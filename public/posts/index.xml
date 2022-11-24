@@ -1,0 +1,23 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Chamsii Mouhib</title>
+        <link>https://chxmxii.github.io/Porteflio/posts/</link>
+        <description>Recent content in Posts on Chamsii Mouhib</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sun, 24 Jul 2022 00:00:00 +0000</lastBuildDate>
+        <atom:link href="https://chxmxii.github.io/Porteflio/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Introduction</title>
+            <link>https://chxmxii.github.io/Porteflio/posts/2022/07/introduction/</link>
+            <pubDate>Sun, 24 Jul 2022 00:00:00 +0000</pubDate>
+            
+            <guid>https://chxmxii.github.io/Porteflio/posts/2022/07/introduction/</guid>
+            <description>Note taking is the most effective way for an</description>
+            <content type="html"><![CDATA[<p>Note taking is the most effective way for an</p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
