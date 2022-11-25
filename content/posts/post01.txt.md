@@ -15,7 +15,7 @@ series:
 
 Just some notes I took while revising for certifications :
 
-- [RHCE Exam Notes and tips](http://localhost:1313/Porteflio/rhce/main.html)
+- [RHCE Exam Notes and tips](https://chxmxii.github.io/portfolio/rhce/main.html)
 
 - [RHCSA Exam Notes and tips](https://chxmxii.gitbook.io/system-management-tasks/)
     
