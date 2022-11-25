@@ -14,4 +14,4 @@ weight: 10
 series:
 - Hugo 101
 ---
-Hey folks, 
+Hey folks, today we are going to
