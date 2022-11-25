@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "C:/Hugo/Sites/myblog",
+	"sourceRoot": "/home/runner/work/portfolio/portfolio",
 	"sources": [
 		"assets/scss/main.scss",
 		"assets/scss/_normalize.scss",
