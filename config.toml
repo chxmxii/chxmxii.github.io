@@ -65,7 +65,7 @@ disableHugoGeneratorInject = false
  
 
   # Set a background for the homepage
-  backgroundImage = "http://localhost:1313/Porteflio/bg.gif"
+  backgroundImage = "https://chxmxii.github.io/portfolio/bg.gif"
 
   # Prefix of link to the git commit detail page. GitInfo must be enabled.
   #
