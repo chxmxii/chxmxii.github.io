@@ -24,6 +24,3 @@ Depending on the template engine being used the impact can vary, some of the iss
 + Remote Code execution
 
 ### String filters 
-=======
-Hey folks, today we are going to
->>>>>>> 4b13efeb73dd44d961d32e419b5a66bcdc5e3cb3
