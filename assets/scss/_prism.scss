@@ -8,11 +8,11 @@ https://prismjs.com/download.html#themes=prism-twilight&languages=markup+css+cli
 code[class*="language-"],
 pre[class*="language-"] {
 	color: white;
-	background: none;
+	background: #202628 !important;/*#212121;*/
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	font-size: 1em;
 	text-align: left;
-	text-shadow: 0 -.1em .2em black;
+	text-shadow: 0 -.1em .1em #201f1f;
 	white-space: pre;
 	word-spacing: normal;
 	word-break: normal;
@@ -31,17 +31,19 @@ pre[class*="language-"] {
 
 pre[class*="language-"],
 :not(pre) > code[class*="language-"] {
-	background: hsl(0, 0%, 8%); /* #141414 */
+	background: #202628;/*#212121; /* #141414 */
 }
 
 /* Code blocks */
 pre[class*="language-"] {
-	border-radius: .5em;
-	border: .3em solid hsl(0, 0%, 33%); /* #282A2B */
-	box-shadow: 1px 1px .5em black inset;
+	border-radius: .8em;
+	border: .0em hsl(0, 0%, 33%); /* #282A2B */
+	/*box-shadow: 0.01px 0.01px .5em rgb(0, 0, 0) inset;*/
+	box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 	margin: .5em 0;
 	overflow: auto;
 	padding: 1em;
+	background-color: #202628;
 }
 
 pre[class*="language-"]::-moz-selection {
@@ -58,13 +60,13 @@ pre[class*="language-"]::selection {
 pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
 code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
 	text-shadow: none;
-	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+	background: hsla(0, 0%, 9%, 0.15); /* #EDEDED */
 }
 
 pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
 code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	text-shadow: none;
-	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+	background: #ededed26; /* #EDEDED */
 }
 
 /* Inline code */
@@ -80,7 +82,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: hsl(0, 0%, 47%); /* #777777 */
+	color: hsl(0, 0%, 22%); /* #777777 */
 }
 
 .token.punctuation {
@@ -95,7 +97,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .token.boolean,
 .token.number,
 .token.deleted {
-	color: hsl(14, 58%, 55%); /* #CF6A4C */
+	color: #8624dfe6; /* #CF6A4C */
 }
 
 .token.keyword,
@@ -122,12 +124,12 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 }
 
 .token.atrule {
-	color: hsl(218, 22%, 55%); /* #7587A6 */
+	color: hwb(340 12% 9%); /* #7587A6 #b11e69 */
 }
 
 .token.regex,
 .token.important {
-	color: hsl(42, 75%, 65%); /* #E9C062 */
+	color: hsl(42, 42%, 61%); /* #E9C062 */
 }
 
 .token.important,
