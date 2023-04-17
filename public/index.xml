@@ -13,8 +13,7 @@
       <pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate>
       
       <guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid>
-      <description>Just some notes I took while revising for certifications :
-RHCE Exam Notes and tips
+      <description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description>
     </item>
@@ -25,7 +24,7 @@ AWS CCP Exam Notes and tips</description>
       <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid>
-      <description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp; CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
+      <description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
 0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description>
     </item>
     
@@ -47,8 +46,7 @@ Kubectl get deployment</description>
       <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
       
       <guid>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</guid>
-      <description>&amp;laquo;&amp;laquo;&amp;laquo;&amp;lt; HEAD
-What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
+      <description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
 Depending on the template engine being used the impact can vary, some of the issues range from:
 Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters </description>
     </item>
@@ -74,9 +72,8 @@ Frontend : HTML, CSS, JavaScript Backend : PHP DataBase : mySQL, xampp server Sa
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chxmxii.github.io/portfolio/about.txt/</guid>
-      <description>Hey there, My name is mouhib and I&amp;rsquo;m a cybersecurity engineering student @TEK-UP university. I like to spend my time exploring new innovations and technologies.
-Throughout this site, you will find various articles I have authored involving cloud technologies (Automation tools, IaC, K8S etc..), penetration testing methodolgies and write ups for CTF challengs.
-=&amp;gt; For further information on my academic and professional achievements, please review my resume. Certifications : </description>
+      <description>Hey there, I am Chamsi Mouhib aka chxmxii a driven and ambitious Cybersecurity Engineering student with a passion for Cloud and Cybersecurity, an enthusiast of automation tools, and actively involved in the cybersecurity community, participating in CTFs with a focus on web challenges. With a strong desire to learn and grow, I am always eager to expand my skill set and knowledge by learning from others.
+Throughout this site, you will find various articles I have authored involving cloud technologies (Automation tools, IaC, K8S etc.</description>
     </item>
     
   </channel>

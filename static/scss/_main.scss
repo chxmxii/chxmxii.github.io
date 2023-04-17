@@ -38,7 +38,7 @@ body {
   }
 
   @media (prefers-color-scheme: dark) {
-    background-color: $dark-background;
+    background-color: rgb(22 25 30 / 98%);
     color: $dark-color;
   }
 
@@ -48,13 +48,13 @@ body {
   }
 
   [data-theme=dark] & {
-    background-color: $dark-background;
+    background-color: rgb(22 25 30 / 98%);
     color: $dark-color;
   }
 
   [data-theme=light] & {
     background-color: $light-background;
-    color: #9e9e9e;
+    color: rgb(158, 158, 158);
   }
 }
 

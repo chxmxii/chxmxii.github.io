@@ -14,11 +14,11 @@
             <pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate>
             
             <guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid>
-            <description>Just some notes I took while revising for certifications :
-RHCE Exam Notes and tips
+            <description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description>
-            <content type="html"><![CDATA[<p>Just some notes I took while revising for certifications :</p>
+            <content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
+<h3 id="some-notes-i-took-during-my-certifications-journey">Some notes I took during my certifications journey:</h3>
 <ul>
 <li>
 <p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE Exam Notes and tips</a></p>
@@ -39,36 +39,37 @@ AWS CCP Exam Notes and tips</description>
             <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
             
             <guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid>
-            <description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp; CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
+            <description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
 0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description>
-            <content type="html"><![CDATA[<h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
+            <content type="html"><![CDATA[<p><img src="/cicdlogo.png" alt=""></p>
+<h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
 <ul>
-<li><em>CI/CD is an automated and reliable process for software development and delivery.&amp;</em></li>
-<li><em>CI/CD’s frequent testing reduces code errors and defects.</em></li>
-<li><em>The main concepts attributed to CI/CD are continuos integration, delivery and deployment.</em></li>
+<li>CI/CD is an automated and reliable process for software development and delivery.&amp;*</li>
+<li>CI/CD’s frequent testing reduces code errors and defects.</li>
+<li>The main concepts attributed to CI/CD are continuos integration, delivery and deployment.</li>
 </ul>
 <p>⇒ The main goal is to reduce the risk involved in deploying software.</p>
 <h3 id="0--2-whats-the-difference-between-ci--cd--cd-">0 . 2 What’s the difference between CI &amp; CD &amp; CD :</h3>
 <ul>
-<li><em>Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</em></li>
-<li><em>Countinous delivery is a solution to the problem of poor visibility and commmunication between dev and business teams. its purpose is to ensure that it takes minimal effort to deploy new code.</em></li>
-<li><em>Countinous deployment means to automatically releasing a dev’s changes from the repository to produciton, where it is usable by customers.</em></li>
+<li>Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</li>
+<li>Countinous delivery is a solution to the problem of poor visibility and commmunication between dev and business teams. its purpose is to ensure that it takes minimal effort to deploy new code.</li>
+<li>Countinous deployment means to automatically releasing a dev’s changes from the repository to produciton, where it is usable by customers.</li>
 </ul>
 <p><img src="/cicd.png" alt="Untitled"></p>
 <h3 id="0--3-different-stages-">0 . 3 Different stages :</h3>
-<p><em>CI/CD piple can be divided into four main stages :</em></p>
+<p>CI/CD piple can be divided into four main stages :*</p>
 <ol>
-<li><em>Source</em></li>
-<li><em>Build</em></li>
-<li><em>Test</em></li>
-<li><em>Deployment</em></li>
+<li>Source</li>
+<li>Build</li>
+<li>Test</li>
+<li>Deployment</li>
 </ol>
-<p><em>Each stage must be completed before continuing to the next stage.</em></p>
+<p>The stages are executed in a linear fashion, and each stage must be completed successfully before the next stage can begin.</p>
 <p><img src="/cicd2.png" alt=""></p>
 <p><img src="/cicd3.png" alt=""></p>
 <h3 id="0--3--1-source-stage">0 . 3 . 1 Source Stage</h3>
-<p><em>First stage of any CI/CD pipeline. In this stage the pipleline will get trigged by any change in the program. this stage will cover version controlling and tracking changes.</em></p>
-<p><em>If the automated workflow detects a change in the central repository, it will trigger tasks such as code compilation and unit testing.</em></p>
+<p>First stage of any CI/CD pipeline. In this stage the pipleline will get trigged by any change in the program. this stage will cover version controlling and tracking changes.</p>
+<p>If the automated workflow detects a change in the central repository, it will trigger tasks such as code compilation and unit testing.</p>
 <p><strong>Example tools :</strong></p>
 <ul>
 <li>GIT</li>
@@ -77,9 +78,9 @@ AWS CCP Exam Notes and tips</description>
 </ul>
 <h3 id="0--3--2-build-stage-">0 . 3 . 2 Build Stage :</h3>
 <ul>
-<li><em>The second stage of the pipeline you merge the source code and its dependencies.</em></li>
-<li><em>It is done mainly to build a runnable instance of software that you can potentially ship to the end-user.</em></li>
-<li><em>Failure to pass the build stage could indicate a fundamental issue in the underlying code.</em></li>
+<li>The second stage of the pipeline you merge the source code and its dependencies.</li>
+<li>It is done mainly to build a runnable instance of software that you can potentially ship to the end-user.</li>
+<li>Failure to pass the build stage could indicate a fundamental issue in the underlying code.</li>
 </ul>
 <p>Example tools :</p>
 <ol>
@@ -88,8 +89,8 @@ AWS CCP Exam Notes and tips</description>
 <li>Azure Pipelines</li>
 </ol>
 <h3 id="0--3--3-test-stage-">0 . 3 . 3 Test Stage :</h3>
-<p><em>Test stage includes the execution of automated tests written by developers (integration testing, functional testing etc..) to validate the correctness of code and the behaviour of the software.</em></p>
-<p><em>The main goal of this stage is to prevent software bugs from reaching end-users.</em></p>
+<p>Test stage includes the execution of automated tests written by developers (integration testing, functional testing etc..) to validate the correctness of code and the behaviour of the software.</p>
+<p>The main goal of this stage is to prevent software bugs from reaching end-users.</p>
 <p><strong>Example Tools :</strong></p>
 <ol>
 <li>Puppeteer</li>
@@ -97,8 +98,8 @@ AWS CCP Exam Notes and tips</description>
 <li>Selenium.</li>
 </ol>
 <h3 id="0--3--4-deploy-stage-">0 . 3 . 4 Deploy stage :</h3>
-<p><em>Final stage of the pipeline, where your product goes live after passing the source,build and test stages successfully.</em></p>
-<p><em>The deployment stage can include infra provisioning, config, and containerization using techs like terraform, puppet,docker and k8s.</em></p>
+<p>Final stage of the pipeline, where your product goes live after passing the source,build and test stages successfully.</p>
+<p>The deployment stage can include infra provisioning, config, and containerization using techs like terraform, puppet,docker and k8s.</p>
 <p><strong>Example Tools :</strong></p>
 <ol>
 <li>Ansible</li>
@@ -174,12 +175,10 @@ Kubectl get deployment</description>
             <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
             
             <guid>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</guid>
-            <description>&amp;laquo;&amp;laquo;&amp;laquo;&amp;lt; HEAD
-What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
+            <description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
 Depending on the template engine being used the impact can vary, some of the issues range from:
 Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters </description>
-            <content type="html"><![CDATA[<p>&laquo;&laquo;&laquo;&lt; HEAD</p>
-<h2 id="what-is-ssti">What is SSTI?</h2>
+            <content type="html"><![CDATA[<h2 id="what-is-ssti">What is SSTI?</h2>
 <p>SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.</p>
 <p>Depending on the template engine being used the impact can vary, some of the issues range from:</p>
 <ul>

@@ -13,7 +13,7 @@
       <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid>
-      <description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp; CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
+      <description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
 0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description>
     </item>
     

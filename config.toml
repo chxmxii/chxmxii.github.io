@@ -201,7 +201,7 @@ disableHugoGeneratorInject = false
   [[menu.main]]
     identifier = "projects"
     name       = "Projects"   
-    url        = "/projects.txt/"
+    url        = "/projects/"
   [[menu.main]]
     identifier = "cv"
     name       = "Resume"   
