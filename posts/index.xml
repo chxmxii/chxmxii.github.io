@@ -1,7 +1,7 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 18 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Just some notes I took while revising for certifications :
-RHCE Exam Notes and tips
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 18 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
-AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p>Just some notes I took while revising for certifications :</p>
+AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
+<h3 id="some-notes-i-took-during-my-certifications-journey">Some notes I took during my certifications journey:</h3>
 <ul>
 <li>
 <p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE Exam Notes and tips</a></p>
@@ -14,7 +14,8 @@ AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p>Just s
 </li>
 </ul>
 ]]></content></item><item><title>Understanding CI/CD</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</link><pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid><description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
-0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description><content type="html"><![CDATA[<h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
+0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description><content type="html"><![CDATA[<p><img src="/cicdlogo.png" alt=""></p>
+<h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
 <ul>
 <li>CI/CD is an automated and reliable process for software development and delivery.&amp;*</li>
 <li>CI/CD’s frequent testing reduces code errors and defects.</li>
@@ -80,54 +81,6 @@ AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p>Just s
 <li>AWS Code Deploy</li>
 <li>Azure Pipelines - Deployment.</li>
 </ol>
-]]></content></item><item><title>Kubernetes Nginx Web Server Deployement</title><link>https://chxmxii.github.io/portfolio/posts/2022/09/kubernetes-nginx-web-server-deployement/</link><pubDate>Sat, 10 Sep 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/09/kubernetes-nginx-web-server-deployement/</guid><description>1 - Create nginx-deployement.yaml file :
-apiVersion : apps/v1 kind: Deployment metadata: name: nginx labels: app: nginx spec: replicas: 1 selector: matchlabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx ports: - containerPort: 80 2 - Create the deployment : kubectl create -f dep.yaml ⇒ This will create one pod with single NGINX container listening on port 80.
-3 - Verify :
-Kubectl get deployment</description><content type="html"><![CDATA[<p>1 - Create nginx-deployement.yaml file :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion </span>: <span style="color:#ae81ff">apps/v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">labels</span>:
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">matchlabels</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">template</span>: 
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">metadata</span>: 
-</span></span><span style="display:flex;"><span>			<span style="color:#f92672">labels</span>:
-</span></span><span style="display:flex;"><span>				<span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>			- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>				<span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>				<span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>				- <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
-</span></span></code></pre></div><p>2 - Create the deployment :
-<code>kubectl create -f dep.yaml</code>
-⇒ This will create one pod with single NGINX container listening on port 80.</p>
-<p>3 - Verify :</p>
-<p><code>Kubectl get deployment</code></p>
-<p>4 - Create nginx-service.yaml :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-service</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>	- <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">targetpPort</span>: <span style="color:#ae81ff">80</span>
-</span></span></code></pre></div><p>5 - Create the service :</p>
-<p><code>kubectl create -f nginx-service.yaml</code></p>
-<p>⇒ Service will be created as a nodePort, means it will expose the nginx web-server on each node with port 80. pods are selected for this service depending on label selector”app:nginx”, same label we specified while creating the nginx pode in dep.</p>
-<p>6 - verify :</p>
-<p><code>kubectl get svc</code></p>
 ]]></content></item><item><title>Bypassing common jinja2 filters</title><link>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</link><pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</guid><description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
 Depending on the template engine being used the impact can vary, some of the issues range from:
 Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters</description><content type="html"><![CDATA[<h2 id="what-is-ssti">What is SSTI?</h2>
