@@ -82,7 +82,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: hsl(0, 0%, 22%); /* #777777 */
+	color: hsl(260, 6%, 50%); /* #777777 */
 }
 
 .token.punctuation {
@@ -120,7 +120,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .style .token.string,
 .token.variable,
 .token.inserted {
-	color: hsl(76, 21%, 52%); /* #8F9D6A */
+	color: hsl(315, 76%, 50%); /* #8F9D6A */
 }
 
 .token.atrule {
@@ -153,7 +153,7 @@ pre[data-line] {
 .language-markup .token.tag,
 .language-markup .token.attr-name,
 .language-markup .token.punctuation {
-	color: hsl(33, 33%, 52%); /* #AC885B */
+	color: hsl(59, 76%, 50%); /* #AC885B */
 }
 
 /* Make the tokens sit above the line highlight so the colours don't look faded. */

@@ -1,0 +1,94 @@
+---
+author:
+  name: "chxmxii_"
+date: 2022-11-18
+tags:
+  - DevOps
+  - Sysadmin
+type:
+- post
+- posts
+title: KodeKloud Engineer Challenges
+weight: 10
+series:
+- Hugo 101
+---
+
+
+## Linux TimeZones Setting	
+
++ During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn't match with that of the local datacenter's timezone, which is America/Blanc-Sablon.
+
+###### solution : 
++ 
+  ```shell
+  #ssh to app server 1 account and switch to root
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  sudo su -
+  # change the timezone to America/Blanc-Sablon
+  timedatectl set-timezone America/Blanc-Sablon
+  #Verify
+  timedatectl
+  ```
+---
+## Linux User Files
+
++ There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC. Later they found that they mistakenly mixed up different user data there. Now they want to filter out some user data and copy it to another location. Find the details below:
+
++ On App Server 1 find all files (not directories) owned by user javed inside /home/usersdata directory and copy them all while keeping the folder structure (preserve the directories path) to /news directory.
+
+###### Solution : 
++ 
+  ```shell
+  #ssh to user tony on App server 1 
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  #find all the files copy the to /news directory while keeping the folder structure.
+  find /home/usersdata/ -type f -user javed -exec cp --parents {} /news/ \; 2>/dev/null
+  #verify
+  yum install tree -y
+  tree /news
+  ```
+---
+## Linux User Without Home 
+
++ The system admins team of xFusionCorp Industries has set up a new tool on all app servers, as they have a requirement to create a service user account that will be used by that tool. They are finished with all apps except for App Server 1 in Stratos Datacenter.
+
++ Create a user named ravi in App Server 1 without a home directory.
+
+###### Solution:
++ 
+  ```shell
+  #Login to tony account in App server 1 via SSH
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  #man useradd and look for the option to create a user without a home dir
+  sudo useradd -M ravi
+  #verify
+  getent passwd
+  ```
+---
+## MariaDB Troubleshooting	
+
+  + There is a critical issue going on with the Nautilus application in Stratos DC. The production support team identified that the application is unable to connect to the database. After digging into the issue, the team found that mariadb service is down on the database server.
+  + Look into the issue and fix the same.
+
+###### Soltuion:
++ 
+  ``` shell
+  #Connect to the db instance
+  sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
+  #Verify the status of mariadb service
+  systemctl status mariadb
+  #go through the logs and pay some attention!
+  journalctl -xe
+  cat /var/log/mariadb/mariadb.log
+  #as you can see, the mariadb service coudln\'t start due to 'permision denied' problem! 
+  #lets check the ownerships of both folders /var/lib/mysql and /var/run/mariadb
+  ll /var/lib/mysql
+  ll /var/run/mariadb
+  #we notice that the owner of mariadb is sat to root and this was the root problem
+  cd /var/run/
+  chown -R mysql:mysql mariadb/
+  #start and enbale the service
+  systemctl start mariadb
+  systemctl enable --now mariadb
+  ```
