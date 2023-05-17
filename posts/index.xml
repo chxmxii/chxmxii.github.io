@@ -113,15 +113,12 @@
 <hr>
 <h2 id="linux-collaborative-directories">Linux Collaborative Directories</h2>
 <ul>
-<li>
-<p>The Nautilus team doesn&rsquo;t want its data to be accessed by any of the other groups/teams due to security reasons and want their data to be strictly accessed by the devops group of the team.</p>
-</li>
-<li>
-<p>Setup a collaborative directory /devops/data on Nautilus App 3 server in Stratos Datacenter.</p>
-</li>
-<li>
-<p>The directory should be group owned by the group devops and the group should own the files inside the directory. The directory should be read/write/execute to the group owners, and others should not have any access.</p>
-</li>
+<li>The Nautilus team doesn&rsquo;t want its data to be accessed by any of the other groups/teams due to security reasons and want their data to be strictly accessed by the devops group of the team.</li>
+<li>Setup a collaborative directory /devops/data on Nautilus App 3 server in Stratos Datacenter.</li>
+<li>The directory should be group owned by the group devops and the group should own the files inside the directory. The directory should be read/write/execute to the group owners, and others should not have any access.</li>
+</ul>
+<h6 id="solution-2">Solution</h6>
+<ul>
 <li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server3</span>
 </span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
