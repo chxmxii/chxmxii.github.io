@@ -110,6 +110,35 @@
 </span></span><span style="display:flex;"><span>ssh banner@stapp03
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-collaborative-directories">Linux Collaborative Directories</h2>
+<ul>
+<li>
+<p>The Nautilus team doesn&rsquo;t want its data to be accessed by any of the other groups/teams due to security reasons and want their data to be strictly accessed by the devops group of the team.</p>
+</li>
+<li>
+<p>Setup a collaborative directory /devops/data on Nautilus App 3 server in Stratos Datacenter.</p>
+</li>
+<li>
+<p>The directory should be group owned by the group devops and the group should own the files inside the directory. The directory should be read/write/execute to the group owners, and others should not have any access.</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server3</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create dir /devops/data</span>
+</span></span><span style="display:flex;"><span>mkdir -p /devops/data
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#change the group owner</span>
+</span></span><span style="display:flex;"><span>m1 : chgrp -R devops /devops <span style="color:#f92672">&amp;&amp;</span> chgrp -R devops /devops/data <span style="color:#f92672">(</span>-R &gt; <span style="color:#66d9ef">for</span> recursive<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>m2 : chown -R :devops /devops 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#change the dir perms</span>
+</span></span><span style="display:flex;"><span>chmod -R <span style="color:#ae81ff">2770</span> /devops/ <span style="color:#f92672">&amp;&amp;</span> chmod -R <span style="color:#ae81ff">2770</span> /devops/data
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> &gt; SGID
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span> &gt; rwx
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> &gt; ---
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
