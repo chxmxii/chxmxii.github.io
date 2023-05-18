@@ -136,6 +136,35 @@
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> &gt; ---
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-ntp-setup">Linux NTP Setup</h2>
+<ul>
+<li>The system admin team of xFusionCorp Industries has noticed an issue with some servers in Stratos Datacenter where some of the servers are not in sync w.r.t time. Because of this, several application functionalities have been impacted. To fix this issue the team has started using common/standard NTP servers. They are finished with most of the servers except App Server 1. Therefore, perform the following tasks on this server:</li>
+<li>Install and configure NTP server on App Server 1.</li>
+<li>Add NTP server 1.south-america.pool.ntp.org in NTP configuration on App Server 1.</li>
+<li>Please do not try to start/restart/stop ntp service, as we already have a restart for this service scheduled for tonight and we don&rsquo;t want these changes to be applied right now</li>
+</ul>
+<h6 id="solution-3">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostkeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install ntp server if not installed</span>
+</span></span><span style="display:flex;"><span>rpm -qa | grep ntp
+</span></span><span style="display:flex;"><span>yum install -y ntp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure NTP server</span>
+</span></span><span style="display:flex;"><span>vi /etc/ntp.conf 
+</span></span><span style="display:flex;"><span>~ insert this line <span style="color:#f92672">(</span>NTP server 1.south-america.pool.ntp.org<span style="color:#f92672">)</span> <span style="color:#66d9ef">then</span> save and quit
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Start and enable the ntp daemon</span>
+</span></span><span style="display:flex;"><span>systemctl enable ntpd
+</span></span><span style="display:flex;"><span>systemctl start ntpd
+</span></span><span style="display:flex;"><span>systemctl status ntpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify configuration</span>
+</span></span><span style="display:flex;"><span>ntpstat
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
