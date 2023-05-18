@@ -138,3 +138,31 @@ series:
   7 > rwx
   0 > ---
   ```
+---
+## Linux NTP Setup
+
++ The system admin team of xFusionCorp Industries has noticed an issue with some servers in Stratos Datacenter where some of the servers are not in sync w.r.t time. Because of this, several application functionalities have been impacted. To fix this issue the team has started using common/standard NTP servers. They are finished with most of the servers except App Server 1. Therefore, perform the following tasks on this server:
++ Install and configure NTP server on App Server 1.
++ Add NTP server 1.south-america.pool.ntp.org in NTP configuration on App Server 1.
++ Please do not try to start/restart/stop ntp service, as we already have a restart for this service scheduled for tonight and we don't want these changes to be applied right now
+  
+###### Solution:
++ 
+  ```Shell
+  #ssh to app server 1
+  sshpass -p Ir0nM@n ssh -o StrictHostkeyChecking=no tony@stapp01
+  #switch to root user
+  sudo su -
+  #Install ntp server if not installed
+  rpm -qa | grep ntp
+  yum install -y ntp
+  #Configure NTP server
+  vi /etc/ntp.conf 
+  ~ insert this line (NTP server 1.south-america.pool.ntp.org) then save and quit
+  #Start and enable the ntp daemon
+  systemctl enable ntpd
+  systemctl start ntpd
+  systemctl status ntpd
+  #verify configuration
+  ntpstat
+  ```
