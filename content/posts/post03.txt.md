@@ -8,7 +8,7 @@ tags:
 type:
 - post
 - posts
-title: KodeKloud Engineer Challenges
+title: KodeKloud Engineer System Administration Challenges 
 weight: 10
 series:
 - Hugo 101
