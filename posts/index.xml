@@ -165,6 +165,31 @@
 </span></span><span style="display:flex;"><span>ntpstat
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-run-levels">Linux Run Levels</h2>
+<ul>
+<li>New tools have been installed on the app server in Stratos Datacenter. Some of these tools can only be managed from the graphical user interface. Therefore, there are requirements for these app servers.</li>
+<li>On all App servers in Stratos Datacenter change the default runlevel so that they can boot in GUI (graphical user interface) by default. Please do not try to reboot these servers</li>
+</ul>
+<h6 id="solution-4">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server of the 3 accounts</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch user to root</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#get the default target</span>
+</span></span><span style="display:flex;"><span>systemctl get-default
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#notice the default target is set to multi-user.target, you can list all the target using the following command</span>
+</span></span><span style="display:flex;"><span>systemctl list-units
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#set the default target to graphical.target</span>
+</span></span><span style="display:flex;"><span>systemctl set-default graphical.target
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the new target and verify</span>
+</span></span><span style="display:flex;"><span>systemctl start graphical.target <span style="color:#f92672">&amp;&amp;</span> systemctl status graphical.target
+</span></span><span style="display:flex;"><span>systemctl get-default
+</span></span></code></pre></div></li>
+</ul>
+<hr>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
