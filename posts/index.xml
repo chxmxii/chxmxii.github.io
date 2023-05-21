@@ -1,4 +1,5 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 14 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer System Administration Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges/</link><pubDate>Sun, 14 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<h2 id="linux-timezones-setting">Linux TimeZones Setting</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 14 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer System Administration Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges/</link><pubDate>Sun, 14 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
+<h2 id="linux-timezones-setting">Linux TimeZones Setting</h2>
 <ul>
 <li>During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&rsquo;t match with that of the local datacenter&rsquo;s timezone, which is America/Blanc-Sablon.</li>
 </ul>
@@ -17,12 +18,8 @@
 <hr>
 <h2 id="linux-user-files">Linux User Files</h2>
 <ul>
-<li>
-<p>There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC. Later they found that they mistakenly mixed up different user data there. Now they want to filter out some user data and copy it to another location. Find the details below:</p>
-</li>
-<li>
-<p>On App Server 1 find all files (not directories) owned by user javed inside /home/usersdata directory and copy them all while keeping the folder structure (preserve the directories path) to /news directory.</p>
-</li>
+<li>There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC. Later they found that they mistakenly mixed up different user data there. Now they want to filter out some user data and copy it to another location. Find the details below:</li>
+<li>On App Server 1 find all files (not directories) owned by user javed inside /home/usersdata directory and copy them all while keeping the folder structure (preserve the directories path) to /news directory.</li>
 </ul>
 <h6 id="solution--1">Solution :</h6>
 <ul>
@@ -39,12 +36,8 @@
 <hr>
 <h2 id="linux-user-without-home">Linux User Without Home</h2>
 <ul>
-<li>
-<p>The system admins team of xFusionCorp Industries has set up a new tool on all app servers, as they have a requirement to create a service user account that will be used by that tool. They are finished with all apps except for App Server 1 in Stratos Datacenter.</p>
-</li>
-<li>
-<p>Create a user named ravi in App Server 1 without a home directory.</p>
-</li>
+<li>The system admins team of xFusionCorp Industries has set up a new tool on all app servers, as they have a requirement to create a service user account that will be used by that tool. They are finished with all apps except for App Server 1 in Stratos Datacenter.</li>
+<li>Create a user named ravi in App Server 1 without a home directory.</li>
 </ul>
 <h6 id="solution">Solution:</h6>
 <ul>
@@ -88,12 +81,8 @@
 <hr>
 <h2 id="linux-ssh-authentication">Linux SSH Authentication</h2>
 <ul>
-<li>
-<p>The system admins team of xFusionCorp Industries has set up some scripts on jump host that run on regular intervals and perform operations on all app servers in Stratos Datacenter. To make these scripts work properly we need to make sure the thor user on jump host has password-less SSH access to all app servers through their respective sudo users (i.e tony for app server 1). Based on the requirements, perform the following:</p>
-</li>
-<li>
-<p>Set up a password-less authentication from user thor on jump host to all app servers through their respective sudo users.</p>
-</li>
+<li>The system admins team of xFusionCorp Industries has set up some scripts on jump host that run on regular intervals and perform operations on all app servers in Stratos Datacenter. To make these scripts work properly we need to make sure the thor user on jump host has password-less SSH access to all app servers through their respective sudo users (i.e tony for app server 1). Based on the requirements, perform the following:</li>
+<li>Set up a password-less authentication from user thor on jump host to all app servers through their respective sudo users.</li>
 </ul>
 <h6 id="solution-1">Solution:</h6>
 <ul>
@@ -190,6 +179,34 @@
 </span></span></code></pre></div></li>
 </ul>
 <hr>
+<h2 id="linux-string-substitute">Linux String Substitute</h2>
+<ul>
+<li>The backup server in the Stratos DC contains several template XML files used by the Nautilus application. However, these template XML files must be populated with valid data before they can be used. One of the daily tasks of a system admin working in the xFusionCorp industries is to apply string and file manipulation commands!</li>
+<li>Replace all occurances of the string Sample to Software on the XML file /root/nautilus.xml located in the backup server.</li>
+</ul>
+<h6 id="solution-5">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the backup server</span>
+</span></span><span style="display:flex;"><span>sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no clint@stbkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#change the word Sample with SoftWare in the XML file nautilus.xml</span>
+</span></span><span style="display:flex;"><span>cat /root/nautilus.xml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Using sed, you can always refer to the manual for help</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;s/Sample/Software/g&#39;</span> nautilus.xml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Breaking down the sed command</span>
+</span></span><span style="display:flex;"><span>-i &gt; save the changes to the file
+</span></span><span style="display:flex;"><span>s &gt; substitue
+</span></span><span style="display:flex;"><span>g &gt; global
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Using awk, refer to the manual for help</span>
+</span></span><span style="display:flex;"><span>awk <span style="color:#e6db74">&#39;{gsub(&#34;Sample&#34;, &#34;Software&#34;, $0); print &gt; &#34;nautilus.xml&#34;}&#39;</span> nautilus.xml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Breaking down the awk command</span>
+</span></span><span style="display:flex;"><span>gsub<span style="color:#f92672">()</span> -&gt; awk <span style="color:#66d9ef">function</span> to globally substitue the Sample word with Software
+</span></span><span style="display:flex;"><span>$0 -&gt; refers to the entire input line being proccessed <span style="color:#f92672">(</span>awk reads the input file line by line <span style="color:#66d9ef">until</span> it reaches the end of file<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>print &gt; <span style="color:#e6db74">&#34;nautilus.xml&#34;</span> -&gt; overwrites the original file with the modified lines
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
