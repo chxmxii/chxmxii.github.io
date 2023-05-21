@@ -13,8 +13,7 @@ weight: 10
 series:
 - Hugo 101
 ---
-
-
+---
 ## Linux TimeZones Setting	
 
 + During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn't match with that of the local datacenter's timezone, which is America/Blanc-Sablon.
@@ -34,7 +33,6 @@ series:
 ## Linux User Files
 
 + There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC. Later they found that they mistakenly mixed up different user data there. Now they want to filter out some user data and copy it to another location. Find the details below:
-
 + On App Server 1 find all files (not directories) owned by user javed inside /home/usersdata directory and copy them all while keeping the folder structure (preserve the directories path) to /news directory.
 
 ###### Solution : 
@@ -52,7 +50,6 @@ series:
 ## Linux User Without Home 
 
 + The system admins team of xFusionCorp Industries has set up a new tool on all app servers, as they have a requirement to create a service user account that will be used by that tool. They are finished with all apps except for App Server 1 in Stratos Datacenter.
-
 + Create a user named ravi in App Server 1 without a home directory.
 
 ###### Solution:
@@ -68,8 +65,8 @@ series:
 ---
 ## MariaDB Troubleshooting	
 
-  + There is a critical issue going on with the Nautilus application in Stratos DC. The production support team identified that the application is unable to connect to the database. After digging into the issue, the team found that mariadb service is down on the database server.
-  + Look into the issue and fix the same.
++ There is a critical issue going on with the Nautilus application in Stratos DC. The production support team identified that the application is unable to connect to the database. After digging into the issue, the team found that mariadb service is down on the database server.
++ Look into the issue and fix the same.
 
 ###### Soltuion:
 + 
@@ -96,7 +93,6 @@ series:
 ## Linux SSH Authentication	
 
 + The system admins team of xFusionCorp Industries has set up some scripts on jump host that run on regular intervals and perform operations on all app servers in Stratos Datacenter. To make these scripts work properly we need to make sure the thor user on jump host has password-less SSH access to all app servers through their respective sudo users (i.e tony for app server 1). Based on the requirements, perform the following:
-
 + Set up a password-less authentication from user thor on jump host to all app servers through their respective sudo users.
 
 ###### Solution: 
@@ -190,3 +186,29 @@ series:
   systemctl get-default
   ```
 ---
+## Linux String Substitute
+
++ The backup server in the Stratos DC contains several template XML files used by the Nautilus application. However, these template XML files must be populated with valid data before they can be used. One of the daily tasks of a system admin working in the xFusionCorp industries is to apply string and file manipulation commands!
++ Replace all occurances of the string Sample to Software on the XML file /root/nautilus.xml located in the backup server.
+
+###### Solution
++ ```Shell 
+  #ssh to the backup server
+  sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking=no clint@stbkp01
+  #switch to the root user
+  sudo su -
+  #change the word Sample with SoftWare in the XML file nautilus.xml
+  cat /root/nautilus.xml
+  #Using sed, you can always refer to the manual for help
+  sed -i 's/Sample/Software/g' nautilus.xml
+  #Breaking down the sed command
+  -i > save the changes to the file
+  s > substitue
+  g > global
+  #Using awk, refer to the manual for help
+  awk '{gsub("Sample", "Software", $0); print > "nautilus.xml"}' nautilus.xml
+  #Breaking down the awk command
+  gsub() -> awk function to globally substitue the Sample word with Software
+  $0 -> refers to the entire input line being proccessed (awk reads the input file line by line until it reaches the end of file).
+  print > "nautilus.xml" -> overwrites the original file with the modified lines
+  ```
