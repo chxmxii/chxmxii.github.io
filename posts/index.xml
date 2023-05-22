@@ -196,7 +196,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#Using sed, you can always refer to the manual for help</span>
 </span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;s/Sample/Software/g&#39;</span> nautilus.xml
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#Breaking down the sed command</span>
-</span></span><span style="display:flex;"><span>-i &gt; save the changes to the file
+</span></span><span style="display:flex;"><span>-i &gt; save the changes to the file --in-place
 </span></span><span style="display:flex;"><span>s &gt; substitue
 </span></span><span style="display:flex;"><span>g &gt; global
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#Using awk, refer to the manual for help</span>
@@ -205,6 +205,40 @@
 </span></span><span style="display:flex;"><span>gsub<span style="color:#f92672">()</span> -&gt; awk <span style="color:#66d9ef">function</span> to globally substitue the Sample word with Software
 </span></span><span style="display:flex;"><span>$0 -&gt; refers to the entire input line being proccessed <span style="color:#f92672">(</span>awk reads the input file line by line <span style="color:#66d9ef">until</span> it reaches the end of file<span style="color:#f92672">)</span>.
 </span></span><span style="display:flex;"><span>print &gt; <span style="color:#e6db74">&#34;nautilus.xml&#34;</span> -&gt; overwrites the original file with the modified lines
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-string-substitute-sed">Linux String Substitute (sed)</h2>
+<ul>
+<li>There is some data on Nautilus App Server 1 in Stratos DC. Data needs to be altered in several of the files. On Nautilus App Server 1, alter the /home/BSD.txt file as per details given below:</li>
+<li>a. Delete all lines containing word following and save results in /home/BSD_DELETE.txt file. (Please be aware of case sensitivity)</li>
+<li>b. Replace all occurrence of word and to them and save results in /home/BSD_REPLACE.txt file.</li>
+<li>Note: Let&rsquo;s say you are asked to replace word to with from. In that case, make sure not to alter any words containing this string; for example upto, contributor etc.</li>
+</ul>
+<h6 id="solution-6">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to roo user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#cd the /home dir and cat the BSD.txt</span>
+</span></span><span style="display:flex;"><span>cd /home 
+</span></span><span style="display:flex;"><span>cat BSD.txt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Delete all lines containing word following and save results in /home/BSD_DELETE.txt file.</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#e6db74">&#39;/\&lt;following\&gt;/d&#39;</span> /home/BSD.txt &gt; /home/BSD_DELETE.txt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Here, \&lt; and \&gt; are word boundaries in regular expressions, ensuring that only the exact word &#34;following&#34; is </span>
+</span></span><span style="display:flex;"><span>matched and not parts of other words.
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Cat the original file and the modified one to verify</span>
+</span></span><span style="display:flex;"><span>cat BSD.txt | grep following 
+</span></span><span style="display:flex;"><span>cat BSD_DELETE.txt | grep follwing
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Replace all occurrence of word and to them and save results in /home/BSD_REPLACE.txt file.</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#e6db74">&#39;s/\band\b/them/g&#39;</span> /home/BSD.txt &gt; /home/BSD_REPLACE.txt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Here, \b represents word boundaries in regular expressions, ensuring that only the word &#34;and&#34; is matched as a standalone word and not parts of other   </span>
+</span></span><span style="display:flex;"><span>words. 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Cat the modified file to verify</span>
+</span></span><span style="display:flex;"><span>cat BSD_REPLACE.txt | grep them
+</span></span><span style="display:flex;"><span>cat BSD_REPLACE.txt | grep them
 </span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
