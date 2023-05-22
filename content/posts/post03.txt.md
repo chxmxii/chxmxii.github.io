@@ -202,7 +202,7 @@ series:
   #Using sed, you can always refer to the manual for help
   sed -i 's/Sample/Software/g' nautilus.xml
   #Breaking down the sed command
-  -i > save the changes to the file
+  -i > save the changes to the file --in-place
   s > substitue
   g > global
   #Using awk, refer to the manual for help
@@ -212,3 +212,36 @@ series:
   $0 -> refers to the entire input line being proccessed (awk reads the input file line by line until it reaches the end of file).
   print > "nautilus.xml" -> overwrites the original file with the modified lines
   ```
+---
+## Linux String Substitute (sed)
+
++ There is some data on Nautilus App Server 1 in Stratos DC. Data needs to be altered in several of the files. On Nautilus App Server 1, alter the /home/BSD.txt file as per details given below:
++ a. Delete all lines containing word following and save results in /home/BSD_DELETE.txt file. (Please be aware of case sensitivity)
++ b. Replace all occurrence of word and to them and save results in /home/BSD_REPLACE.txt file.
++ Note: Let's say you are asked to replace word to with from. In that case, make sure not to alter any words containing this string; for example upto, contributor etc.
+
+###### Solution: 
++ 
+  ```Shell
+  #ssh to app server 1
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  #switch to roo user
+  sudo su -
+  #cd the /home dir and cat the BSD.txt
+  cd /home 
+  cat BSD.txt
+  #Delete all lines containing word following and save results in /home/BSD_DELETE.txt file.
+  sed '/\<following\>/d' /home/BSD.txt > /home/BSD_DELETE.txt
+  #Here, \< and \> are word boundaries in regular expressions, ensuring that only the exact word "following" is 
+  matched and not parts of other words.
+  #Cat the original file and the modified one to verify
+  cat BSD.txt | grep following 
+  cat BSD_DELETE.txt | grep follwing
+  #Replace all occurrence of word and to them and save results in /home/BSD_REPLACE.txt file.
+  sed 's/\band\b/them/g' /home/BSD.txt > /home/BSD_REPLACE.txt
+  #Here, \b represents word boundaries in regular expressions, ensuring that only the word "and" is matched as a standalone word and not parts of other   
+  words. 
+  #Cat the modified file to verify
+  cat BSD_REPLACE.txt | grep them
+  cat BSD_REPLACE.txt | grep them
+  ``` 
