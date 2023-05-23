@@ -241,6 +241,31 @@
 </span></span><span style="display:flex;"><span>cat BSD_REPLACE.txt | grep them
 </span></span></code></pre></div></li>
 </ul>
+<h2 id="dns-troubleshooting">DNS TroubleShooting</h2>
+<ul>
+<li>the system admins team of xFusionCorp Industries has noticed intermittent issues with DNS resolution in several apps . App Server 3 in Stratos Datacenter is having some DNS resolution issues, so we want to add some additional DNS nameservers on this server.</li>
+<li>As a temporary fix we have decided to go with Google public DNS (ipv4). Please make appropriate changes on this server.</li>
+</ul>
+<h6 id="solution-7">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Connect to the app server 3</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#test dns with ping command</span>
+</span></span><span style="display:flex;"><span>ping www.google.com
+</span></span><span style="display:flex;"><span>ping 8.8.8.8
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#modify resolv.conf file</span>
+</span></span><span style="display:flex;"><span>vi /etc/resolv.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add the following lines</span>
+</span></span><span style="display:flex;"><span>nameserver 8.8.8.8
+</span></span><span style="display:flex;"><span>nameserver 8.8.4.4
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#save modification and test</span>
+</span></span><span style="display:flex;"><span>ping www.google.com
+</span></span><span style="display:flex;"><span>ping 8.8.8.8
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
