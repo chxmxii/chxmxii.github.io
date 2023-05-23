@@ -245,3 +245,28 @@ series:
   cat BSD_REPLACE.txt | grep them
   cat BSD_REPLACE.txt | grep them
   ``` 
+## DNS TroubleShooting
+
++ the system admins team of xFusionCorp Industries has noticed intermittent issues with DNS resolution in several apps . App Server 3 in Stratos Datacenter is having some DNS resolution issues, so we want to add some additional DNS nameservers on this server.
++ As a temporary fix we have decided to go with Google public DNS (ipv4). Please make appropriate changes on this server.
+
+###### Solution
+
++ 
+  ```Shell
+  #Connect to the app server 3
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  #switch to root user
+  sudo su -
+  #test dns with ping command
+  ping www.google.com
+  ping 8.8.8.8
+  #modify resolv.conf file
+  vi /etc/resolv.conf
+  #add the following lines
+  nameserver 8.8.8.8
+  nameserver 8.8.4.4
+  #save modification and test
+  ping www.google.com
+  ping 8.8.8.8
+  ```
