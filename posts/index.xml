@@ -241,6 +241,7 @@
 </span></span><span style="display:flex;"><span>cat BSD_REPLACE.txt | grep them
 </span></span></code></pre></div></li>
 </ul>
+<hr>
 <h2 id="dns-troubleshooting">DNS TroubleShooting</h2>
 <ul>
 <li>the system admins team of xFusionCorp Industries has noticed intermittent issues with DNS resolution in several apps . App Server 3 in Stratos Datacenter is having some DNS resolution issues, so we want to add some additional DNS nameservers on this server.</li>
@@ -267,6 +268,7 @@ ee</li>
 </span></span><span style="display:flex;"><span>ping 8.8.8.8
 </span></span></code></pre></div></li>
 </ul>
+<hr>
 <h2 id="selinux-installation">Selinux Installation</h2>
 <ul>
 <li>The xFusionCorp Industries security team recently did a security audit of their infrastructure and came up with ideas to improve the application and server security. They decided to use SElinux for an additional security layer. They are still planning how they will implement it; however, they have decided to start testing with app servers, so based on the recommendations they have the following requirements:</li>
