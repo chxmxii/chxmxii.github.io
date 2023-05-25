@@ -249,7 +249,7 @@ series:
 
 + the system admins team of xFusionCorp Industries has noticed intermittent issues with DNS resolution in several apps . App Server 3 in Stratos Datacenter is having some DNS resolution issues, so we want to add some additional DNS nameservers on this server.
 + As a temporary fix we have decided to go with Google public DNS (ipv4). Please make appropriate changes on this server.
-
+ee
 ###### Solution
 
 + 
@@ -269,4 +269,30 @@ series:
   #save modification and test
   ping www.google.com
   ping 8.8.8.8
+  ```
+## Selinux Installation	
+
++ The xFusionCorp Industries security team recently did a security audit of their infrastructure and came up with ideas to improve the application and server security. They decided to use SElinux for an additional security layer. They are still planning how they will implement it; however, they have decided to start testing with app servers, so based on the recommendations they have the following requirements:
++ Install the required packages of SElinux on App server 1 in Stratos Datacenter and disable it permanently for now; it will be enabled after making some required configuration changes on this host. Don't worry about rebooting the server as there is already a reboot scheduled for tonight's maintenance window. Also ignore the status of SElinux command line right now; the final status after reboot should be disabled.
+
+###### Solution
++ 
+  ```Shell 
+  #ssh to app server1
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  #switch to root user
+  sudo su -
+  #testing selinux
+  setatus
+  #installing selinux
+  yum whatprovides selinux
+  yum search selinux
+  #install all the packages
+  yum install policycoreutils policycoreutils-python selinux-policy selinux-policy-targeted libselinux-utils setroubleshoot-server setools setools-console mcstrans
+  #check selinux status
+  sestatus
+  #set selinux mode to disabled
+  vi /etc/selinux/config => Change the SELINUX=enforcing to SELINUX=disabled
+  #checking selinux status again
+  sestatus
   ```
