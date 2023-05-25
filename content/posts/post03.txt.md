@@ -245,6 +245,7 @@ series:
   cat BSD_REPLACE.txt | grep them
   cat BSD_REPLACE.txt | grep them
   ``` 
+---
 ## DNS TroubleShooting
 
 + the system admins team of xFusionCorp Industries has noticed intermittent issues with DNS resolution in several apps . App Server 3 in Stratos Datacenter is having some DNS resolution issues, so we want to add some additional DNS nameservers on this server.
@@ -270,6 +271,7 @@ ee
   ping www.google.com
   ping 8.8.8.8
   ```
+---
 ## Selinux Installation	
 
 + The xFusionCorp Industries security team recently did a security audit of their infrastructure and came up with ideas to improve the application and server security. They decided to use SElinux for an additional security layer. They are still planning how they will implement it; however, they have decided to start testing with app servers, so based on the recommendations they have the following requirements:
