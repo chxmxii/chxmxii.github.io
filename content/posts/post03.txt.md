@@ -298,3 +298,31 @@ ee
   #checking selinux status again
   sestatus
   ```
+---
+## Create Cron Jon
+
++ The Nautilus system admins team has prepared scripts to automate several day-to-day tasks. They want them to be deployed on all app servers in Stratos DC on a set schedule. Before that they need to test similar functionality with a sample cron job. Therefore, perform the steps below:
++ a. Install cronie package on all Nautilus app servers and start crond service.
++ b. Add a cron */5 * * * * echo hello > /tmp/cron_text for root user.
+  
+###### Solution:
+
++ 
+  ```Shell
+  #ssh to the app servers
+  sshpass -p <password> ssh -o StrictHostKeyChecking=no <user>@stapp0{1,2,3}
+  #switch to root user
+  sudo su -
+  #install cron service
+  yum whatprovides crontab
+  yum install cronie
+  #start and enable the service
+  systemctl start cronie
+  systemctl enable --now cronie
+  systemctl status cronie
+  #create a new cron job and copy the job given
+  crontab -e -u root #-u is for user and is not actually necessary here
+  #verify
+  crontab -l
+  cat /var/spool/cron/root
+  ```
