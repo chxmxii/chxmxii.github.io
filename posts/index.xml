@@ -296,6 +296,34 @@ ee</li>
 </span></span><span style="display:flex;"><span>sestatus
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="create-cron-jon">Create Cron Jon</h2>
+<ul>
+<li>The Nautilus system admins team has prepared scripts to automate several day-to-day tasks. They want them to be deployed on all app servers in Stratos DC on a set schedule. Before that they need to test similar functionality with a sample cron job. Therefore, perform the steps below:</li>
+<li>a. Install cronie package on all Nautilus app servers and start crond service.</li>
+<li>b. Add a cron */5 * * * * echo hello &gt; /tmp/cron_text for root user.</li>
+</ul>
+<h6 id="solution-9">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app servers</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@stapp0<span style="color:#f92672">{</span>1,2,3<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install cron service</span>
+</span></span><span style="display:flex;"><span>yum whatprovides crontab
+</span></span><span style="display:flex;"><span>yum install cronie
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start and enable the service</span>
+</span></span><span style="display:flex;"><span>systemctl start cronie
+</span></span><span style="display:flex;"><span>systemctl enable --now cronie
+</span></span><span style="display:flex;"><span>systemctl status cronie
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create a new cron job and copy the job given</span>
+</span></span><span style="display:flex;"><span>crontab -e -u root <span style="color:#75715e">#-u is for user and is not actually necessary here</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>crontab -l
+</span></span><span style="display:flex;"><span>cat /var/spool/cron/root
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
