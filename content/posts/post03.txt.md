@@ -1,7 +1,7 @@
 ---
 author:
   name: "chxmxii_"
-date: 2023-05-26 23:35 
+date: 2023-05-26
 tags:
   - DevOps
   - Sysadmin
@@ -320,8 +320,8 @@ ee
   systemctl start cronie
   systemctl enable --now cronie
   systemctl status cronie
-  #create a new cron job and copy the job given
-  crontab -e -u root #-u is for user and is not actually necessary here
+  #create a new cron job and copy the job given, the -u here arg is for user and is not actually necessary here
+  crontab -e -u root 
   #verify
   crontab -l
   cat /var/spool/cron/root
