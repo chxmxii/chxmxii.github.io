@@ -324,6 +324,24 @@ ee</li>
 </span></span><span style="display:flex;"><span>cat /var/spool/cron/root
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-remote-copy">Linux Remote Copy</h2>
+<ul>
+<li>One of the Nautilus developers has copied confidential data on the jump host in Stratos DC. That data must be copied to one of the app servers. Because developers do not have access to app servers, they asked the system admins team to accomplish the task for them.</li>
+<li>Copy /tmp/nautilus.txt.gpg file from jump server to App Server 1 at location /home/webapp.</li>
+</ul>
+<h6 id="solution-10">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#check for the file in jump hose</span>
+</span></span><span style="display:flex;"><span>ls /tmp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the file to the app server1</span>
+</span></span><span style="display:flex;"><span>sudo scp -r /tmp/nautilus.txt.gpg tony@stapp01:/home/webapp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>ls /home/webapp
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
