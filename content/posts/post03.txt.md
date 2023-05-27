@@ -326,3 +326,19 @@ ee
   crontab -l
   cat /var/spool/cron/root
   ```
+---
+## Linux Remote Copy
+
++ One of the Nautilus developers has copied confidential data on the jump host in Stratos DC. That data must be copied to one of the app servers. Because developers do not have access to app servers, they asked the system admins team to accomplish the task for them.
++ Copy /tmp/nautilus.txt.gpg file from jump server to App Server 1 at location /home/webapp.
+
+###### Solution:
++ ```Shell
+  #check for the file in jump hose
+  ls /tmp
+  #copy the file to the app server1
+  sudo scp -r /tmp/nautilus.txt.gpg tony@stapp01:/home/webapp
+  #verify
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  ls /home/webapp
+  ```
