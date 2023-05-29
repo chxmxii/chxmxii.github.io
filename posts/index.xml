@@ -342,6 +342,12 @@ ee</li>
 </span></span><span style="display:flex;"><span>ls /home/webapp
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-postfix-troubleshooting">Linux Postfix Troubleshooting</h2>
+<ul>
+<li>Some users of the monitoring app have reported issues with xFusionCorp Industries mail server. They have a mail server in Stork DC where they are using postfix mail transfer agent. Postfix service seems to fail. Try to identify the root cause and fix it.</li>
+</ul>
+<h6 id="solution-11">Solution:</h6>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
