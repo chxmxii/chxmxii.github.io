@@ -349,3 +349,22 @@ ee
 + Some users of the monitoring app have reported issues with xFusionCorp Industries mail server. They have a mail server in Stork DC where they are using postfix mail transfer agent. Postfix service seems to fail. Try to identify the root cause and fix it.
 
 ###### Solution:
++ ``` Shell
+  #connect to the mail server
+  sshpass -p Gr00T123 ssh -o StrictHostKeyChecking=no groot@stmail01
+  #switch to the root user
+  sudo su -
+  #start the postfix service
+  systemctl start postfix 
+  #notice the error we get, lets dig into it and understand the root problem
+  systemctl status postifx -l
+  journalctl -xe 
+  #According to the logs, the error in Postfix occurred because the "inet_interfaces" parameter was set to both "all" and "localhost," causing a conflict. This conflicting configuration resulted in a malfunction of the system.
+  #We can fix this by commenting "inet_interfaces=localhost" in /etc/postfix/main.cf
+  vi /etc/postfix/main.cf > add "#" to "inet_interfaces=localhost"
+  #start the service
+  systemctl start postfix
+  systemctl status postfix
+  #verify
+  telnet stmail01 25
+  ```
