@@ -12,9 +12,7 @@ weight: 10
 series:
 - Hugo 101
 ---
-![](/certslogo.png#center)
-
-### Some notes I took during my certifications journey:
+### These are some useful notes I gathered while pursuing my certifications 
 
 - [RHCE Exam Notes and tips](https://chxmxii.github.io/portfolio/rhce/main.html)
 
