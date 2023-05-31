@@ -368,3 +368,26 @@ ee
   #verify
   telnet stmail01 25
   ```
+---
+## Linux Services	
+
++ As per details shared by the development team, the new application release has some dependencies on the back end. There are some packages/services that need to be installed on all app servers under Stratos Datacenter. As per requirements please perform the following steps:
++ a. Install nscd package on all the application servers.
++ b. Once installed, make sure it is enabled to start during boot.
+
+###### Solution:
++ ```Shell
+  #ssh to the app servers one by one
+  sshpass -p <password> ssh -o StrictHostKeyChecking=no <name>@stapp0{1,2,3}
+  #switch to root user
+  sudo su -
+  #search for the nscd package
+  yum search nscd
+  #install the package
+  yum install nscd -y
+  #start and enbale the service
+  systemctl status nscd
+  systemctl enable --now nscd
+  #verify the service status
+  systemctl status nscd
+  ```
