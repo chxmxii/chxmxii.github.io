@@ -369,6 +369,31 @@ ee</li>
 </span></span><span style="display:flex;"><span>telnet stmail01 <span style="color:#ae81ff">25</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-services">Linux Services</h2>
+<ul>
+<li>As per details shared by the development team, the new application release has some dependencies on the back end. There are some packages/services that need to be installed on all app servers under Stratos Datacenter. As per requirements please perform the following steps:</li>
+<li>a. Install nscd package on all the application servers.</li>
+<li>b. Once installed, make sure it is enabled to start during boot.</li>
+</ul>
+<h6 id="solution-12">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app servers one by one</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;name&gt;@stapp0<span style="color:#f92672">{</span>1,2,3<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#search for the nscd package</span>
+</span></span><span style="display:flex;"><span>yum search nscd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install the package</span>
+</span></span><span style="display:flex;"><span>yum install nscd -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start and enbale the service</span>
+</span></span><span style="display:flex;"><span>systemctl status nscd
+</span></span><span style="display:flex;"><span>systemctl enable --now nscd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify the service status</span>
+</span></span><span style="display:flex;"><span>systemctl status nscd
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>Some notes I took during my certifications journey: RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<p><img src="/certslogo.png#center" alt=""></p>
