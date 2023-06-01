@@ -394,6 +394,12 @@ ee</li>
 </span></span><span style="display:flex;"><span>systemctl status nscd
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-user-expiry">Linux User Expiry</h2>
+<ul>
+<li>A developer kirsty has been assigned Nautilus project temporarily as a backup resource. As a temporary resource for this project, we need a temporary user for kirsty. It’s a good idea to create a user with a set expiration date so that the user won&rsquo;t be able to access servers beyond that point.</li>
+<li>Therefore, create a user named kirsty on the App Server 1. Set expiry date to 2021-02-17 in Stratos Datacenter. Make sure the user is created as per standard and is in lowercase.</li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
