@@ -400,6 +400,19 @@ ee</li>
 <li>A developer kirsty has been assigned Nautilus project temporarily as a backup resource. As a temporary resource for this project, we need a temporary user for kirsty. It’s a good idea to create a user with a set expiration date so that the user won&rsquo;t be able to access servers beyond that point.</li>
 <li>Therefore, create a user named kirsty on the App Server 1. Set expiry date to 2021-02-17 in Stratos Datacenter. Make sure the user is created as per standard and is in lowercase.</li>
 </ul>
+<h6 id="solution-13">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Connect to app server 1 </span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create new user with expiry date</span>
+</span></span><span style="display:flex;"><span>useradd -e 2021-02-17 kirsty
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>chage -l kirsty
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
