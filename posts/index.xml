@@ -413,6 +413,27 @@ ee</li>
 </span></span><span style="display:flex;"><span>chage -l kirsty
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="disable-root-login">Disable Root Login</h2>
+<ul>
+<li>After doing some security audits of servers, xFusionCorp Industries security team has implemented some new security policies. One of them is to disable direct root login through SSH.</li>
+<li>Disable direct SSH root login on all app servers in Stratos Datacenter.</li>
+</ul>
+<h6 id="solution-14">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app servers</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;host&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#edit the sshd_config file</span>
+</span></span><span style="display:flex;"><span>vi /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>add <span style="color:#e6db74">&#34;PermitRootLogin no&#34;</span> and save the file and quit
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart ssh daemon </span>
+</span></span><span style="display:flex;"><span>systemctl restart sshd
+</span></span><span style="display:flex;"><span>systemctl status sshd
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
