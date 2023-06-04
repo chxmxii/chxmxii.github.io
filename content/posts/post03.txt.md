@@ -425,3 +425,32 @@ ee
   systemctl restart sshd
   systemctl status sshd
   ```
+---
+## Linux Banner	
+
++ During the monthly compliance meeting, it was pointed out that several servers in the Stratos DC do not have a valid banner. The security team has provided serveral approved templates which should be applied to the servers to maintain compliance. These will be displayed to the user upon a successful login.
++ Update the message of the day on all application and db servers for Nautilus. Make use of the approved template located at /home/thor/nautilus_banner on jump host
+
+###### Solution
++ ```Shell
+  #scp is not installed in the db server, lets first install it first.
+  sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
+  #switch to the root user and install the required package
+  sudo su -
+  yum whatprovides scp
+  yum install openssh-clients -y
+  #now CTRL^D twice and go back to the jump host to copy the template.
+  scp nautilus_banner peter@stdb01:/tmp/motd
+  scp nautilus_banner tony@stapp01:/tmp/motd
+  scp nautilus_banner steve@stapp02:/tmp/motd
+  scp nautilus_banner banner@stapp03:/tmp/motd
+  #ssh again to the server
+  sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
+  #move the /tmp/motd file to /etc/motd
+  sudo mv /tmp/motd /etc/motd
+  #verify
+  cat /etc/motd
+  #CTRL^D twice and reconnect to the server via ssh to see the changes.
+  sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
+  #Redo the same process on all app servers.
+  ```
