@@ -81,6 +81,7 @@ $ ps ax
 1581771 ?        S      0:00 sleep 10
 1581772 pts/0    R+     0:00 ps ax
 ```
-Gottcha ya! - <\Flag-7e0cfcf090a2fe53c97ea3edd3883d0d/>
++ Gottcha ya! -> Flag-7e0cfcf090a2fe53c97ea3edd3883d0d
 ---
 ## SysAdmin Part 2
+ 
