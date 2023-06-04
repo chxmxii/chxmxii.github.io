@@ -278,6 +278,8 @@ progress {
 
 textarea {
   overflow: auto;
+  overflow-y:scroll;
+  overflow-y: visible   ;
 }
 
 /**
