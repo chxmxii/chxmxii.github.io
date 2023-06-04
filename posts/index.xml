@@ -434,6 +434,37 @@ ee</li>
 </span></span><span style="display:flex;"><span>systemctl status sshd
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-banner">Linux Banner</h2>
+<ul>
+<li>During the monthly compliance meeting, it was pointed out that several servers in the Stratos DC do not have a valid banner. The security team has provided serveral approved templates which should be applied to the servers to maintain compliance. These will be displayed to the user upon a successful login.</li>
+<li>Update the message of the day on all application and db servers for Nautilus. Make use of the approved template located at /home/thor/nautilus_banner on jump host</li>
+</ul>
+<h6 id="solution-15">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#scp is not installed in the db server, lets first install it first.</span>
+</span></span><span style="display:flex;"><span>sshpass -p Sp<span style="color:#ae81ff">\!</span>dy ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no peter@stdb01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user and install the required package</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span>yum whatprovides scp
+</span></span><span style="display:flex;"><span>yum install openssh-clients -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#now CTRL^D twice and go back to the jump host to copy the template.</span>
+</span></span><span style="display:flex;"><span>scp nautilus_banner peter@stdb01:/tmp/motd
+</span></span><span style="display:flex;"><span>scp nautilus_banner tony@stapp01:/tmp/motd
+</span></span><span style="display:flex;"><span>scp nautilus_banner steve@stapp02:/tmp/motd
+</span></span><span style="display:flex;"><span>scp nautilus_banner banner@stapp03:/tmp/motd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh again to the server</span>
+</span></span><span style="display:flex;"><span>sshpass -p Sp<span style="color:#ae81ff">\!</span>dy ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no peter@stdb01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#move the /tmp/motd file to /etc/motd</span>
+</span></span><span style="display:flex;"><span>sudo mv /tmp/motd /etc/motd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>cat /etc/motd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#CTRL^D twice and reconnect to the server via ssh to see the changes.</span>
+</span></span><span style="display:flex;"><span>sshpass -p Sp<span style="color:#ae81ff">\!</span>dy ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no peter@stdb01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Redo the same process on all app servers.</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
