@@ -664,6 +664,9 @@ Data exposure (application secrets) Cross Site Scripting Remote Code execution S
 </span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">406</span> ?        Ss    10:40 /lib/systemd/systemd-logind
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">1581771</span> ?        S      0:00 sleep <span style="color:#ae81ff">10</span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">1581772</span> pts/0    R+     0:00 ps ax
-</span></span></code></pre></div><h2 id="gottcha-ya---flag-7e0cfcf090a2fe53c97ea3edd3883d0d">Gottcha ya! - &lt;\Flag-7e0cfcf090a2fe53c97ea3edd3883d0d/&gt;</h2>
+</span></span></code></pre></div><ul>
+<li>Gottcha ya! -&gt; Flag-7e0cfcf090a2fe53c97ea3edd3883d0d</li>
+</ul>
+<hr>
 <h2 id="sysadmin-part-2">SysAdmin Part 2</h2>
 ]]></content></item></channel></rss>
