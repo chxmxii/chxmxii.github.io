@@ -454,3 +454,33 @@ ee
   sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
   #Redo the same process on all app servers.
   ```
+---
+## Web Server Security	
+
++ During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:
++ a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number. Ensure this server has the appropriate settings to hide the version number of the Apache web server.
++ b. There is a website hosted under /var/www/html/blog on App Server 1. It was detected that the directory /blog lists all of its contents while browsing the URL. Disable the directory browser listing in Apache config.
++ c. Also make sure to restart the Apache service after making the changes.
+
+###### Solution
++ ```Shell
+  #ssh to the app server 1
+  sshpass -p Ir0nM@n -o StrictHostKeyChecking=no tony@stapp01
+  #check the httpd status
+  sudo systemctl status httpd
+  #open the httpd.conf file with vi
+  sudo vi /etc/httpd/conf/httpd.conf
+  #a. to disable the version discolusre you can append the following two lines to the httpd.conf
+  .> ServerTokens Prod
+  .> ServerSignature Off
+  #b. to disable the directory browser listing, make sure to remove Indexes from options
+  Before > Options Indexes FollowSymLinks
+  After > Options FollowSymLinks
+  #save and quit
+  #c. restart the server and curl to verify
+  sudo systemctl start httpd && sudo systemctl status httpd
+  curl -I stapp01:8080/
+  #TIP: you can press "/" and write "Options" in vi to search for that line. press n to move to the next matched item.
+  #ref: https://www.tecmint.com/hide-apache-web-server-version-information/
+  #ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing
+  ```
