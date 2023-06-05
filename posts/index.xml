@@ -465,6 +465,38 @@ ee</li>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#Redo the same process on all app servers.</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="web-server-security">Web Server Security</h2>
+<ul>
+<li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li>
+<li>a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number. Ensure this server has the appropriate settings to hide the version number of the Apache web server.</li>
+<li>b. There is a website hosted under /var/www/html/blog on App Server 1. It was detected that the directory /blog lists all of its contents while browsing the URL. Disable the directory browser listing in Apache config.</li>
+<li>c. Also make sure to restart the Apache service after making the changes.</li>
+</ul>
+<h6 id="solution-16">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check the httpd status</span>
+</span></span><span style="display:flex;"><span>sudo systemctl status httpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#open the httpd.conf file with vi</span>
+</span></span><span style="display:flex;"><span>sudo vi /etc/httpd/conf/httpd.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#a. to disable the version discolusre you can append the following two lines to the httpd.conf</span>
+</span></span><span style="display:flex;"><span>.&gt; ServerTokens Prod
+</span></span><span style="display:flex;"><span>.&gt; ServerSignature Off
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#b. to disable the directory browser listing, make sure to remove Indexes from options</span>
+</span></span><span style="display:flex;"><span>Before &gt; Options Indexes FollowSymLinks
+</span></span><span style="display:flex;"><span>After &gt; Options FollowSymLinks
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#save and quit</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#c. restart the server and curl to verify</span>
+</span></span><span style="display:flex;"><span>sudo systemctl start httpd <span style="color:#f92672">&amp;&amp;</span> sudo systemctl status httpd
+</span></span><span style="display:flex;"><span>curl -I stapp01:8080/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#TIP: you can press &#34;/&#34; and write &#34;Options&#34; in vi to search for that line. press n to move to the next matched item.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://www.tecmint.com/hide-apache-web-server-version-information/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
