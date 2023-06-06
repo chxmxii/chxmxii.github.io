@@ -277,13 +277,13 @@ ee</li></ul><h6 id=solution-7>Solution</h6><ul><li><div class=highlight><pre tab
 </span></span><span style=display:flex><span><span style=color:#75715e>#Switch to the root user</span>
 </span></span><span style=display:flex><span>sudo su -
 </span></span><span style=display:flex><span><span style=color:#75715e>#there is actually 2 ways to create yum repos, either you do it manually or you can do it with &#34;yum-config-manager --add-repo=&lt;url&gt;&#34;</span>
-</span></span><span style=display:flex><span>cat <span style=color:#e6db74>&lt;&lt; EOF &gt; /etc/yum_repos.d/epel_local.repo
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>[epel_local]
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>name=epel_local
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>baseurl=file:///packages/downloaded_rpms/
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>enabled=1
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>gpgcheck=0
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>cat <span style=color:#ae81ff>\&lt;</span>&lt; EOF &gt; /etc/yum_repos.d/epel_local.repo
+</span></span><span style=display:flex><span><span style=color:#f92672>[</span>epel_local<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>name<span style=color:#f92672>=</span>epel_local
+</span></span><span style=display:flex><span>baseurl<span style=color:#f92672>=</span>file:///packages/downloaded_rpms/
+</span></span><span style=display:flex><span>enabled<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>gpgcheck<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>EOF
 </span></span><span style=display:flex><span><span style=color:#75715e>#clean and list the repos</span>
 </span></span><span style=display:flex><span>yum clean all
 </span></span><span style=display:flex><span>yum repo list
