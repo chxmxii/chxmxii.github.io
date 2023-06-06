@@ -484,3 +484,31 @@ ee
   #ref: https://www.tecmint.com/hide-apache-web-server-version-information/
   #ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing
   ```
+---
+## Configure Local Yum repos	
+
++ The Nautilus production support team and security team had a meeting last month in which they decided to use local yum repositories for maintaing packages needed for their servers. For now they have decided to configure a local yum repo on Nautilus Backup Server. This is one of the pending items from last month, so please configure a local yum repository on Nautilus Backup Server as per details given below.
++ a. We have some packages already present at location /packages/downloaded_rpms/ on Nautilus Backup Server.
++ b. Create a yum repo named epel_local and make sure to set Repository ID to epel_local. Configure it to use package's location /packages/downloaded_rpms/.
++ c. Install package vim-enhanced from this newly created repo.
+  
+###### Solution:
++ ```Shell 
+  #Connect to the backup server
+  sshpass -p H@wk3y3	ssh -o StrictHostKeyChecking=no clint@stbkp01
+  #Switch to the root user
+  sudo su -
+  #there is actually 2 ways to create yum repos, either you do it manually or you can do it with "yum-config-manager --add-repo=<url>"
+  cat << EOF > /etc/yum_repos.d/epel_local.repo
+  [epel_local]
+  name=epel_local
+  baseurl=file:///packages/downloaded_rpms/
+  enabled=1
+  gpgcheck=0
+  EOF
+  #clean and list the repos
+  yum clean all
+  yum repo list
+  #install the vim-enhanced
+  yum install vim-enhanced -y
+  ```
