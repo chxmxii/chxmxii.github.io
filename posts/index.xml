@@ -497,6 +497,36 @@ ee</li>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="configure-local-yum-repos">Configure Local Yum repos</h2>
+<ul>
+<li>The Nautilus production support team and security team had a meeting last month in which they decided to use local yum repositories for maintaing packages needed for their servers. For now they have decided to configure a local yum repo on Nautilus Backup Server. This is one of the pending items from last month, so please configure a local yum repository on Nautilus Backup Server as per details given below.</li>
+<li>a. We have some packages already present at location /packages/downloaded_rpms/ on Nautilus Backup Server.</li>
+<li>b. Create a yum repo named epel_local and make sure to set Repository ID to epel_local. Configure it to use package&rsquo;s location /packages/downloaded_rpms/.</li>
+<li>c. Install package vim-enhanced from this newly created repo.</li>
+</ul>
+<h6 id="solution-17">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Connect to the backup server</span>
+</span></span><span style="display:flex;"><span>sshpass -p H@wk3y3	ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no clint@stbkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#there is actually 2 ways to create yum repos, either you do it manually or you can do it with &#34;yum-config-manager --add-repo=&lt;url&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt; EOF &gt; /etc/yum_repos.d/epel_local.repo
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[epel_local]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">name=epel_local
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">baseurl=file:///packages/downloaded_rpms/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">enabled=1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">gpgcheck=0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#clean and list the repos</span>
+</span></span><span style="display:flex;"><span>yum clean all
+</span></span><span style="display:flex;"><span>yum repo list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install the vim-enhanced</span>
+</span></span><span style="display:flex;"><span>yum install vim-enhanced -y
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
