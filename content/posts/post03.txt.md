@@ -499,7 +499,7 @@ ee
   #Switch to the root user
   sudo su -
   #there is actually 2 ways to create yum repos, either you do it manually or you can do it with "yum-config-manager --add-repo=<url>"
-  cat \<< EOF > /etc/yum_repos.d/epel_local.repo
+  cat <<\ EOF > /etc/yum_repos.d/epel_local.repo
   [epel_local]
   name=epel_local
   baseurl=file:///packages/downloaded_rpms/
