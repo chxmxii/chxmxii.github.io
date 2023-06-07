@@ -277,7 +277,7 @@ ee</li></ul><h6 id=solution-7>Solution</h6><ul><li><div class=highlight><pre tab
 </span></span><span style=display:flex><span><span style=color:#75715e>#Switch to the root user</span>
 </span></span><span style=display:flex><span>sudo su -
 </span></span><span style=display:flex><span><span style=color:#75715e>#there is actually 2 ways to create yum repos, either you do it manually or you can do it with &#34;yum-config-manager --add-repo=&lt;url&gt;&#34;</span>
-</span></span><span style=display:flex><span>cat <span style=color:#ae81ff>\&lt;</span>&lt; EOF &gt; /etc/yum_repos.d/epel_local.repo
+</span></span><span style=display:flex><span>cat &lt;&lt;<span style=color:#ae81ff>\ </span>EOF &gt; /etc/yum_repos.d/epel_local.repo
 </span></span><span style=display:flex><span><span style=color:#f92672>[</span>epel_local<span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>name<span style=color:#f92672>=</span>epel_local
 </span></span><span style=display:flex><span>baseurl<span style=color:#f92672>=</span>file:///packages/downloaded_rpms/
