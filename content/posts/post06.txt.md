@@ -23,7 +23,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 ![](/chall1.png#center)
 #### Solution :
 
-###### Controlplane
+##### Controlplane
 + We will start by installing terraform in the controlplane node
 + ```Shell
   apt update
@@ -35,7 +35,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
   cd /root/terraform_challenge
   ```
 ---
-###### Kubernetes-provider 
+##### Kubernetes-provider 
 + for the kubernets provider we will configure it within provider.tf file.
 + You can refer to the documentation for this provider, simply go to [Terraform Registry](https://registry.terraform.io/) and search for hashicorp/kubernetes.
 + Click on USE PROVIDER button and copy the snippet into provider.tf
@@ -57,7 +57,7 @@ Now, we can initialize the provider
   Terraform init
   ```
 ---
-###### frontend
+##### frontend
 + Create a terraform resource frontend for kubernetes deployement, you can refere to the documentation for [Kubernetes_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/deployment).
 + If you are familiar with kubernetes, you can see that the resource shema is arranged similarly to the corresponding YAML manifest.
 + ```Terraform
@@ -95,7 +95,7 @@ Now, we can initialize the provider
   }
   ```
 ---
-###### webapp-service
+##### webapp-service
 + Create terraform resouce webapp-service for kubernetes service, you can always refere to the provider documentation for [kubernetes_service](https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/service).
 + ```Terraform
     resource "kubernetes_service" "webapp-service" {
