@@ -54,7 +54,7 @@ provider "kubernetes" {
 }```
 Now, we can initialize the provider
 + ```Shell
-  Terraform iit
+  Terraform init
   ```
 ---
 ###### frontend
