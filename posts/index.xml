@@ -808,7 +808,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 <h4 id="architecture-">Architecture :</h4>
 <p><img src="/chall1.png#center" alt=""></p>
 <h4 id="solution-">Solution :</h4>
-<h6 id="controlplane">Controlplane</h6>
+<h5 id="controlplane">Controlplane</h5>
 <ul>
 <li>We will start by installing terraform in the controlplane node</li>
 <li>
@@ -822,7 +822,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-<h6 id="kubernetes-provider">Kubernetes-provider</h6>
+<h5 id="kubernetes-provider">Kubernetes-provider</h5>
 <ul>
 <li>for the kubernets provider we will configure it within provider.tf file.</li>
 <li>You can refer to the documentation for this provider, simply go to <a href="https://registry.terraform.io/">Terraform Registry</a> and search for hashicorp/kubernetes.</li>
@@ -848,7 +848,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-<h6 id="frontend">frontend</h6>
+<h5 id="frontend">frontend</h5>
 <ul>
 <li>Create a terraform resource frontend for kubernetes deployement, you can refere to the documentation for <a href="https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/deployment">Kubernetes_deployment</a>.</li>
 <li>If you are familiar with kubernetes, you can see that the resource shema is arranged similarly to the corresponding YAML manifest.</li>
@@ -888,7 +888,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-<h6 id="webapp-service">webapp-service</h6>
+<h5 id="webapp-service">webapp-service</h5>
 <ul>
 <li>Create terraform resouce webapp-service for kubernetes service, you can always refere to the provider documentation for <a href="https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/service">kubernetes_service</a>.</li>
 <li>
