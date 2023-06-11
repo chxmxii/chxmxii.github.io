@@ -801,11 +801,30 @@ AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="t
 <li>AWS Code Deploy</li>
 <li>Azure Pipelines - Deployment.</li>
 </ol>
-]]></content></item><item><title>Terraform Challenge Series - Challenge 1</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</link><pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</guid><description>In this challenge we will deploy several Kubernetes resources using terraform. Utilize /root/terraform_challenge directory to store your Terraform configuration files.
-Architecture :</description><content type="html"><![CDATA[<p>In this challenge we will deploy several Kubernetes resources using terraform.
-Utilize /root/terraform_challenge directory to store your Terraform configuration files.</p>
+]]></content></item><item><title>Terraform Challenge Series - Challenge 1</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</link><pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</guid><description>In this challenge we will deploy several Kubernetes resources using terraform. Utilize /root/terraform_challenge directory to store your Terraform configuration files. Note: kubectl is already installed on the host, you can check your deployments in the usual way.
+Architecture : Solution : Controlplane We will start by installing terraform in the controlplane node apt update apt install unzip -y curl -L -o /tmp/terraform_1.1.5_linux_amd64.zip https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip which terraform terrafomr --version Kubernetes-provider for the kubernets provider we will configure it within provider.</description><content type="html"><![CDATA[<p>In this challenge we will deploy several Kubernetes resources using terraform.
+Utilize /root/terraform_challenge directory to store your Terraform configuration files.
+Note: kubectl is already installed on the host, you can check your deployments in the usual way.</p>
 <h4 id="architecture-">Architecture :</h4>
 <p><img src="/chall1.png#center" alt=""></p>
+<h4 id="solution-">Solution :</h4>
+<h6 id="controlplane">Controlplane</h6>
+<ul>
+<li>We will start by installing terraform in the controlplane node</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>apt update
+</span></span><span style="display:flex;"><span>apt install unzip -y
+</span></span><span style="display:flex;"><span>curl -L -o /tmp/terraform_1.1.5_linux_amd64.zip https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip
+</span></span><span style="display:flex;"><span>unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip
+</span></span><span style="display:flex;"><span>which terraform
+</span></span><span style="display:flex;"><span>terrafomr --version
+</span></span></code></pre></div></li>
+</ul>
+<h6 id="kubernetes-provider">Kubernetes-provider</h6>
+<ul>
+<li>for the kubernets provider we will configure it within provider.tf file.</li>
+<li>You can refer to the documentation for this provider, simply go to <a href="https://registry.terraform.io/">Terraform Registry</a> and search for hashicorp/kubernetes.</li>
+</ul>
 ]]></content></item><item><title>Deploying NGINX web server with kubernetes</title><link>https://chxmxii.github.io/portfolio/posts/2022/09/deploying-nginx-web-server-with-kubernetes/</link><pubDate>Sat, 10 Sep 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/09/deploying-nginx-web-server-with-kubernetes/</guid><description>Hello, We already know that with Kubernetes you can easily deploy and manage NGINX across a cluster of nodes, ensuring high availability and efficient resource utilization. In this article, we&amp;rsquo;ll discuss the steps involved in deploying NGINX with Kubernetes and how it can benefit your web hosting infrastructure.
 1 - Create nginx-deployement.yaml file :
 apiVersion : apps/v1 kind: Deployment metadata: name: nginx labels: app: nginx spec: replicas: 1 selector: matchlabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx ports: - containerPort: 80 2 - Create the deployment : kubectl create -f dep.</description><content type="html"><![CDATA[<p>Hello, We already know that with Kubernetes you can easily deploy and manage NGINX across a cluster of nodes, ensuring high availability and efficient resource utilization. In this article, we&rsquo;ll discuss the steps involved in deploying NGINX with Kubernetes and how it can benefit your web hosting infrastructure.</p>
