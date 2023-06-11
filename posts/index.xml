@@ -802,7 +802,7 @@ AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="t
 <li>Azure Pipelines - Deployment.</li>
 </ol>
 ]]></content></item><item><title>Terraform Challenge Series - Challenge 1</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</link><pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</guid><description>In this challenge we will deploy several Kubernetes resources using terraform. Utilize /root/terraform_challenge directory to store your Terraform configuration files. Note: kubectl is already installed on the host, you can check your deployments in the usual way.
-Architecture : Solution : Controlplane We will start by installing terraform in the controlplane node apt update apt install unzip -y curl -L -o /tmp/terraform_1.1.5_linux_amd64.zip https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip which terraform terrafomr --version Kubernetes-provider for the kubernets provider we will configure it within provider.</description><content type="html"><![CDATA[<p>In this challenge we will deploy several Kubernetes resources using terraform.
+Architecture : Solution : Controlplane We will start by installing terraform in the controlplane node apt update apt install unzip -y curl -L -o /tmp/terraform_1.1.5_linux_amd64.zip https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip which terraform terrafomr --version cd /root/terraform_challenge Kubernetes-provider for the kubernets provider we will configure it within provider.</description><content type="html"><![CDATA[<p>In this challenge we will deploy several Kubernetes resources using terraform.
 Utilize /root/terraform_challenge directory to store your Terraform configuration files.
 Note: kubectl is already installed on the host, you can check your deployments in the usual way.</p>
 <h4 id="architecture-">Architecture :</h4>
@@ -818,12 +818,106 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span><span style="display:flex;"><span>unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip
 </span></span><span style="display:flex;"><span>which terraform
 </span></span><span style="display:flex;"><span>terrafomr --version
+</span></span><span style="display:flex;"><span>cd /root/terraform_challenge
 </span></span></code></pre></div></li>
 </ul>
+<hr>
 <h6 id="kubernetes-provider">Kubernetes-provider</h6>
 <ul>
 <li>for the kubernets provider we will configure it within provider.tf file.</li>
 <li>You can refer to the documentation for this provider, simply go to <a href="https://registry.terraform.io/">Terraform Registry</a> and search for hashicorp/kubernetes.</li>
+<li>Click on USE PROVIDER button and copy the snippet into provider.tf</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Terraform" data-lang="Terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">kubernetes</span> = {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;hashicorp/kubernetes&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">version</span> = <span style="color:#e6db74">&#34;2.11.0&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<p>}</p>
+<p>provider &ldquo;kubernetes&rdquo; {
+config_path    = &ldquo;/root/.kube/config&rdquo;
+}```
+Now, we can initialize the provider</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>Terraform iit
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h6 id="frontend">frontend</h6>
+<ul>
+<li>Create a terraform resource frontend for kubernetes deployement, you can refere to the documentation for <a href="https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/deployment">Kubernetes_deployment</a>.</li>
+<li>If you are familiar with kubernetes, you can see that the resource shema is arranged similarly to the corresponding YAML manifest.</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Terraform" data-lang="Terraform"><span style="display:flex;"><span><span style="color:#66d9ef">  resource</span> <span style="color:#e6db74">&#34;kubernetes_deployment&#34;</span> <span style="color:#e6db74">&#34;frontend&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">metadata</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;frontend&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">labels</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;frontend&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">spec</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">replicas</span> = <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">selector</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">match_labels</span> = {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;webapp&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">template</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">metadata</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">labels</span> = {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;webapp&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">spec</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">container</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">image</span> = <span style="color:#e6db74">&#34;kodekloud/webapp-color:v1&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">name</span>  = <span style="color:#e6db74">&#34;simple-webapp&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">port</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">container_port</span> = <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h6 id="webapp-service">webapp-service</h6>
+<ul>
+<li>Create terraform resouce webapp-service for kubernetes service, you can always refere to the provider documentation for <a href="https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/service">kubernetes_service</a>.</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Terraform" data-lang="Terraform"><span style="display:flex;"><span><span style="color:#66d9ef">  resource</span> <span style="color:#e6db74">&#34;kubernetes_service&#34;</span> <span style="color:#e6db74">&#34;webapp-service&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">metadata</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;webapp-service&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">spec</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">selector</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">name</span> = <span style="color:#a6e22e">kubernetes_deployment</span>.<span style="color:#a6e22e">frontend</span>.<span style="color:#a6e22e">spec</span>.<span style="color:#ae81ff">0</span>.<span style="color:#a6e22e">template</span>.<span style="color:#ae81ff">0</span>.<span style="color:#a6e22e">metadata</span>.<span style="color:#ae81ff">0</span>.<span style="color:#a6e22e">labels</span>.<span style="color:#a6e22e">name</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">port</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">port</span>        = <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">target_port</span> = <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">node_port</span>   = <span style="color:#ae81ff">30080</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">type</span> = <span style="color:#e6db74">&#34;NodePort&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h6 id="deploy-the-kubernetes-resources">Deploy the kubernetes resources</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>terraform plan
+</span></span><span style="display:flex;"><span>terraform apply
+</span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>Deploying NGINX web server with kubernetes</title><link>https://chxmxii.github.io/portfolio/posts/2022/09/deploying-nginx-web-server-with-kubernetes/</link><pubDate>Sat, 10 Sep 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/09/deploying-nginx-web-server-with-kubernetes/</guid><description>Hello, We already know that with Kubernetes you can easily deploy and manage NGINX across a cluster of nodes, ensuring high availability and efficient resource utilization. In this article, we&amp;rsquo;ll discuss the steps involved in deploying NGINX with Kubernetes and how it can benefit your web hosting infrastructure.
 1 - Create nginx-deployement.yaml file :
