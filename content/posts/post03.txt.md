@@ -635,6 +635,34 @@ ee
   curl -k https://172.16.238.10
   ```
   ---
+## Application Security
+
++ We have a backup management application UI hosted on Nautilus backup server in Stratos DC. That backup management application code is deployed under Apache on the backup server itself, and Nginx is running as a reverse proxy on the same server. Apache and Nginx ports are 6100 and 8093, respectively. We have iptables firewall installed on this server. Make the appropriate changes to fulfill the requirements mentioned below:
++ a. We want to open all incoming connections to Nginx's port and block all incoming connections to Apache's port. Also make sure rules are permanent.
+
+###### Solution:
++ ```Shell
+  #ssh to the backup server
+  sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking=no clint@stbkp01
+  #switch to root user
+  sudo su -
+  #verify the ports of nginx and apache
+  ss -lntp | grep nginx
+  ss -lntp | grep http
+  #configure the firewall to match the desired behavior
+  iptables -A INPUT -p tcp --dport 8093 -m conntrack --cstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A INPUT -p tcp --dport 6100 -m conntrack --cstate NEW -j REJECT
+  #save the rules to remain permanent
+  sudo iptables-save > /etc/sysconfig/iptables
+  service iptables save
+  #veriffy
+  cat /etc/sysconfig/iptables
+  iptables -L -n -v
+  #verify from jump host
+  telnet stkbp01 8093
+  telnet stkbp01 6100
+  ```
+---
   ## Bash Script 
 
 + The production support team of xFusionCorp Industries is working on developing some bash scripts to automate different day to day tasks. One is to create a bash script for taking websites backup. They have a static website running on App Server 1 in Stratos Datacenter, and they need to create a bash script named official_backup.sh which should accomplish the following tasks. (Also remember to place the script under /scripts directory on App Server 1)
@@ -654,11 +682,12 @@ ee
   After opening the officila_backup.sh file, copy the following script, save and quit.
 + ```Shell
   #!/bin/bash
-  #make an archieve for the official folder under /var/www/html/ "-r for recurisve" 
+  #make an archive for the official folder under /var/www/html/ "-r for recurisve" 
   zip -r /backup/xfusioncorp_official.zip /var/www/html/official
-  #copy the archieve file to the backup server
+  #copy the archive file to the backup server
   scp /backup/xfusioncorp_official.zip clint@stbkp01:/backup/
   ```
+  now, to make sure the script won't ask for password while copying the archive file, lets generate a ssh key
 + ```shell
   #generate an ssh key
   ssh-keygen
