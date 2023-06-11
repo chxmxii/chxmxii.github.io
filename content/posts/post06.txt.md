@@ -45,13 +45,13 @@ Note: kubectl is already installed on the host, you can check your deployments i
     kubernetes = {
       source = "hashicorp/kubernetes"
       version = "2.11.0"
+      }
     }
   }
-}
-
-provider "kubernetes" {
-  config_path    = "/root/.kube/config"
-}```
+  provider "kubernetes" {
+    config_path    = "/root/.kube/config"
+  }
+  ```
 Now, we can initialize the provider
 + ```Shell
   Terraform init
