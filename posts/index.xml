@@ -551,7 +551,8 @@ ee</li>
 </span></span><span style="display:flex;"><span>yum install nginx
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the self-signed cert</span>
 </span></span><span style="display:flex;"><span>cp /tmp/nautilus.crt /etc/pki/CA/certs/ <span style="color:#f92672">&amp;&amp;</span> cp /tmp/nautilus.key /etc/pki/CA/private/
-</span></span></code></pre></div>edit the /etc/nginx/nginx.conf to look like this</li>
+</span></span></code></pre></div><p>edit the /etc/nginx/nginx.conf to look like this</p>
+</li>
 <li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#For more information on configuration, see:</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#* Official English Documentation: http://nginx.org/en/docs/</span>
@@ -632,7 +633,8 @@ ee</li>
 </span></span><span style="display:flex;"><span>            location <span style="color:#f92672">=</span> /50x.html <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span></code></pre></div>Now lets add index.html file and start the nginx service</li>
+</span></span></code></pre></div><p>Now lets add index.html file and start the nginx service</p>
+</li>
 <li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Now, you will have to remove the index.html under the nginx root because is linked to another file.</span>
 </span></span><span style="display:flex;"><span>rm -rf /usr/share/nginx/html/index.html
@@ -646,6 +648,55 @@ ee</li>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#going back to the jump host lets curl</span>
 </span></span><span style="display:flex;"><span>curl -Ik https://172.16.238.10	
 </span></span><span style="display:flex;"><span>curl -k https://172.16.238.10
+</span></span></code></pre></div><hr>
+<h2 id="bash-script">Bash Script</h2>
+</li>
+<li>
+<p>The production support team of xFusionCorp Industries is working on developing some bash scripts to automate different day to day tasks. One is to create a bash script for taking websites backup. They have a static website running on App Server 1 in Stratos Datacenter, and they need to create a bash script named official_backup.sh which should accomplish the following tasks. (Also remember to place the script under /scripts directory on App Server 1)</p>
+</li>
+<li>
+<p>a. Create a zip archive named xfusioncorp_official.zip of /var/www/html/official directory.</p>
+</li>
+<li>
+<p>b. Save the archive in /backup/ on App Server 1. This is a temporary storage, as backups from this location will be clean on weekly basis. Therefore, we also need to save this backup archive on Nautilus Backup Server.</p>
+</li>
+<li>
+<p>c. Copy the created archive to Nautilus Backup Server server in /backup/ location.</p>
+</li>
+<li>
+<p>d. Please make sure script won&rsquo;t ask for password while copying the archive file. Additionally, the respective server user (for example, tony in case of App Server 1) must be able to run it.</p>
+</li>
+</ul>
+<h6 id="solution-19">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#cd to /scripts folder and create a official_backup.sh file</span>
+</span></span><span style="display:flex;"><span>cd /scripts
+</span></span><span style="display:flex;"><span>vi official_backup.sh
+</span></span></code></pre></div>After opening the officila_backup.sh file, copy the following script, save and quit.</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#make an archieve for the official folder under /var/www/html/ &#34;-r for recurisve&#34; </span>
+</span></span><span style="display:flex;"><span>zip -r /backup/xfusioncorp_official.zip /var/www/html/official
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the archieve file to the backup server</span>
+</span></span><span style="display:flex;"><span>scp /backup/xfusioncorp_official.zip clint@stbkp01:/backup/
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#generate an ssh key</span>
+</span></span><span style="display:flex;"><span>ssh-keygen
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the generated key to the backup server</span>
+</span></span><span style="display:flex;"><span>ssh-copy-id clint@stbkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to verify</span>
+</span></span><span style="display:flex;"><span>ssh clint@stkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add exec perm to the official_backup.sh file</span>
+</span></span><span style="display:flex;"><span>chmod +x official_backup.sh
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the script</span>
+</span></span><span style="display:flex;"><span>./official_backup
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to backserver and verify</span>
+</span></span><span style="display:flex;"><span>ssh clint@stkp01
+</span></span><span style="display:flex;"><span>ls /backup/
 </span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
