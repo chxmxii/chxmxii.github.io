@@ -719,6 +719,28 @@ ee</li>
 </span></span><span style="display:flex;"><span>ls /backup/
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-configure-sudo">Linux Configure sudo</h2>
+<ul>
+<li>We have some users on all app servers in Stratos Datacenter. Some of them have been assigned some new roles and responsibilities, therefore their users need to be upgraded with sudo access so that they can perform admin level tasks.</li>
+<li>a. Provide sudo access to user james on all app servers.</li>
+<li>b. Make sure you have set up password-less sudo for the user.</li>
+</ul>
+<h6 id="solution--2">Solution :</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to all app servers one by one</span>
+</span></span><span style="display:flex;"><span>ssh -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;name&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Provide sudo access to user james</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;james ALL=(ALL) NOPASSWD:ALL&#34;</span> &gt; /etc/sudoer.d/james
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>su james
+</span></span><span style="display:flex;"><span>sudo id
+</span></span><span style="display:flex;"><span>sudo su
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
