@@ -741,6 +741,15 @@ ee</li>
 </span></span><span style="display:flex;"><span>sudo su
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="apache-redirects">Apache Redirects</h2>
+<ul>
+<li>The Nautilus devops team got some requirements related to some Apache config changes. They need to setup some redirects for some URLs. There might be some more changes need to be done. Below you can find more details regarding that:</li>
+<li>httpd is already installed on app server 3. Configure Apache to listen on port 5003.</li>
+<li>Configure Apache to add some redirects as mentioned below:
+a.) Redirect <a href="http://stapp03.stratos.xfusioncorp.com">http://stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/ to <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/ i.e non www to www. This must be a permanent redirect i.e 301
+b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/blog/ to <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/news/. This must be a temporary redirect i.e 302.</li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
