@@ -735,5 +735,35 @@ ee
 ###### Solution :
 + ```Shell
   #ssh to app server 3
-  sshpass -p 
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  #Switch to the root user
+  sudo su -
+  #verify httpd is alr installed
+  rpm -qa | grep httpd
+  #Configure apache to listen on port 5003
+  vi /etc/httpd/conf/httpd.conf
+  Look for the line that starts with Listen and change it to > Listen 5003
+  ```
+  Configure redirection
++ ```Shell
+  vi /etc/httpd/conf.d/main.conf
+  #copy the following lines
+  <VirtualHost *:5003>
+  ServerName http://stapp03.stratos.xfusioncorp.com:5003/
+  Redirect 301 /  http://www.stapp03.stratos.xfusioncorp.com:5003/
+  </VirtualHost>
+
+  <VirtualHost *:5003>
+  ServerName http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
+  Redirect 302 / http://www.stapp03.stratos.xfusioncorp.com:5003/news/
+  </VirtualHost>
+  ```
++ ```Shell
+  #Restart htttpd
+  systemctl restartd httpd
+  #Verify 
+  curl http://stapp03.stratos.xfusioncorp.com:5003/
+  curl http://www.stapp03.stratos.xfusioncorp.com:5003/
+  curl http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
+  curl http://www.stapp03.stratos.xfusioncorp.com:5003/news
   ```
