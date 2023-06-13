@@ -731,3 +731,9 @@ ee
 + Configure Apache to add some redirects as mentioned below:
   a.) Redirect http://stapp03.stratos.xfusioncorp.com:<Port>/ to http://www.stapp03.stratos.xfusioncorp.com:<Port>/ i.e non www to www. This must be a permanent redirect i.e 301
   b.) Redirect http://www.stapp03.stratos.xfusioncorp.com:<Port>/blog/ to http://www.stapp03.stratos.xfusioncorp.com:<Port>/news/. This must be a temporary redirect i.e 302.
+
+###### Solution :
++ ```Shell
+  #ssh to app server 3
+  sshpass -p 
+  ```
