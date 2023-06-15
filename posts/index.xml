@@ -786,6 +786,43 @@ b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.sta
 </span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/news
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-gpg-encryption">Linux GPG Encryption</h2>
+<ul>
+<li>We have confidential data that needs to be transferred to a remote location, so we need to encrypt that data.We also need to decrypt data we received from a remote location in order to understand its content.</li>
+<li>On storage server in Stratos Datacenter we have private and public keys stored /home/*_key.asc. Use those keys to perform the following actions.</li>
+<li>Encrypt /home/encrypt_me.txt to /home/encrypted_me.asc.</li>
+<li>Decrypt /home/decrypt_me.asc to /home/decrypted_me.txt. (Passphrase for decryption and encryption is kodekloud).</li>
+</ul>
+<h6 id="solution-21">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the storage server</span>
+</span></span><span style="display:flex;"><span>sshpass -p Bl@ckW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#swith to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check for the keys</span>
+</span></span><span style="display:flex;"><span>ls /home/
+</span></span><span style="display:flex;"><span>cat /home/encrypt_me.txt
+</span></span><span style="display:flex;"><span>cat /home/decrypt_me
+</span></span><span style="display:flex;"><span>cd /home
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Import the keys </span>
+</span></span><span style="display:flex;"><span>gpg --import public_key.asc
+</span></span><span style="display:flex;"><span>gpg --import private_key.asc
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>gpg --list-keys
+</span></span><span style="display:flex;"><span>gpg --list-secret-keys
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#encryp the encrypt_me.txt file</span>
+</span></span><span style="display:flex;"><span>gpg --encrypt -r kodekloud@kodekloud.com --armor &lt; encrypt_me.txt -o encrypted_me.asc
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#decrypt the message, you will be prompted with a passphrase which is &#34;kodekloud&#34;</span>
+</span></span><span style="display:flex;"><span>gpg --decrypt decrypt_me.asc &gt; decrypted_me.txt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#validate</span>
+</span></span><span style="display:flex;"><span>cat decrypted_me.txt
+</span></span><span style="display:flex;"><span>cat decrypt_me.asc
+</span></span><span style="display:flex;"><span>cat encrypt_me.txt
+</span></span><span style="display:flex;"><span>cat encrpyed_me.asc
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
