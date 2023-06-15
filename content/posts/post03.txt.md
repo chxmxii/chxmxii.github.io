@@ -767,3 +767,39 @@ ee
   curl http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
   curl http://www.stapp03.stratos.xfusioncorp.com:5003/news
   ```
+---
+## Linux GPG Encryption	
+
++ We have confidential data that needs to be transferred to a remote location, so we need to encrypt that data.We also need to decrypt data we received from a remote location in order to understand its content.
++ On storage server in Stratos Datacenter we have private and public keys stored /home/*_key.asc. Use those keys to perform the following actions.
++ Encrypt /home/encrypt_me.txt to /home/encrypted_me.asc.
++ Decrypt /home/decrypt_me.asc to /home/decrypted_me.txt. (Passphrase for decryption and encryption is kodekloud).
+
+###### Solution
+
++ ```Shell
+  #ssh to the storage server
+  sshpass -p Bl@ckW ssh -o StrictHostKeyChecking=no natasha@ststor01
+  #swith to the root user
+  sudo su -
+  #check for the keys
+  ls /home/
+  cat /home/encrypt_me.txt
+  cat /home/decrypt_me
+  cd /home
+  #Import the keys 
+  gpg --import public_key.asc
+  gpg --import private_key.asc
+  #verify
+  gpg --list-keys
+  gpg --list-secret-keys
+  #encryp the encrypt_me.txt file
+  gpg --encrypt -r kodekloud@kodekloud.com --armor < encrypt_me.txt -o encrypted_me.asc
+  #decrypt the message, you will be prompted with a passphrase which is "kodekloud"
+  gpg --decrypt decrypt_me.asc > decrypted_me.txt
+  #validate
+  cat decrypted_me.txt
+  cat decrypt_me.asc
+  cat encrypt_me.txt
+  cat encrpyed_me.asc
+  ```
