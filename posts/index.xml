@@ -823,6 +823,42 @@ b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.sta
 </span></span><span style="display:flex;"><span>cat encrpyed_me.asc
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-logrotate">Linux LogRotate</h2>
+<ul>
+<li>The Nautilus DevOps team is ready to launch a new application, which they will deploy on app servers in Stratos Datacenter. They are expecting significant traffic/usage of httpd on app servers after that. This will generate massive logs, creating huge log files. To utilise the storage efficiently, they need to compress the log files and need to rotate old logs. Check the requirements shared below:</li>
+<li>a. In all app servers install httpd package.</li>
+<li>b. Using logrotate configure httpd logs rotation to monthly and keep only 3 rotated logs.
+(If by default log rotation is set, then please update configuration as needed)</li>
+</ul>
+<h6 id="solution--4">Solution :</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;passwd&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install httpd package</span>
+</span></span><span style="display:flex;"><span>yum install httpd -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure logrotate to rotate httpd logs</span>
+</span></span><span style="display:flex;"><span>vi /etc/logrotate.d/http
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start httpd service</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span></code></pre></div>copy this into the http file under logrotate.d/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>/var/log/httpd/*log <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  monthly
+</span></span><span style="display:flex;"><span>  missingok
+</span></span><span style="display:flex;"><span>  rotate <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  notifempty
+</span></span><span style="display:flex;"><span>  sharedscripts
+</span></span><span style="display:flex;"><span>  compress
+</span></span><span style="display:flex;"><span>  postrotate
+</span></span><span style="display:flex;"><span>      /bin/systemctl reload httpd.service &gt; /dev/null 2&gt;/dev/null <span style="color:#f92672">||</span> true
+</span></span><span style="display:flex;"><span>  endscript
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
