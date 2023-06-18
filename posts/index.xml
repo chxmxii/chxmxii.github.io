@@ -859,6 +859,45 @@ b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.sta
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="apache-heading">Apache heading</h2>
+<ul>
+<li>We are working on hardening Apache web server on all app servers. As a part of this process we want to add some of the Apache response headers for security purpose. We are testing the settings one by one on all app servers. As per details mentioned below enable these headers for Apache:</li>
+<li>Install httpd package on App Server 3 using yum and configure it to run on 3003 port, make sure to start its service.</li>
+<li>Create an index.html file under Apache&rsquo;s default document root i.e /var/www/html and add below given content in it.</li>
+<li>Welcome to the xFusionCorp Industries!</li>
+<li>Configure Apache to enable below mentioned headers:</li>
+<li>X-XSS-Protection header with value 1; mode=block</li>
+<li>X-Frame-Options header with value SAMEORIGIN</li>
+<li>X-Content-Type-Options header with value nosniff
+=&gt; Note: You can test using curl on the given app server as LBR URL will not work for this task</li>
+</ul>
+<h6 id="solution-22">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to server app 3</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no ssh banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install httpd</span>
+</span></span><span style="display:flex;"><span>yum install httpd -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure httpd to listen on port 3003, and enable the mentioned headers</span>
+</span></span><span style="display:flex;"><span>vi /etc/httpd/conf/httpd.conf
+</span></span><span style="display:flex;"><span>EDIT &gt; Listen <span style="color:#ae81ff">3003</span>
+</span></span><span style="display:flex;"><span>INSERT &gt; Header set X-XSS-Protection <span style="color:#e6db74">&#34;1; mode=block&#34;</span>
+</span></span><span style="display:flex;"><span>INSERT &gt; Header set X-Content-Type-Options nosniff
+</span></span><span style="display:flex;"><span>INSERT &gt; Header always append X-Frame-Options SAMEORIGIN
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create index.html</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Welcome to the xFusionCorp Industries!&#34;</span> &gt; /var/www/html/index.html
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the http service</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl -i localhost:3003
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify again from jumphost</span>
+</span></span><span style="display:flex;"><span>curl -i http://stapp03:3003
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
