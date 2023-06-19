@@ -898,6 +898,28 @@ b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.sta
 </span></span><span style="display:flex;"><span>curl -i http://stapp03:3003
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="install-package">Install package</h2>
+<ul>
+<li>As per new application requirements shared by the Nautilus project development team, serveral new packages need to be installed on all app servers in Stratos Datacenter. Most of them are completed except for git.</li>
+<li>Therefore, install the git package on all app-servers.</li>
+</ul>
+<h6 id="solution-23">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1,2 and 3</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;pass&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list all the installed packages</span>
+</span></span><span style="display:flex;"><span>rpm -qa | grep git
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install git</span>
+</span></span><span style="display:flex;"><span>yum install git -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>yum list installed | grep git
+</span></span><span style="display:flex;"><span>git version
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
