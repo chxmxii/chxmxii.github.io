@@ -61,7 +61,7 @@ disableHugoGeneratorInject = false
 
   # Home subtitle of the index page.
   #
-  homeSubtitle = "CyberSecurity & Cloud enthusiast | CTF Player | Music Producer"
+  homeSubtitle = "System & DevOps Engineer | CTF Player | Music Producer"
  
 
   # Set a background for the homepage
@@ -153,7 +153,7 @@ disableHugoGeneratorInject = false
   # Uncomment this if you want a portrait on your start page
   #
    [params.portrait]
-     path     = "/mor1.jpg"
+     path     = "/files/mor1.jpg"
      alt      = "Portrait"
      maxWidth = "175px"
 

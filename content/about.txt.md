@@ -16,11 +16,11 @@ Throughout this site, you will find various articles I have authored involving c
 
 ----------------------------------------------------------------------------------------------------------------------
 
-![](/nev.gif#center)
+![](/files/nev.gif#center)
 
 # Certifications :
 
-![](/certs.png#center)
+![](/files/certs.png#center)
 
 
              "Half knowledge is dangerous. Keep on learning. Seek the light.-"

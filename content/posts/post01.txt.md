@@ -14,7 +14,7 @@ series:
 - Hugo 101
 ---
 
-![](/cicdlogo.png)
+![](/files/cicdlogo.png)
 
 
 ### 0 . 1 What is CI/CD :
@@ -31,7 +31,7 @@ series:
 - Countinous delivery is a solution to the problem of poor visibility and commmunication between dev and business teams. its purpose is to ensure that it takes minimal effort to deploy new code.
 - Countinous deployment means to automatically releasing a dev’s changes from the repository to produciton, where it is usable by customers.
 
-![Untitled](/cicd.png)
+![Untitled](/files/cicd.png)
 
 ### 0 . 3 Different stages :
 
@@ -44,9 +44,9 @@ CI/CD piple can be divided into four main stages :*
 
 The stages are executed in a linear fashion, and each stage must be completed successfully before the next stage can begin.
 
-![](/cicd2.png)
+![](/files/cicd2.png)
 
-![](/cicd3.png)
+![](/files/cicd3.png)
 
 ### 0 . 3 . 1 Source Stage
 

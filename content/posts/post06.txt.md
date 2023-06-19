@@ -20,7 +20,7 @@ In this challenge we will deploy several Kubernetes resources using terraform.
 Utilize /root/terraform_challenge directory to store your Terraform configuration files.
 Note: kubectl is already installed on the host, you can check your deployments in the usual way.
 #### Architecture : 
-![](/chall1.png#center)
+![](/files/chall1.png#center)
 #### Solution :
 
 ##### Controlplane
