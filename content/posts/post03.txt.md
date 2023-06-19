@@ -876,3 +876,24 @@ ee
   #verify again from jumphost
   curl -i http://stapp03:3003
   ```
+---
+## Install package
+
++ As per new application requirements shared by the Nautilus project development team, serveral new packages need to be installed on all app servers in Stratos Datacenter. Most of them are completed except for git.
++ Therefore, install the git package on all app-servers.
+  
+###### Solution
+
++ ```Shell
+  #ssh to app server 1,2 and 3
+  sshpass -p <pass> ssh -o StrictHostKeyChecking=no <user>@<hostname>
+  #switch to the root user
+  sudo su -
+  #list all the installed packages
+  rpm -qa | grep git
+  #install git
+  yum install git -y
+  #verify
+  yum list installed | grep git
+  git version
+  ```
