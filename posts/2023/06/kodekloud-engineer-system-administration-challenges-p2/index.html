@@ -1,0 +1,441 @@
+<!doctype html><html lang=en><link rel=icon href=https://chxmxii.github.io/portfolio/mor.jpg type=image/icontype><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:chxmxii_]"><meta name=description content="Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number."><meta name=keywords content=",DevOps,Sysadmin"><meta name=robots content="noodp"><meta name=theme-color content><link rel=canonical href=https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/><title>KodeKloud Engineer System Administration Challenges - P2 :: Chamsii Mouhib</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=https://chxmxii.github.io/portfolio/main.cda4d8a80eb9c0ad59d520a83b27f1bf13dba33ab38a74541b46a8c246eeebca.css><link rel=apple-touch-icon sizes=180x180 href=https://chxmxii.github.io/portfolio/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://chxmxii.github.io/portfolio/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://chxmxii.github.io/portfolio/favicon-16x16.png><link rel=manifest href=https://chxmxii.github.io/portfolio/site.webmanifest><link rel=mask-icon href=https://chxmxii.github.io/portfolio/safari-pinned-tab.svg color><link rel="shortcut icon" href=https://chxmxii.github.io/portfolio/favicon.ico><meta name=msapplication-TileColor content><meta itemprop=name content="KodeKloud Engineer System Administration Challenges - P2"><meta itemprop=description content="Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number."><meta itemprop=datePublished content="2023-06-22T00:00:00+00:00"><meta itemprop=dateModified content="2023-06-22T00:00:00+00:00"><meta itemprop=wordCount content="3212"><meta itemprop=image content="https://chxmxii.github.io/portfolio/"><meta itemprop=keywords content="DevOps,Sysadmin,"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://chxmxii.github.io/portfolio/"><meta name=twitter:title content="KodeKloud Engineer System Administration Challenges - P2"><meta name=twitter:description content="Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number."><meta property="og:title" content="KodeKloud Engineer System Administration Challenges - P2"><meta property="og:description" content="Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number."><meta property="og:type" content="article"><meta property="og:url" content="https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/"><meta property="og:image" content="https://chxmxii.github.io/portfolio/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-06-22T00:00:00+00:00"><meta property="article:modified_time" content="2023-06-22T00:00:00+00:00"><meta property="og:see_also" content="https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/"><meta property="og:see_also" content="https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/"><meta property="og:see_also" content="https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/"><meta property="og:see_also" content="https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/"><meta property="og:see_also" content="https://chxmxii.github.io/portfolio/projects/project01.txt/"><meta property="article:published_time" content="2023-06-22 00:00:00 +0000 UTC"></head><body><div class=container><header class=header><span class=header__inner><a href=https://chxmxii.github.io/portfolio/ style=text-decoration:none><div class=logo><span class=logo__mark></span><span class=logo__text>C:\Users\chxmxii\</span>
+<span class=logo__text style=color:#ff3c36>post07.txt</span>
+<span class=logo__cursor style=background-color:#ff3c36></span></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=https://chxmxii.github.io/portfolio/about.txt/ style=text-decoration:none class=name>About</a></li><li><a href=https://chxmxii.github.io/portfolio/posts/ style=text-decoration:none class=name>Posts</a></li><li><a href=https://chxmxii.github.io/portfolio/projects/ style=text-decoration:none class=name>Projects</a></li><li><a href=https://chxmxii.github.io/portfolio/cv.pdf style=text-decoration:none class=name>Resume</a></li></ul></nav><span class=menu-trigger><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>16 minutes</p></div><article><h1 class=post-title><a href=https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/>KodeKloud Engineer System Administration Challenges - P2</a></h1><div class=post-content><hr><h2 id=web-server-security>Web Server Security</h2><ul><li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li><li>a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number. Ensure this server has the appropriate settings to hide the version number of the Apache web server.</li><li>b. There is a website hosted under /var/www/html/blog on App Server 1. It was detected that the directory /blog lists all of its contents while browsing the URL. Disable the directory browser listing in Apache config.</li><li>c. Also make sure to restart the Apache service after making the changes.</li></ul><h6 id=solution>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to the app server 1</span>
+</span></span><span style=display:flex><span>sshpass -p Ir0nM@n -o StrictHostKeyChecking<span style=color:#f92672>=</span>no tony@stapp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#check the httpd status</span>
+</span></span><span style=display:flex><span>sudo systemctl status httpd
+</span></span><span style=display:flex><span><span style=color:#75715e>#open the httpd.conf file with vi</span>
+</span></span><span style=display:flex><span>sudo vi /etc/httpd/conf/httpd.conf
+</span></span><span style=display:flex><span><span style=color:#75715e>#a. to disable the version discolusre you can append the following two lines to the httpd.conf</span>
+</span></span><span style=display:flex><span>.&gt; ServerTokens Prod
+</span></span><span style=display:flex><span>.&gt; ServerSignature Off
+</span></span><span style=display:flex><span><span style=color:#75715e>#b. to disable the directory browser listing, make sure to remove Indexes from options</span>
+</span></span><span style=display:flex><span>Before &gt; Options Indexes FollowSymLinks
+</span></span><span style=display:flex><span>After &gt; Options FollowSymLinks
+</span></span><span style=display:flex><span><span style=color:#75715e>#save and quit</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#c. restart the server and curl to verify</span>
+</span></span><span style=display:flex><span>sudo systemctl start httpd <span style=color:#f92672>&amp;&amp;</span> sudo systemctl status httpd
+</span></span><span style=display:flex><span>curl -I stapp01:8080/
+</span></span><span style=display:flex><span><span style=color:#75715e>#TIP: you can press &#34;/&#34; and write &#34;Options&#34; in vi to search for that line. press n to move to the next matched item.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#ref: https://www.tecmint.com/hide-apache-web-server-version-information/</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing</span>
+</span></span></code></pre></div></li></ul><hr><h2 id=configure-local-yum-repos>Configure Local Yum repos</h2><ul><li>The Nautilus production support team and security team had a meeting last month in which they decided to use local yum repositories for maintaing packages needed for their servers. For now they have decided to configure a local yum repo on Nautilus Backup Server. This is one of the pending items from last month, so please configure a local yum repository on Nautilus Backup Server as per details given below.</li><li>a. We have some packages already present at location /packages/downloaded_rpms/ on Nautilus Backup Server.</li><li>b. Create a yum repo named epel_local and make sure to set Repository ID to epel_local. Configure it to use package&rsquo;s location /packages/downloaded_rpms/.</li><li>c. Install package vim-enhanced from this newly created repo.</li></ul><h6 id=solution-1>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#Connect to the backup server</span>
+</span></span><span style=display:flex><span>sshpass -p H@wk3y3	ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no clint@stbkp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#Switch to the root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#there is actually 2 ways to create yum repos, either you do it manually or you can do it with &#34;yum-config-manager --add-repo=&lt;url&gt;&#34;</span>
+</span></span><span style=display:flex><span>cat &lt;&lt;<span style=color:#ae81ff>\ </span>EOF &gt; /etc/yum_repos.d/epel_local.repo
+</span></span><span style=display:flex><span><span style=color:#f92672>[</span>epel_local<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>name<span style=color:#f92672>=</span>epel_local
+</span></span><span style=display:flex><span>baseurl<span style=color:#f92672>=</span>file:///packages/downloaded_rpms/
+</span></span><span style=display:flex><span>enabled<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>gpgcheck<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>EOF
+</span></span><span style=display:flex><span><span style=color:#75715e>#clean and list the repos</span>
+</span></span><span style=display:flex><span>yum clean all
+</span></span><span style=display:flex><span>yum repo list
+</span></span><span style=display:flex><span><span style=color:#75715e>#install the vim-enhanced</span>
+</span></span><span style=display:flex><span>yum install vim-enhanced -y
+</span></span></code></pre></div></li></ul><hr><h2 id=setup-ssl-for-nginx>Setup SSL for Nginx</h2><ul><li>The system admins team of xFusionCorp Industries needs to deploy a new application on App Server 1 in Stratos Datacenter. They have some pre-requites to get ready that server for application deployment. Prepare the server as per requirements shared below:</li><li>Install and configure nginx on App Server 1.</li><li>On App Server 1 there is a self signed SSL certificate and key present at location /tmp/nautilus.crt and /tmp/nautilus.key. Move them to some appropriate location and deploy the same in Nginx.</li><li>Create an index.html file with content Welcome! under Nginx document root.</li><li>For final testing try to access the App Server 2 link (either hostname or IP) from jump host using curl command. For example curl -Ik https:///.</li></ul><h6 id=solution-2>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to the app server 1</span>
+</span></span><span style=display:flex><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no tony@stapp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#Switch to root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#search for the nginx package</span>
+</span></span><span style=display:flex><span>yum whatprovides nginx
+</span></span><span style=display:flex><span>yum search nginx
+</span></span><span style=display:flex><span><span style=color:#75715e>#install epel-release &amp; nginx</span>
+</span></span><span style=display:flex><span>yum install epel-release -y
+</span></span><span style=display:flex><span>yum install nginx
+</span></span><span style=display:flex><span><span style=color:#75715e>#copy the self-signed cert</span>
+</span></span><span style=display:flex><span>cp /tmp/nautilus.crt /etc/pki/CA/certs/ <span style=color:#f92672>&amp;&amp;</span> cp /tmp/nautilus.key /etc/pki/CA/private/
+</span></span></code></pre></div>edit the /etc/nginx/nginx.conf to look like this</li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#For more information on configuration, see:</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#* Official English Documentation: http://nginx.org/en/docs/</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#* Official Russian Documentation: http://nginx.org/ru/docs/</span>
+</span></span><span style=display:flex><span>user nginx;
+</span></span><span style=display:flex><span>worker_processes auto;
+</span></span><span style=display:flex><span>error_log /var/log/nginx/error.log;
+</span></span><span style=display:flex><span>pid /run/nginx.pid;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.</span>
+</span></span><span style=display:flex><span>include /usr/share/nginx/modules/*.conf;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>events <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    worker_connections 1024;
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>http <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    log_format  main  <span style=color:#e6db74>&#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;</span>
+</span></span><span style=display:flex><span>                      <span style=color:#e6db74>&#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
+</span></span><span style=display:flex><span>                      <span style=color:#e6db74>&#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    access_log  /var/log/nginx/access.log  main;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    sendfile            on;
+</span></span><span style=display:flex><span>    tcp_nopush          on;
+</span></span><span style=display:flex><span>    tcp_nodelay         on;
+</span></span><span style=display:flex><span>    keepalive_timeout   65;
+</span></span><span style=display:flex><span>    types_hash_max_size 4096;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    include             /etc/nginx/mime.types;
+</span></span><span style=display:flex><span>    default_type        application/octet-stream;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Load modular configuration files from the /etc/nginx/conf.d directory.</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># See http://nginx.org/en/docs/ngx_core_module.html#include</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># for more information.</span>
+</span></span><span style=display:flex><span>    include /etc/nginx/conf.d/*.conf;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    server <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        listen       80;
+</span></span><span style=display:flex><span>        listen       <span style=color:#f92672>[</span>::<span style=color:#f92672>]</span>:80;
+</span></span><span style=display:flex><span>        server_name  &lt;your_server_ip_here&gt;;
+</span></span><span style=display:flex><span>        root         /usr/share/nginx/html;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Load configuration files for the default server block.</span>
+</span></span><span style=display:flex><span>        include /etc/nginx/default.d/*.conf;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        error_page <span style=color:#ae81ff>404</span> /404.html;
+</span></span><span style=display:flex><span>        location <span style=color:#f92672>=</span> /404.html <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        error_page <span style=color:#ae81ff>500</span> <span style=color:#ae81ff>502</span> <span style=color:#ae81ff>503</span> <span style=color:#ae81ff>504</span> /50x.html;
+</span></span><span style=display:flex><span>        location <span style=color:#f92672>=</span> /50x.html <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#Settings for a TLS enabled server.</span>
+</span></span><span style=display:flex><span>    server <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        listen       <span style=color:#ae81ff>443</span> ssl http2;
+</span></span><span style=display:flex><span>        listen       <span style=color:#f92672>[</span>::<span style=color:#f92672>]</span>:443 ssl http2;
+</span></span><span style=display:flex><span>        server_name  &lt;your_server_ip_from_here&gt;;
+</span></span><span style=display:flex><span>        root         /usr/share/nginx/html;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        ssl_certificate <span style=color:#e6db74>&#34;/etc/pki/CA/certs/nautilus.crt&#34;</span>;
+</span></span><span style=display:flex><span>        ssl_certificate_key <span style=color:#e6db74>&#34;/etc/pki/CA/private/nautilus.key&#34;</span>;
+</span></span><span style=display:flex><span>        ssl_session_cache shared:SSL:1m;
+</span></span><span style=display:flex><span>        ssl_session_timeout  10m;
+</span></span><span style=display:flex><span>        ssl_ciphers HIGH:!aNULL:!MD5;
+</span></span><span style=display:flex><span>        ssl_prefer_server_ciphers on;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Load configuration files for the default server block.</span>
+</span></span><span style=display:flex><span>        include /etc/nginx/default.d/*.conf;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        error_page <span style=color:#ae81ff>404</span> /404.html;
+</span></span><span style=display:flex><span>            location <span style=color:#f92672>=</span> /40x.html <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        error_page <span style=color:#ae81ff>500</span> <span style=color:#ae81ff>502</span> <span style=color:#ae81ff>503</span> <span style=color:#ae81ff>504</span> /50x.html;
+</span></span><span style=display:flex><span>            location <span style=color:#f92672>=</span> /50x.html <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span></code></pre></div>Now lets add index.html file and start the nginx service</li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#Now, you will have to remove the index.html under the nginx root because is linked to another file.</span>
+</span></span><span style=display:flex><span>rm -rf /usr/share/nginx/html/index.html
+</span></span><span style=display:flex><span><span style=color:#75715e>#create new index.html under nginx root contains &#34;welcome!&#34;</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;Welcome!&#34;</span> &gt; /usr/share/nginx/html/index.html
+</span></span><span style=display:flex><span><span style=color:#75715e>#start nginx </span>
+</span></span><span style=display:flex><span>systemctl start nginx
+</span></span><span style=display:flex><span>systemctl status
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify</span>
+</span></span><span style=display:flex><span>curl localhot
+</span></span><span style=display:flex><span><span style=color:#75715e>#going back to the jump host lets curl</span>
+</span></span><span style=display:flex><span>curl -Ik https://172.16.238.10	
+</span></span><span style=display:flex><span>curl -k https://172.16.238.10
+</span></span></code></pre></div><hr></li></ul><h2 id=application-security>Application Security</h2><ul><li>We have a backup management application UI hosted on Nautilus backup server in Stratos DC. That backup management application code is deployed under Apache on the backup server itself, and Nginx is running as a reverse proxy on the same server. Apache and Nginx ports are 6100 and 8093, respectively. We have iptables firewall installed on this server. Make the appropriate changes to fulfill the requirements mentioned below:</li><li>a. We want to open all incoming connections to Nginx&rsquo;s port and block all incoming connections to Apache&rsquo;s port. Also make sure rules are permanent.</li></ul><h6 id=solution-3>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to the backup server</span>
+</span></span><span style=display:flex><span>sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no clint@stbkp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#switch to root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify the ports of nginx and apache</span>
+</span></span><span style=display:flex><span>ss -lntp | grep nginx
+</span></span><span style=display:flex><span>ss -lntp | grep http
+</span></span><span style=display:flex><span><span style=color:#75715e>#configure the firewall to match the desired behavior</span>
+</span></span><span style=display:flex><span>iptables -A INPUT -p tcp --dport <span style=color:#ae81ff>8093</span> -m conntrack --cstate NEW,ESTABLISHED -j ACCEPT
+</span></span><span style=display:flex><span>iptables -A INPUT -p tcp --dport <span style=color:#ae81ff>6100</span> -m conntrack --cstate NEW -j REJECT
+</span></span><span style=display:flex><span><span style=color:#75715e>#save the rules to remain permanent</span>
+</span></span><span style=display:flex><span>sudo iptables-save &gt; /etc/sysconfig/iptables
+</span></span><span style=display:flex><span>service iptables save
+</span></span><span style=display:flex><span><span style=color:#75715e>#veriffy</span>
+</span></span><span style=display:flex><span>cat /etc/sysconfig/iptables
+</span></span><span style=display:flex><span>iptables -L -n -v
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify from jump host</span>
+</span></span><span style=display:flex><span>telnet stkbp01 <span style=color:#ae81ff>8093</span>
+</span></span><span style=display:flex><span>telnet stkbp01 <span style=color:#ae81ff>6100</span>
+</span></span></code></pre></div></li></ul><hr><h2 id=bash-script>Bash Script</h2><ul><li>The production support team of xFusionCorp Industries is working on developing some bash scripts to automate different day to day tasks. One is to create a bash script for taking websites backup. They have a static website running on App Server 1 in Stratos Datacenter, and they need to create a bash script named official_backup.sh which should accomplish the following tasks. (Also remember to place the script under /scripts directory on App Server 1)</li><li>a. Create a zip archive named xfusioncorp_official.zip of /var/www/html/official directory.</li><li>b. Save the archive in /backup/ on App Server 1. This is a temporary storage, as backups from this location will be clean on weekly basis. Therefore, we also need to save this backup archive on Nautilus Backup Server.</li><li>c. Copy the created archive to Nautilus Backup Server server in /backup/ location.</li><li>d. Please make sure script won&rsquo;t ask for password while copying the archive file. Additionally, the respective server user (for example, tony in case of App Server 1) must be able to run it.</li></ul><h6 id=solution-4>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to app server 1</span>
+</span></span><span style=display:flex><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no tony@stapp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#cd to /scripts folder and create a official_backup.sh file</span>
+</span></span><span style=display:flex><span>cd /scripts
+</span></span><span style=display:flex><span>vi official_backup.sh
+</span></span></code></pre></div>After opening the officila_backup.sh file, copy the following script, save and quit.</li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#make an archive for the official folder under /var/www/html/ &#34;-r for recurisve&#34; </span>
+</span></span><span style=display:flex><span>zip -r /backup/xfusioncorp_official.zip /var/www/html/official
+</span></span><span style=display:flex><span><span style=color:#75715e>#copy the archive file to the backup server</span>
+</span></span><span style=display:flex><span>scp /backup/xfusioncorp_official.zip clint@stbkp01:/backup/
+</span></span></code></pre></div>now, to make sure the script won&rsquo;t ask for password while copying the archive file, lets generate a ssh key</li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e>#generate an ssh key</span>
+</span></span><span style=display:flex><span>ssh-keygen
+</span></span><span style=display:flex><span><span style=color:#75715e>#copy the generated key to the backup server</span>
+</span></span><span style=display:flex><span>ssh-copy-id clint@stbkp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#ssh to verify</span>
+</span></span><span style=display:flex><span>ssh clint@stkp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#add exec perm to the official_backup.sh file</span>
+</span></span><span style=display:flex><span>chmod +x official_backup.sh
+</span></span><span style=display:flex><span><span style=color:#75715e>#run the script</span>
+</span></span><span style=display:flex><span>./official_backup
+</span></span><span style=display:flex><span><span style=color:#75715e>#ssh to backserver and verify</span>
+</span></span><span style=display:flex><span>ssh clint@stkp01
+</span></span><span style=display:flex><span>ls /backup/
+</span></span></code></pre></div></li></ul><hr><h2 id=linux-configure-sudo>Linux Configure sudo</h2><ul><li>We have some users on all app servers in Stratos Datacenter. Some of them have been assigned some new roles and responsibilities, therefore their users need to be upgraded with sudo access so that they can perform admin level tasks.</li><li>a. Provide sudo access to user james on all app servers.</li><li>b. Make sure you have set up password-less sudo for the user.</li></ul><h6 id=solution->Solution :</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to all app servers one by one</span>
+</span></span><span style=display:flex><span>ssh -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no &lt;name&gt;@&lt;hostname&gt;
+</span></span><span style=display:flex><span><span style=color:#75715e>#switch to root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#Provide sudo access to user james</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;james ALL=(ALL) NOPASSWD:ALL&#34;</span> &gt; /etc/sudoer.d/james
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify</span>
+</span></span><span style=display:flex><span>su james
+</span></span><span style=display:flex><span>sudo id
+</span></span><span style=display:flex><span>sudo su
+</span></span></code></pre></div></li></ul><hr><h2 id=apache-redirects>Apache Redirects</h2><ul><li>The Nautilus devops team got some requirements related to some Apache config changes. They need to setup some redirects for some URLs. There might be some more changes need to be done. Below you can find more details regarding that:</li><li>httpd is already installed on app server 3. Configure Apache to listen on port 5003.</li><li>Configure Apache to add some redirects as mentioned below:
+a.) Redirect <a href=http://stapp03.stratos.xfusioncorp.com>http://stapp03.stratos.xfusioncorp.com</a>:/ to <a href=http://www.stapp03.stratos.xfusioncorp.com>http://www.stapp03.stratos.xfusioncorp.com</a>:/ i.e non www to www. This must be a permanent redirect i.e 301
+b.) Redirect <a href=http://www.stapp03.stratos.xfusioncorp.com>http://www.stapp03.stratos.xfusioncorp.com</a>:/blog/ to <a href=http://www.stapp03.stratos.xfusioncorp.com>http://www.stapp03.stratos.xfusioncorp.com</a>:/news/. This must be a temporary redirect i.e 302.</li></ul><h6 id=solution--1>Solution :</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to app server 3</span>
+</span></span><span style=display:flex><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no banner@stapp03
+</span></span><span style=display:flex><span><span style=color:#75715e>#Switch to the root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify httpd is alr installed</span>
+</span></span><span style=display:flex><span>rpm -qa | grep httpd
+</span></span><span style=display:flex><span><span style=color:#75715e>#Configure apache to listen on port 5003</span>
+</span></span><span style=display:flex><span>vi /etc/httpd/conf/httpd.conf
+</span></span><span style=display:flex><span>Look <span style=color:#66d9ef>for</span> the line that starts with Listen and change it to &gt; Listen <span style=color:#ae81ff>5003</span>
+</span></span></code></pre></div>Configure redirection</li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span>vi /etc/httpd/conf.d/main.conf
+</span></span><span style=display:flex><span><span style=color:#75715e>#copy the following lines</span>
+</span></span><span style=display:flex><span>&lt;VirtualHost *:5003&gt;
+</span></span><span style=display:flex><span>ServerName http://stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style=display:flex><span>Redirect <span style=color:#ae81ff>301</span> /  http://www.stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style=display:flex><span>&lt;/VirtualHost&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;VirtualHost *:5003&gt;
+</span></span><span style=display:flex><span>ServerName http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
+</span></span><span style=display:flex><span>Redirect <span style=color:#ae81ff>302</span> / http://www.stapp03.stratos.xfusioncorp.com:5003/news/
+</span></span><span style=display:flex><span>&lt;/VirtualHost&gt;
+</span></span></code></pre></div></li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#Restart htttpd</span>
+</span></span><span style=display:flex><span>systemctl restartd httpd
+</span></span><span style=display:flex><span><span style=color:#75715e>#Verify </span>
+</span></span><span style=display:flex><span>curl http://stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style=display:flex><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style=display:flex><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
+</span></span><span style=display:flex><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/news
+</span></span></code></pre></div></li></ul><hr><h2 id=linux-gpg-encryption>Linux GPG Encryption</h2><ul><li>We have confidential data that needs to be transferred to a remote location, so we need to encrypt that data.We also need to decrypt data we received from a remote location in order to understand its content.</li><li>On storage server in Stratos Datacenter we have private and public keys stored /home/*_key.asc. Use those keys to perform the following actions.</li><li>Encrypt /home/encrypt_me.txt to /home/encrypted_me.asc.</li><li>Decrypt /home/decrypt_me.asc to /home/decrypted_me.txt. (Passphrase for decryption and encryption is kodekloud).</li></ul><h6 id=solution-5>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to the storage server</span>
+</span></span><span style=display:flex><span>sshpass -p Bl@ckW ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no natasha@ststor01
+</span></span><span style=display:flex><span><span style=color:#75715e>#swith to the root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#check for the keys</span>
+</span></span><span style=display:flex><span>ls /home/
+</span></span><span style=display:flex><span>cat /home/encrypt_me.txt
+</span></span><span style=display:flex><span>cat /home/decrypt_me
+</span></span><span style=display:flex><span>cd /home
+</span></span><span style=display:flex><span><span style=color:#75715e>#Import the keys </span>
+</span></span><span style=display:flex><span>gpg --import public_key.asc
+</span></span><span style=display:flex><span>gpg --import private_key.asc
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify</span>
+</span></span><span style=display:flex><span>gpg --list-keys
+</span></span><span style=display:flex><span>gpg --list-secret-keys
+</span></span><span style=display:flex><span><span style=color:#75715e>#encryp the encrypt_me.txt file</span>
+</span></span><span style=display:flex><span>gpg --encrypt -r kodekloud@kodekloud.com --armor &lt; encrypt_me.txt -o encrypted_me.asc
+</span></span><span style=display:flex><span><span style=color:#75715e>#decrypt the message, you will be prompted with a passphrase which is &#34;kodekloud&#34;</span>
+</span></span><span style=display:flex><span>gpg --decrypt decrypt_me.asc &gt; decrypted_me.txt
+</span></span><span style=display:flex><span><span style=color:#75715e>#validate</span>
+</span></span><span style=display:flex><span>cat decrypted_me.txt
+</span></span><span style=display:flex><span>cat decrypt_me.asc
+</span></span><span style=display:flex><span>cat encrypt_me.txt
+</span></span><span style=display:flex><span>cat encrpyed_me.asc
+</span></span></code></pre></div></li></ul><hr><h2 id=linux-logrotate>Linux LogRotate</h2><ul><li>The Nautilus DevOps team is ready to launch a new application, which they will deploy on app servers in Stratos Datacenter. They are expecting significant traffic/usage of httpd on app servers after that. This will generate massive logs, creating huge log files. To utilise the storage efficiently, they need to compress the log files and need to rotate old logs. Check the requirements shared below:</li><li>a. In all app servers install httpd package.</li><li>b. Using logrotate configure httpd logs rotation to monthly and keep only 3 rotated logs.
+(If by default log rotation is set, then please update configuration as needed)</li></ul><h6 id=solution--2>Solution :</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to the app server</span>
+</span></span><span style=display:flex><span>sshpass -p &lt;passwd&gt; ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style=display:flex><span><span style=color:#75715e>#switch to root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#Install httpd package</span>
+</span></span><span style=display:flex><span>yum install httpd -y
+</span></span><span style=display:flex><span><span style=color:#75715e>#configure logrotate to rotate httpd logs</span>
+</span></span><span style=display:flex><span>vi /etc/logrotate.d/http
+</span></span><span style=display:flex><span><span style=color:#75715e>#start httpd service</span>
+</span></span><span style=display:flex><span>systemctl start httpd
+</span></span><span style=display:flex><span>systemctl status httpd
+</span></span></code></pre></div>copy this into the http file under logrotate.d/<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span>/var/log/httpd/*log <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>  monthly
+</span></span><span style=display:flex><span>  missingok
+</span></span><span style=display:flex><span>  rotate <span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span>  notifempty
+</span></span><span style=display:flex><span>  sharedscripts
+</span></span><span style=display:flex><span>  compress
+</span></span><span style=display:flex><span>  postrotate
+</span></span><span style=display:flex><span>      /bin/systemctl reload httpd.service &gt; /dev/null 2&gt;/dev/null <span style=color:#f92672>||</span> true
+</span></span><span style=display:flex><span>  endscript
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div></li></ul><hr><h2 id=apache-heading>Apache heading</h2><ul><li>We are working on hardening Apache web server on all app servers. As a part of this process we want to add some of the Apache response headers for security purpose. We are testing the settings one by one on all app servers. As per details mentioned below enable these headers for Apache:</li><li>Install httpd package on App Server 3 using yum and configure it to run on 3003 port, make sure to start its service.</li><li>Create an index.html file under Apache&rsquo;s default document root i.e /var/www/html and add below given content in it.</li><li>Welcome to the xFusionCorp Industries!</li><li>Configure Apache to enable below mentioned headers:</li><li>X-XSS-Protection header with value 1; mode=block</li><li>X-Frame-Options header with value SAMEORIGIN</li><li>X-Content-Type-Options header with value nosniff
+=> Note: You can test using curl on the given app server as LBR URL will not work for this task</li></ul><h6 id=solution-6>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to server app 3</span>
+</span></span><span style=display:flex><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no ssh banner@stapp03
+</span></span><span style=display:flex><span><span style=color:#75715e>#switch to root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#install httpd</span>
+</span></span><span style=display:flex><span>yum install httpd -y
+</span></span><span style=display:flex><span><span style=color:#75715e>#configure httpd to listen on port 3003, and enable the mentioned headers</span>
+</span></span><span style=display:flex><span>vi /etc/httpd/conf/httpd.conf
+</span></span><span style=display:flex><span>EDIT &gt; Listen <span style=color:#ae81ff>3003</span>
+</span></span><span style=display:flex><span>INSERT &gt; Header set X-XSS-Protection <span style=color:#e6db74>&#34;1; mode=block&#34;</span>
+</span></span><span style=display:flex><span>INSERT &gt; Header set X-Content-Type-Options nosniff
+</span></span><span style=display:flex><span>INSERT &gt; Header always append X-Frame-Options SAMEORIGIN
+</span></span><span style=display:flex><span><span style=color:#75715e>#create index.html</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;Welcome to the xFusionCorp Industries!&#34;</span> &gt; /var/www/html/index.html
+</span></span><span style=display:flex><span><span style=color:#75715e>#start the http service</span>
+</span></span><span style=display:flex><span>systemctl start httpd
+</span></span><span style=display:flex><span>systemctl status httpd
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify</span>
+</span></span><span style=display:flex><span>curl -i localhost:3003
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify again from jumphost</span>
+</span></span><span style=display:flex><span>curl -i http://stapp03:3003
+</span></span></code></pre></div></li></ul><hr><h2 id=install-package>Install package</h2><ul><li>As per new application requirements shared by the Nautilus project development team, serveral new packages need to be installed on all app servers in Stratos Datacenter. Most of them are completed except for git.</li><li>Therefore, install the git package on all app-servers.</li></ul><h6 id=solution-7>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#ssh to app server 1,2 and 3</span>
+</span></span><span style=display:flex><span>sshpass -p &lt;pass&gt; ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style=display:flex><span><span style=color:#75715e>#switch to the root user</span>
+</span></span><span style=display:flex><span>sudo su -
+</span></span><span style=display:flex><span><span style=color:#75715e>#list all the installed packages</span>
+</span></span><span style=display:flex><span>rpm -qa | grep git
+</span></span><span style=display:flex><span><span style=color:#75715e>#install git</span>
+</span></span><span style=display:flex><span>yum install git -y
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify</span>
+</span></span><span style=display:flex><span>yum list installed | grep git
+</span></span><span style=display:flex><span>git version
+</span></span></code></pre></div></li></ul><hr><h2 id=linux-find-command>Linux Find Command</h2><ul><li>During a routine security audit, the team identified an issue on the Nautilus App Server. Some malicious content was identified within the website code. After digging into the issue they found that there
+might be more infected files. Before doing a cleanup they would like to find all similar files and copy them to a safe location for further investigation. Accomplish the task as per the following requirements:</li><li>a. On App Server 1 at location /var/www/html/official find out all files (not directories) having .js extension.</li><li>b. Copy all those files along with their parent directory structure to location /official on same server.</li><li>c. Please make sure not to copy the entire /var/www/html/official directory content.</li></ul><h6 id=solution-8>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#connect to app server 1</span>
+</span></span><span style=display:flex><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no tony@stapp01
+</span></span><span style=display:flex><span><span style=color:#75715e>#check if /official exists</span>
+</span></span><span style=display:flex><span>ls /official
+</span></span><span style=display:flex><span>ls /var/www/html/
+</span></span><span style=display:flex><span><span style=color:#75715e>#find all the js files under /var/www/html/official</span>
+</span></span><span style=display:flex><span>find /var/www/html/official -name <span style=color:#e6db74>&#34;*.js&#34;</span> -type f -exec cp --parents <span style=color:#f92672>{}</span> /official/ <span style=color:#ae81ff>\;</span> 
+</span></span><span style=display:flex><span><span style=color:#75715e>#verify</span>
+</span></span><span style=display:flex><span>ls /official/
+</span></span></code></pre></div></li></ul><hr><h2 id=linux-postfix-mail>Linux Postfix Mail</h2><ul><li>xFusionCorp Industries has planned to set up a common email server in Stork DC. After several meetings and recommendations they have decided to use postfix as their mail transfer agent and dovecot as an IMAP/POP3 server. We would like you to perform the following steps:</li><li>Install and configure postfix on Stork DC mail server.</li><li>Create an email account <a href=mailto:javed@stratos.xfusioncorp.com>javed@stratos.xfusioncorp.com</a> identified by BruCStnMT5.</li><li>Set its mail directory to /home/javed/Maildir.</li><li>Install and configure dovecot on the same server.</li></ul><h6 id=solution-9>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>## To perform the given task, I performed the actions below:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Login to the mail server as root
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; ssh username@mailserver
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; sudo su
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Confirm that yum is installed
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; rpm -qa | grep postfix
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Install postfix on the mail server
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; yum install postfix -y
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Configure postfix on the server
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; vi /etc/postfix/main.cf
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :set nu
+</span></span><span style=display:flex><span>a<span style=color:#f92672>)</span> Find the line with <span style=color:#75715e>#myhostname &amp; #mydomain and set it as follows</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; myhostname <span style=color:#f92672>=</span> stmail01.stratos.xfusioncorp.com
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; mydomain <span style=color:#f92672>=</span> stratos.xfusioncorp.com
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>b<span style=color:#f92672>)</span> Uncomment the <span style=color:#e6db74>&#39;#myorigin=$mydomain&#39;</span> line
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; myorigin <span style=color:#f92672>=</span> $mydomain
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>c<span style=color:#f92672>)</span> Uncomment the <span style=color:#e6db74>&#39;#inet_interfaces = all&#39;</span> line
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; inet_interfaces <span style=color:#f92672>=</span> all
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>d<span style=color:#f92672>)</span> Uncomment the <span style=color:#e6db74>&#39;#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain&#39;</span> line
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; mydestination <span style=color:#f92672>=</span> $myhostname, localhost.$mydomain, localhost, $mydomain
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>e<span style=color:#f92672>)</span> Uncomment the <span style=color:#e6db74>&#39;#mynetworks = host IP address, =&gt; localhost&#39;</span> line and replace it accordingly
+</span></span><span style=display:flex><span>mynetworks <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>host IP address<span style=color:#f92672>}</span>/24, 127.0.0.0/8
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>f<span style=color:#f92672>)</span> Uncomment the <span style=color:#e6db74>&#39;#home_mailbox = Maildir/&#39;</span> line
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; home_mailbox <span style=color:#f92672>=</span> Maildir/
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>g<span style=color:#f92672>)</span> Save and quit the configuration file
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; Esc
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :wq
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>h<span style=color:#f92672>)</span> Start postfix and confirm it is working
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; systemctl start postfix
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; systemctl status postfix
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>h<span style=color:#f92672>)</span> Create the user account <span style=color:#66d9ef>for</span> javed
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; useradd mariyam
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; passwd mariyam
+</span></span><span style=display:flex><span>Set the given password.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; telnet stmail01 <span style=color:#ae81ff>25</span>
+</span></span><span style=display:flex><span>Enter the following settings:
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; EHLO localhost
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; mail from: mariyam@stratos.xfusioncorp.com
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; rcpt to: mariyam@stratos.xfusioncorp.com
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; DATA
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; test mail
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; quit
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Check mail queue and confirm the test mail was sent and delivered
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; su - mariyam
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; mailq
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; cd Maildir/new
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; ll 
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; cat new/1632140730.v801I629b61M576754.stmail01.stratos.xfusioncorp.com
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; exit
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Install dovecot on mail server
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; yum install dovecot -y
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Configure dovecot
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; vi /etc/dovecot/dovecot.conf
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :set nu
+</span></span><span style=display:flex><span>- Uncomment <span style=color:#e6db74>&#39;#protocols = imap pop3 lmtp&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; Esc
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :wq
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; vi /etc/dovecot/conf.d/10-mail.conf
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :set nu
+</span></span><span style=display:flex><span>- Uncomment the line <span style=color:#e6db74>&#39;#mail_location = maildir:~/Maildir&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :wq
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; vi /etc/dovecot/conf.d/10-auth.conf
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :set nu
+</span></span><span style=display:flex><span>- Uncomment the line <span style=color:#e6db74>&#39;#disable_plaintext_auth = yes&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; disable_plaintext_auth <span style=color:#f92672>=</span> yes
+</span></span><span style=display:flex><span>- Set the <span style=color:#e6db74>&#39;auth_mechanisms&#39;</span> line
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; auth_mechanisms <span style=color:#f92672>=</span> plain login
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; Esc
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :wq
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; vi 10-master.conf
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :set nu
+</span></span><span style=display:flex><span>- Uncomment and set the line <span style=color:#e6db74>&#39;#user = &#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; user <span style=color:#f92672>=</span> postfix
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; group <span style=color:#f92672>=</span> postfix
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; :wq
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Start dovecot service
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; systemctl start dovecot
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- Test the configuration
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; telnet stmail01 110
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; user mariyam
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; pass <span style=color:#f92672>{</span>given-password<span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; retr 1
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; quit
+</span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; ss -tulnp
+</span></span></code></pre></div></li></ul><hr><h2 id=linux-process-troubleshooting>Linux Process Troubleshooting</h2><ul><li>The production support team of xFusionCorp Industries has deployed some of the latest monitoring tools to keep an eye on every service, application, etc. running on the systems. One of the monitoring systems reported about Apache service unavailability on one of the app servers in Stratos DC.</li><li>Identify the faulty app host and fix the issue. Make sure Apache service is up and running on all app hosts. They might not hosted any code yet on these servers so you need not to worry about if Apache isn&rsquo;t serving any pages or not, just make sure service is up and running. Also, do not try to change the Apache port on any host.</li></ul><h6 id=solution-10>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Shell data-lang=Shell><span style=display:flex><span><span style=color:#75715e>#First, we need to identify the faulty app. lets use curl from the jump host</span>
+</span></span><span style=display:flex><span>curl http://stapp01:6200
+</span></span><span style=display:flex><span>curl http://stapp02:6200
+</span></span><span style=display:flex><span>curl http://stapp03:6200
+</span></span><span style=display:flex><span><span style=color:#75715e>#In my case, stapp01 was the faulty app, lets ssh to it and find out whats the problem</span>
+</span></span><span style=display:flex><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style=color:#f92672>=</span>no tony@stapp01
+</span></span><span style=display:flex><span>systemctl start httpd
+</span></span><span style=display:flex><span>systemctl status httpd
+</span></span><span style=display:flex><span>httpd -t
+</span></span><span style=display:flex><span>journalctl -xe
+</span></span><span style=display:flex><span>cat /etc/httpd/conf/httpd_conf | grep Listen
+</span></span><span style=display:flex><span><span style=color:#75715e>#lets install netstat</span>
+</span></span><span style=display:flex><span>yum install netstat -y
+</span></span><span style=display:flex><span>netstat -tulnp |grep <span style=color:#ae81ff>6200</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#get the id of the current proccess using port 6200 and kill it, in my case it was 525</span>
+</span></span><span style=display:flex><span>kill -9 <span style=color:#ae81ff>525</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#start the service and verify</span>
+</span></span><span style=display:flex><span>systemctl start httpd
+</span></span><span style=display:flex><span>systemctl status httpd
+</span></span><span style=display:flex><span>curl http://stapp01:6200
+</span></span></code></pre></div></li></ul></div></article><hr><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://chxmxii.github.io/portfolio/tags/devops/>DevOps</a></span>
+<span class=tag><a href=https://chxmxii.github.io/portfolio/tags/sysadmin/>Sysadmin</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>3212 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2023-06-22 00:00</p></div><hr><div class=sharing-buttons><a class=resp-sharing-button__link href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_blank rel=noopener aria-label title="Share on facebook"><div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_blank rel=noopener aria-label title="Share on twitter"><div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2&amp;caption=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2&amp;canonicalUrl=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_blank rel=noopener aria-label title="Share on tumblr"><div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093.0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941.0 9.999.0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg></div></div></a><a class=resp-sharing-button__link href="mailto:?subject=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2&amp;body=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_self rel=noopener aria-label title="Share via email"><div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div></div></a><a class=resp-sharing-button__link href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f&amp;media=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f;description=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2" target=_blank rel=noopener aria-label title="Share on pinterest"><div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="none"><path d="M12.017.0C5.396.0.029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024.0 1.518.769 1.518 1.688.0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128.0 3.768-2.245 3.768-5.487.0-2.861-2.063-4.869-5.008-4.869-3.41.0-5.409 2.562-5.409 5.199.0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646.0-3.776 2.748-7.252 7.92-7.252 4.158.0 7.392 2.967 7.392 6.923.0 4.135-2.607 7.462-6.233 7.462-1.214.0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607.0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017.0z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f&amp;title=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2&amp;summary=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2&amp;source=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_blank rel=noopener aria-label title="Share on linkedin"><div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div></div></a><a class=resp-sharing-button__link href="https://reddit.com/submit/?url=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f&amp;resubmit=true&amp;title=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2" target=_blank rel=noopener aria-label title="Share on reddit"><div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="none"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688.0 1.25.561 1.25 1.249a1.25 1.25.0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968.0 1.754.786 1.754 1.754.0.716-.435 1.333-1.01 1.614a3.111 3.111.0 01.042.52c0 2.694-3.13 4.87-7.004 4.87s-7.004-2.176-7.004-4.87c0-.183.015-.366.043-.534A1.748 1.748.0 014.028 12c0-.968.786-1.754 1.754-1.754.463.0.898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342.0 01.14-.197.35.35.0 01.238-.042l2.906.617a1.214 1.214.0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687.0 1.248-.561 1.248-1.249S9.937 12 9.249 12zm5.5.0c-.687.0-1.248.561-1.248 1.25.0.687.561 1.248 1.249 1.248S16 13.937 16 13.249c0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327.0 00-.231.094.33.33.0 000 .463c.842.842 2.484.913 2.961.913s2.105-.056 2.961-.913a.361.361.0 00.029-.463.33.33.0 00-.464.0c-.547.533-1.684.73-2.512.73-.828.0-1.979-.196-2.512-.73a.326.326.0 00-.232-.095z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f;title=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2" target=_blank rel=noopener aria-label title="Share on xing"><div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="none"><path d="M18.188.0c-.517.0-.741.325-.927.66.0.0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211.0.375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016.0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894.0 21.686.0h-3.498zM3.648 4.74c-.211.0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016.0.021L1.86 16.051c-.099.188-.093.381.0.529.085.142.239.234.45.234h3.461c.518.0.766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg></div></div></a><a class=resp-sharing-button__link href="whatsapp://send?text=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2%20https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_blank rel=noopener aria-label title="Share on whatsapp"><div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198.0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479.0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87.0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86.0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64.0 5.122 1.03 6.988 2.898a9.825 9.825.0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815.0 0012.05.0C5.495.0.16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882.0 005.683 1.448h.005c6.554.0 11.89-5.335 11.893-11.893a11.821 11.821.0 00-3.48-8.413z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f&amp;t=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2" target=_blank rel=noopener aria-label title="Share on hacker news"><div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://telegram.me/share/url?text=KodeKloud%20Engineer%20System%20Administration%20Challenges%20-%20P2&amp;url=https%3a%2f%2fchxmxii.github.io%2fportfolio%2fposts%2f2023%2f06%2fkodekloud-engineer-system-administration-challenges-p2%2f" target=_blank rel=noopener aria-label title="Share on telegram"><div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div></div></a></div><div class=pagination><div class=pagination__buttons><span class="button next"><a href=https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/><span class=button__text>KodeKloud Engineer System Administration Challenges - P1</span>
+<span class=button__icon>→</span></a></span></div></div></main></div><footer class=footer><div class=footer__inner><div class=footer__content><span>© All right reserved chxmxii - 2022</span></div></div><div class=footer__inner><div class=footer__content><span></span></div></div></footer></div><script type=text/javascript src=https://chxmxii.github.io/portfolio/bundle.min.bb2c6bc3ed452ca4759660e4020811f248bc2320081559e8a32d8b0092773852941133639d35e8370d03d3ddaa750b1edd6b343c5bd22a55d5bdeae8f648f49b.js integrity="sha512-uyxrw+1FLKR1lmDkAggR8ki8IyAIFVnooy2LAJJ3OFKUETNjnTXoNw0D092qdQse3Ws0PFvSKlXVvero9kj0mw=="></script></body></html>
