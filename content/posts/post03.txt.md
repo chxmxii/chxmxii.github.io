@@ -922,12 +922,122 @@ might be more infected files. Before doing a cleanup they would like to find all
 ---
 ## Linux Postfix Mail
 
-
 + xFusionCorp Industries has planned to set up a common email server in Stork DC. After several meetings and recommendations they have decided to use postfix as their mail transfer agent and dovecot as an IMAP/POP3 server. We would like you to perform the following steps:
 + Install and configure postfix on Stork DC mail server.
 + Create an email account javed@stratos.xfusioncorp.com identified by BruCStnMT5.
 + Set its mail directory to /home/javed/Maildir.
 + Install and configure dovecot on the same server.
+
+###### Solution:
+
++ ```Shell
+  ## To perform the given task, I performed the actions below:
+
+  - Login to the mail server as root
+  => ssh username@mailserver
+  => sudo su
+
+  - Confirm that yum is installed
+  => rpm -qa | grep postfix
+
+  - Install postfix on the mail server
+  => yum install postfix -y
+
+  - Configure postfix on the server
+  => vi /etc/postfix/main.cf
+  => :set nu
+  a) Find the line with #myhostname & #mydomain and set it as follows
+  => myhostname = stmail01.stratos.xfusioncorp.com
+  => mydomain = stratos.xfusioncorp.com
+
+  b) Uncomment the '#myorigin=$mydomain' line
+  => myorigin = $mydomain
+
+  c) Uncomment the '#inet_interfaces = all' line
+  => inet_interfaces = all
+
+  d) Uncomment the '#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain' line
+  => mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+
+  e) Uncomment the '#mynetworks = host IP address, => localhost' line and replace it accordingly
+  mynetworks = {host IP address}/24, 127.0.0.0/8
+
+  f) Uncomment the '#home_mailbox = Maildir/' line
+  => home_mailbox = Maildir/
+
+  g) Save and quit the configuration file
+  => Esc
+  => :wq
+
+  h) Start postfix and confirm it is working
+  => systemctl start postfix
+  => systemctl status postfix
+
+  h) Create the user account for javed
+  => useradd mariyam
+  => passwd mariyam
+  Set the given password.
+
+
+  => telnet stmail01 25
+  Enter the following settings:
+  => EHLO localhost
+  => mail from: mariyam@stratos.xfusioncorp.com
+  => rcpt to: mariyam@stratos.xfusioncorp.com
+  => DATA
+  => test mail
+  => quit
+
+  - Check mail queue and confirm the test mail was sent and delivered
+  => su - mariyam
+  => mailq
+  => cd Maildir/new
+  => ll 
+  => cat new/1632140730.v801I629b61M576754.stmail01.stratos.xfusioncorp.com
+  => exit
+
+  - Install dovecot on mail server
+  => yum install dovecot -y
+
+  - Configure dovecot
+  => vi /etc/dovecot/dovecot.conf
+  => :set nu
+  - Uncomment '#protocols = imap pop3 lmtp'
+  => Esc
+  => :wq
+
+  => vi /etc/dovecot/conf.d/10-mail.conf
+  => :set nu
+  - Uncomment the line '#mail_location = maildir:~/Maildir'
+  => :wq
+
+  => vi /etc/dovecot/conf.d/10-auth.conf
+  => :set nu
+  - Uncomment the line '#disable_plaintext_auth = yes'
+  => disable_plaintext_auth = yes
+  - Set the 'auth_mechanisms' line
+  => auth_mechanisms = plain login
+  => Esc
+  => :wq
+
+  => vi 10-master.conf
+  => :set nu
+  - Uncomment and set the line '#user = '
+  => user = postfix
+  => group = postfix
+  => :wq
+
+  - Start dovecot service
+  => systemctl start dovecot
+
+  - Test the configuration
+  => telnet stmail01 110
+  => user mariyam
+  => pass {given-password}
+  => retr 1
+  => quit
+  => ss -tulnp
+  ```
 
 ---
 
