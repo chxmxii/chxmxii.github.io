@@ -1095,89 +1095,7 @@ ee</li>
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
-RHCSA Exam Notes and tips
-AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
-<ul>
-<li>
-<p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE Exam Notes and tips</a></p>
-</li>
-<li>
-<p><a href="https://chxmxii.gitbook.io/system-management-tasks/">RHCSA Exam Notes and tips</a></p>
-</li>
-<li>
-<p><a href="https://chxmxii.gitbook.io/aws-ccp/">AWS CCP Exam Notes and tips</a></p>
-</li>
-</ul>
-]]></content></item><item><title>Understanding CI/CD</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</link><pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid><description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
-0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description><content type="html"><![CDATA[<p><img src="/files/cicdlogo.png" alt=""></p>
-<h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
-<ul>
-<li>CI/CD is an automated and reliable process for software development and delivery.&amp;*</li>
-<li>CI/CD’s frequent testing reduces code errors and defects.</li>
-<li>The main concepts attributed to CI/CD are continuos integration, delivery and deployment.</li>
-</ul>
-<p>⇒ The main goal is to reduce the risk involved in deploying software.</p>
-<h3 id="0--2-whats-the-difference-between-ci--cd--cd-">0 . 2 What’s the difference between CI &amp; CD &amp; CD :</h3>
-<ul>
-<li>Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</li>
-<li>Countinous delivery is a solution to the problem of poor visibility and commmunication between dev and business teams. its purpose is to ensure that it takes minimal effort to deploy new code.</li>
-<li>Countinous deployment means to automatically releasing a dev’s changes from the repository to produciton, where it is usable by customers.</li>
-</ul>
-<p><img src="/files/cicd.png" alt="Untitled"></p>
-<h3 id="0--3-different-stages-">0 . 3 Different stages :</h3>
-<p>CI/CD piple can be divided into four main stages :*</p>
-<ol>
-<li>Source</li>
-<li>Build</li>
-<li>Test</li>
-<li>Deployment</li>
-</ol>
-<p>The stages are executed in a linear fashion, and each stage must be completed successfully before the next stage can begin.</p>
-<p><img src="/files/cicd2.png" alt=""></p>
-<p><img src="/files/cicd3.png" alt=""></p>
-<h3 id="0--3--1-source-stage">0 . 3 . 1 Source Stage</h3>
-<p>First stage of any CI/CD pipeline. In this stage the pipleline will get trigged by any change in the program. this stage will cover version controlling and tracking changes.</p>
-<p>If the automated workflow detects a change in the central repository, it will trigger tasks such as code compilation and unit testing.</p>
-<p><strong>Example tools :</strong></p>
-<ul>
-<li>GIT</li>
-<li>Azure Repos</li>
-<li>AWS CodeCommit</li>
-</ul>
-<h3 id="0--3--2-build-stage-">0 . 3 . 2 Build Stage :</h3>
-<ul>
-<li>The second stage of the pipeline you merge the source code and its dependencies.</li>
-<li>It is done mainly to build a runnable instance of software that you can potentially ship to the end-user.</li>
-<li>Failure to pass the build stage could indicate a fundamental issue in the underlying code.</li>
-</ul>
-<p>Example tools :</p>
-<ol>
-<li>Jenkins</li>
-<li>AWS CodeBuild</li>
-<li>Azure Pipelines</li>
-</ol>
-<h3 id="0--3--3-test-stage-">0 . 3 . 3 Test Stage :</h3>
-<p>Test stage includes the execution of automated tests written by developers (integration testing, functional testing etc..) to validate the correctness of code and the behaviour of the software.</p>
-<p>The main goal of this stage is to prevent software bugs from reaching end-users.</p>
-<p><strong>Example Tools :</strong></p>
-<ol>
-<li>Puppeteer</li>
-<li>Jest</li>
-<li>Selenium.</li>
-</ol>
-<h3 id="0--3--4-deploy-stage-">0 . 3 . 4 Deploy stage :</h3>
-<p>Final stage of the pipeline, where your product goes live after passing the source,build and test stages successfully.</p>
-<p>The deployment stage can include infra provisioning, config, and containerization using techs like terraform, puppet,docker and k8s.</p>
-<p><strong>Example Tools :</strong></p>
-<ol>
-<li>Ansible</li>
-<li>Chef</li>
-<li>AWS Elastic beanstalk</li>
-<li>AWS Code Deploy</li>
-<li>Azure Pipelines - Deployment.</li>
-</ol>
-]]></content></item><item><title>Terraform Challenge Series - Challenge 1</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</link><pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/terraform-challenge-series-challenge-1/</guid><description>In this challenge we will deploy several Kubernetes resources using terraform. Utilize /root/terraform_challenge directory to store your Terraform configuration files. Note: kubectl is already installed on the host, you can check your deployments in the usual way.
+]]></content></item><item><title>Terraform Challenge Series - Challenge 1</title><link>https://chxmxii.github.io/portfolio/posts/2023/03/terraform-challenge-series-challenge-1/</link><pubDate>Sun, 26 Mar 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/03/terraform-challenge-series-challenge-1/</guid><description>In this challenge we will deploy several Kubernetes resources using terraform. Utilize /root/terraform_challenge directory to store your Terraform configuration files. Note: kubectl is already installed on the host, you can check your deployments in the usual way.
 Architecture : Solution : Controlplane We will start by installing terraform in the controlplane node apt update apt install unzip -y curl -L -o /tmp/terraform_1.1.5_linux_amd64.zip https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip which terraform terrafomr --version cd /root/terraform_challenge Kubernetes-provider for the kubernets provider we will configure it within provider.</description><content type="html"><![CDATA[<p>In this challenge we will deploy several Kubernetes resources using terraform.
 Utilize /root/terraform_challenge directory to store your Terraform configuration files.
 Note: kubectl is already installed on the host, you can check your deployments in the usual way.</p>
@@ -1295,6 +1213,88 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span><span style="display:flex;"><span>terraform apply
 </span></span></code></pre></div></li>
 </ul>
+]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/01/certifications-exam-notes/</link><pubDate>Mon, 30 Jan 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/01/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
+RHCSA Exam Notes and tips
+AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
+<ul>
+<li>
+<p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE Exam Notes and tips</a></p>
+</li>
+<li>
+<p><a href="https://chxmxii.gitbook.io/system-management-tasks/">RHCSA Exam Notes and tips</a></p>
+</li>
+<li>
+<p><a href="https://chxmxii.gitbook.io/aws-ccp/">AWS CCP Exam Notes and tips</a></p>
+</li>
+</ul>
+]]></content></item><item><title>Understanding CI/CD</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</link><pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid><description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
+0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description><content type="html"><![CDATA[<p><img src="/files/cicdlogo.png" alt=""></p>
+<h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
+<ul>
+<li>CI/CD is an automated and reliable process for software development and delivery.&amp;*</li>
+<li>CI/CD’s frequent testing reduces code errors and defects.</li>
+<li>The main concepts attributed to CI/CD are continuos integration, delivery and deployment.</li>
+</ul>
+<p>⇒ The main goal is to reduce the risk involved in deploying software.</p>
+<h3 id="0--2-whats-the-difference-between-ci--cd--cd-">0 . 2 What’s the difference between CI &amp; CD &amp; CD :</h3>
+<ul>
+<li>Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</li>
+<li>Countinous delivery is a solution to the problem of poor visibility and commmunication between dev and business teams. its purpose is to ensure that it takes minimal effort to deploy new code.</li>
+<li>Countinous deployment means to automatically releasing a dev’s changes from the repository to produciton, where it is usable by customers.</li>
+</ul>
+<p><img src="/files/cicd.png" alt="Untitled"></p>
+<h3 id="0--3-different-stages-">0 . 3 Different stages :</h3>
+<p>CI/CD piple can be divided into four main stages :*</p>
+<ol>
+<li>Source</li>
+<li>Build</li>
+<li>Test</li>
+<li>Deployment</li>
+</ol>
+<p>The stages are executed in a linear fashion, and each stage must be completed successfully before the next stage can begin.</p>
+<p><img src="/files/cicd2.png" alt=""></p>
+<p><img src="/files/cicd3.png" alt=""></p>
+<h3 id="0--3--1-source-stage">0 . 3 . 1 Source Stage</h3>
+<p>First stage of any CI/CD pipeline. In this stage the pipleline will get trigged by any change in the program. this stage will cover version controlling and tracking changes.</p>
+<p>If the automated workflow detects a change in the central repository, it will trigger tasks such as code compilation and unit testing.</p>
+<p><strong>Example tools :</strong></p>
+<ul>
+<li>GIT</li>
+<li>Azure Repos</li>
+<li>AWS CodeCommit</li>
+</ul>
+<h3 id="0--3--2-build-stage-">0 . 3 . 2 Build Stage :</h3>
+<ul>
+<li>The second stage of the pipeline you merge the source code and its dependencies.</li>
+<li>It is done mainly to build a runnable instance of software that you can potentially ship to the end-user.</li>
+<li>Failure to pass the build stage could indicate a fundamental issue in the underlying code.</li>
+</ul>
+<p>Example tools :</p>
+<ol>
+<li>Jenkins</li>
+<li>AWS CodeBuild</li>
+<li>Azure Pipelines</li>
+</ol>
+<h3 id="0--3--3-test-stage-">0 . 3 . 3 Test Stage :</h3>
+<p>Test stage includes the execution of automated tests written by developers (integration testing, functional testing etc..) to validate the correctness of code and the behaviour of the software.</p>
+<p>The main goal of this stage is to prevent software bugs from reaching end-users.</p>
+<p><strong>Example Tools :</strong></p>
+<ol>
+<li>Puppeteer</li>
+<li>Jest</li>
+<li>Selenium.</li>
+</ol>
+<h3 id="0--3--4-deploy-stage-">0 . 3 . 4 Deploy stage :</h3>
+<p>Final stage of the pipeline, where your product goes live after passing the source,build and test stages successfully.</p>
+<p>The deployment stage can include infra provisioning, config, and containerization using techs like terraform, puppet,docker and k8s.</p>
+<p><strong>Example Tools :</strong></p>
+<ol>
+<li>Ansible</li>
+<li>Chef</li>
+<li>AWS Elastic beanstalk</li>
+<li>AWS Code Deploy</li>
+<li>Azure Pipelines - Deployment.</li>
+</ol>
 ]]></content></item><item><title>Deploying NGINX web server with kubernetes</title><link>https://chxmxii.github.io/portfolio/posts/2022/09/deploying-nginx-web-server-with-kubernetes/</link><pubDate>Sat, 10 Sep 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/09/deploying-nginx-web-server-with-kubernetes/</guid><description>Hello, We already know that with Kubernetes you can easily deploy and manage NGINX across a cluster of nodes, ensuring high availability and efficient resource utilization. In this article, we&amp;rsquo;ll discuss the steps involved in deploying NGINX with Kubernetes and how it can benefit your web hosting infrastructure.
 1 - Create nginx-deployement.yaml file :
 apiVersion : apps/v1 kind: Deployment metadata: name: nginx labels: app: nginx spec: replicas: 1 selector: matchlabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx ports: - containerPort: 80 2 - Create the deployment : kubectl create -f dep.</description><content type="html"><![CDATA[<p>Hello, We already know that with Kubernetes you can easily deploy and manage NGINX across a cluster of nodes, ensuring high availability and efficient resource utilization. In this article, we&rsquo;ll discuss the steps involved in deploying NGINX with Kubernetes and how it can benefit your web hosting infrastructure.</p>
@@ -1343,18 +1343,7 @@ apiVersion : apps/v1 kind: Deployment metadata: name: nginx labels: app: nginx s
 <p>⇒ Service will be created as a nodePort, means it will expose the nginx web-server on each node with port 80. pods are selected for this service depending on label selector”app:nginx”, same label we specified while creating the nginx pode in dep.</p>
 <p>6 - verify :</p>
 <p><code>kubectl get svc</code></p>
-]]></content></item><item><title>Bypassing common jinja2 filters</title><link>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</link><pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</guid><description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
-Depending on the template engine being used the impact can vary, some of the issues range from:
-Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters</description><content type="html"><![CDATA[<h2 id="what-is-ssti">What is SSTI?</h2>
-<p>SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.</p>
-<p>Depending on the template engine being used the impact can vary, some of the issues range from:</p>
-<ul>
-<li>Data exposure (application secrets)</li>
-<li>Cross Site Scripting</li>
-<li>Remote Code execution</li>
-</ul>
-<h3 id="string-filters">String filters</h3>
-]]></content></item><item><title>RingZer0CTF Sysadmin Track</title><link>https://chxmxii.github.io/portfolio/posts/2021/04/ringzer0ctf-sysadmin-track/</link><pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2021/04/ringzer0ctf-sysadmin-track/</guid><description>SysAdmin Part 1 ┌──(kali㉿kali)-[~] └─$ sshpass -p VNZDDLq2x9qXCzVdABbR1HOtz ssh -o StrictHostKeyChecking=no morpheus@challenges.ringzer0team.com -p 10089 Warning: Permanently added &amp;#39;[challenges.ringzer0team.com]:10089&amp;#39; (ED25519) to the list of known hosts. 888888ba oo d8888888P a8888a d888888P 88 8b .d8&amp;#39; d8 8b 88 88aaaa8P dP 88d888b. .d8888b. .d8&amp;#39; .d8888b. 88d888b. 88 P 88 88 .d8888b. .d8888b. 88d8b.d8b. 88 8b. 88 88 88 88 88 .d8&amp;#39; 88ooood8 88 88 88 d 88 88 88ooood8 88 88 88 88 88 88 88 88 88 88 88 88 d8&amp;#39; 88.</description><content type="html"><![CDATA[<h2 id="sysadmin-part-1">SysAdmin Part 1</h2>
+]]></content></item><item><title>RingZer0CTF Sysadmin Track</title><link>https://chxmxii.github.io/portfolio/posts/2022/04/ringzer0ctf-sysadmin-track/</link><pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/04/ringzer0ctf-sysadmin-track/</guid><description>SysAdmin Part 1 ┌──(kali㉿kali)-[~] └─$ sshpass -p VNZDDLq2x9qXCzVdABbR1HOtz ssh -o StrictHostKeyChecking=no morpheus@challenges.ringzer0team.com -p 10089 Warning: Permanently added &amp;#39;[challenges.ringzer0team.com]:10089&amp;#39; (ED25519) to the list of known hosts. 888888ba oo d8888888P a8888a d888888P 88 8b .d8&amp;#39; d8 8b 88 88aaaa8P dP 88d888b. .d8888b. .d8&amp;#39; .d8888b. 88d888b. 88 P 88 88 .d8888b. .d8888b. 88d8b.d8b. 88 8b. 88 88 88 88 88 .d8&amp;#39; 88ooood8 88 88 88 d 88 88 88ooood8 88 88 88 88 88 88 88 88 88 88 88 88 d8&amp;#39; 88.</description><content type="html"><![CDATA[<h2 id="sysadmin-part-1">SysAdmin Part 1</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>└─$ sshpass -p VNZDDLq2x9qXCzVdABbR1HOtz ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no morpheus@challenges.ringzer0team.com -p <span style="color:#ae81ff">10089</span>
 </span></span><span style="display:flex;"><span>Warning: Permanently added <span style="color:#e6db74">&#39;[challenges.ringzer0team.com]:10089&#39;</span> <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span> to the list of known hosts.
@@ -1417,4 +1406,15 @@ Data exposure (application secrets) Cross Site Scripting Remote Code execution S
 </ul>
 <hr>
 <h2 id="sysadmin-part-2">SysAdmin Part 2</h2>
+]]></content></item><item><title>Bypassing common jinja2 filters</title><link>https://chxmxii.github.io/portfolio/posts/2021/08/bypassing-common-jinja2-filters/</link><pubDate>Thu, 19 Aug 2021 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2021/08/bypassing-common-jinja2-filters/</guid><description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
+Depending on the template engine being used the impact can vary, some of the issues range from:
+Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters</description><content type="html"><![CDATA[<h2 id="what-is-ssti">What is SSTI?</h2>
+<p>SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.</p>
+<p>Depending on the template engine being used the impact can vary, some of the issues range from:</p>
+<ul>
+<li>Data exposure (application secrets)</li>
+<li>Cross Site Scripting</li>
+<li>Remote Code execution</li>
+</ul>
+<h3 id="string-filters">String filters</h3>
 ]]></content></item></channel></rss>
