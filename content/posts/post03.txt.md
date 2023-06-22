@@ -897,3 +897,51 @@ ee
   yum list installed | grep git
   git version
   ```
+---
+## Find
+
+###### Solution:
++ ```Shell
+  find /var/www/html/official -name "*.js" -type f -exec cp --parents {} /official/ \; 
+  ```
+---
+## Linux Postfix Mail
+
+
++ xFusionCorp Industries has planned to set up a common email server in Stork DC. After several meetings and recommendations they have decided to use postfix as their mail transfer agent and dovecot as an IMAP/POP3 server. We would like you to perform the following steps:
++ Install and configure postfix on Stork DC mail server.
++ Create an email account javed@stratos.xfusioncorp.com identified by BruCStnMT5.
++ Set its mail directory to /home/javed/Maildir.
++ Install and configure dovecot on the same server.
+
+---
+
+## Linux Process Troubleshooting
+
++ The production support team of xFusionCorp Industries has deployed some of the latest monitoring tools to keep an eye on every service, application, etc. running on the systems. One of the monitoring systems reported about Apache service unavailability on one of the app servers in Stratos DC.
++ Identify the faulty app host and fix the issue. Make sure Apache service is up and running on all app hosts. They might not hosted any code yet on these servers so you need not to worry about if Apache isn't serving any pages or not, just make sure service is up and running. Also, do not try to change the Apache port on any host.
+
+###### Solution:
+
++ ```Shell 
+  #First, we need to identify the faulty app. lets use curl from the jump host
+  curl http://stapp01:6200
+  curl http://stapp02:6200
+  curl http://stapp03:6200
+  #In my case, stapp01 was the faulty app, lets ssh to it and find out whats the problem
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  systemctl start httpd
+  systemctl status httpd
+  httpd -t
+  journalctl -xe
+  cat /etc/httpd/conf/httpd_conf | grep Listen
+  #lets install netstat
+  yum install netstat -y
+  netstat -tulnp |grep 6200
+  #get the id of the current proccess using port 6200 and kill it, in my case it was 525
+  kill -9 525
+  #start the service and verify
+  systemctl start httpd
+  systemctl status httpd
+  curl http://stapp01:6200
+  ```
