@@ -920,6 +920,69 @@ b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.sta
 </span></span><span style="display:flex;"><span>git version
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-find-command">Linux Find Command</h2>
+<ul>
+<li>During a routine security audit, the team identified an issue on the Nautilus App Server. Some malicious content was identified within the website code. After digging into the issue they found that there
+might be more infected files. Before doing a cleanup they would like to find all similar files and copy them to a safe location for further investigation. Accomplish the task as per the following requirements:</li>
+<li>a. On App Server 1 at location /var/www/html/official find out all files (not directories) having .js extension.</li>
+<li>b. Copy all those files along with their parent directory structure to location /official on same server.</li>
+<li>c. Please make sure not to copy the entire /var/www/html/official directory content.</li>
+</ul>
+<h6 id="solution-24">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#connect to app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check if /official exists</span>
+</span></span><span style="display:flex;"><span>ls /official
+</span></span><span style="display:flex;"><span>ls /var/www/html/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#find all the js files under /var/www/html/official</span>
+</span></span><span style="display:flex;"><span>find /var/www/html/official -name <span style="color:#e6db74">&#34;*.js&#34;</span> -type f -exec cp --parents <span style="color:#f92672">{}</span> /official/ <span style="color:#ae81ff">\;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ls /official/
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-postfix-mail">Linux Postfix Mail</h2>
+<ul>
+<li>xFusionCorp Industries has planned to set up a common email server in Stork DC. After several meetings and recommendations they have decided to use postfix as their mail transfer agent and dovecot as an IMAP/POP3 server. We would like you to perform the following steps:</li>
+<li>Install and configure postfix on Stork DC mail server.</li>
+<li>Create an email account <a href="mailto:javed@stratos.xfusioncorp.com">javed@stratos.xfusioncorp.com</a> identified by BruCStnMT5.</li>
+<li>Set its mail directory to /home/javed/Maildir.</li>
+<li>Install and configure dovecot on the same server.</li>
+</ul>
+<hr>
+<h2 id="linux-process-troubleshooting">Linux Process Troubleshooting</h2>
+<ul>
+<li>The production support team of xFusionCorp Industries has deployed some of the latest monitoring tools to keep an eye on every service, application, etc. running on the systems. One of the monitoring systems reported about Apache service unavailability on one of the app servers in Stratos DC.</li>
+<li>Identify the faulty app host and fix the issue. Make sure Apache service is up and running on all app hosts. They might not hosted any code yet on these servers so you need not to worry about if Apache isn&rsquo;t serving any pages or not, just make sure service is up and running. Also, do not try to change the Apache port on any host.</li>
+</ul>
+<h6 id="solution-25">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#First, we need to identify the faulty app. lets use curl from the jump host</span>
+</span></span><span style="display:flex;"><span>curl http://stapp01:6200
+</span></span><span style="display:flex;"><span>curl http://stapp02:6200
+</span></span><span style="display:flex;"><span>curl http://stapp03:6200
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#In my case, stapp01 was the faulty app, lets ssh to it and find out whats the problem</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span>httpd -t
+</span></span><span style="display:flex;"><span>journalctl -xe
+</span></span><span style="display:flex;"><span>cat /etc/httpd/conf/httpd_conf | grep Listen
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#lets install netstat</span>
+</span></span><span style="display:flex;"><span>yum install netstat -y
+</span></span><span style="display:flex;"><span>netstat -tulnp |grep <span style="color:#ae81ff">6200</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#get the id of the current proccess using port 6200 and kill it, in my case it was 525</span>
+</span></span><span style="display:flex;"><span>kill -9 <span style="color:#ae81ff">525</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the service and verify</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span>curl http://stapp01:6200
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</link><pubDate>Fri, 18 Nov 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
 RHCSA Exam Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
