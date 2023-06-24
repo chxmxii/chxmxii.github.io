@@ -488,7 +488,7 @@ might be more infected files. Before doing a cleanup they would like to find all
 <h6 id="solution-9">Solution:</h6>
 <ul>
 <li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">## ssh to the mail server</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">## ssh to the mail server</span>
 </span></span><span style="display:flex;"><span>sshpass -p Gr00T123 ssh -o StrictHostKeyChecking groot@stmail01
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
 </span></span><span style="display:flex;"><span>sudo su -
@@ -601,22 +601,38 @@ might be more infected files. Before doing a cleanup they would like to find all
 <li>d. Make appropriate settings to allow all local clients (local socket connections) to connect to the kodekloud_db8 database through kodekloud_sam user using md5 method (Please do not try to encrypt password with md5sum).</li>
 <li>e. At the end its good to test the db connection using these new credentials from root user or server&rsquo;s sudo use</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the database server</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the database server</span>
+</span></span><span style="display:flex;"><span>sshpass -p Sp<span style="color:#ae81ff">\!</span>dy ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no peter@stdb01
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">sudo su -</span>
+</span></span><span style="display:flex;"><span>sudo su -
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#install postgresql</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">yum search all postgresql</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">yum whatprovides postgresql</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">yum install postgresql-server postgresql-contrib</span>
+</span></span><span style="display:flex;"><span>yum search all postgresql
+</span></span><span style="display:flex;"><span>yum whatprovides postgresql
+</span></span><span style="display:flex;"><span>yum install postgresql-server postgresql-contrib
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#iniate the db</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">postgresql-setup initdb</span>
+</span></span><span style="display:flex;"><span>postgresql-setup initdb
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#enable and start postgresql</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">systemctl enable postgresql &amp;&amp; systemctl start postgresql</span>
+</span></span><span style="display:flex;"><span>systemctl enable postgresql <span style="color:#f92672">&amp;&amp;</span> systemctl start postgresql
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#create user and grant full permissions</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">sudo -u postgres psql</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">&gt; CREATE</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">&gt; </span>
+</span></span><span style="display:flex;"><span>sudo -u postgres psql
+</span></span><span style="display:flex;"><span>&gt; CREATE USER &lt;username&gt; WITH PASSWORD &lt;password&gt;;
+</span></span><span style="display:flex;"><span>&gt; CREATE DATABASE &lt;database_name&gt;;
+</span></span><span style="display:flex;"><span>&gt; GRANT ALL PRIVILEGES ON DATABASE &lt;databse_name&gt; TO &lt;username&gt;; 
+</span></span><span style="display:flex;"><span>&gt;<span style="color:#ae81ff">\q</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure to postgres to allow local socket cnx using md5 method</span>
+</span></span><span style="display:flex;"><span>vi /var/lib/psql/data/pg_hba.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#edit the following lines</span>
+</span></span><span style="display:flex;"><span>&gt;local all all md5
+</span></span><span style="display:flex;"><span>&gt;host all 127.0.0.1/32 md5
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#open postgresql.conf and uncomment listen_addresses line</span>
+</span></span><span style="display:flex;"><span>vi /var/lib/psql/data/postgresql.conf
+</span></span><span style="display:flex;"><span>&gt;listen_addresses <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;localhost&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart psq service</span>
+</span></span><span style="display:flex;"><span>systemctl restart postgresql
+</span></span><span style="display:flex;"><span>systemctl status postgresql
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verifying</span>
+</span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h 127.0.0.1 -W
+</span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h localhost -W
 </span></span></code></pre></div>]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
 <h2 id="linux-timezones-setting">Linux TimeZones Setting</h2>
 <ul>
