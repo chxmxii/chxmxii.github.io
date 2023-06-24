@@ -603,37 +603,38 @@ might be more infected files. Before doing a cleanup they would like to find all
 + d. Make appropriate settings to allow all local clients (local socket connections) to connect to the kodekloud_db8 database through kodekloud_sam user using md5 method (Please do not try to encrypt password with md5sum).
 + e. At the end its good to test the db connection using these new credentials from root user or server's sudo use
 
-```shell
-#ssh to the database server
-sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
-#switch to root user
-sudo su -
-#install postgresql
-yum search all postgresql
-yum whatprovides postgresql
-yum install postgresql-server postgresql-contrib
-#iniate the db
-postgresql-setup initdb
-#enable and start postgresql
-systemctl enable postgresql && systemctl start postgresql
-#create user and grant full permissions
-sudo -u postgres psql
-> CREATE USER <username> WITH PASSWORD <password>;
-> CREATE DATABASE <database_name>;
-> GRANT ALL PRIVILEGES ON DATABASE <databse_name> TO <username>; 
->\q
-#configure to postgres to allow local socket cnx using md5 method
-vi /var/lib/psql/data/pg_hba.conf
-#edit the following lines
->local all all md5
->host all 127.0.0.1/32 md5
-#open postgresql.conf and uncomment listen_addresses line
-vi /var/lib/psql/data/postgresql.conf
->listen_addresses = 'localhost'
-#restart psq service
-systemctl restart postgresql
-systemctl status postgresql
-#verifying
-psql -U <username> -d <database_name> -h 127.0.0.1 -W
-psql -U <username> -d <database_name> -h localhost -W
-```
+###### Solution:
++ ```shell
+  #ssh to the database server
+  sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
+  #switch to root user
+  sudo su -
+  #install postgresql
+  yum search all postgresql
+  yum whatprovides postgresql
+  yum install postgresql-server postgresql-contrib
+  #iniate the db
+  postgresql-setup initdb
+  #enable and start postgresql
+  systemctl enable postgresql && systemctl start postgresql
+  #create user and grant full permissions
+  sudo -u postgres psql
+  > CREATE USER <username> WITH PASSWORD <password>;
+  > CREATE DATABASE <database_name>;
+  > GRANT ALL PRIVILEGES ON DATABASE <databse_name> TO <username>; 
+  >\q
+  #configure to postgres to allow local socket cnx using md5 method
+  vi /var/lib/psql/data/pg_hba.conf
+  #edit the following lines
+  >local all all md5
+  >host all 127.0.0.1/32 md5
+  #open postgresql.conf and uncomment listen_addresses line
+  vi /var/lib/psql/data/postgresql.conf
+  >listen_addresses = 'localhost'
+  #restart psq service
+  systemctl restart postgresql
+  systemctl status postgresql
+  #verifying
+  psql -U <username> -d <database_name> -h 127.0.0.1 -W
+  psql -U <username> -d <database_name> -h localhost -W
+  ```
