@@ -602,3 +602,22 @@ might be more infected files. Before doing a cleanup they would like to find all
 + c. Create a database kodekloud_db8 and grant full permissions to user kodekloud_sam on this database.
 + d. Make appropriate settings to allow all local clients (local socket connections) to connect to the kodekloud_db8 database through kodekloud_sam user using md5 method (Please do not try to encrypt password with md5sum).
 + e. At the end its good to test the db connection using these new credentials from root user or server's sudo use
+
+```yaml
+#ssh to the database server
+sshpass -p Sp\!dy ssh -o StrictHostKeyChecking=no peter@stdb01
+#switch to root user
+sudo su -
+#install postgresql
+yum search all postgresql
+yum whatprovides postgresql
+yum install postgresql-server postgresql-contrib
+#iniate the db
+postgresql-setup initdb
+#enable and start postgresql
+systemctl enable postgresql && systemctl start postgresql
+#create user and grant full permissions
+sudo -u postgres psql
+> CREATE
+> 
+```
