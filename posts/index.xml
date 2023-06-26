@@ -638,6 +638,36 @@ might be more infected files. Before doing a cleanup they would like to find all
 </span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h localhost -W
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="tomcat">Tomcat</h2>
+<ul>
+<li>The Nautilus application development team recently finished the beta version of one of their Java-based applications, which they are planning to deploy on one of the app servers in Stratos DC. After an internal team meeting, they have decided to use the tomcat application server. Based on the requirements mentioned below complete the task:</li>
+<li>a. Install tomcat server on App Server 2 using yum.</li>
+<li>b. Configure it to run on port 6300.</li>
+<li>c. There is a ROOT.war file on Jump host at location /tmp. Deploy it on this tomcat server and make sure the webpage works directly on base URL i.e without specifying any sub-directory anything like this http://URL/ROOT .</li>
+</ul>
+<h6 id="solution-12">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 2</span>
+</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install tomcat</span>
+</span></span><span style="display:flex;"><span>yum install tomcat -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run tomcat on port 6300</span>
+</span></span><span style="display:flex;"><span>vi /etc/tomcat/server.xml
+</span></span><span style="display:flex;"><span>&gt; look <span style="color:#66d9ef">for</span> Port and change it to &lt;Connector Port <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;6300&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>systemctl start tomcat
+</span></span><span style="display:flex;"><span>systemctl status tomcat
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from the jumphost copy the ROOT.war to app server2</span>
+</span></span><span style="display:flex;"><span>scp ROOT.war steve@lstapp02:/tmp/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#go back to the app server2</span>
+</span></span><span style="display:flex;"><span>mv /tmp/ROOT.war /var/lib/tomcat/webapps/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl localhost:6300
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
 <h2 id="linux-timezones-setting">Linux TimeZones Setting</h2>
 <ul>
