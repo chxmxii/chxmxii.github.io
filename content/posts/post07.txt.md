@@ -638,3 +638,31 @@ might be more infected files. Before doing a cleanup they would like to find all
   psql -U <username> -d <database_name> -h 127.0.0.1 -W
   psql -U <username> -d <database_name> -h localhost -W
   ```
+---
+## Tomcat
+
++ The Nautilus application development team recently finished the beta version of one of their Java-based applications, which they are planning to deploy on one of the app servers in Stratos DC. After an internal team meeting, they have decided to use the tomcat application server. Based on the requirements mentioned below complete the task:
++ a. Install tomcat server on App Server 2 using yum.
++ b. Configure it to run on port 6300.
++ c. There is a ROOT.war file on Jump host at location /tmp. Deploy it on this tomcat server and make sure the webpage works directly on base URL i.e without specifying any sub-directory anything like this http://URL/ROOT .
+
+###### Solution: 
++ ```Shell
+  #ssh to app server 2
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02
+  #switch to the root user
+  sudo su -
+  #install tomcat
+  yum install tomcat -y
+  #run tomcat on port 6300
+  vi /etc/tomcat/server.xml
+  > look for Port and change it to <Connector Port = "6300">
+  systemctl start tomcat
+  systemctl status tomcat
+  #from the jumphost copy the ROOT.war to app server2
+  scp ROOT.war steve@lstapp02:/tmp/
+  #go back to the app server2
+  mv /tmp/ROOT.war /var/lib/tomcat/webapps/
+  #verify
+  curl localhost:6300
+  ```
