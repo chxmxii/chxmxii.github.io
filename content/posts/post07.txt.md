@@ -666,3 +666,23 @@ might be more infected files. Before doing a cleanup they would like to find all
   #verify
   curl localhost:6300
   ```
+---
+## Install and configure SFTP
+
++ Some of the developers from Nautilus project team have asked for SFTP access to at least one of the app server in Stratos DC. After going through the requirements, the system admins team has decided to configure the SFTP server on App Server 2 server in Stratos Datacenter. Please configure it as per the following instructions:
++ a. Create an SFTP user mariyam and set its password to BruCStnMT5.
++ b. Password authentication should be enabled for this user.
++ c. Set its ChrootDirectory to /var/www/appdata.
++ d. SFTP user should only be allowed to make SFTP connections.
+  
+###### Solution:
++ ```Shell
+mkdir -p /var/www/appdata
+    useradd -d /var/www/appdata/ mariyam
+    cat /etc/passwd
+    vi /etc/ssh/sshd_config 
+    systemctl restart sshd
+    chmod 755 /var/www/appdata/
+    chown root:root /var/www/appdata/
+    sftp mariyam@stapp02
+  ```
