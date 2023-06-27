@@ -677,12 +677,30 @@ might be more infected files. Before doing a cleanup they would like to find all
   
 ###### Solution:
 + ```Shell
-mkdir -p /var/www/appdata
-    useradd -d /var/www/appdata/ mariyam
-    cat /etc/passwd
-    vi /etc/ssh/sshd_config 
-    systemctl restart sshd
-    chmod 755 /var/www/appdata/
-    chown root:root /var/www/appdata/
-    sftp mariyam@stapp02
+  #ssh to app server2
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02  
+  #switch to the root user
+  sudo su -
+  #make the folder appdata
+  mkdir -p /var/www/appdata
+  #change perms and the owner of appdata folder
+  chmod 755 /var/www/appdata/
+  chown root:root /var/www/appdata/
+  #add user mariyam with appdata as its chrootDir
+  useradd -d /var/www/appdata/ mariyam
+  #verify
+  cat /etc/passwd
+  #configure sshd
+  vi /etc/ssh/sshd_config
+  >PasswordAuthentication yes
+	>ChrootDirectory %h
+	>AllowTCPForwarding no
+	>X11Forwarding no
+	>ForceCommand internal-sftp
+	>AllowAgentForwarding no
+	>PermitTunnel no 
+  #restart sshd 
+  systemctl restart sshd
+  #verify
+  sftp mariyam@stapp02
   ```
