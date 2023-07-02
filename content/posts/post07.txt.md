@@ -704,3 +704,38 @@ might be more infected files. Before doing a cleanup they would like to find all
   #verify
   sftp mariyam@stapp02
   ```
+ ---
+ ## IPtables Installation And Configuration
+
++ We have one of our website up and running on our Nautilus infrastructure in Stratos DC. Our security team has raised a concern that right now Apache’s port i.e 3000 is open for all since there is no firewall installed on these hosts. So we have decided to add some security layer for these hosts and after discussions and recommendations we have come up with below given requirements:
++ Install iptables and all its dependencies on each app host.
++ Block incoming port 3000 on all apps for everyone except for LBR host.
++ Make sure the rules should persist even after system reboot.
+
+###### Solution:
++ ```shell
+  #ssh to the app servers
+  sshpass -p <password> ssh -o StrictHostKeyChecking=no <user>@<host>
+  #switch to the root user
+  sudo su -
+  #install iptables
+  yum install iptables-services -y
+  iptables --help
+  #start the iptables 
+  systemctl start iptables
+  systemctl enable iptables
+  systemctl status iptables
+  iptables --list
+  #allow LBR host
+  iptables -R INPUT 5 -p tcp --dport 3000 -s 172.16.238.14 -j ACCEPT #-s is for source ip of the LBR, dport is destination port.
+  #block the incoming reqs
+  iptables -A INPUT -p tcp --dport 3000 -j DROP
+  #save
+  service iptables save
+  #verify from the jump host
+  curl 172.16.238.10:3000
+  #ssh to the LBR host
+  sshpass -p Mischi3f ssh -o StrictHostKeyChecking=no loki@stlb01
+  #verify
+  curl 172.16.238.10:3000
+  ```
