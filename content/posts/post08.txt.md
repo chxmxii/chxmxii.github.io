@@ -13,6 +13,7 @@ weight: 10
 series:
 - Hugo 101
 ---
+---
 ## Ansible Unarchive Module	
 
 + One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task:
@@ -60,3 +61,4 @@ series:
         when: ansible_hostname == "stapp03"
   ...
   ```
+---
