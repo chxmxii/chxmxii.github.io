@@ -1,4 +1,53 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 09 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer DevOps Engineer Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/07/kodekloud-engineer-devops-engineer-challenges-p1/</link><pubDate>Sun, 09 Jul 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/07/kodekloud-engineer-devops-engineer-challenges-p1/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<h2 id="ansible-unarchive-module">Ansible Unarchive Module</h2>
+<ul>
+<li>One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task:</li>
+<li>We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</li>
+<li>There is a ZIP archive /usr/src/devops/nautilus.zip on jump host.</li>
+<li>Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to perform the below given tasks.</li>
+<li>Unzip /usr/src/devops/nautilus.zip archive in /opt/devops/ location on all app servers.</li>
+<li>Make sure the extracted data must has the respective sudo user as their user and group owner, i.e tony for app server 1, steve for app server 2, banner for app server 3.</li>
+<li>The extracted data permissions must be 0644</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#verify the connectivity </span>
+</span></span><span style="display:flex;"><span>ansible all -m ping -i inventory
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create a playbook.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the playbook</span>
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">unarchive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/sysops/xfusion.zip</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0744&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">unarchive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/sysops/xfusion.zip</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0744&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">unarchive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/sysops/xfusion.zip</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0744&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div></li>
+</ul>
+]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
 <li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li>
