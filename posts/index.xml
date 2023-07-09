@@ -1291,7 +1291,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 <li>You can refer to the documentation for this provider, simply go to <a href="https://registry.terraform.io/">Terraform Registry</a> and search for hashicorp/kubernetes.</li>
 <li>Click on USE PROVIDER button and copy the snippet into provider.tf</li>
 <li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Terraform" data-lang="Terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">required_providers</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">kubernetes</span> = {
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;hashicorp/kubernetes&#34;</span>
@@ -1307,7 +1307,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 <p>Now, we can initialize the provider</p>
 <ul>
 <li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>Terraform init
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>terraform init
 </span></span></code></pre></div></li>
 </ul>
 <hr>
@@ -1316,7 +1316,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 <li>Create a terraform resource frontend for kubernetes deployement, you can refere to the documentation for <a href="https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/deployment">Kubernetes_deployment</a>.</li>
 <li>If you are familiar with kubernetes, you can see that the resource shema is arranged similarly to the corresponding YAML manifest.</li>
 <li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Terraform" data-lang="Terraform"><span style="display:flex;"><span><span style="color:#66d9ef">  resource</span> <span style="color:#e6db74">&#34;kubernetes_deployment&#34;</span> <span style="color:#e6db74">&#34;frontend&#34;</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">  resource</span> <span style="color:#e6db74">&#34;kubernetes_deployment&#34;</span> <span style="color:#e6db74">&#34;frontend&#34;</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">metadata</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;frontend&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">labels</span> = {
@@ -1378,7 +1378,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 <h6 id="deploy-the-kubernetes-resources">Deploy the kubernetes resources</h6>
 <ul>
 <li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>terraform plan
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>terraform plan
 </span></span><span style="display:flex;"><span>terraform apply
 </span></span></code></pre></div></li>
 </ul>
