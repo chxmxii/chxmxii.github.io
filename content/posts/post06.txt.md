@@ -39,7 +39,7 @@ Note: kubectl is already installed on the host, you can check your deployments i
 + for the kubernets provider we will configure it within provider.tf file.
 + You can refer to the documentation for this provider, simply go to [Terraform Registry](https://registry.terraform.io/) and search for hashicorp/kubernetes.
 + Click on USE PROVIDER button and copy the snippet into provider.tf
-+ ```Terraform
++ ```terraform
   terraform {
   required_providers {
     kubernetes = {
@@ -53,14 +53,14 @@ Note: kubectl is already installed on the host, you can check your deployments i
   }
   ```
 Now, we can initialize the provider
-+ ```Shell
-  Terraform init
++ ```shell
+  terraform init
   ```
 ---
 ##### frontend
 + Create a terraform resource frontend for kubernetes deployement, you can refere to the documentation for [Kubernetes_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/2.11.0/docs/resources/deployment).
 + If you are familiar with kubernetes, you can see that the resource shema is arranged similarly to the corresponding YAML manifest.
-+ ```Terraform
++ ```terraform
     resource "kubernetes_deployment" "frontend" {
     metadata {
       name = "frontend"
@@ -118,7 +118,7 @@ Now, we can initialize the provider
   ```
 ---
 ###### Deploy the kubernetes resources
-+ ```Shell
++ ```shell
   terraform plan
   terraform apply
   ```
