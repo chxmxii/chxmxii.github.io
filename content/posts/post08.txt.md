@@ -118,5 +118,5 @@ series:
       - name: log-volume
         emptyDir : {}
     restartPolicy: Never
-
   ```
+--- 
