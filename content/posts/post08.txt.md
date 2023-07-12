@@ -62,7 +62,7 @@ series:
   ...
   ```
 ---
-# Kuberentes_Time_Check_Pod
+## Kuberentes time check pod
 
 + The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.
 + Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.e busybox:latest.
