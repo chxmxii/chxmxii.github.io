@@ -109,6 +109,25 @@
 </span></span></code></pre></div></li>
 </ul>
 <hr>
+<h2 id="docker-ports-mapping">Docker Ports Mapping</h2>
+<ul>
+<li>The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below:</li>
+<li>a. Pull nginx:stable docker image on Application Server 1.</li>
+<li>b. Create a container named cluster using the image you pulled.</li>
+<li>c. Map host port 5000 to container port 80. Please keep the container in running state.</li>
+</ul>
+<h6 id="solution-2">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pull the docker image</span>
+</span></span><span style="display:flex;"><span>sudo docker pull nginx:stable
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the container</span>
+</span></span><span style="display:flex;"><span>sudo docker run -itd --name cluster -p 5000:80 nginx:stable
+</span></span><span style="display:flex;"><span>&gt;itd - --interactive + --tty + --detach
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
