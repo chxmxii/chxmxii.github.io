@@ -223,6 +223,55 @@ Note: Do not create a separate role for this task, just add all of the changes i
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started  </span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="run-a-docker-containerx">Run a Docker Container:x</h2>
+<h2 id="fix-issue-with-volumemounts-in-kubernetes">Fix Issue with VolumeMounts in Kubernetes:</h2>
+<h2 id="puppet-create-symlinks">Puppet Create Symlinks</h2>
+<ul>
+<li>Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:</li>
+<li>Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks:</li>
+<li>Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2.
+Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2.</li>
+<li>Notes:
+<ul>
+<li>Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test.</li>
+<li>Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first.</li>
+</ul>
+</li>
+<li>P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.</li>
+</ul>
+<h6 id="solution-5">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify the syntax</span>
+</span></span><span style="display:flex;"><span>puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run on the agent 2</span>
+</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>sudo puppet agent -tv
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ls -lrt /var/www/html
+</span></span><span style="display:flex;"><span>ls -lrt /opt/itadmin
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">symlink</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//create sym link
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">file</span>{<span style="color:#e6db74">&#39;/opt/itadmin&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ensure</span> =&gt; <span style="color:#e6db74">&#39;link&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span> =&gt; <span style="color:#e6db74">&#39;/var/www/html&#39;</span>,
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//create file media.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">file</span>{<span style="color:#e6db74">&#39;/opt/itadmin/media.txt&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ensure</span> =&gt; <span style="color:#e6db74">&#39;present&#39;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">node</span> <span style="color:#e6db74">&#39;stapp01.stratos.xfusioncorp.com&#39;</span>, <span style="color:#e6db74">&#39;stapp02.stratos.xfusioncorp.com&#39;</span>, <span style="color:#e6db74">&#39;stapp03.stratos.xfusioncorp.com&#39;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">include</span> <span style="color:#a6e22e">symlink</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<hr>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
