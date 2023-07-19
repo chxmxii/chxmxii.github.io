@@ -224,8 +224,27 @@ Note: Do not create a separate role for this task, just add all of the changes i
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-<h2 id="run-a-docker-containerx">Run a Docker Container:x</h2>
+<h2 id="run-a-docker-container">Run a Docker Container:</h2>
+<ul>
+<li>Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below:</li>
+<li>On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state.</li>
+</ul>
+<h6 id="solution-5">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to stapp03</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the container</span>
+</span></span><span style="display:flex;"><span>docker run -d --name nginx_3 -p 8080:80 nginx:alpine
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>docker images
+</span></span><span style="display:flex;"><span>curl -I localhost:8080
+</span></span></code></pre></div></li>
+</ul>
+<hr>
 <h2 id="fix-issue-with-volumemounts-in-kubernetes">Fix Issue with VolumeMounts in Kubernetes:</h2>
+<hr>
 <h2 id="puppet-create-symlinks">Puppet Create Symlinks</h2>
 <ul>
 <li>Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:</li>
@@ -240,7 +259,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </li>
 <li>P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.</li>
 </ul>
-<h6 id="solution-5">Solution</h6>
+<h6 id="solution-6">Solution</h6>
 <ul>
 <li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp
