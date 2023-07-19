@@ -230,10 +230,26 @@ Note: Do not create a separate role for this task, just add all of the changes i
           state: started  
   ```
 ---
-## Run a Docker Container:x
+## Run a Docker Container:
 
++ Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below:
++ On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state.
+
+###### Solution:
++ ```shell
+  #ssh to stapp03
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  #run the container
+  docker run -d --name nginx_3 -p 8080:80 nginx:alpine
+  #verify
+  docker ps -a
+  docker images
+  curl -I localhost:8080
+  ```
+---
 ## Fix Issue with VolumeMounts in Kubernetes:
 
+---
 ## Puppet Create Symlinks
 
 + Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:
