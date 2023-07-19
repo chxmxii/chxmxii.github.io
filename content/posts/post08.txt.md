@@ -229,3 +229,49 @@ Note: Do not create a separate role for this task, just add all of the changes i
           name: httpd
           state: started  
   ```
+---
+## Run a Docker Container:x
+
+## Fix Issue with VolumeMounts in Kubernetes:
+
+## Puppet Create Symlinks
+
++ Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:
++ Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks:
++ Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2.
+Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2.
++ Notes:
+  + Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test. 
+  + Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first.
++ P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.
+
+###### Solution
++ ```shell
+  sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp
+  #verify the syntax
+  puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp
+  #run on the agent 2
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02
+  sudo puppet agent -tv
+  #verify
+  ls -lrt /var/www/html
+  ls -lrt /opt/itadmin
+  ```
++ ```js
+  class symlink {
+    //create sym link
+    file{'/opt/itadmin':
+      ensure => 'link',
+      target => '/var/www/html',
+    }
+    //create file media.txt
+    file{'/opt/itadmin/media.txt':
+      ensure => 'present';
+    }
+  }
+
+  node 'stapp01.stratos.xfusioncorp.com', 'stapp02.stratos.xfusioncorp.com', 'stapp03.stratos.xfusioncorp.com' {
+    include symlink
+  }
+  ```
+---
