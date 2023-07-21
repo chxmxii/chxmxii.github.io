@@ -291,6 +291,110 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </span></span></code></pre></div></li>
 </ul>
 <hr>
+<h2 id="deploy-nginx-and-phpfpm-on-kubernetes">Deploy Nginx and Phpfpm on Kubernetes</h2>
+<ul>
+<li>The Nautilus Application Development team is planning to deploy one of the php-based application on Kubernetes cluster. As per discussion with DevOps team they have decided to use nginx and phpfpm. Additionally, they shared some custom configuration requirements. Below you can find more details. Please complete the task as per requirements mentioned below:</li>
+<li>Create a service to expose this app, the service type must be NodePort, nodePort should be 30012.</li>
+<li>Create a config map nginx-config for nginx.conf as we want to add some custom settings for nginx.conf.
+<ul>
+<li>Change default port 80 to 8096 in nginx.conf.</li>
+<li>Change default document root /usr/share/nginx to /var/www/html in nginx.conf.</li>
+<li>Update directory index to index index.html index.htm index.php in nginx.conf.</li>
+</ul>
+</li>
+<li>Create a pod named nginx-phpfpm .
+<ul>
+<li>Create a shared volume shared-files that will be used by both containers (nginx and phpfpm) also it should be a emptyDir volume.</li>
+<li>Map the ConfigMap we declared above as a volume for nginx container. Name the volume as nginx-config-volume, mount path should be /etc/nginx/nginx.conf and subPath should be nginx.conf</li>
+<li>Nginx container should be named as nginx-container and it should use nginx:latest image. PhpFPM container should be named as php-fpm-container and it should use php:7.0-fpm image.</li>
+<li>The shared volume shared-files should be mounted at /var/www/html location in both containers. Copy /opt/index.php from jump host to the nginx document root inside nginx container, once done you can access the app using App button on the top bar.</li>
+</ul>
+</li>
+<li>Before clicking on finish button always make sure to check if all pods are in running state.</li>
+<li>You can use any labels as per your choice.
+=&gt; Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.</li>
+</ul>
+<h6 id="solution-7">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">back-end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8096</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">8096</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30012</span> 
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nginx.conf</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    events {} 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    http {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      server {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        listen 8096;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        index index.html index.htm index.php;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        root  /var/www/html;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        location ~ \.php$ {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          include fastcgi_params;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_param REQUEST_METHOD $request_method;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_pass 127.0.0.1:9000;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    } </span>    
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">back-end</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir</span>: {}
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config-volume</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">configMap</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-container</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config-volume</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/etc/nginx/nginx.conf</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">subPath</span>: <span style="color:#ae81ff">nginx.conf</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">php-fpm-container</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">php:7.0-fpm</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>thor@jump_host ~$ kubectl apply -f .
+</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl get all
+</span></span><span style="display:flex;"><span>NAME               READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>pod/nginx-phpfpm   2/2     Running   <span style="color:#ae81ff">0</span>          5m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                   TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>          AGE
+</span></span><span style="display:flex;"><span>service/kubernetes     ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP          76m
+</span></span><span style="display:flex;"><span>service/nginx-phpfpm   NodePort    10.96.72.3   &lt;none&gt;        8096:30012/TCP   5m
+</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl cp /opt/index.php nginx-phpfpm:/var/www/html/ --container<span style="color:#f92672">=</span>nginx-container
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
