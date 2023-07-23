@@ -7,12 +7,11 @@ aliases = ["about-me","contact"]
 
 +++
 
+> Greetings, I am *Chamsi Mouhib*, also known as *chxmxii*. I am a highly motivated and ambitious Cybersecurity Engineering student with a deep passion for Cloud and Cybersecurity. I am particularly enthusiastic about automation tools and actively engage in the cybersecurity community, regularly participating in Capture The Flag (CTF) events with a specific focus on *web && 4n6*  challenges. My strong desire to learn and grow drives me to continually expand my skill set and knowledge, and I always seek opportunities to learn from others.
 
-Hey there, I am Chamsi Mouhib aka **chxmxii** a driven and ambitious Cybersecurity Engineering student with a passion for Cloud and Cybersecurity, an enthusiast of automation tools, and actively involved in the cybersecurity community, participating in CTFs with a focus on web challenges. With a strong desire to learn and grow, I am always eager to expand my skill set and knowledge by learning from others.
+> On this website, you will find a collection of articles authored by me, covering various topics related to cloud technologies such as automation tools, Infrastructure as Code (IaC), Kubernetes, and AWS. Additionally, I have penned penetration testing methodologies and write-ups for CTF challenges.
 
-Throughout this site, you will find various articles I have authored involving cloud technologies (Automation tools, IaC, K8S etc..), penetration testing methodolgies and write ups for CTF challengs. 
-
-=> For further information on my academic and professional achievements, please review my [resume.](../cv.pdf)
+> *If you would like more detailed information about my academic and professional accomplishments, please feel free to review my [resume.](../cv.pdf) Thank you for visiting!*
 
 ----------------------------------------------------------------------------------------------------------------------
 
