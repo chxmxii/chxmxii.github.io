@@ -436,7 +436,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
         targetPort: 8080
         nodePort: 30012
   ```
-+ ```s
++ ```shell
   thor@jump_host ~$ kubectl get pods
   NAME                              READY   STATUS    RESTARTS   AGE
   node-deployment-dd99d7b78-ftr2r   1/1     Running   0          2m2s
