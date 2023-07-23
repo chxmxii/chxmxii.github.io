@@ -19,10 +19,23 @@ series:
 - Hugo 101
 ---
 ---
+> Picture this: software development practices evolving like a Pokémon on steroids, giving birth to the legendary concepts of DevOps and its sidekick, DevSecOps. They're like Batman and Robin, but for software development. DevOps focuses on collaboration and integration between development and operations teams, turbocharging software delivery speed and reliability. And then, DevSecOps enters the scene, adding a sprinkle of security practices throughout the entire software development lifecycle. It's like adding a secret agent to the mix – shaken, not stirred.
 
-Hola, fine folks! This isn't any typical university project, we're partnering up with the unstoppable @M0DY4S to bring you a graded project that will inspire you to embrace the magic of DevSecOps.
+##### *Table of Contents*
 
-#### Introduction:
-+ Picture this: software development practices evolving like a Pokémon on steroids, giving birth to the legendary concepts of DevOps and its sidekick, DevSecOps. They're like Batman and Robin, but for software development. DevOps focuses on collaboration and integration between development and operations teams, turbocharging software delivery speed and reliability. And then, DevSecOps enters the scene, adding a sprinkle of security practices throughout the entire software development lifecycle. It's like adding a secret agent to the mix – shaken, not stirred.
+1. Architecture overview
+   1. Tools & Technologies
+2. Utilizing Terraform Scripts
+   1. The Main Configuration
+   2. Allocating Instances
+   3. Configuring Security Groups
+   4. Managing SSH Keys
+3. Implementing Ansible Playbooks
+   1. Configuring Instances with Ansible
+   2. Installing Jenkins with Ansible
+   3. Setting Up Jenkins using Ansible
+   4. Installing Plugins with Ansible
+---
+## Introduction to the Architecture:
+[](../files/proj1dso.png)
 
-+ But wait, there's more! Cloud computing swoops in, turning the IT landscape into a colorful playground of scalable and flexible infrastructure resources. It's like having a magical cloud genie granting your every software-related wish. And what happens when you combine the powers of DevSecOps and cloud computing? You get an automated software delivery pipeline that's faster, smoother, and more efficient than a high-speed rollercoaster.
