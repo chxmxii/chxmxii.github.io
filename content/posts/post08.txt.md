@@ -446,3 +446,17 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        30m
   node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
   ```
+---
+## Docker Copy Operaton:
+
++ The Nautilus DevOps team has some conditional data present on App Server 1 in Stratos Datacenter. There is a container ubuntu_latest running on the same server. We received a request to copy some of the data from the docker host to the container. Below are more details about the task:
++ On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /usr/src/ location. Please do not try to modify this file in any way.
+  
+###### Solution
+
++ ```shell
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  docker ps
+  docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src/
+  docker exec <container_id> ls /usr/src/
+  ```
