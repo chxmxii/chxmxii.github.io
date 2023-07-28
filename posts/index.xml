@@ -1685,6 +1685,27 @@ ee</li>
 </span></span></code></pre></div></li>
 </ul>
 <hr>
+<h2 id="cron-schedule-deny-to-users">Cron schedule deny to users</h2>
+<ul>
+<li>To stick with the security compliances, the Nautilus project team has decided to apply some restrictions on crontab access so that only allowed users can create/update the cron jobs. Limit crontab access to below specified users on App Server 1.</li>
+<li>Allow crontab access to mariyam user and deny the same to ryan user.</li>
+</ul>
+<h6 id="solution-16">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#restrict user ryna from using crontab</span>
+</span></span><span style="display:flex;"><span>sudo echo <span style="color:#e6db74">&#34;ryan&#34;</span> &gt; /etc/cron.deny
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#allow user mariyam </span>
+</span></span><span style="display:flex;"><span>sudo echo <span style="color:#e6db74">&#34;mariyam&#34;</span> &gt; /etc/cron.allow
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart crond service </span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart crond
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>su ryan
+</span></span><span style="display:flex;"><span>crontab -l <span style="color:#75715e">#you should get  the following message</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;You ryan are not allowed to use this program (crontab).&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Terraform Challenge Series - Challenge 1</title><link>https://chxmxii.github.io/portfolio/posts/2023/03/terraform-challenge-series-challenge-1/</link><pubDate>Sun, 26 Mar 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/03/terraform-challenge-series-challenge-1/</guid><description>In this challenge we will deploy several Kubernetes resources using terraform. Utilize /root/terraform_challenge directory to store your Terraform configuration files. Note: kubectl is already installed on the host, you can check your deployments in the usual way.
 Architecture : Solution : Controlplane We will start by installing terraform in the controlplane node apt update apt install unzip -y curl -L -o /tmp/terraform_1.1.5_linux_amd64.zip https://releases.hashicorp.com/terraform/1.1.5/terraform_1.1.5_linux_amd64.zip unzip -d /usr/local/bin /tmp/terraform_1.1.5_linux_amd64.zip which terraform terrafomr --version cd /root/terraform_challenge Kubernetes-provider for the kubernets provider we will configure it within provider.</description><content type="html"><![CDATA[<p>In this challenge we will deploy several Kubernetes resources using terraform.
 Utilize /root/terraform_challenge directory to store your Terraform configuration files.
