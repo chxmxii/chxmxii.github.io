@@ -475,3 +475,23 @@ ee
   crontab -l #you should get  the following message
   "You ryan are not allowed to use this program (crontab)."
   ```
+
+## Linux Firewalld Rules
+
++ The Nautilus system admins team recently deployed a web UI application for their backup utility running on the Nautilus backup server in Stratos Datacenter. The application is running on port 5001. They have firewalld installed on that server. The requirements that have come up include the following:
++ Open all incoming connection on 5002/tcp port. Zone should be public
+
+###### Solution
+
++ ```Shell
+  sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking clint@stbkp01
+  #check
+  curl localhost:5002
+  #open port
+  sudo firewall-cmd --permanent --add-port=5002/tcp --zone=public
+  #reload
+  sudo firewall-cmd --reload
+  #verify
+  sudo firewall-cmd --list-ports
+  curl localhost:5002
+  ```
