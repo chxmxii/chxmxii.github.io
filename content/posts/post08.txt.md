@@ -461,7 +461,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   docker exec <container_id> ls /usr/src/
   ```
 ---
-## 
+## Docker Container Issue
 
 + There is a static website running within a container named nautilus, this container is running on App Server 1. Suddenly, we started facing some issues with the static website on App Server 1. Look into the issue to fix the same, you can find more details below:
 + Container's volume /usr/local/apache2/htdocs is mapped with the host's volume /var/www/html.
@@ -478,4 +478,32 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   docker start <docker_id>
   #verify
   curl localhost:8080
+  ```
+---
+
+## Ansible Basic Playbook
+
++ One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task:
++ The inventory file /home/thor/ansible/inventory seems to be having some issues, please fix them. The playbook needs to be run on App Server 2 in Stratos DC, so inventory file needs to be updated accordingly.
++ Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2.
++ Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak
+  
+###### Solution
++ ```shell
+  #fix the inventory file by adding the ssh user and sshpass
+  stapp02 ansible_host=172.16.238.11 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ #remote_user=steve
+  #verify
+  ansible stapp02 -m ping -i ansible/inventory
+  #now lets write the playbook
+  vi ansible/playboo.yml
+  #run the playbook
+  ansible-playbook playbook.yml -i inventory
+  ```
++ ```yaml
+  ---
+  - hosts: stapp02
+    tasks:
+      - file:
+          dest: /tmp/file.txt
+          state: touch
   ```
