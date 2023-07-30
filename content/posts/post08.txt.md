@@ -529,7 +529,18 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 + b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc).
 
 ###### Solution:
-+ ```dockerfile
++ ```shell
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  cd /opt/docker/
+  vi Dockerfile
+  #build the image
+  docker built -t apache .
+  #run the container
+  docker run -d -p 5004:5004 --name docker apache
+  #test
+  curl localhost:5004
+  ```
++ ```Dockerfile
   FROM ubuntu
   RUN apt-get update && apt-get install -y apache2
   RUN sed -i 's/Listen 80/Listen 5004/g' /etc/apache2/ports.conf
