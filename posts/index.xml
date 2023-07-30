@@ -546,7 +546,18 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 <h6 id="solution-13">Solution:</h6>
 <ul>
 <li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> ubuntu</span><span style="color:#960050;background-color:#1e0010">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>cd /opt/docker/
+</span></span><span style="display:flex;"><span>vi Dockerfile
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#build the image</span>
+</span></span><span style="display:flex;"><span>docker built -t apache .
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the container</span>
+</span></span><span style="display:flex;"><span>docker run -d -p 5004:5004 --name docker apache
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#test</span>
+</span></span><span style="display:flex;"><span>curl localhost:5004
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> ubuntu</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install -y apache2<span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#39;s/Listen 80/Listen 5004/g&#39;</span> /etc/apache2/ports.conf<span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 5004</span><span style="color:#960050;background-color:#1e0010">
