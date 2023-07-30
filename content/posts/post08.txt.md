@@ -480,7 +480,6 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   curl localhost:8080
   ```
 ---
-
 ## Ansible Basic Playbook
 
 + One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task:
@@ -488,7 +487,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 + Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2.
 + Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak
   
-###### Solution
+###### Solution:
 + ```shell
   #fix the inventory file by adding the ssh user and sshpass
   stapp02 ansible_host=172.16.238.11 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ #remote_user=steve
@@ -506,4 +505,34 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
       - file:
           dest: /tmp/file.txt
           state: touch
+  ```
+---
+## Pull Docker Image
+
++ Nautilus project developers are planning to start testing on a new project. As per their meeting with the DevOps team, they want to test containerized environment application features. As per details shared with DevOps team, we need to accomplish the following task:
++ a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news
+
+###### Solution:
++ ```Shell
+  docker image ls 
+  docker pull busybox:musl
+  docker images
+  docker tag busybox:musl busybox:news
+  docker images
+  ```
+
+---
+## Write a Docker File
+
++ As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 3 in Stratos DC and configure to build an image with the following requirements:
++ a. Use ubuntu as the base image.
++ b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc).
+
+###### Solution:
++ ```dockerfile
+  FROM ubuntu
+  RUN apt-get update && apt-get install -y apache2
+  RUN sed -i 's/Listen 80/Listen 5004/g' /etc/apache2/ports.conf
+  EXPOSE 5004
+  CMD ["apache2ctl","-D","FOREGROUND"]
   ```
