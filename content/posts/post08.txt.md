@@ -547,3 +547,18 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   EXPOSE 5004
   CMD ["apache2ctl","-D","FOREGROUND"]
   ```
+---
+## Docker Update Permissions
+
++ One of the Nautilus project developers need access to run docker commands on App Server 2. This user is already created on the server. Accomplish this task as per details given below:
++ User mark is not able to run docker commands on App Server 2 in Stratos DC, make the required changes so that this user can run docker commands without sudo
+
+###### Solution
++ ```Shell
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02
+  sudo usermod -aG docker mark
+  id mark
+  su - mark
+  id
+  docker ps
+  ```
