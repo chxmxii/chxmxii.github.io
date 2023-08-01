@@ -581,3 +581,17 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   docker inspect -f "{{ .NetworkSettings.IPAddress }}
   curl $ip:8084
   ```
+---
+##
+
++ One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it:
++ a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server.
+  
+###### Solution
++ ```Shell
+  sshpass -p BigGr33n  ssh -o StrictHostKeyChecking=no banner@stapp03
+  docker ps
+  docker image ls
+  docker commit demo:datacenter ubuntu_latest
+  docker image ls
+  ```
