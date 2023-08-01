@@ -602,6 +602,22 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">curl </span>$ip<span style="color:#e6db74">:8084
 </span></span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="heading"></h2>
+<ul>
+<li>One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it:</li>
+<li>a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server.</li>
+</ul>
+<h6 id="solution-16">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n  ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>docker image ls
+</span></span><span style="display:flex;"><span>docker commit demo:datacenter ubuntu_latest
+</span></span><span style="display:flex;"><span>docker image ls
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
