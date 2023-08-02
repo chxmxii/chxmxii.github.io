@@ -595,3 +595,54 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   docker commit demo:datacenter ubuntu_latest
   docker image ls
   ```
+---
+
+## Create a Docker Network
+
++ The Nautilus DevOps team needs to set up several docker environments for different applications. One of the team members has been assigned a ticket where he has been asked to create some docker networks to be used later. Complete the task based on the following ticket description:
++ a. Create a docker network named as blog on App Server 2 in Stratos DC.
++ b. Configure it to use bridge drivers.
++ c. Set it to use subnet 192.168.0.0/24 and iprange 192.168.0.2/24.
+
+###### Solution
++ ```Shell
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02
+  sudo su -
+  docker network ls
+  docker network create --driver=bridge --ip-range=192.168.0.2/24 --subnet=192.168.0.0/24 blog
+  docker network inspect blog
+      {
+        "Name": "blog",
+        "Id": "6cd0bae9b622286afb87eb284c36d14b20f23b242c69cae5bfede8b1b257191a",
+        "Created": "2023-08-02T08:32:56.010259327Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.0.0/24",
+                    "IPRange": "192.168.0.2/24"
+                }
+            ]
+        },
+      }
+  docker network ls
+  ```
+---
+## Docker Volumes Mapping
+
++ The Nautilus DevOps team is testing applications containerization, which issupposed to be migrated on docker container-based environments soon. In today's stand-up meeting one of the team members has been assigned a task to create and test a docker container with certain requirements. Below are more details:
++ a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too).
++ b. Create a new container with name beta from the image you just pulled.
++ c. Map the host volume /opt/security with container volume /usr/src/. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state.
++ ```Shell
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02
+  sudo su
+  docker pull nginx:latest #pull the nginx image
+  docker run -d --name beta -v /opt/security:/usr/src/:Z nginx:latest
+  cp /tmp/sample.txt /opt/security/ #copy the sample.txt file 
+  docker exec -it beta cat /usr/src/sample.txt #verify
+  ```
