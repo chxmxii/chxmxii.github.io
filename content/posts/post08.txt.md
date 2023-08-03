@@ -646,3 +646,25 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   cp /tmp/sample.txt /opt/security/ #copy the sample.txt file 
   docker exec -it beta cat /usr/src/sample.txt #verify
   ```
+---
+## Save Load and Transfer Docker Image
+
++ One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC.
++ a. On App Server 1 save the image demo:devops in an archive.
++ b. Transfer the image archive to App Server 3.
++ c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1.
++ Note: Docker is already installed on both servers; however, if its service is down please make sure to start it.
+
+###### Solution
++ ```shell
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  docker images 
+  docker save demo:devops -o /tmp/demo.tar
+  scp /tmp/demo.tar banner@stapp03:/tmp/
+  docker inspect --format "{{ .Config.Cmd }}" demo:devops #2verify
+    [/bin/bash]
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  docker load -i /tmp/demo.tar
+  docker inspect --format "{{ .Config.Cmd }}" demo:devops #2verify
+    [/bin/bash]
+  ```
