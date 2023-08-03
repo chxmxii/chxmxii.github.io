@@ -671,6 +671,30 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </span></span><span style="display:flex;"><span>docker exec -it beta cat /usr/src/sample.txt <span style="color:#75715e">#verify</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="save-load-and-transfer-docker-image">Save Load and Transfer Docker Image</h2>
+<ul>
+<li>One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC.</li>
+<li>a. On App Server 1 save the image demo:devops in an archive.</li>
+<li>b. Transfer the image archive to App Server 3.</li>
+<li>c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1.</li>
+<li>Note: Docker is already installed on both servers; however, if its service is down please make sure to start it.</li>
+</ul>
+<h6 id="solution-18">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>docker images 
+</span></span><span style="display:flex;"><span>docker save demo:devops -o /tmp/demo.tar
+</span></span><span style="display:flex;"><span>scp /tmp/demo.tar banner@stapp03:/tmp/
+</span></span><span style="display:flex;"><span>docker inspect --format <span style="color:#e6db74">&#34;{{ .Config.Cmd }}&#34;</span> demo:devops <span style="color:#75715e">#2verify</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span>/bin/bash<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>docker load -i /tmp/demo.tar
+</span></span><span style="display:flex;"><span>docker inspect --format <span style="color:#e6db74">&#34;{{ .Config.Cmd }}&#34;</span> demo:devops <span style="color:#75715e">#2verify</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span>/bin/bash<span style="color:#f92672">]</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
