@@ -14,8 +14,10 @@ series:
 ---
 ### These are some useful notes I gathered while pursuing my certifications 
 
-- [RHCE Exam Notes and tips](https://chxmxii.github.io/portfolio/rhce/main.html)
+- [RHCE EX294 Notes and tips](https://chxmxii.github.io/portfolio/rhce/main.html)
 
-- [RHCSA Exam Notes and tips](https://chxmxii.gitbook.io/system-management-tasks/)
+- [RHCCS EX188 Notes and tips](https://chxmxii.github.io/portfolio/rhccs/rhccs.html)
+
+- [RHCSA EX200 Notes and tips](https://chxmxii.gitbook.io/system-management-tasks/)
     
 - [AWS CCP Exam Notes and tips](https://chxmxii.gitbook.io/aws-ccp/)
