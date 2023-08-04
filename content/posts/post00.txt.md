@@ -12,6 +12,7 @@ weight: 10
 series:
 - Hugo 101
 ---
+
 ### These are some useful notes I gathered while pursuing my certifications 
 
 - [RHCE EX294 Notes and tips](https://chxmxii.github.io/portfolio/rhce/main.html)
