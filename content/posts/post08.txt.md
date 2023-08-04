@@ -668,3 +668,31 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   docker inspect --format "{{ .Config.Cmd }}" demo:devops #2verify
     [/bin/bash]
   ```
+---
+## Write a Docker Compose File 
+
++ The Nautilus application development team shared static website content that needs to be hosted on the httpd web server using a containerised platform. The team has shared details with the DevOps team, and we need to set up an environment according to those guidelines. Below are the details:
++ a. On App Server 3 in Stratos DC create a container named httpd using a docker compose file /opt/docker/docker-compose.yml (please use the exact name for file).
++ b. Use httpd (preferably latest tag) image for container and make sure container is named as httpd; you can use any name for service.
++ c. Map 80 number port of container with port 5004 of docker host.
++ d. Map container's /usr/local/apache2/htdocs volume with /opt/itadmin volume of docker host which is already there. (please do not modify any data within these locations).
+
+###### Solution
++ ```Shell
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  cd /opt/docker
+  vi docker-compose.yml
+  docker-compose up -d
+  docker ps
+  ```
++ ```yaml
+  version: '3'
+  services:
+    httpd:
+      image: httpd:latest
+      container_name: httpd
+      ports:
+        - "5004:80"
+      volumes:
+        - /opt/itadmin:/usr/local/apache2/htdocs
+  ```
