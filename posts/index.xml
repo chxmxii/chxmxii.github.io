@@ -2069,15 +2069,19 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span><span style="display:flex;"><span>terraform apply
 </span></span></code></pre></div></li>
 </ul>
-]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/01/certifications-exam-notes/</link><pubDate>Mon, 30 Jan 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/01/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE Exam Notes and tips
-RHCSA Exam Notes and tips
+]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/01/certifications-exam-notes/</link><pubDate>Mon, 30 Jan 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/01/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
+RHCCS EX188 Notes and tips
+RHCSA EX200 Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
 <ul>
 <li>
-<p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE Exam Notes and tips</a></p>
+<p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE EX294 Notes and tips</a></p>
 </li>
 <li>
-<p><a href="https://chxmxii.gitbook.io/system-management-tasks/">RHCSA Exam Notes and tips</a></p>
+<p><a href="https://chxmxii.github.io/portfolio/rhccs/rhccs.html">RHCCS EX188 Notes and tips</a></p>
+</li>
+<li>
+<p><a href="https://chxmxii.gitbook.io/system-management-tasks/">RHCSA EX200 Notes and tips</a></p>
 </li>
 <li>
 <p><a href="https://chxmxii.gitbook.io/aws-ccp/">AWS CCP Exam Notes and tips</a></p>
