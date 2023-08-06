@@ -730,3 +730,38 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 
   COPY html/index.html /usr/local/apache2/htdocs/
   ```
+---
+## Resolve Docker Compose Issues
+
++ The Nautilus DevOps team is working to deploy one of the applications on App Server 1 in Stratos DC. Due to a misconfiguration in the docker compose file, the deployment is failing. We would like you to take a look into it to identify and fix the issues. More details can be found below:
++ a. docker-compose.yml file is present on App Server 1 under /opt/docker directory.
++ b. Try to run the same and make sure it works fine.
++ c. Please do not change the container names being used. Also, do not update or alter any other valid config settings in the compose file or any other relevant data that can cause app failure.
++ Note: Please note that once you click on FINISH button all existing running/stopped containers will be destroyed, and your compose will be run.
+
+###### Solution
++ ```Shell
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01
+  cd /opt/docker
+  sudo docker-compose up
+  vi docker-compose.yml
+  ```
++ ```yaml
+  version: '2'
+  services:
+      web:
+          build:
+            context: .
+            dockerfile: Dockerfile
+          container_name: python
+          ports:
+              - "5000:5000"
+          volumes:
+              - .:/code
+          depends_on:
+              - redis
+          command: python app/app.py
+      redis:
+          image: redis
+          container_name: redis
+  ```
