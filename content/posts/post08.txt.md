@@ -751,7 +751,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   services:
       web:
           build:
-            context: .
+            context: app/
             dockerfile: Dockerfile
           container_name: python
           ports:
