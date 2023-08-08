@@ -174,7 +174,7 @@ AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="t
 </span></span></span></code></pre></div></li>
 </ul>
 <hr>
-<h2 id="heading"></h2>
+<h2 id="create-a-docker-image-from-container">Create a Docker Image From Container</h2>
 <ul>
 <li>One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it:</li>
 <li>a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server.</li>
