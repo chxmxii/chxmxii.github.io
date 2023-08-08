@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer DevOps Engineer Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-devops-engineer-challenges-p1/</link><pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-devops-engineer-challenges-p1/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<hr>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer Docker Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</link><pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<hr>
 <h2 id="ansible-unarchive-module">Ansible Unarchive Module</h2>
 <ul>
 <li>One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task:</li>
@@ -858,6 +858,46 @@ For more details check here.</li>
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_USER</span>: <span style="color:#ae81ff">kodekloud</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_PASSWORD</span>: <span style="color:#ae81ff">k0d3kl0ud3</span>
 </span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-node-app">Docker Node App</h2>
+<ul>
+<li>There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework.</li>
+<li>Create a Dockerfile (name is case sensitive) under /node_app directory:
+<ul>
+<li>Use any node image as the base image.</li>
+<li>Install the dependencies using package.json file.</li>
+<li>Use server.js in the CMD.</li>
+<li>Expose port 5001.</li>
+</ul>
+</li>
+<li>The build image should be named as nautilus/node-web-app.</li>
+<li>Now run a container named nodeapp_nautilus using this image.</li>
+<li>Map the container port 5001 with the host port 8093.</li>
+<li>Once deployed, you can test the app using a curl command on App Server 3:
+<ul>
+<li><code>curl http://localhost:8093</code></li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-22">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>cd /node_app
+</span></span><span style="display:flex;"><span>sudo vim Dockerfile
+</span></span><span style="display:flex;"><span>docker build -t nautilus/node-web-app .
+</span></span><span style="display:flex;"><span>docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app
+</span></span><span style="display:flex;"><span>curl localhost:8096
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Docker" data-lang="Docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;package.json&#34;</span>,<span style="color:#e6db74">&#34;server.js&#34;</span>,<span style="color:#e6db74">&#34;./&#34;</span><span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm install<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 5001</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;node&#34;</span>, <span style="color:#e6db74">&#34;server.js&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/07/certifications-exam-notes/</link><pubDate>Sun, 30 Jul 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/07/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
