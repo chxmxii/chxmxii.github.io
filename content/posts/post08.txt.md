@@ -4,7 +4,7 @@ author:
 date: 2023-08-07
 tags:
   - DevOps
-  - Sysadmin
+  - Docker
 type:
 - post
 - posts
@@ -33,7 +33,6 @@ series:
   >itd - --interactive + --tty + --detach
   ```
 ---
-
 ## Run a Docker Container:
 
 + Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below:
@@ -159,7 +158,7 @@ series:
   curl $ip:8084
   ```
 ---
-##
+## Create a Docker Image From Container
 
 + One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it:
 + a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server.
