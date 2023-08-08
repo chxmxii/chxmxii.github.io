@@ -8,7 +8,7 @@ tags:
 type:
 - post
 - posts
-title: KodeKloud Engineer DevOps Engineer Challenges - P1
+title: KodeKloud Engineer Docker Challenges 
 weight: 10
 series:
 - Hugo 101
@@ -818,4 +818,36 @@ For more details check here.
         MYSQL_ROOT_PASSWORD: r00t321
         MYSQL_USER: kodekloud
         MYSQL_PASSWORD: k0d3kl0ud3
+  ```
+---
+## Docker Node App
+
++ There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework.
++ Create a Dockerfile (name is case sensitive) under /node_app directory:
+  + Use any node image as the base image.
+  + Install the dependencies using package.json file.
+  + Use server.js in the CMD.
+  + Expose port 5001.
++ The build image should be named as nautilus/node-web-app.
++ Now run a container named nodeapp_nautilus using this image.
++ Map the container port 5001 with the host port 8093.
++ Once deployed, you can test the app using a curl command on App Server 3:
+  + `curl http://localhost:8093`
+
+###### Solution
++ ```Shell
+  sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03
+  cd /node_app
+  sudo vim Dockerfile
+  docker build -t nautilus/node-web-app .
+  docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app
+  curl localhost:8096
+  ```
++ ```Docker
+  FROM node:alpine
+  WORKDIR /app
+  COPY ["package.json","server.js","./"]
+  RUN npm install
+  EXPOSE 5001
+  CMD ["node", "server.js"]
   ```
