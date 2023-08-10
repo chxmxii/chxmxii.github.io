@@ -427,3 +427,35 @@ For more details check here.
   EXPOSE 5001
   CMD ["node", "server.js"]
   ```
+---
+## Docker Python App
+
++ A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below:
+  + Create a Dockerfile under /python_app directory:
+    + Use any python image as the base image.
+    + Install the dependencies using requirements.txt file.
+    + Expose the port 3002.
+    + Run the server.py script using CMD.
+  + Build an image named nautilus/python-app using this Dockerfile.
+  + Once image is built, create a container named pythonapp_nautilus:
+    + Map port 3002 of the container to the host port 8097.
+  + Once deployed, you can test the app using curl command on App Server 2.
+
+###### Solution:
++ ```shell
+  sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02
+  cd /python_app
+  sudo vi Dockerfile
+  docker build -t nautilus/python-app .
+  docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app
+  docker ps
+  curl localhost:8097
+  ```
++ ```Docker
+  FROM python:3
+  COPY src .
+  RUN pip install --no-cache-dir -r requirements.txt
+  EXPOSE 3002
+  CMD ["pyhton","server.py"]
+  ```
+> DONE!!
