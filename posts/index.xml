@@ -963,7 +963,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-system-administration-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
+]]></content></item><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-linux-challenges/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
 <li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li>
@@ -1708,6 +1708,20 @@ might be more infected files. Before doing a cleanup they would like to find all
 </span></span><span style="display:flex;"><span>sshpass -p Mischi3f ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no loki@stlb01
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
 </span></span><span style="display:flex;"><span>curl 172.16.238.10:3000
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="install-ansible">Install Ansible</h2>
+<ul>
+<li>During the weekly meeting, the Nautilus DevOps team discussed about the automation and configuration management solutions that they want to implement. While considering several options, the team has decided to go with Ansible for now due to its simple setup and minimal pre-requisites. The team wanted to start testing using Ansible, so they have decided to use jump host as an Ansible controller to test different kind of tasks on rest of the servers.</li>
+<li>Install ansible version 4.7.0 on Jump host using pip3 only. Make sure Ansible binary is available globally on this system, i.e all users on this system are able to run Ansible commands.
+Install Ansible</li>
+</ul>
+<h6 id="solution-15">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>pip3 install -U pip
+</span></span><span style="display:flex;"><span>sudo pip3 install ansible<span style="color:#f92672">==</span>4.7.0
 </span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
