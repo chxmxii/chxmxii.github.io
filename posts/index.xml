@@ -470,6 +470,51 @@ For more details check here.</li>
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;node&#34;</span>, <span style="color:#e6db74">&#34;server.js&#34;</span>]<span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="docker-python-app">Docker Python App</h2>
+<ul>
+<li>A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below:
+<ul>
+<li>Create a Dockerfile under /python_app directory:
+<ul>
+<li>Use any python image as the base image.</li>
+<li>Install the dependencies using requirements.txt file.</li>
+<li>Expose the port 3002.</li>
+<li>Run the server.py script using CMD.</li>
+</ul>
+</li>
+<li>Build an image named nautilus/python-app using this Dockerfile.</li>
+<li>Once image is built, create a container named pythonapp_nautilus:
+<ul>
+<li>Map port 3002 of the container to the host port 8097.</li>
+</ul>
+</li>
+<li>Once deployed, you can test the app using curl command on App Server 2.</li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-15">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>cd /python_app
+</span></span><span style="display:flex;"><span>sudo vi Dockerfile
+</span></span><span style="display:flex;"><span>docker build -t nautilus/python-app .
+</span></span><span style="display:flex;"><span>docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>curl localhost:8097
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Docker" data-lang="Docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> src .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --no-cache-dir -r requirements.txt<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 3002</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;pyhton&#34;</span>,<span style="color:#e6db74">&#34;server.py&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+</ul>
+<blockquote>
+<p>DONE!!</p>
+</blockquote>
 ]]></content></item><item><title>KodeKloud Engineer Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</link><pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<h2 id="kuberentes-time-check-pod">Kuberentes time check pod</h2>
 <ul>
 <li>The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.</li>
