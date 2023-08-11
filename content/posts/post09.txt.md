@@ -166,22 +166,17 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
           state: touch
   ```
 ---
-##
+## Ansible Inventory Update
 
-+ xFusionCorp Industries uses some monitoring tools to check the status of every service, application, etc running on the systems. Recently, the monitoring system identified that Apache service is not running on some of the Nautilus Application Servers in Stratos Datacenter.
-  1. Identify the faulty Nautilus Application Server and fix the issue. Also, make sure Apache service is up and running on all Nautilus Application Servers. Do not try to stop any kind of firewall that is already running.
-  2. Apache is running on 3002 port on all Nautilus Application Servers and its document root must be /var/www/html on all app servers.
-  3. Finally you can test from jump host using curl command to access Apache on all app servers and it should be reachable and you should get some static page. E.g. curl http://172.16.238.10:3002/
-  
-###### Soluiton:
++ The Nautilus DevOps team has started testing their Ansible playbooks on different servers within the stack. They have placed some playbooks under /home/thor/playbook/ directory on jump host which they want to test. Some of these playbooks have already been tested on different servers, but now they want to test them on app server 1 in Stratos DC. However, they first need to create an inventory file so that Ansible can connect to the respective app. Below are some requirements:
++ a. Create an ini type Ansible inventory file /home/thor/playbook/inventory on jump host.
++ b. Add App Server 1 in this inventory along with required variables that are needed to make it work.
++ c. The inventory hostname of the host should be the server name as per the wiki, for example stapp01 for app server 1 in Stratos DC.
++ Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
+
+###### Solution
 + ```Shell
-  sshpass -p <password> ssh -o StrictHostKeyChecking=no <username>@<hostname>
-  sudo su -
-  systemctl start httpd
-  httpd -t
-  vi +<line> <configfile> #e.g vi +34 /etc/httpd/conf/httpd.conf and fix the line!
-  systemctl start httpd
-  systemctl status httpd
-  systemctl enable --now httpd
-  curl <hostname>:3002
+  cd playbooks
+  echo "stapp01 ansible_user=tony ansible_password=Ir0nM@n" > inventory
+  ansible-playbook -i inventory playbook.yml
   ```
