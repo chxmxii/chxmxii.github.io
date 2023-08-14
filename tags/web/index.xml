@@ -1,3 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>web on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/tags/web/</link><description>Recent content in web on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/tags/web/index.xml" rel="self" type="application/rss+xml"/><item><title>Bypassing common jinja2 filters</title><link>https://chxmxii.github.io/portfolio/posts/2021/08/bypassing-common-jinja2-filters/</link><pubDate>Thu, 19 Aug 2021 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2021/08/bypassing-common-jinja2-filters/</guid><description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web on Chamsii Mouhib</title>
+    <link>https://chxmxii.github.io/portfolio/tags/web/</link>
+    <description>Recent content in web on Chamsii Mouhib</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bypassing common jinja2 filters</title>
+      <link>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</link>
+      <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</guid>
+      <description>What is SSTI? SSTI is an injection vulnerability, similar to other injection vulnerabilities it occurs when unsanitized user input is directly processed by the application or more specifically the template engine.
 Depending on the template engine being used the impact can vary, some of the issues range from:
-Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters</description></item></channel></rss>
+Data exposure (application secrets) Cross Site Scripting Remote Code execution String filters </description>
+    </item>
+    
+  </channel>
+</rss>
