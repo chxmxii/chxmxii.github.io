@@ -180,3 +180,19 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   echo "stapp01 ansible_user=tony ansible_password=Ir0nM@n" > inventory
   ansible-playbook -i inventory playbook.yml
   ```
+---
+## Ansible Config File Update
+
++ To manage all servers within the stack using Ansible, the Nautilus DevOps team is planning to use a common sudo user among all servers. Ansible will be able to use this to perform different tasks on each server. This is not finalized yet, but the team has decided to first perform testing. The DevOps team has already installed Ansible on jump host using yum, and they now have the following requirement:
++ On jump host make appropriate changes so that Ansible can use kirsty as a default ssh user for all hosts. Make changes in Ansible's default configuration only —please do not try to create a new config.
+
+###### Solution:
++ ```Shell
+  thor@jump_host ~$ ansible --version
+  ansible 2.9.9
+    config file = /etc/ansible/ansible.cfg
+  thor@jump_host ~$ sudo vi /etc/ansible.cfg
+  > search for "#remote_user=root" and change it to "remote_user=kirst"
+  #verify
+  ansible-config dump | grep USER 
+  ```
