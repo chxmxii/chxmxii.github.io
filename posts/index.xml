@@ -1,4 +1,818 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
+<h2 id="web-server-security">Web Server Security</h2>
+<ul>
+<li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li>
+<li>a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number. Ensure this server has the appropriate settings to hide the version number of the Apache web server.</li>
+<li>b. There is a website hosted under /var/www/html/blog on App Server 1. It was detected that the directory /blog lists all of its contents while browsing the URL. Disable the directory browser listing in Apache config.</li>
+<li>c. Also make sure to restart the Apache service after making the changes.</li>
+</ul>
+<h6 id="solution">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check the httpd status</span>
+</span></span><span style="display:flex;"><span>sudo systemctl status httpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#open the httpd.conf file with vi</span>
+</span></span><span style="display:flex;"><span>sudo vi /etc/httpd/conf/httpd.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#a. to disable the version discolusre you can append the following two lines to the httpd.conf</span>
+</span></span><span style="display:flex;"><span>.&gt; ServerTokens Prod
+</span></span><span style="display:flex;"><span>.&gt; ServerSignature Off
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#b. to disable the directory browser listing, make sure to remove Indexes from options</span>
+</span></span><span style="display:flex;"><span>Before &gt; Options Indexes FollowSymLinks
+</span></span><span style="display:flex;"><span>After &gt; Options FollowSymLinks
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#save and quit</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#c. restart the server and curl to verify</span>
+</span></span><span style="display:flex;"><span>sudo systemctl start httpd <span style="color:#f92672">&amp;&amp;</span> sudo systemctl status httpd
+</span></span><span style="display:flex;"><span>curl -I stapp01:8080/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#TIP: you can press &#34;/&#34; and write &#34;Options&#34; in vi to search for that line. press n to move to the next matched item.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://www.tecmint.com/hide-apache-web-server-version-information/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="configure-local-yum-repos">Configure Local Yum repos</h2>
+<ul>
+<li>The Nautilus production support team and security team had a meeting last month in which they decided to use local yum repositories for maintaing packages needed for their servers. For now they have decided to configure a local yum repo on Nautilus Backup Server. This is one of the pending items from last month, so please configure a local yum repository on Nautilus Backup Server as per details given below.</li>
+<li>a. We have some packages already present at location /packages/downloaded_rpms/ on Nautilus Backup Server.</li>
+<li>b. Create a yum repo named epel_local and make sure to set Repository ID to epel_local. Configure it to use package&rsquo;s location /packages/downloaded_rpms/.</li>
+<li>c. Install package vim-enhanced from this newly created repo.</li>
+</ul>
+<h6 id="solution-1">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Connect to the backup server</span>
+</span></span><span style="display:flex;"><span>sshpass -p H@wk3y3	ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no clint@stbkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#there is actually 2 ways to create yum repos, either you do it manually or you can do it with &#34;yum-config-manager --add-repo=&lt;url&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>cat &lt;&lt;<span style="color:#ae81ff">\ </span>EOF &gt; /etc/yum_repos.d/epel_local.repo
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>epel_local<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>epel_local
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>file:///packages/downloaded_rpms/
+</span></span><span style="display:flex;"><span>enabled<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#clean and list the repos</span>
+</span></span><span style="display:flex;"><span>yum clean all
+</span></span><span style="display:flex;"><span>yum repo list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install the vim-enhanced</span>
+</span></span><span style="display:flex;"><span>yum install vim-enhanced -y
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="setup-ssl-for-nginx">Setup SSL for Nginx</h2>
+<ul>
+<li>The system admins team of xFusionCorp Industries needs to deploy a new application on App Server 1 in Stratos Datacenter. They have some pre-requites to get ready that server for application deployment. Prepare the server as per requirements shared below:</li>
+<li>Install and configure nginx on App Server 1.</li>
+<li>On App Server 1 there is a self signed SSL certificate and key present at location /tmp/nautilus.crt and /tmp/nautilus.key. Move them to some appropriate location and deploy the same in Nginx.</li>
+<li>Create an index.html file with content Welcome! under Nginx document root.</li>
+<li>For final testing try to access the App Server 2 link (either hostname or IP) from jump host using curl command. For example curl -Ik https://<!-- raw HTML omitted -->/.</li>
+</ul>
+<h6 id="solution-2">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#search for the nginx package</span>
+</span></span><span style="display:flex;"><span>yum whatprovides nginx
+</span></span><span style="display:flex;"><span>yum search nginx
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install epel-release &amp; nginx</span>
+</span></span><span style="display:flex;"><span>yum install epel-release -y
+</span></span><span style="display:flex;"><span>yum install nginx
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the self-signed cert</span>
+</span></span><span style="display:flex;"><span>cp /tmp/nautilus.crt /etc/pki/CA/certs/ <span style="color:#f92672">&amp;&amp;</span> cp /tmp/nautilus.key /etc/pki/CA/private/
+</span></span></code></pre></div>edit the /etc/nginx/nginx.conf to look like this</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#For more information on configuration, see:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#* Official English Documentation: http://nginx.org/en/docs/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#* Official Russian Documentation: http://nginx.org/ru/docs/</span>
+</span></span><span style="display:flex;"><span>user nginx;
+</span></span><span style="display:flex;"><span>worker_processes auto;
+</span></span><span style="display:flex;"><span>error_log /var/log/nginx/error.log;
+</span></span><span style="display:flex;"><span>pid /run/nginx.pid;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.</span>
+</span></span><span style="display:flex;"><span>include /usr/share/nginx/modules/*.conf;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>events <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    worker_connections 1024;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>http <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    log_format  main  <span style="color:#e6db74">&#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#e6db74">&#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#e6db74">&#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    access_log  /var/log/nginx/access.log  main;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sendfile            on;
+</span></span><span style="display:flex;"><span>    tcp_nopush          on;
+</span></span><span style="display:flex;"><span>    tcp_nodelay         on;
+</span></span><span style="display:flex;"><span>    keepalive_timeout   65;
+</span></span><span style="display:flex;"><span>    types_hash_max_size 4096;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    include             /etc/nginx/mime.types;
+</span></span><span style="display:flex;"><span>    default_type        application/octet-stream;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load modular configuration files from the /etc/nginx/conf.d directory.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># See http://nginx.org/en/docs/ngx_core_module.html#include</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># for more information.</span>
+</span></span><span style="display:flex;"><span>    include /etc/nginx/conf.d/*.conf;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        listen       80;
+</span></span><span style="display:flex;"><span>        listen       <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80;
+</span></span><span style="display:flex;"><span>        server_name  &lt;your_server_ip_here&gt;;
+</span></span><span style="display:flex;"><span>        root         /usr/share/nginx/html;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Load configuration files for the default server block.</span>
+</span></span><span style="display:flex;"><span>        include /etc/nginx/default.d/*.conf;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">404</span> /404.html;
+</span></span><span style="display:flex;"><span>        location <span style="color:#f92672">=</span> /404.html <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">500</span> <span style="color:#ae81ff">502</span> <span style="color:#ae81ff">503</span> <span style="color:#ae81ff">504</span> /50x.html;
+</span></span><span style="display:flex;"><span>        location <span style="color:#f92672">=</span> /50x.html <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Settings for a TLS enabled server.</span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        listen       <span style="color:#ae81ff">443</span> ssl http2;
+</span></span><span style="display:flex;"><span>        listen       <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:443 ssl http2;
+</span></span><span style="display:flex;"><span>        server_name  &lt;your_server_ip_from_here&gt;;
+</span></span><span style="display:flex;"><span>        root         /usr/share/nginx/html;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ssl_certificate <span style="color:#e6db74">&#34;/etc/pki/CA/certs/nautilus.crt&#34;</span>;
+</span></span><span style="display:flex;"><span>        ssl_certificate_key <span style="color:#e6db74">&#34;/etc/pki/CA/private/nautilus.key&#34;</span>;
+</span></span><span style="display:flex;"><span>        ssl_session_cache shared:SSL:1m;
+</span></span><span style="display:flex;"><span>        ssl_session_timeout  10m;
+</span></span><span style="display:flex;"><span>        ssl_ciphers HIGH:!aNULL:!MD5;
+</span></span><span style="display:flex;"><span>        ssl_prefer_server_ciphers on;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Load configuration files for the default server block.</span>
+</span></span><span style="display:flex;"><span>        include /etc/nginx/default.d/*.conf;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">404</span> /404.html;
+</span></span><span style="display:flex;"><span>            location <span style="color:#f92672">=</span> /40x.html <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">500</span> <span style="color:#ae81ff">502</span> <span style="color:#ae81ff">503</span> <span style="color:#ae81ff">504</span> /50x.html;
+</span></span><span style="display:flex;"><span>            location <span style="color:#f92672">=</span> /50x.html <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div>Now lets add index.html file and start the nginx service</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Now, you will have to remove the index.html under the nginx root because is linked to another file.</span>
+</span></span><span style="display:flex;"><span>rm -rf /usr/share/nginx/html/index.html
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create new index.html under nginx root contains &#34;welcome!&#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Welcome!&#34;</span> &gt; /usr/share/nginx/html/index.html
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start nginx </span>
+</span></span><span style="display:flex;"><span>systemctl start nginx
+</span></span><span style="display:flex;"><span>systemctl status
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl localhot
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#going back to the jump host lets curl</span>
+</span></span><span style="display:flex;"><span>curl -Ik https://172.16.238.10	
+</span></span><span style="display:flex;"><span>curl -k https://172.16.238.10
+</span></span></code></pre></div><hr>
+</li>
+</ul>
+<h2 id="application-security">Application Security</h2>
+<ul>
+<li>We have a backup management application UI hosted on Nautilus backup server in Stratos DC. That backup management application code is deployed under Apache on the backup server itself, and Nginx is running as a reverse proxy on the same server. Apache and Nginx ports are 6100 and 8093, respectively. We have iptables firewall installed on this server. Make the appropriate changes to fulfill the requirements mentioned below:</li>
+<li>a. We want to open all incoming connections to Nginx&rsquo;s port and block all incoming connections to Apache&rsquo;s port. Also make sure rules are permanent.</li>
+</ul>
+<h6 id="solution-3">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the backup server</span>
+</span></span><span style="display:flex;"><span>sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no clint@stbkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify the ports of nginx and apache</span>
+</span></span><span style="display:flex;"><span>ss -lntp | grep nginx
+</span></span><span style="display:flex;"><span>ss -lntp | grep http
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure the firewall to match the desired behavior</span>
+</span></span><span style="display:flex;"><span>iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">8093</span> -m conntrack --cstate NEW,ESTABLISHED -j ACCEPT
+</span></span><span style="display:flex;"><span>iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">6100</span> -m conntrack --cstate NEW -j REJECT
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#save the rules to remain permanent</span>
+</span></span><span style="display:flex;"><span>sudo iptables-save &gt; /etc/sysconfig/iptables
+</span></span><span style="display:flex;"><span>service iptables save
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#veriffy</span>
+</span></span><span style="display:flex;"><span>cat /etc/sysconfig/iptables
+</span></span><span style="display:flex;"><span>iptables -L -n -v
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from jump host</span>
+</span></span><span style="display:flex;"><span>telnet stkbp01 <span style="color:#ae81ff">8093</span>
+</span></span><span style="display:flex;"><span>telnet stkbp01 <span style="color:#ae81ff">6100</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="bash-script">Bash Script</h2>
+<ul>
+<li>The production support team of xFusionCorp Industries is working on developing some bash scripts to automate different day to day tasks. One is to create a bash script for taking websites backup. They have a static website running on App Server 1 in Stratos Datacenter, and they need to create a bash script named official_backup.sh which should accomplish the following tasks. (Also remember to place the script under /scripts directory on App Server 1)</li>
+<li>a. Create a zip archive named xfusioncorp_official.zip of /var/www/html/official directory.</li>
+<li>b. Save the archive in /backup/ on App Server 1. This is a temporary storage, as backups from this location will be clean on weekly basis. Therefore, we also need to save this backup archive on Nautilus Backup Server.</li>
+<li>c. Copy the created archive to Nautilus Backup Server server in /backup/ location.</li>
+<li>d. Please make sure script won&rsquo;t ask for password while copying the archive file. Additionally, the respective server user (for example, tony in case of App Server 1) must be able to run it.</li>
+</ul>
+<h6 id="solution-4">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#cd to /scripts folder and create a official_backup.sh file</span>
+</span></span><span style="display:flex;"><span>cd /scripts
+</span></span><span style="display:flex;"><span>vi official_backup.sh
+</span></span></code></pre></div>After opening the officila_backup.sh file, copy the following script, save and quit.</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#make an archive for the official folder under /var/www/html/ &#34;-r for recurisve&#34; </span>
+</span></span><span style="display:flex;"><span>zip -r /backup/xfusioncorp_official.zip /var/www/html/official
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the archive file to the backup server</span>
+</span></span><span style="display:flex;"><span>scp /backup/xfusioncorp_official.zip clint@stbkp01:/backup/
+</span></span></code></pre></div>now, to make sure the script won&rsquo;t ask for password while copying the archive file, lets generate a ssh key</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#generate an ssh key</span>
+</span></span><span style="display:flex;"><span>ssh-keygen
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the generated key to the backup server</span>
+</span></span><span style="display:flex;"><span>ssh-copy-id clint@stbkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to verify</span>
+</span></span><span style="display:flex;"><span>ssh clint@stkp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add exec perm to the official_backup.sh file</span>
+</span></span><span style="display:flex;"><span>chmod +x official_backup.sh
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the script</span>
+</span></span><span style="display:flex;"><span>./official_backup
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to backserver and verify</span>
+</span></span><span style="display:flex;"><span>ssh clint@stkp01
+</span></span><span style="display:flex;"><span>ls /backup/
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-configure-sudo">Linux Configure sudo</h2>
+<ul>
+<li>We have some users on all app servers in Stratos Datacenter. Some of them have been assigned some new roles and responsibilities, therefore their users need to be upgraded with sudo access so that they can perform admin level tasks.</li>
+<li>a. Provide sudo access to user james on all app servers.</li>
+<li>b. Make sure you have set up password-less sudo for the user.</li>
+</ul>
+<h6 id="solution-">Solution :</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to all app servers one by one</span>
+</span></span><span style="display:flex;"><span>ssh -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;name&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Provide sudo access to user james</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;james ALL=(ALL) NOPASSWD:ALL&#34;</span> &gt; /etc/sudoer.d/james
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>su james
+</span></span><span style="display:flex;"><span>sudo id
+</span></span><span style="display:flex;"><span>sudo su
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="apache-redirects">Apache Redirects</h2>
+<ul>
+<li>The Nautilus devops team got some requirements related to some Apache config changes. They need to setup some redirects for some URLs. There might be some more changes need to be done. Below you can find more details regarding that:</li>
+<li>httpd is already installed on app server 3. Configure Apache to listen on port 5003.</li>
+<li>Configure Apache to add some redirects as mentioned below:
+a.) Redirect <a href="http://stapp03.stratos.xfusioncorp.com">http://stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/ to <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/ i.e non www to www. This must be a permanent redirect i.e 301
+b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/blog/ to <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/news/. This must be a temporary redirect i.e 302.</li>
+</ul>
+<h6 id="solution--1">Solution :</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 3</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify httpd is alr installed</span>
+</span></span><span style="display:flex;"><span>rpm -qa | grep httpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure apache to listen on port 5003</span>
+</span></span><span style="display:flex;"><span>vi /etc/httpd/conf/httpd.conf
+</span></span><span style="display:flex;"><span>Look <span style="color:#66d9ef">for</span> the line that starts with Listen and change it to &gt; Listen <span style="color:#ae81ff">5003</span>
+</span></span></code></pre></div>Configure redirection</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>vi /etc/httpd/conf.d/main.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the following lines</span>
+</span></span><span style="display:flex;"><span>&lt;VirtualHost *:5003&gt;
+</span></span><span style="display:flex;"><span>ServerName http://stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style="display:flex;"><span>Redirect <span style="color:#ae81ff">301</span> /  http://www.stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style="display:flex;"><span>&lt;/VirtualHost&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;VirtualHost *:5003&gt;
+</span></span><span style="display:flex;"><span>ServerName http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
+</span></span><span style="display:flex;"><span>Redirect <span style="color:#ae81ff">302</span> / http://www.stapp03.stratos.xfusioncorp.com:5003/news/
+</span></span><span style="display:flex;"><span>&lt;/VirtualHost&gt;
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Restart htttpd</span>
+</span></span><span style="display:flex;"><span>systemctl restartd httpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Verify </span>
+</span></span><span style="display:flex;"><span>curl http://stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/
+</span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
+</span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/news
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-gpg-encryption">Linux GPG Encryption</h2>
+<ul>
+<li>We have confidential data that needs to be transferred to a remote location, so we need to encrypt that data.We also need to decrypt data we received from a remote location in order to understand its content.</li>
+<li>On storage server in Stratos Datacenter we have private and public keys stored /home/*_key.asc. Use those keys to perform the following actions.</li>
+<li>Encrypt /home/encrypt_me.txt to /home/encrypted_me.asc.</li>
+<li>Decrypt /home/decrypt_me.asc to /home/decrypted_me.txt. (Passphrase for decryption and encryption is kodekloud).</li>
+</ul>
+<h6 id="solution-5">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the storage server</span>
+</span></span><span style="display:flex;"><span>sshpass -p Bl@ckW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#swith to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check for the keys</span>
+</span></span><span style="display:flex;"><span>ls /home/
+</span></span><span style="display:flex;"><span>cat /home/encrypt_me.txt
+</span></span><span style="display:flex;"><span>cat /home/decrypt_me
+</span></span><span style="display:flex;"><span>cd /home
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Import the keys </span>
+</span></span><span style="display:flex;"><span>gpg --import public_key.asc
+</span></span><span style="display:flex;"><span>gpg --import private_key.asc
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>gpg --list-keys
+</span></span><span style="display:flex;"><span>gpg --list-secret-keys
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#encryp the encrypt_me.txt file</span>
+</span></span><span style="display:flex;"><span>gpg --encrypt -r kodekloud@kodekloud.com --armor &lt; encrypt_me.txt -o encrypted_me.asc
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#decrypt the message, you will be prompted with a passphrase which is &#34;kodekloud&#34;</span>
+</span></span><span style="display:flex;"><span>gpg --decrypt decrypt_me.asc &gt; decrypted_me.txt
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#validate</span>
+</span></span><span style="display:flex;"><span>cat decrypted_me.txt
+</span></span><span style="display:flex;"><span>cat decrypt_me.asc
+</span></span><span style="display:flex;"><span>cat encrypt_me.txt
+</span></span><span style="display:flex;"><span>cat encrpyed_me.asc
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-logrotate">Linux LogRotate</h2>
+<ul>
+<li>The Nautilus DevOps team is ready to launch a new application, which they will deploy on app servers in Stratos Datacenter. They are expecting significant traffic/usage of httpd on app servers after that. This will generate massive logs, creating huge log files. To utilise the storage efficiently, they need to compress the log files and need to rotate old logs. Check the requirements shared below:</li>
+<li>a. In all app servers install httpd package.</li>
+<li>b. Using logrotate configure httpd logs rotation to monthly and keep only 3 rotated logs.
+(If by default log rotation is set, then please update configuration as needed)</li>
+</ul>
+<h6 id="solution--2">Solution :</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;passwd&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install httpd package</span>
+</span></span><span style="display:flex;"><span>yum install httpd -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure logrotate to rotate httpd logs</span>
+</span></span><span style="display:flex;"><span>vi /etc/logrotate.d/http
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start httpd service</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span></code></pre></div>copy this into the http file under logrotate.d/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>/var/log/httpd/*log <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  monthly
+</span></span><span style="display:flex;"><span>  missingok
+</span></span><span style="display:flex;"><span>  rotate <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  notifempty
+</span></span><span style="display:flex;"><span>  sharedscripts
+</span></span><span style="display:flex;"><span>  compress
+</span></span><span style="display:flex;"><span>  postrotate
+</span></span><span style="display:flex;"><span>      /bin/systemctl reload httpd.service &gt; /dev/null 2&gt;/dev/null <span style="color:#f92672">||</span> true
+</span></span><span style="display:flex;"><span>  endscript
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="apache-heading">Apache heading</h2>
+<ul>
+<li>We are working on hardening Apache web server on all app servers. As a part of this process we want to add some of the Apache response headers for security purpose. We are testing the settings one by one on all app servers. As per details mentioned below enable these headers for Apache:</li>
+<li>Install httpd package on App Server 3 using yum and configure it to run on 3003 port, make sure to start its service.</li>
+<li>Create an index.html file under Apache&rsquo;s default document root i.e /var/www/html and add below given content in it.</li>
+<li>Welcome to the xFusionCorp Industries!</li>
+<li>Configure Apache to enable below mentioned headers:</li>
+<li>X-XSS-Protection header with value 1; mode=block</li>
+<li>X-Frame-Options header with value SAMEORIGIN</li>
+<li>X-Content-Type-Options header with value nosniff
+=&gt; Note: You can test using curl on the given app server as LBR URL will not work for this task</li>
+</ul>
+<h6 id="solution-6">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to server app 3</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no ssh banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install httpd</span>
+</span></span><span style="display:flex;"><span>yum install httpd -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure httpd to listen on port 3003, and enable the mentioned headers</span>
+</span></span><span style="display:flex;"><span>vi /etc/httpd/conf/httpd.conf
+</span></span><span style="display:flex;"><span>EDIT &gt; Listen <span style="color:#ae81ff">3003</span>
+</span></span><span style="display:flex;"><span>INSERT &gt; Header set X-XSS-Protection <span style="color:#e6db74">&#34;1; mode=block&#34;</span>
+</span></span><span style="display:flex;"><span>INSERT &gt; Header set X-Content-Type-Options nosniff
+</span></span><span style="display:flex;"><span>INSERT &gt; Header always append X-Frame-Options SAMEORIGIN
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create index.html</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Welcome to the xFusionCorp Industries!&#34;</span> &gt; /var/www/html/index.html
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the http service</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl -i localhost:3003
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify again from jumphost</span>
+</span></span><span style="display:flex;"><span>curl -i http://stapp03:3003
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="install-package">Install package</h2>
+<ul>
+<li>As per new application requirements shared by the Nautilus project development team, serveral new packages need to be installed on all app servers in Stratos Datacenter. Most of them are completed except for git.</li>
+<li>Therefore, install the git package on all app-servers.</li>
+</ul>
+<h6 id="solution-7">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1,2 and 3</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;pass&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list all the installed packages</span>
+</span></span><span style="display:flex;"><span>rpm -qa | grep git
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install git</span>
+</span></span><span style="display:flex;"><span>yum install git -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>yum list installed | grep git
+</span></span><span style="display:flex;"><span>git version
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-find-command">Linux Find Command</h2>
+<ul>
+<li>During a routine security audit, the team identified an issue on the Nautilus App Server. Some malicious content was identified within the website code. After digging into the issue they found that there
+might be more infected files. Before doing a cleanup they would like to find all similar files and copy them to a safe location for further investigation. Accomplish the task as per the following requirements:</li>
+<li>a. On App Server 1 at location /var/www/html/official find out all files (not directories) having .js extension.</li>
+<li>b. Copy all those files along with their parent directory structure to location /official on same server.</li>
+<li>c. Please make sure not to copy the entire /var/www/html/official directory content.</li>
+</ul>
+<h6 id="solution-8">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#connect to app server 1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#check if /official exists</span>
+</span></span><span style="display:flex;"><span>ls /official
+</span></span><span style="display:flex;"><span>ls /var/www/html/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#find all the js files under /var/www/html/official</span>
+</span></span><span style="display:flex;"><span>find /var/www/html/official -name <span style="color:#e6db74">&#34;*.js&#34;</span> -type f -exec cp --parents <span style="color:#f92672">{}</span> /official/ <span style="color:#ae81ff">\;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ls /official/
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-postfix-mail">Linux Postfix Mail</h2>
+<ul>
+<li>xFusionCorp Industries has planned to set up a common email server in Stork DC. After several meetings and recommendations they have decided to use postfix as their mail transfer agent and dovecot as an IMAP/POP3 server. We would like you to perform the following steps:</li>
+<li>Install and configure postfix on Stork DC mail server.</li>
+<li>Create an email account <a href="mailto:javed@stratos.xfusioncorp.com">javed@stratos.xfusioncorp.com</a> identified by BruCStnMT5.</li>
+<li>Set its mail directory to /home/javed/Maildir.</li>
+<li>Install and configure dovecot on the same server.</li>
+</ul>
+<h6 id="solution-9">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">## ssh to the mail server</span>
+</span></span><span style="display:flex;"><span>sshpass -p Gr00T123 ssh -o StrictHostKeyChecking groot@stmail01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Confirm that yum is installed</span>
+</span></span><span style="display:flex;"><span>rpm -qa | grep postfix
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install postfix on the mail server</span>
+</span></span><span style="display:flex;"><span>yum install postfix -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure postfix on the server</span>
+</span></span><span style="display:flex;"><span>vi /etc/postfix/main.cf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Find the line with #myhostname &amp; #mydomain and set it as follows</span>
+</span></span><span style="display:flex;"><span>&gt;myhostname <span style="color:#f92672">=</span> stmail01.stratos.xfusioncorp.com
+</span></span><span style="display:flex;"><span>&gt;mydomain <span style="color:#f92672">=</span> stratos.xfusioncorp.com
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#myorigin=$mydomain&#39; line</span>
+</span></span><span style="display:flex;"><span>&gt;myorigin <span style="color:#f92672">=</span> $mydomain
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#inet_interfaces = all&#39; line</span>
+</span></span><span style="display:flex;"><span>&gt; inet_interfaces <span style="color:#f92672">=</span> all
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain&#39; line</span>
+</span></span><span style="display:flex;"><span>&gt; mydestination <span style="color:#f92672">=</span> $myhostname, localhost.$mydomain, localhost, $mydomain
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#mynetworks = host IP address, =&gt; localhost&#39; line and replace it accordingly</span>
+</span></span><span style="display:flex;"><span>&gt;mynetworks <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>host IP address<span style="color:#f92672">}</span>/24, 127.0.0.0/8
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#home_mailbox = Maildir/&#39; line</span>
+</span></span><span style="display:flex;"><span>&gt; home_mailbox <span style="color:#f92672">=</span> Maildir/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Save and quit the configuration file</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Start postfix and confirm it is working</span>
+</span></span><span style="display:flex;"><span>systemctl start postfix
+</span></span><span style="display:flex;"><span>systemctl status postfix
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Create the user account for javed</span>
+</span></span><span style="display:flex;"><span>useradd javed
+</span></span><span style="display:flex;"><span>passwd javed
+</span></span><span style="display:flex;"><span>telnet stmail01 <span style="color:#ae81ff">25</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Enter the following settings:</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; EHLO localhost
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; mail from: javed@stratos.xfusioncorp.com
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; rcpt to: javed@stratos.xfusioncorp.com
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; DATA
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; test mail
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; quit
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install dovecot on mail server</span>
+</span></span><span style="display:flex;"><span>yum install dovecot -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure dovecot</span>
+</span></span><span style="display:flex;"><span>vi /etc/dovecot/dovecot.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#tip&gt;:set nu</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment &#39;#protocols = imap pop3 lmtp&#39;</span>
+</span></span><span style="display:flex;"><span>&gt; save and quit :wq
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#modify 10-mail.conf</span>
+</span></span><span style="display:flex;"><span>vi /etc/dovecot/conf.d/10-mail.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the line &#39;#mail_location = maildir:~/Maildir&#39;</span>
+</span></span><span style="display:flex;"><span>&gt; save and quit :wq
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#modify 10-auth.conf</span>
+</span></span><span style="display:flex;"><span>vi /etc/dovecot/conf.d/10-auth.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the line &#39;#disable_plaintext_auth = yes&#39;</span>
+</span></span><span style="display:flex;"><span>&gt; disable_plaintext_auth <span style="color:#f92672">=</span> yes
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Set the &#39;auth_mechanisms&#39; line</span>
+</span></span><span style="display:flex;"><span>&gt; auth_mechanisms <span style="color:#f92672">=</span> plain login
+</span></span><span style="display:flex;"><span>&gt; save and quit :wq
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#modfiy master.conf</span>
+</span></span><span style="display:flex;"><span>vi 10-master.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment and set the line &#39;#user = &#39;</span>
+</span></span><span style="display:flex;"><span>&gt; user <span style="color:#f92672">=</span> postfix
+</span></span><span style="display:flex;"><span>&gt; group <span style="color:#f92672">=</span> postfix
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Start dovecot service</span>
+</span></span><span style="display:flex;"><span>systemctl start dovecot
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Test the configuration</span>
+</span></span><span style="display:flex;"><span>telnet stmail01 <span style="color:#ae81ff">110</span>
+</span></span><span style="display:flex;"><span>&gt; user javed
+</span></span><span style="display:flex;"><span>&gt; pass <span style="color:#f92672">{</span>given-password<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>&gt; retr <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>&gt; quit
+</span></span><span style="display:flex;"><span>&gt; ss -tulnp
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="linux-process-troubleshooting">Linux Process Troubleshooting</h2>
+<ul>
+<li>The production support team of xFusionCorp Industries has deployed some of the latest monitoring tools to keep an eye on every service, application, etc. running on the systems. One of the monitoring systems reported about Apache service unavailability on one of the app servers in Stratos DC.</li>
+<li>Identify the faulty app host and fix the issue. Make sure Apache service is up and running on all app hosts. They might not hosted any code yet on these servers so you need not to worry about if Apache isn&rsquo;t serving any pages or not, just make sure service is up and running. Also, do not try to change the Apache port on any host.</li>
+</ul>
+<h6 id="solution-10">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#First, we need to identify the faulty app. lets use curl from the jump host</span>
+</span></span><span style="display:flex;"><span>curl http://stapp01:6200
+</span></span><span style="display:flex;"><span>curl http://stapp02:6200
+</span></span><span style="display:flex;"><span>curl http://stapp03:6200
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#In my case, stapp01 was the faulty app, lets ssh to it and find out whats the problem</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span>httpd -t
+</span></span><span style="display:flex;"><span>journalctl -xe
+</span></span><span style="display:flex;"><span>cat /etc/httpd/conf/httpd_conf | grep Listen
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#lets install netstat</span>
+</span></span><span style="display:flex;"><span>yum install netstat -y
+</span></span><span style="display:flex;"><span>netstat -tulnp |grep <span style="color:#ae81ff">6200</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#get the id of the current proccess using port 6200 and kill it, in my case it was 525</span>
+</span></span><span style="display:flex;"><span>kill -9 <span style="color:#ae81ff">525</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the service and verify</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span>curl http://stapp01:6200
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="install-and-configure-postgresql">Install and Configure PostgreSQL</h2>
+<ul>
+<li>The Nautilus application development team has shared that they are planning to deploy one newly developed application on Nautilus infra in Stratos DC. The application uses PostgreSQL database, so as a pre-requisite we need to set up PostgreSQL database server as per requirements shared below:</li>
+<li>a. Install and configure PostgreSQL database on Nautilus database server.</li>
+<li>b. Create a database user kodekloud_sam and set its password to B4zNgHA7Ya.</li>
+<li>c. Create a database kodekloud_db8 and grant full permissions to user kodekloud_sam on this database.</li>
+<li>d. Make appropriate settings to allow all local clients (local socket connections) to connect to the kodekloud_db8 database through kodekloud_sam user using md5 method (Please do not try to encrypt password with md5sum).</li>
+<li>e. At the end its good to test the db connection using these new credentials from root user or server&rsquo;s sudo use</li>
+</ul>
+<h6 id="solution-11">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the database server</span>
+</span></span><span style="display:flex;"><span>sshpass -p Sp<span style="color:#ae81ff">\!</span>dy ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no peter@stdb01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install postgresql</span>
+</span></span><span style="display:flex;"><span>yum search all postgresql
+</span></span><span style="display:flex;"><span>yum whatprovides postgresql
+</span></span><span style="display:flex;"><span>yum install postgresql-server postgresql-contrib
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#iniate the db</span>
+</span></span><span style="display:flex;"><span>postgresql-setup initdb
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#enable and start postgresql</span>
+</span></span><span style="display:flex;"><span>systemctl enable postgresql <span style="color:#f92672">&amp;&amp;</span> systemctl start postgresql
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create user and grant full permissions</span>
+</span></span><span style="display:flex;"><span>sudo -u postgres psql
+</span></span><span style="display:flex;"><span>&gt; CREATE USER &lt;username&gt; WITH PASSWORD &lt;password&gt;;
+</span></span><span style="display:flex;"><span>&gt; CREATE DATABASE &lt;database_name&gt;;
+</span></span><span style="display:flex;"><span>&gt; GRANT ALL PRIVILEGES ON DATABASE &lt;databse_name&gt; TO &lt;username&gt;; 
+</span></span><span style="display:flex;"><span>&gt;<span style="color:#ae81ff">\q</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure to postgres to allow local socket cnx using md5 method</span>
+</span></span><span style="display:flex;"><span>vi /var/lib/psql/data/pg_hba.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#edit the following lines</span>
+</span></span><span style="display:flex;"><span>&gt;local all all md5
+</span></span><span style="display:flex;"><span>&gt;host all 127.0.0.1/32 md5
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#open postgresql.conf and uncomment listen_addresses line</span>
+</span></span><span style="display:flex;"><span>vi /var/lib/psql/data/postgresql.conf
+</span></span><span style="display:flex;"><span>&gt;listen_addresses <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;localhost&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart psq service</span>
+</span></span><span style="display:flex;"><span>systemctl restart postgresql
+</span></span><span style="display:flex;"><span>systemctl status postgresql
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verifying</span>
+</span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h 127.0.0.1 -W
+</span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h localhost -W
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="tomcat">Tomcat</h2>
+<ul>
+<li>The Nautilus application development team recently finished the beta version of one of their Java-based applications, which they are planning to deploy on one of the app servers in Stratos DC. After an internal team meeting, they have decided to use the tomcat application server. Based on the requirements mentioned below complete the task:</li>
+<li>a. Install tomcat server on App Server 2 using yum.</li>
+<li>b. Configure it to run on port 6300.</li>
+<li>c. There is a ROOT.war file on Jump host at location /tmp. Deploy it on this tomcat server and make sure the webpage works directly on base URL i.e without specifying any sub-directory anything like this http://URL/ROOT .</li>
+</ul>
+<h6 id="solution-12">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 2</span>
+</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install tomcat</span>
+</span></span><span style="display:flex;"><span>yum install tomcat -y
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run tomcat on port 6300</span>
+</span></span><span style="display:flex;"><span>vi /etc/tomcat/server.xml
+</span></span><span style="display:flex;"><span>&gt; look <span style="color:#66d9ef">for</span> Port and change it to &lt;Connector Port <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;6300&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>systemctl start tomcat
+</span></span><span style="display:flex;"><span>systemctl status tomcat
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from the jumphost copy the ROOT.war to app server2</span>
+</span></span><span style="display:flex;"><span>scp ROOT.war steve@lstapp02:/tmp/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#go back to the app server2</span>
+</span></span><span style="display:flex;"><span>mv /tmp/ROOT.war /var/lib/tomcat/webapps/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl localhost:6300
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="install-and-configure-sftp">Install and configure SFTP</h2>
+<ul>
+<li>Some of the developers from Nautilus project team have asked for SFTP access to at least one of the app server in Stratos DC. After going through the requirements, the system admins team has decided to configure the SFTP server on App Server 2 server in Stratos Datacenter. Please configure it as per the following instructions:</li>
+<li>a. Create an SFTP user mariyam and set its password to BruCStnMT5.</li>
+<li>b. Password authentication should be enabled for this user.</li>
+<li>c. Set its ChrootDirectory to /var/www/appdata.</li>
+<li>d. SFTP user should only be allowed to make SFTP connections.</li>
+</ul>
+<h6 id="solution-13">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server2</span>
+</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#make the folder appdata</span>
+</span></span><span style="display:flex;"><span>mkdir -p /var/www/appdata
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#change perms and the owner of appdata folder</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">755</span> /var/www/appdata/
+</span></span><span style="display:flex;"><span>chown root:root /var/www/appdata/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#add user mariyam with appdata as its chrootDir</span>
+</span></span><span style="display:flex;"><span>useradd -d /var/www/appdata/ mariyam
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>cat /etc/passwd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure sshd</span>
+</span></span><span style="display:flex;"><span>vi /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>&gt;PasswordAuthentication yes
+</span></span><span style="display:flex;"><span>  &gt;ChrootDirectory %h
+</span></span><span style="display:flex;"><span>  &gt;AllowTCPForwarding no
+</span></span><span style="display:flex;"><span>  &gt;X11Forwarding no
+</span></span><span style="display:flex;"><span>  &gt;ForceCommand internal-sftp
+</span></span><span style="display:flex;"><span>  &gt;AllowAgentForwarding no
+</span></span><span style="display:flex;"><span>  &gt;PermitTunnel no 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart sshd </span>
+</span></span><span style="display:flex;"><span>systemctl restart sshd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>sftp mariyam@stapp02
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="iptables-installation-and-configuration">IPtables Installation And Configuration</h2>
+<ul>
+<li>We have one of our website up and running on our Nautilus infrastructure in Stratos DC. Our security team has raised a concern that right now Apache’s port i.e 3000 is open for all since there is no firewall installed on these hosts. So we have decided to add some security layer for these hosts and after discussions and recommendations we have come up with below given requirements:</li>
+<li>Install iptables and all its dependencies on each app host.</li>
+<li>Block incoming port 3000 on all apps for everyone except for LBR host.</li>
+<li>Make sure the rules should persist even after system reboot.</li>
+</ul>
+<h6 id="solution-14">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app servers</span>
+</span></span><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;host&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#install iptables</span>
+</span></span><span style="display:flex;"><span>yum install iptables-services -y
+</span></span><span style="display:flex;"><span>iptables --help
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the iptables </span>
+</span></span><span style="display:flex;"><span>systemctl start iptables
+</span></span><span style="display:flex;"><span>systemctl enable iptables
+</span></span><span style="display:flex;"><span>systemctl status iptables
+</span></span><span style="display:flex;"><span>iptables --list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#allow LBR host</span>
+</span></span><span style="display:flex;"><span>iptables -R INPUT <span style="color:#ae81ff">5</span> -p tcp --dport <span style="color:#ae81ff">3000</span> -s 172.16.238.14 -j ACCEPT <span style="color:#75715e">#-s is for source ip of the LBR, dport is destination port.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#block the incoming reqs</span>
+</span></span><span style="display:flex;"><span>iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">3000</span> -j DROP
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#save</span>
+</span></span><span style="display:flex;"><span>service iptables save
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from the jump host</span>
+</span></span><span style="display:flex;"><span>curl 172.16.238.10:3000
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to the LBR host</span>
+</span></span><span style="display:flex;"><span>sshpass -p Mischi3f ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no loki@stlb01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl 172.16.238.10:3000
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="install-ansible">Install Ansible</h2>
+<ul>
+<li>During the weekly meeting, the Nautilus DevOps team discussed about the automation and configuration management solutions that they want to implement. While considering several options, the team has decided to go with Ansible for now due to its simple setup and minimal pre-requisites. The team wanted to start testing using Ansible, so they have decided to use jump host as an Ansible controller to test different kind of tasks on rest of the servers.</li>
+<li>Install ansible version 4.7.0 on Jump host using pip3 only. Make sure Ansible binary is available globally on this system, i.e all users on this system are able to run Ansible commands.
+Install Ansible</li>
+</ul>
+<h6 id="solution-15">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>pip3 install -U pip
+</span></span><span style="display:flex;"><span>sudo pip3 install ansible<span style="color:#f92672">==</span>4.7.0
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="apache-troubleshooting">Apache Troubleshooting</h2>
+<ul>
+<li>xFusionCorp Industries uses some monitoring tools to check the status of every service, application, etc running on the systems. Recently, the monitoring system identified that Apache service is not running on some of the Nautilus Application Servers in Stratos Datacenter.
+<ol>
+<li>Identify the faulty Nautilus Application Server and fix the issue. Also, make sure Apache service is up and running on all Nautilus Application Servers. Do not try to stop any kind of firewall that is already running.</li>
+<li>Apache is running on 3002 port on all Nautilus Application Servers and its document root must be /var/www/html on all app servers.</li>
+<li>Finally you can test from jump host using curl command to access Apache on all app servers and it should be reachable and you should get some static page. E.g. curl http://172.16.238.10:3002/</li>
+</ol>
+</li>
+</ul>
+<h6 id="soluiton">Soluiton:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;username&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>httpd -t
+</span></span><span style="display:flex;"><span>vi +&lt;line&gt; &lt;configfile&gt; <span style="color:#75715e">#e.g vi +34 /etc/httpd/conf/httpd.conf and fix the line!</span>
+</span></span><span style="display:flex;"><span>systemctl start httpd
+</span></span><span style="display:flex;"><span>systemctl status httpd
+</span></span><span style="display:flex;"><span>systemctl enable --now httpd
+</span></span><span style="display:flex;"><span>curl &lt;hostname&gt;:3002
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="heading"></h2>
+<ul>
+<li>To secure our Nautilus infrastructure in Stratos Datacenter we have decided to install and configure firewalld on all app servers. We have Apache and Nginx services running on these apps. Nginx is running as a reverse proxy server for Apache. We might have more robust firewall settings in the future, but for now we have decided to go with the given requirements listed below:</li>
+<li>a. Allow all incoming connections on Nginx port, i.e 80.</li>
+<li>b. Block all incoming connections on Apache port, i.e 8080.</li>
+<li>c. All rules must be permanent.</li>
+<li>d. Zone should be public.</li>
+<li>e. If Apache or Nginx services aren&rsquo;t running already, please make sure to start them</li>
+</ul>
+<h6 id="solution-16">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span>systemctl status httpd <span style="color:#75715e">#start if not</span>
+</span></span><span style="display:flex;"><span>systemctl status nginx <span style="color:#75715e">#start if not</span>
+</span></span><span style="display:flex;"><span>sudo yum install firewalld -y 
+</span></span><span style="display:flex;"><span>sudo systemctl enable --now firewalld
+</span></span><span style="display:flex;"><span>sudo systemctl status firewalld
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --permanent --zone<span style="color:#f92672">=</span>public --add-port<span style="color:#f92672">=</span>80/tcp
+</span></span><span style="display:flex;"><span> sudo firewall-cmd --zone<span style="color:#f92672">=</span>public --add-rich-rule<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;rule family=&#34;ipv4&#34; source address=&#34;0.0.0.0/0&#34; port port=8080 protocol=&#34;tcp&#34; reject&#39;</span>
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --get-default-zone
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --list-all
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from jump host</span>
+</span></span><span style="display:flex;"><span>curl stapp01:80 <span style="color:#75715e">#you should get &#34;Working!&#34;</span>
+</span></span><span style="display:flex;"><span>curl stapp02:8080 <span style="color:#75715e">#you should get &#34;connection refused msg&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
 AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
@@ -994,820 +1808,6 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </span></span><span style="display:flex;"><span>&gt; search <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;#remote_user=root&#34;</span> and change it to <span style="color:#e6db74">&#34;remote_user=kirst&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
 </span></span><span style="display:flex;"><span>ansible-config dump | grep USER 
-</span></span></code></pre></div></li>
-</ul>
-]]></content></item><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-linux-challenges/</link><pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/06/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
-<h2 id="web-server-security">Web Server Security</h2>
-<ul>
-<li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li>
-<li>a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number. Ensure this server has the appropriate settings to hide the version number of the Apache web server.</li>
-<li>b. There is a website hosted under /var/www/html/blog on App Server 1. It was detected that the directory /blog lists all of its contents while browsing the URL. Disable the directory browser listing in Apache config.</li>
-<li>c. Also make sure to restart the Apache service after making the changes.</li>
-</ul>
-<h6 id="solution">Solution</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server 1</span>
-</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#check the httpd status</span>
-</span></span><span style="display:flex;"><span>sudo systemctl status httpd
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#open the httpd.conf file with vi</span>
-</span></span><span style="display:flex;"><span>sudo vi /etc/httpd/conf/httpd.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#a. to disable the version discolusre you can append the following two lines to the httpd.conf</span>
-</span></span><span style="display:flex;"><span>.&gt; ServerTokens Prod
-</span></span><span style="display:flex;"><span>.&gt; ServerSignature Off
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#b. to disable the directory browser listing, make sure to remove Indexes from options</span>
-</span></span><span style="display:flex;"><span>Before &gt; Options Indexes FollowSymLinks
-</span></span><span style="display:flex;"><span>After &gt; Options FollowSymLinks
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#save and quit</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#c. restart the server and curl to verify</span>
-</span></span><span style="display:flex;"><span>sudo systemctl start httpd <span style="color:#f92672">&amp;&amp;</span> sudo systemctl status httpd
-</span></span><span style="display:flex;"><span>curl -I stapp01:8080/
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#TIP: you can press &#34;/&#34; and write &#34;Options&#34; in vi to search for that line. press n to move to the next matched item.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://www.tecmint.com/hide-apache-web-server-version-information/</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#ref: https://stackoverflow.com/questions/2530372/how-do-i-disable-directory-browsing</span>
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="configure-local-yum-repos">Configure Local Yum repos</h2>
-<ul>
-<li>The Nautilus production support team and security team had a meeting last month in which they decided to use local yum repositories for maintaing packages needed for their servers. For now they have decided to configure a local yum repo on Nautilus Backup Server. This is one of the pending items from last month, so please configure a local yum repository on Nautilus Backup Server as per details given below.</li>
-<li>a. We have some packages already present at location /packages/downloaded_rpms/ on Nautilus Backup Server.</li>
-<li>b. Create a yum repo named epel_local and make sure to set Repository ID to epel_local. Configure it to use package&rsquo;s location /packages/downloaded_rpms/.</li>
-<li>c. Install package vim-enhanced from this newly created repo.</li>
-</ul>
-<h6 id="solution-1">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Connect to the backup server</span>
-</span></span><span style="display:flex;"><span>sshpass -p H@wk3y3	ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no clint@stbkp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#there is actually 2 ways to create yum repos, either you do it manually or you can do it with &#34;yum-config-manager --add-repo=&lt;url&gt;&#34;</span>
-</span></span><span style="display:flex;"><span>cat &lt;&lt;<span style="color:#ae81ff">\ </span>EOF &gt; /etc/yum_repos.d/epel_local.repo
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>epel_local<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>epel_local
-</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>file:///packages/downloaded_rpms/
-</span></span><span style="display:flex;"><span>enabled<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>EOF
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#clean and list the repos</span>
-</span></span><span style="display:flex;"><span>yum clean all
-</span></span><span style="display:flex;"><span>yum repo list
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install the vim-enhanced</span>
-</span></span><span style="display:flex;"><span>yum install vim-enhanced -y
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="setup-ssl-for-nginx">Setup SSL for Nginx</h2>
-<ul>
-<li>The system admins team of xFusionCorp Industries needs to deploy a new application on App Server 1 in Stratos Datacenter. They have some pre-requites to get ready that server for application deployment. Prepare the server as per requirements shared below:</li>
-<li>Install and configure nginx on App Server 1.</li>
-<li>On App Server 1 there is a self signed SSL certificate and key present at location /tmp/nautilus.crt and /tmp/nautilus.key. Move them to some appropriate location and deploy the same in Nginx.</li>
-<li>Create an index.html file with content Welcome! under Nginx document root.</li>
-<li>For final testing try to access the App Server 2 link (either hostname or IP) from jump host using curl command. For example curl -Ik https://<!-- raw HTML omitted -->/.</li>
-</ul>
-<h6 id="solution-2">Solution</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server 1</span>
-</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#search for the nginx package</span>
-</span></span><span style="display:flex;"><span>yum whatprovides nginx
-</span></span><span style="display:flex;"><span>yum search nginx
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install epel-release &amp; nginx</span>
-</span></span><span style="display:flex;"><span>yum install epel-release -y
-</span></span><span style="display:flex;"><span>yum install nginx
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the self-signed cert</span>
-</span></span><span style="display:flex;"><span>cp /tmp/nautilus.crt /etc/pki/CA/certs/ <span style="color:#f92672">&amp;&amp;</span> cp /tmp/nautilus.key /etc/pki/CA/private/
-</span></span></code></pre></div>edit the /etc/nginx/nginx.conf to look like this</li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#For more information on configuration, see:</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#* Official English Documentation: http://nginx.org/en/docs/</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#* Official Russian Documentation: http://nginx.org/ru/docs/</span>
-</span></span><span style="display:flex;"><span>user nginx;
-</span></span><span style="display:flex;"><span>worker_processes auto;
-</span></span><span style="display:flex;"><span>error_log /var/log/nginx/error.log;
-</span></span><span style="display:flex;"><span>pid /run/nginx.pid;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.</span>
-</span></span><span style="display:flex;"><span>include /usr/share/nginx/modules/*.conf;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>events <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    worker_connections 1024;
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>http <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    log_format  main  <span style="color:#e6db74">&#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;</span>
-</span></span><span style="display:flex;"><span>                      <span style="color:#e6db74">&#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
-</span></span><span style="display:flex;"><span>                      <span style="color:#e6db74">&#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    access_log  /var/log/nginx/access.log  main;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    sendfile            on;
-</span></span><span style="display:flex;"><span>    tcp_nopush          on;
-</span></span><span style="display:flex;"><span>    tcp_nodelay         on;
-</span></span><span style="display:flex;"><span>    keepalive_timeout   65;
-</span></span><span style="display:flex;"><span>    types_hash_max_size 4096;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    include             /etc/nginx/mime.types;
-</span></span><span style="display:flex;"><span>    default_type        application/octet-stream;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load modular configuration files from the /etc/nginx/conf.d directory.</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># See http://nginx.org/en/docs/ngx_core_module.html#include</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># for more information.</span>
-</span></span><span style="display:flex;"><span>    include /etc/nginx/conf.d/*.conf;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        listen       80;
-</span></span><span style="display:flex;"><span>        listen       <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80;
-</span></span><span style="display:flex;"><span>        server_name  &lt;your_server_ip_here&gt;;
-</span></span><span style="display:flex;"><span>        root         /usr/share/nginx/html;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Load configuration files for the default server block.</span>
-</span></span><span style="display:flex;"><span>        include /etc/nginx/default.d/*.conf;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">404</span> /404.html;
-</span></span><span style="display:flex;"><span>        location <span style="color:#f92672">=</span> /404.html <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">500</span> <span style="color:#ae81ff">502</span> <span style="color:#ae81ff">503</span> <span style="color:#ae81ff">504</span> /50x.html;
-</span></span><span style="display:flex;"><span>        location <span style="color:#f92672">=</span> /50x.html <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Settings for a TLS enabled server.</span>
-</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        listen       <span style="color:#ae81ff">443</span> ssl http2;
-</span></span><span style="display:flex;"><span>        listen       <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:443 ssl http2;
-</span></span><span style="display:flex;"><span>        server_name  &lt;your_server_ip_from_here&gt;;
-</span></span><span style="display:flex;"><span>        root         /usr/share/nginx/html;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        ssl_certificate <span style="color:#e6db74">&#34;/etc/pki/CA/certs/nautilus.crt&#34;</span>;
-</span></span><span style="display:flex;"><span>        ssl_certificate_key <span style="color:#e6db74">&#34;/etc/pki/CA/private/nautilus.key&#34;</span>;
-</span></span><span style="display:flex;"><span>        ssl_session_cache shared:SSL:1m;
-</span></span><span style="display:flex;"><span>        ssl_session_timeout  10m;
-</span></span><span style="display:flex;"><span>        ssl_ciphers HIGH:!aNULL:!MD5;
-</span></span><span style="display:flex;"><span>        ssl_prefer_server_ciphers on;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Load configuration files for the default server block.</span>
-</span></span><span style="display:flex;"><span>        include /etc/nginx/default.d/*.conf;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">404</span> /404.html;
-</span></span><span style="display:flex;"><span>            location <span style="color:#f92672">=</span> /40x.html <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        error_page <span style="color:#ae81ff">500</span> <span style="color:#ae81ff">502</span> <span style="color:#ae81ff">503</span> <span style="color:#ae81ff">504</span> /50x.html;
-</span></span><span style="display:flex;"><span>            location <span style="color:#f92672">=</span> /50x.html <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span></code></pre></div>Now lets add index.html file and start the nginx service</li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Now, you will have to remove the index.html under the nginx root because is linked to another file.</span>
-</span></span><span style="display:flex;"><span>rm -rf /usr/share/nginx/html/index.html
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#create new index.html under nginx root contains &#34;welcome!&#34;</span>
-</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Welcome!&#34;</span> &gt; /usr/share/nginx/html/index.html
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#start nginx </span>
-</span></span><span style="display:flex;"><span>systemctl start nginx
-</span></span><span style="display:flex;"><span>systemctl status
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>curl localhot
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#going back to the jump host lets curl</span>
-</span></span><span style="display:flex;"><span>curl -Ik https://172.16.238.10	
-</span></span><span style="display:flex;"><span>curl -k https://172.16.238.10
-</span></span></code></pre></div><hr>
-</li>
-</ul>
-<h2 id="application-security">Application Security</h2>
-<ul>
-<li>We have a backup management application UI hosted on Nautilus backup server in Stratos DC. That backup management application code is deployed under Apache on the backup server itself, and Nginx is running as a reverse proxy on the same server. Apache and Nginx ports are 6100 and 8093, respectively. We have iptables firewall installed on this server. Make the appropriate changes to fulfill the requirements mentioned below:</li>
-<li>a. We want to open all incoming connections to Nginx&rsquo;s port and block all incoming connections to Apache&rsquo;s port. Also make sure rules are permanent.</li>
-</ul>
-<h6 id="solution-3">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the backup server</span>
-</span></span><span style="display:flex;"><span>sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no clint@stbkp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify the ports of nginx and apache</span>
-</span></span><span style="display:flex;"><span>ss -lntp | grep nginx
-</span></span><span style="display:flex;"><span>ss -lntp | grep http
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure the firewall to match the desired behavior</span>
-</span></span><span style="display:flex;"><span>iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">8093</span> -m conntrack --cstate NEW,ESTABLISHED -j ACCEPT
-</span></span><span style="display:flex;"><span>iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">6100</span> -m conntrack --cstate NEW -j REJECT
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#save the rules to remain permanent</span>
-</span></span><span style="display:flex;"><span>sudo iptables-save &gt; /etc/sysconfig/iptables
-</span></span><span style="display:flex;"><span>service iptables save
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#veriffy</span>
-</span></span><span style="display:flex;"><span>cat /etc/sysconfig/iptables
-</span></span><span style="display:flex;"><span>iptables -L -n -v
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from jump host</span>
-</span></span><span style="display:flex;"><span>telnet stkbp01 <span style="color:#ae81ff">8093</span>
-</span></span><span style="display:flex;"><span>telnet stkbp01 <span style="color:#ae81ff">6100</span>
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="bash-script">Bash Script</h2>
-<ul>
-<li>The production support team of xFusionCorp Industries is working on developing some bash scripts to automate different day to day tasks. One is to create a bash script for taking websites backup. They have a static website running on App Server 1 in Stratos Datacenter, and they need to create a bash script named official_backup.sh which should accomplish the following tasks. (Also remember to place the script under /scripts directory on App Server 1)</li>
-<li>a. Create a zip archive named xfusioncorp_official.zip of /var/www/html/official directory.</li>
-<li>b. Save the archive in /backup/ on App Server 1. This is a temporary storage, as backups from this location will be clean on weekly basis. Therefore, we also need to save this backup archive on Nautilus Backup Server.</li>
-<li>c. Copy the created archive to Nautilus Backup Server server in /backup/ location.</li>
-<li>d. Please make sure script won&rsquo;t ask for password while copying the archive file. Additionally, the respective server user (for example, tony in case of App Server 1) must be able to run it.</li>
-</ul>
-<h6 id="solution-4">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1</span>
-</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#cd to /scripts folder and create a official_backup.sh file</span>
-</span></span><span style="display:flex;"><span>cd /scripts
-</span></span><span style="display:flex;"><span>vi official_backup.sh
-</span></span></code></pre></div>After opening the officila_backup.sh file, copy the following script, save and quit.</li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#make an archive for the official folder under /var/www/html/ &#34;-r for recurisve&#34; </span>
-</span></span><span style="display:flex;"><span>zip -r /backup/xfusioncorp_official.zip /var/www/html/official
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the archive file to the backup server</span>
-</span></span><span style="display:flex;"><span>scp /backup/xfusioncorp_official.zip clint@stbkp01:/backup/
-</span></span></code></pre></div>now, to make sure the script won&rsquo;t ask for password while copying the archive file, lets generate a ssh key</li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#generate an ssh key</span>
-</span></span><span style="display:flex;"><span>ssh-keygen
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the generated key to the backup server</span>
-</span></span><span style="display:flex;"><span>ssh-copy-id clint@stbkp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to verify</span>
-</span></span><span style="display:flex;"><span>ssh clint@stkp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#add exec perm to the official_backup.sh file</span>
-</span></span><span style="display:flex;"><span>chmod +x official_backup.sh
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the script</span>
-</span></span><span style="display:flex;"><span>./official_backup
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to backserver and verify</span>
-</span></span><span style="display:flex;"><span>ssh clint@stkp01
-</span></span><span style="display:flex;"><span>ls /backup/
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="linux-configure-sudo">Linux Configure sudo</h2>
-<ul>
-<li>We have some users on all app servers in Stratos Datacenter. Some of them have been assigned some new roles and responsibilities, therefore their users need to be upgraded with sudo access so that they can perform admin level tasks.</li>
-<li>a. Provide sudo access to user james on all app servers.</li>
-<li>b. Make sure you have set up password-less sudo for the user.</li>
-</ul>
-<h6 id="solution-">Solution :</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to all app servers one by one</span>
-</span></span><span style="display:flex;"><span>ssh -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;name&gt;@&lt;hostname&gt;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Provide sudo access to user james</span>
-</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;james ALL=(ALL) NOPASSWD:ALL&#34;</span> &gt; /etc/sudoer.d/james
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>su james
-</span></span><span style="display:flex;"><span>sudo id
-</span></span><span style="display:flex;"><span>sudo su
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="apache-redirects">Apache Redirects</h2>
-<ul>
-<li>The Nautilus devops team got some requirements related to some Apache config changes. They need to setup some redirects for some URLs. There might be some more changes need to be done. Below you can find more details regarding that:</li>
-<li>httpd is already installed on app server 3. Configure Apache to listen on port 5003.</li>
-<li>Configure Apache to add some redirects as mentioned below:
-a.) Redirect <a href="http://stapp03.stratos.xfusioncorp.com">http://stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/ to <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/ i.e non www to www. This must be a permanent redirect i.e 301
-b.) Redirect <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/blog/ to <a href="http://www.stapp03.stratos.xfusioncorp.com">http://www.stapp03.stratos.xfusioncorp.com</a>:<!-- raw HTML omitted -->/news/. This must be a temporary redirect i.e 302.</li>
-</ul>
-<h6 id="solution--1">Solution :</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 3</span>
-</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify httpd is alr installed</span>
-</span></span><span style="display:flex;"><span>rpm -qa | grep httpd
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure apache to listen on port 5003</span>
-</span></span><span style="display:flex;"><span>vi /etc/httpd/conf/httpd.conf
-</span></span><span style="display:flex;"><span>Look <span style="color:#66d9ef">for</span> the line that starts with Listen and change it to &gt; Listen <span style="color:#ae81ff">5003</span>
-</span></span></code></pre></div>Configure redirection</li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>vi /etc/httpd/conf.d/main.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#copy the following lines</span>
-</span></span><span style="display:flex;"><span>&lt;VirtualHost *:5003&gt;
-</span></span><span style="display:flex;"><span>ServerName http://stapp03.stratos.xfusioncorp.com:5003/
-</span></span><span style="display:flex;"><span>Redirect <span style="color:#ae81ff">301</span> /  http://www.stapp03.stratos.xfusioncorp.com:5003/
-</span></span><span style="display:flex;"><span>&lt;/VirtualHost&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&lt;VirtualHost *:5003&gt;
-</span></span><span style="display:flex;"><span>ServerName http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
-</span></span><span style="display:flex;"><span>Redirect <span style="color:#ae81ff">302</span> / http://www.stapp03.stratos.xfusioncorp.com:5003/news/
-</span></span><span style="display:flex;"><span>&lt;/VirtualHost&gt;
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#Restart htttpd</span>
-</span></span><span style="display:flex;"><span>systemctl restartd httpd
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Verify </span>
-</span></span><span style="display:flex;"><span>curl http://stapp03.stratos.xfusioncorp.com:5003/
-</span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/
-</span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/blog/
-</span></span><span style="display:flex;"><span>curl http://www.stapp03.stratos.xfusioncorp.com:5003/news
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="linux-gpg-encryption">Linux GPG Encryption</h2>
-<ul>
-<li>We have confidential data that needs to be transferred to a remote location, so we need to encrypt that data.We also need to decrypt data we received from a remote location in order to understand its content.</li>
-<li>On storage server in Stratos Datacenter we have private and public keys stored /home/*_key.asc. Use those keys to perform the following actions.</li>
-<li>Encrypt /home/encrypt_me.txt to /home/encrypted_me.asc.</li>
-<li>Decrypt /home/decrypt_me.asc to /home/decrypted_me.txt. (Passphrase for decryption and encryption is kodekloud).</li>
-</ul>
-<h6 id="solution-5">Solution</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the storage server</span>
-</span></span><span style="display:flex;"><span>sshpass -p Bl@ckW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#swith to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#check for the keys</span>
-</span></span><span style="display:flex;"><span>ls /home/
-</span></span><span style="display:flex;"><span>cat /home/encrypt_me.txt
-</span></span><span style="display:flex;"><span>cat /home/decrypt_me
-</span></span><span style="display:flex;"><span>cd /home
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Import the keys </span>
-</span></span><span style="display:flex;"><span>gpg --import public_key.asc
-</span></span><span style="display:flex;"><span>gpg --import private_key.asc
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>gpg --list-keys
-</span></span><span style="display:flex;"><span>gpg --list-secret-keys
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#encryp the encrypt_me.txt file</span>
-</span></span><span style="display:flex;"><span>gpg --encrypt -r kodekloud@kodekloud.com --armor &lt; encrypt_me.txt -o encrypted_me.asc
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#decrypt the message, you will be prompted with a passphrase which is &#34;kodekloud&#34;</span>
-</span></span><span style="display:flex;"><span>gpg --decrypt decrypt_me.asc &gt; decrypted_me.txt
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#validate</span>
-</span></span><span style="display:flex;"><span>cat decrypted_me.txt
-</span></span><span style="display:flex;"><span>cat decrypt_me.asc
-</span></span><span style="display:flex;"><span>cat encrypt_me.txt
-</span></span><span style="display:flex;"><span>cat encrpyed_me.asc
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="linux-logrotate">Linux LogRotate</h2>
-<ul>
-<li>The Nautilus DevOps team is ready to launch a new application, which they will deploy on app servers in Stratos Datacenter. They are expecting significant traffic/usage of httpd on app servers after that. This will generate massive logs, creating huge log files. To utilise the storage efficiently, they need to compress the log files and need to rotate old logs. Check the requirements shared below:</li>
-<li>a. In all app servers install httpd package.</li>
-<li>b. Using logrotate configure httpd logs rotation to monthly and keep only 3 rotated logs.
-(If by default log rotation is set, then please update configuration as needed)</li>
-</ul>
-<h6 id="solution--2">Solution :</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app server</span>
-</span></span><span style="display:flex;"><span>sshpass -p &lt;passwd&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install httpd package</span>
-</span></span><span style="display:flex;"><span>yum install httpd -y
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure logrotate to rotate httpd logs</span>
-</span></span><span style="display:flex;"><span>vi /etc/logrotate.d/http
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#start httpd service</span>
-</span></span><span style="display:flex;"><span>systemctl start httpd
-</span></span><span style="display:flex;"><span>systemctl status httpd
-</span></span></code></pre></div>copy this into the http file under logrotate.d/
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>/var/log/httpd/*log <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>  monthly
-</span></span><span style="display:flex;"><span>  missingok
-</span></span><span style="display:flex;"><span>  rotate <span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>  notifempty
-</span></span><span style="display:flex;"><span>  sharedscripts
-</span></span><span style="display:flex;"><span>  compress
-</span></span><span style="display:flex;"><span>  postrotate
-</span></span><span style="display:flex;"><span>      /bin/systemctl reload httpd.service &gt; /dev/null 2&gt;/dev/null <span style="color:#f92672">||</span> true
-</span></span><span style="display:flex;"><span>  endscript
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="apache-heading">Apache heading</h2>
-<ul>
-<li>We are working on hardening Apache web server on all app servers. As a part of this process we want to add some of the Apache response headers for security purpose. We are testing the settings one by one on all app servers. As per details mentioned below enable these headers for Apache:</li>
-<li>Install httpd package on App Server 3 using yum and configure it to run on 3003 port, make sure to start its service.</li>
-<li>Create an index.html file under Apache&rsquo;s default document root i.e /var/www/html and add below given content in it.</li>
-<li>Welcome to the xFusionCorp Industries!</li>
-<li>Configure Apache to enable below mentioned headers:</li>
-<li>X-XSS-Protection header with value 1; mode=block</li>
-<li>X-Frame-Options header with value SAMEORIGIN</li>
-<li>X-Content-Type-Options header with value nosniff
-=&gt; Note: You can test using curl on the given app server as LBR URL will not work for this task</li>
-</ul>
-<h6 id="solution-6">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to server app 3</span>
-</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no ssh banner@stapp03
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install httpd</span>
-</span></span><span style="display:flex;"><span>yum install httpd -y
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure httpd to listen on port 3003, and enable the mentioned headers</span>
-</span></span><span style="display:flex;"><span>vi /etc/httpd/conf/httpd.conf
-</span></span><span style="display:flex;"><span>EDIT &gt; Listen <span style="color:#ae81ff">3003</span>
-</span></span><span style="display:flex;"><span>INSERT &gt; Header set X-XSS-Protection <span style="color:#e6db74">&#34;1; mode=block&#34;</span>
-</span></span><span style="display:flex;"><span>INSERT &gt; Header set X-Content-Type-Options nosniff
-</span></span><span style="display:flex;"><span>INSERT &gt; Header always append X-Frame-Options SAMEORIGIN
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#create index.html</span>
-</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Welcome to the xFusionCorp Industries!&#34;</span> &gt; /var/www/html/index.html
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the http service</span>
-</span></span><span style="display:flex;"><span>systemctl start httpd
-</span></span><span style="display:flex;"><span>systemctl status httpd
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>curl -i localhost:3003
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify again from jumphost</span>
-</span></span><span style="display:flex;"><span>curl -i http://stapp03:3003
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="install-package">Install package</h2>
-<ul>
-<li>As per new application requirements shared by the Nautilus project development team, serveral new packages need to be installed on all app servers in Stratos Datacenter. Most of them are completed except for git.</li>
-<li>Therefore, install the git package on all app-servers.</li>
-</ul>
-<h6 id="solution-7">Solution</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 1,2 and 3</span>
-</span></span><span style="display:flex;"><span>sshpass -p &lt;pass&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#list all the installed packages</span>
-</span></span><span style="display:flex;"><span>rpm -qa | grep git
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install git</span>
-</span></span><span style="display:flex;"><span>yum install git -y
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>yum list installed | grep git
-</span></span><span style="display:flex;"><span>git version
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="linux-find-command">Linux Find Command</h2>
-<ul>
-<li>During a routine security audit, the team identified an issue on the Nautilus App Server. Some malicious content was identified within the website code. After digging into the issue they found that there
-might be more infected files. Before doing a cleanup they would like to find all similar files and copy them to a safe location for further investigation. Accomplish the task as per the following requirements:</li>
-<li>a. On App Server 1 at location /var/www/html/official find out all files (not directories) having .js extension.</li>
-<li>b. Copy all those files along with their parent directory structure to location /official on same server.</li>
-<li>c. Please make sure not to copy the entire /var/www/html/official directory content.</li>
-</ul>
-<h6 id="solution-8">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#connect to app server 1</span>
-</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#check if /official exists</span>
-</span></span><span style="display:flex;"><span>ls /official
-</span></span><span style="display:flex;"><span>ls /var/www/html/
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#find all the js files under /var/www/html/official</span>
-</span></span><span style="display:flex;"><span>find /var/www/html/official -name <span style="color:#e6db74">&#34;*.js&#34;</span> -type f -exec cp --parents <span style="color:#f92672">{}</span> /official/ <span style="color:#ae81ff">\;</span> 
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>ls /official/
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="linux-postfix-mail">Linux Postfix Mail</h2>
-<ul>
-<li>xFusionCorp Industries has planned to set up a common email server in Stork DC. After several meetings and recommendations they have decided to use postfix as their mail transfer agent and dovecot as an IMAP/POP3 server. We would like you to perform the following steps:</li>
-<li>Install and configure postfix on Stork DC mail server.</li>
-<li>Create an email account <a href="mailto:javed@stratos.xfusioncorp.com">javed@stratos.xfusioncorp.com</a> identified by BruCStnMT5.</li>
-<li>Set its mail directory to /home/javed/Maildir.</li>
-<li>Install and configure dovecot on the same server.</li>
-</ul>
-<h6 id="solution-9">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">## ssh to the mail server</span>
-</span></span><span style="display:flex;"><span>sshpass -p Gr00T123 ssh -o StrictHostKeyChecking groot@stmail01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Confirm that yum is installed</span>
-</span></span><span style="display:flex;"><span>rpm -qa | grep postfix
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install postfix on the mail server</span>
-</span></span><span style="display:flex;"><span>yum install postfix -y
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure postfix on the server</span>
-</span></span><span style="display:flex;"><span>vi /etc/postfix/main.cf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Find the line with #myhostname &amp; #mydomain and set it as follows</span>
-</span></span><span style="display:flex;"><span>&gt;myhostname <span style="color:#f92672">=</span> stmail01.stratos.xfusioncorp.com
-</span></span><span style="display:flex;"><span>&gt;mydomain <span style="color:#f92672">=</span> stratos.xfusioncorp.com
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#myorigin=$mydomain&#39; line</span>
-</span></span><span style="display:flex;"><span>&gt;myorigin <span style="color:#f92672">=</span> $mydomain
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#inet_interfaces = all&#39; line</span>
-</span></span><span style="display:flex;"><span>&gt; inet_interfaces <span style="color:#f92672">=</span> all
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain&#39; line</span>
-</span></span><span style="display:flex;"><span>&gt; mydestination <span style="color:#f92672">=</span> $myhostname, localhost.$mydomain, localhost, $mydomain
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#mynetworks = host IP address, =&gt; localhost&#39; line and replace it accordingly</span>
-</span></span><span style="display:flex;"><span>&gt;mynetworks <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>host IP address<span style="color:#f92672">}</span>/24, 127.0.0.0/8
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the &#39;#home_mailbox = Maildir/&#39; line</span>
-</span></span><span style="display:flex;"><span>&gt; home_mailbox <span style="color:#f92672">=</span> Maildir/
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Save and quit the configuration file</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Start postfix and confirm it is working</span>
-</span></span><span style="display:flex;"><span>systemctl start postfix
-</span></span><span style="display:flex;"><span>systemctl status postfix
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Create the user account for javed</span>
-</span></span><span style="display:flex;"><span>useradd javed
-</span></span><span style="display:flex;"><span>passwd javed
-</span></span><span style="display:flex;"><span>telnet stmail01 <span style="color:#ae81ff">25</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Enter the following settings:</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; EHLO localhost
-</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; mail from: javed@stratos.xfusioncorp.com
-</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; rcpt to: javed@stratos.xfusioncorp.com
-</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; DATA
-</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; test mail
-</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; quit
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Install dovecot on mail server</span>
-</span></span><span style="display:flex;"><span>yum install dovecot -y
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Configure dovecot</span>
-</span></span><span style="display:flex;"><span>vi /etc/dovecot/dovecot.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#tip&gt;:set nu</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment &#39;#protocols = imap pop3 lmtp&#39;</span>
-</span></span><span style="display:flex;"><span>&gt; save and quit :wq
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#modify 10-mail.conf</span>
-</span></span><span style="display:flex;"><span>vi /etc/dovecot/conf.d/10-mail.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the line &#39;#mail_location = maildir:~/Maildir&#39;</span>
-</span></span><span style="display:flex;"><span>&gt; save and quit :wq
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#modify 10-auth.conf</span>
-</span></span><span style="display:flex;"><span>vi /etc/dovecot/conf.d/10-auth.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment the line &#39;#disable_plaintext_auth = yes&#39;</span>
-</span></span><span style="display:flex;"><span>&gt; disable_plaintext_auth <span style="color:#f92672">=</span> yes
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Set the &#39;auth_mechanisms&#39; line</span>
-</span></span><span style="display:flex;"><span>&gt; auth_mechanisms <span style="color:#f92672">=</span> plain login
-</span></span><span style="display:flex;"><span>&gt; save and quit :wq
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#modfiy master.conf</span>
-</span></span><span style="display:flex;"><span>vi 10-master.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Uncomment and set the line &#39;#user = &#39;</span>
-</span></span><span style="display:flex;"><span>&gt; user <span style="color:#f92672">=</span> postfix
-</span></span><span style="display:flex;"><span>&gt; group <span style="color:#f92672">=</span> postfix
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Start dovecot service</span>
-</span></span><span style="display:flex;"><span>systemctl start dovecot
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Test the configuration</span>
-</span></span><span style="display:flex;"><span>telnet stmail01 <span style="color:#ae81ff">110</span>
-</span></span><span style="display:flex;"><span>&gt; user javed
-</span></span><span style="display:flex;"><span>&gt; pass <span style="color:#f92672">{</span>given-password<span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>&gt; retr <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>&gt; quit
-</span></span><span style="display:flex;"><span>&gt; ss -tulnp
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="linux-process-troubleshooting">Linux Process Troubleshooting</h2>
-<ul>
-<li>The production support team of xFusionCorp Industries has deployed some of the latest monitoring tools to keep an eye on every service, application, etc. running on the systems. One of the monitoring systems reported about Apache service unavailability on one of the app servers in Stratos DC.</li>
-<li>Identify the faulty app host and fix the issue. Make sure Apache service is up and running on all app hosts. They might not hosted any code yet on these servers so you need not to worry about if Apache isn&rsquo;t serving any pages or not, just make sure service is up and running. Also, do not try to change the Apache port on any host.</li>
-</ul>
-<h6 id="solution-10">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#First, we need to identify the faulty app. lets use curl from the jump host</span>
-</span></span><span style="display:flex;"><span>curl http://stapp01:6200
-</span></span><span style="display:flex;"><span>curl http://stapp02:6200
-</span></span><span style="display:flex;"><span>curl http://stapp03:6200
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#In my case, stapp01 was the faulty app, lets ssh to it and find out whats the problem</span>
-</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
-</span></span><span style="display:flex;"><span>systemctl start httpd
-</span></span><span style="display:flex;"><span>systemctl status httpd
-</span></span><span style="display:flex;"><span>httpd -t
-</span></span><span style="display:flex;"><span>journalctl -xe
-</span></span><span style="display:flex;"><span>cat /etc/httpd/conf/httpd_conf | grep Listen
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#lets install netstat</span>
-</span></span><span style="display:flex;"><span>yum install netstat -y
-</span></span><span style="display:flex;"><span>netstat -tulnp |grep <span style="color:#ae81ff">6200</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#get the id of the current proccess using port 6200 and kill it, in my case it was 525</span>
-</span></span><span style="display:flex;"><span>kill -9 <span style="color:#ae81ff">525</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the service and verify</span>
-</span></span><span style="display:flex;"><span>systemctl start httpd
-</span></span><span style="display:flex;"><span>systemctl status httpd
-</span></span><span style="display:flex;"><span>curl http://stapp01:6200
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="install-and-configure-postgresql">Install and Configure PostgreSQL</h2>
-<ul>
-<li>The Nautilus application development team has shared that they are planning to deploy one newly developed application on Nautilus infra in Stratos DC. The application uses PostgreSQL database, so as a pre-requisite we need to set up PostgreSQL database server as per requirements shared below:</li>
-<li>a. Install and configure PostgreSQL database on Nautilus database server.</li>
-<li>b. Create a database user kodekloud_sam and set its password to B4zNgHA7Ya.</li>
-<li>c. Create a database kodekloud_db8 and grant full permissions to user kodekloud_sam on this database.</li>
-<li>d. Make appropriate settings to allow all local clients (local socket connections) to connect to the kodekloud_db8 database through kodekloud_sam user using md5 method (Please do not try to encrypt password with md5sum).</li>
-<li>e. At the end its good to test the db connection using these new credentials from root user or server&rsquo;s sudo use</li>
-</ul>
-<h6 id="solution-11">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the database server</span>
-</span></span><span style="display:flex;"><span>sshpass -p Sp<span style="color:#ae81ff">\!</span>dy ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no peter@stdb01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install postgresql</span>
-</span></span><span style="display:flex;"><span>yum search all postgresql
-</span></span><span style="display:flex;"><span>yum whatprovides postgresql
-</span></span><span style="display:flex;"><span>yum install postgresql-server postgresql-contrib
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#iniate the db</span>
-</span></span><span style="display:flex;"><span>postgresql-setup initdb
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#enable and start postgresql</span>
-</span></span><span style="display:flex;"><span>systemctl enable postgresql <span style="color:#f92672">&amp;&amp;</span> systemctl start postgresql
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#create user and grant full permissions</span>
-</span></span><span style="display:flex;"><span>sudo -u postgres psql
-</span></span><span style="display:flex;"><span>&gt; CREATE USER &lt;username&gt; WITH PASSWORD &lt;password&gt;;
-</span></span><span style="display:flex;"><span>&gt; CREATE DATABASE &lt;database_name&gt;;
-</span></span><span style="display:flex;"><span>&gt; GRANT ALL PRIVILEGES ON DATABASE &lt;databse_name&gt; TO &lt;username&gt;; 
-</span></span><span style="display:flex;"><span>&gt;<span style="color:#ae81ff">\q</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure to postgres to allow local socket cnx using md5 method</span>
-</span></span><span style="display:flex;"><span>vi /var/lib/psql/data/pg_hba.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#edit the following lines</span>
-</span></span><span style="display:flex;"><span>&gt;local all all md5
-</span></span><span style="display:flex;"><span>&gt;host all 127.0.0.1/32 md5
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#open postgresql.conf and uncomment listen_addresses line</span>
-</span></span><span style="display:flex;"><span>vi /var/lib/psql/data/postgresql.conf
-</span></span><span style="display:flex;"><span>&gt;listen_addresses <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;localhost&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart psq service</span>
-</span></span><span style="display:flex;"><span>systemctl restart postgresql
-</span></span><span style="display:flex;"><span>systemctl status postgresql
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verifying</span>
-</span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h 127.0.0.1 -W
-</span></span><span style="display:flex;"><span>psql -U &lt;username&gt; -d &lt;database_name&gt; -h localhost -W
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="tomcat">Tomcat</h2>
-<ul>
-<li>The Nautilus application development team recently finished the beta version of one of their Java-based applications, which they are planning to deploy on one of the app servers in Stratos DC. After an internal team meeting, they have decided to use the tomcat application server. Based on the requirements mentioned below complete the task:</li>
-<li>a. Install tomcat server on App Server 2 using yum.</li>
-<li>b. Configure it to run on port 6300.</li>
-<li>c. There is a ROOT.war file on Jump host at location /tmp. Deploy it on this tomcat server and make sure the webpage works directly on base URL i.e without specifying any sub-directory anything like this http://URL/ROOT .</li>
-</ul>
-<h6 id="solution-12">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server 2</span>
-</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install tomcat</span>
-</span></span><span style="display:flex;"><span>yum install tomcat -y
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#run tomcat on port 6300</span>
-</span></span><span style="display:flex;"><span>vi /etc/tomcat/server.xml
-</span></span><span style="display:flex;"><span>&gt; look <span style="color:#66d9ef">for</span> Port and change it to &lt;Connector Port <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;6300&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>systemctl start tomcat
-</span></span><span style="display:flex;"><span>systemctl status tomcat
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#from the jumphost copy the ROOT.war to app server2</span>
-</span></span><span style="display:flex;"><span>scp ROOT.war steve@lstapp02:/tmp/
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#go back to the app server2</span>
-</span></span><span style="display:flex;"><span>mv /tmp/ROOT.war /var/lib/tomcat/webapps/
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>curl localhost:6300
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="install-and-configure-sftp">Install and configure SFTP</h2>
-<ul>
-<li>Some of the developers from Nautilus project team have asked for SFTP access to at least one of the app server in Stratos DC. After going through the requirements, the system admins team has decided to configure the SFTP server on App Server 2 server in Stratos Datacenter. Please configure it as per the following instructions:</li>
-<li>a. Create an SFTP user mariyam and set its password to BruCStnMT5.</li>
-<li>b. Password authentication should be enabled for this user.</li>
-<li>c. Set its ChrootDirectory to /var/www/appdata.</li>
-<li>d. SFTP user should only be allowed to make SFTP connections.</li>
-</ul>
-<h6 id="solution-13">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server2</span>
-</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02  
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#make the folder appdata</span>
-</span></span><span style="display:flex;"><span>mkdir -p /var/www/appdata
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#change perms and the owner of appdata folder</span>
-</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">755</span> /var/www/appdata/
-</span></span><span style="display:flex;"><span>chown root:root /var/www/appdata/
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#add user mariyam with appdata as its chrootDir</span>
-</span></span><span style="display:flex;"><span>useradd -d /var/www/appdata/ mariyam
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>cat /etc/passwd
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#configure sshd</span>
-</span></span><span style="display:flex;"><span>vi /etc/ssh/sshd_config
-</span></span><span style="display:flex;"><span>&gt;PasswordAuthentication yes
-</span></span><span style="display:flex;"><span>  &gt;ChrootDirectory %h
-</span></span><span style="display:flex;"><span>  &gt;AllowTCPForwarding no
-</span></span><span style="display:flex;"><span>  &gt;X11Forwarding no
-</span></span><span style="display:flex;"><span>  &gt;ForceCommand internal-sftp
-</span></span><span style="display:flex;"><span>  &gt;AllowAgentForwarding no
-</span></span><span style="display:flex;"><span>  &gt;PermitTunnel no 
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#restart sshd </span>
-</span></span><span style="display:flex;"><span>systemctl restart sshd
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>sftp mariyam@stapp02
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="iptables-installation-and-configuration">IPtables Installation And Configuration</h2>
-<ul>
-<li>We have one of our website up and running on our Nautilus infrastructure in Stratos DC. Our security team has raised a concern that right now Apache’s port i.e 3000 is open for all since there is no firewall installed on these hosts. So we have decided to add some security layer for these hosts and after discussions and recommendations we have come up with below given requirements:</li>
-<li>Install iptables and all its dependencies on each app host.</li>
-<li>Block incoming port 3000 on all apps for everyone except for LBR host.</li>
-<li>Make sure the rules should persist even after system reboot.</li>
-</ul>
-<h6 id="solution-14">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to the app servers</span>
-</span></span><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;host&gt;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#switch to the root user</span>
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#install iptables</span>
-</span></span><span style="display:flex;"><span>yum install iptables-services -y
-</span></span><span style="display:flex;"><span>iptables --help
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the iptables </span>
-</span></span><span style="display:flex;"><span>systemctl start iptables
-</span></span><span style="display:flex;"><span>systemctl enable iptables
-</span></span><span style="display:flex;"><span>systemctl status iptables
-</span></span><span style="display:flex;"><span>iptables --list
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#allow LBR host</span>
-</span></span><span style="display:flex;"><span>iptables -R INPUT <span style="color:#ae81ff">5</span> -p tcp --dport <span style="color:#ae81ff">3000</span> -s 172.16.238.14 -j ACCEPT <span style="color:#75715e">#-s is for source ip of the LBR, dport is destination port.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#block the incoming reqs</span>
-</span></span><span style="display:flex;"><span>iptables -A INPUT -p tcp --dport <span style="color:#ae81ff">3000</span> -j DROP
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#save</span>
-</span></span><span style="display:flex;"><span>service iptables save
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from the jump host</span>
-</span></span><span style="display:flex;"><span>curl 172.16.238.10:3000
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#ssh to the LBR host</span>
-</span></span><span style="display:flex;"><span>sshpass -p Mischi3f ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no loki@stlb01
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
-</span></span><span style="display:flex;"><span>curl 172.16.238.10:3000
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="install-ansible">Install Ansible</h2>
-<ul>
-<li>During the weekly meeting, the Nautilus DevOps team discussed about the automation and configuration management solutions that they want to implement. While considering several options, the team has decided to go with Ansible for now due to its simple setup and minimal pre-requisites. The team wanted to start testing using Ansible, so they have decided to use jump host as an Ansible controller to test different kind of tasks on rest of the servers.</li>
-<li>Install ansible version 4.7.0 on Jump host using pip3 only. Make sure Ansible binary is available globally on this system, i.e all users on this system are able to run Ansible commands.
-Install Ansible</li>
-</ul>
-<h6 id="solution-15">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>pip3 install -U pip
-</span></span><span style="display:flex;"><span>sudo pip3 install ansible<span style="color:#f92672">==</span>4.7.0
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="apache-troubleshooting">Apache Troubleshooting</h2>
-<ul>
-<li>xFusionCorp Industries uses some monitoring tools to check the status of every service, application, etc running on the systems. Recently, the monitoring system identified that Apache service is not running on some of the Nautilus Application Servers in Stratos Datacenter.
-<ol>
-<li>Identify the faulty Nautilus Application Server and fix the issue. Also, make sure Apache service is up and running on all Nautilus Application Servers. Do not try to stop any kind of firewall that is already running.</li>
-<li>Apache is running on 3002 port on all Nautilus Application Servers and its document root must be /var/www/html on all app servers.</li>
-<li>Finally you can test from jump host using curl command to access Apache on all app servers and it should be reachable and you should get some static page. E.g. curl http://172.16.238.10:3002/</li>
-</ol>
-</li>
-</ul>
-<h6 id="soluiton">Soluiton:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;username&gt;@&lt;hostname&gt;
-</span></span><span style="display:flex;"><span>sudo su -
-</span></span><span style="display:flex;"><span>systemctl start httpd
-</span></span><span style="display:flex;"><span>httpd -t
-</span></span><span style="display:flex;"><span>vi +&lt;line&gt; &lt;configfile&gt; <span style="color:#75715e">#e.g vi +34 /etc/httpd/conf/httpd.conf and fix the line!</span>
-</span></span><span style="display:flex;"><span>systemctl start httpd
-</span></span><span style="display:flex;"><span>systemctl status httpd
-</span></span><span style="display:flex;"><span>systemctl enable --now httpd
-</span></span><span style="display:flex;"><span>curl &lt;hostname&gt;:3002
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="heading"></h2>
-<ul>
-<li>To secure our Nautilus infrastructure in Stratos Datacenter we have decided to install and configure firewalld on all app servers. We have Apache and Nginx services running on these apps. Nginx is running as a reverse proxy server for Apache. We might have more robust firewall settings in the future, but for now we have decided to go with the given requirements listed below:</li>
-<li>a. Allow all incoming connections on Nginx port, i.e 80.</li>
-<li>b. Block all incoming connections on Apache port, i.e 8080.</li>
-<li>c. All rules must be permanent.</li>
-<li>d. Zone should be public.</li>
-<li>e. If Apache or Nginx services aren&rsquo;t running already, please make sure to start them</li>
-</ul>
-<h6 id="solution-16">Solution</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p &lt;password&gt; ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no &lt;user&gt;@&lt;hostname&gt;
-</span></span><span style="display:flex;"><span>systemctl status httpd <span style="color:#75715e">#start if not</span>
-</span></span><span style="display:flex;"><span>systemctl status nginx <span style="color:#75715e">#start if not</span>
-</span></span><span style="display:flex;"><span>sudo yum install firewalld -y 
-</span></span><span style="display:flex;"><span>sudo systemctl enable --now firewalld
-</span></span><span style="display:flex;"><span>sudo systemctl status firewalld
-</span></span><span style="display:flex;"><span>sudo firewall-cmd --permanent --zone<span style="color:#f92672">=</span>public --add-port<span style="color:#f92672">=</span>80/tcp
-</span></span><span style="display:flex;"><span> sudo firewall-cmd --zone<span style="color:#f92672">=</span>public --add-rich-rule<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;rule family=&#34;ipv4&#34; source address=&#34;0.0.0.0/0&#34; port port=8080 protocol=&#34;tcp&#34; reject&#39;</span>
-</span></span><span style="display:flex;"><span>sudo firewall-cmd --get-default-zone
-</span></span><span style="display:flex;"><span>sudo firewall-cmd --list-all
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from jump host</span>
-</span></span><span style="display:flex;"><span>curl stapp01:80 <span style="color:#75715e">#you should get &#34;Working!&#34;</span>
-</span></span><span style="display:flex;"><span>curl stapp02:8080 <span style="color:#75715e">#you should get &#34;connection refused msg&#34;</span>
 </span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
