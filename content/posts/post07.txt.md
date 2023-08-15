@@ -222,7 +222,7 @@ series:
   telnet stkbp01 6100
   ```
 ---
-  ## Bash Script 
+## Bash Script 
 
 + The production support team of xFusionCorp Industries is working on developing some bash scripts to automate different day to day tasks. One is to create a bash script for taking websites backup. They have a static website running on App Server 1 in Stratos Datacenter, and they need to create a bash script named official_backup.sh which should accomplish the following tasks. (Also remember to place the script under /scripts directory on App Server 1)
 + a. Create a zip archive named xfusioncorp_official.zip of /var/www/html/official directory.
@@ -772,7 +772,7 @@ Install Ansible
   curl <hostname>:3002
   ```
 ---
-##
+## Linux Firewalld Setup
 
 + To secure our Nautilus infrastructure in Stratos Datacenter we have decided to install and configure firewalld on all app servers. We have Apache and Nginx services running on these apps. Nginx is running as a reverse proxy server for Apache. We might have more robust firewall settings in the future, but for now we have decided to go with the given requirements listed below:
 + a. Allow all incoming connections on Nginx port, i.e 80.
