@@ -96,8 +96,6 @@ Note: Do not create a separate role for this task, just add all of the changes i
           state: started  
   ```
 ---
-
----
 ## Puppet Create Symlinks
 
 + Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:

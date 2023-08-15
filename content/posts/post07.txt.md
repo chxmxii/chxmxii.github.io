@@ -784,5 +784,16 @@ Install Ansible
 ###### Solution
 + ```Shell
   sshpass -p <password> ssh -o StrictHostKeyChecking=no <user>@<hostname>
-  ssh 
+  systemctl status httpd #start if not
+  systemctl status nginx #start if not
+  sudo yum install firewalld -y 
+  sudo systemctl enable --now firewalld
+  sudo systemctl status firewalld
+  sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+   sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="0.0.0.0/0" port port=8080 protocol="tcp" reject'
+  sudo firewall-cmd --get-default-zone
+  sudo firewall-cmd --list-all
+  #verify from jump host
+  curl stapp01:80 #you should get "Working!"
+  curl stapp02:8080 #you should get "connection refused msg"
   ```
