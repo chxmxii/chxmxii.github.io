@@ -826,8 +826,8 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>sudo yum install -y haproxy
 </span></span><span style="display:flex;"><span>sudo vi /etc/haproxy/haproxy.cfg
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#make sure to bind on port 80, and to add all app servers within the backend app.</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">frontend main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;frontend main
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  bind *:80
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  acl url_static       path_beg       -i /static /images /javascript /stylesheets
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  acl url_static       path_end       -i .jpg .gif .png .css .js
@@ -839,8 +839,8 @@ Install Ansible</li>
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  balance     roundrobin
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app1 172.16.238.10:3002 check
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app2 172.16.238.11:3002 check
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app3 172.16.238.12:3002 check   
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#75715e">#save and quit</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app3 172.16.238.12:3002 check&#34;</span>   
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#save and quit</span>
 </span></span><span style="display:flex;"><span>sudo systemctl restart haproxy
 </span></span><span style="display:flex;"><span>curl localhost:80
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
@@ -860,9 +860,10 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>sudo systemctl start haproxy
 </span></span><span style="display:flex;"><span>sudo systemctl status haproxy
 </span></span><span style="display:flex;"><span>haproxy -f /etc/haproxy/haproxy.cfg -c
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#I got misspelling errors in line 51,58 and 32</span>
 </span></span><span style="display:flex;"><span>sudo vi +51 /etc/haproxy/haproxy.cfg
-</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#34;bind *:80&#34;</span> within the frontend main
-</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#34;roundrobin&#34;</span> within the backend static/app
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#34;bind *:80&#34;</span> <span style="color:#75715e">#line 32 within the frontend main</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#34;roundrobin&#34;</span> <span style="color:#75715e">#line 51 and 58 within the backend static/app </span>
 </span></span><span style="display:flex;"><span>haproxy -f /etc/haproxy/haproxy.cfg -c
 </span></span><span style="display:flex;"><span>sudo systemctl restart haproxy
 </span></span><span style="display:flex;"><span>sudo systemctl status haproxy  
