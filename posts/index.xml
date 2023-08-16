@@ -785,7 +785,7 @@ Install Ansible</li>
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-<h2 id="heading"></h2>
+<h2 id="linux-firewalld-setup">Linux Firewalld Setup</h2>
 <ul>
 <li>To secure our Nautilus infrastructure in Stratos Datacenter we have decided to install and configure firewalld on all app servers. We have Apache and Nginx services running on these apps. Nginx is running as a reverse proxy server for Apache. We might have more robust firewall settings in the future, but for now we have decided to go with the given requirements listed below:</li>
 <li>a. Allow all incoming connections on Nginx port, i.e 80.</li>
@@ -804,7 +804,7 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>sudo systemctl enable --now firewalld
 </span></span><span style="display:flex;"><span>sudo systemctl status firewalld
 </span></span><span style="display:flex;"><span>sudo firewall-cmd --permanent --zone<span style="color:#f92672">=</span>public --add-port<span style="color:#f92672">=</span>80/tcp
-</span></span><span style="display:flex;"><span> sudo firewall-cmd --zone<span style="color:#f92672">=</span>public --add-rich-rule<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;rule family=&#34;ipv4&#34; source address=&#34;0.0.0.0/0&#34; port port=8080 protocol=&#34;tcp&#34; reject&#39;</span>
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --zone<span style="color:#f92672">=</span>public --add-rich-rule<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;rule family=&#34;ipv4&#34; source address=&#34;0.0.0.0/0&#34; port port=8080 protocol=&#34;tcp&#34; reject&#39;</span>
 </span></span><span style="display:flex;"><span>sudo firewall-cmd --get-default-zone
 </span></span><span style="display:flex;"><span>sudo firewall-cmd --list-all
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#verify from jump host</span>
@@ -812,6 +812,43 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>curl stapp02:8080 <span style="color:#75715e">#you should get &#34;connection refused msg&#34;</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="install-and-configure-haproxy-lbr">Install and Configure HaProxy LBR</h2>
+<ul>
+<li>There is a static website running in Stratos Datacenter. They have already configured the app servers and code is already deployed there. To make it work properly, they need to configure LBR server. There are number of options for that, but team has decided to go with HAproxy. FYI, apache is running on port 3002 on all app servers. Complete this task as per below details.</li>
+<li>a. Install and configure HAproxy on LBR server using yum only and make sure all app servers are added to HAproxy load balancer. HAproxy must serve on default http port (Note: Please do not remove stats socket /var/lib/haproxy/stats entry from haproxy default config.).</li>
+<li>b. Once done, you can access the website using StaticApp button on the top bar</li>
+</ul>
+<h6 id="solution-17">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>ssh loki@stlb01
+</span></span><span style="display:flex;"><span>sudo yum install -y haproxy
+</span></span><span style="display:flex;"><span>sudo vi /etc/haproxy/haproxy.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#make sure to bind on port 80, and to add all app servers within the backend app.</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">frontend main
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  bind *:80
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  acl url_static       path_beg       -i /static /images /javascript /stylesheets
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  acl url_static       path_end       -i .jpg .gif .png .css .js
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  use_backend static          if url_static
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  default_backend             app
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">backend app
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  balance     roundrobin
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app1 172.16.238.10:3002 check
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app2 172.16.238.11:3002 check
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  server   app3 172.16.238.12:3002 check   
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#75715e">#save and quit</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart haproxy
+</span></span><span style="display:flex;"><span>curl localhost:80
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl stlb01:80
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="haproxy-lbr-troubleshooting">Haproxy LBR Troubleshooting</h2>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
