@@ -790,10 +790,45 @@ Install Ansible
   sudo systemctl enable --now firewalld
   sudo systemctl status firewalld
   sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
-   sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="0.0.0.0/0" port port=8080 protocol="tcp" reject'
+  sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="0.0.0.0/0" port port=8080 protocol="tcp" reject'
   sudo firewall-cmd --get-default-zone
   sudo firewall-cmd --list-all
   #verify from jump host
   curl stapp01:80 #you should get "Working!"
   curl stapp02:8080 #you should get "connection refused msg"
   ```
+---
+## Install and Configure HaProxy LBR
+
++ There is a static website running in Stratos Datacenter. They have already configured the app servers and code is already deployed there. To make it work properly, they need to configure LBR server. There are number of options for that, but team has decided to go with HAproxy. FYI, apache is running on port 3002 on all app servers. Complete this task as per below details.
++ a. Install and configure HAproxy on LBR server using yum only and make sure all app servers are added to HAproxy load balancer. HAproxy must serve on default http port (Note: Please do not remove stats socket /var/lib/haproxy/stats entry from haproxy default config.).
++ b. Once done, you can access the website using StaticApp button on the top bar
+
+###### Solution
++ ```Shell
+  ssh loki@stlb01
+  sudo yum install -y haproxy
+  sudo vi /etc/haproxy/haproxy.conf
+  #make sure to bind on port 80, and to add all app servers within the backend app.
+  "
+  frontend main
+    bind *:80
+    acl url_static       path_beg       -i /static /images /javascript /stylesheets
+    acl url_static       path_end       -i .jpg .gif .png .css .js
+
+    use_backend static          if url_static
+    default_backend             app
+
+  backend app
+    balance     roundrobin
+    server   app1 172.16.238.10:3002 check
+    server   app2 172.16.238.11:3002 check
+    server   app3 172.16.238.12:3002 check   
+  "#save and quit
+  sudo systemctl restart haproxy
+  curl localhost:80
+  #verify
+  curl stlb01:80
+  ``` 
+---
+## Haproxy LBR Troubleshooting
