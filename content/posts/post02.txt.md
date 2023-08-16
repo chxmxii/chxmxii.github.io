@@ -1,7 +1,7 @@
 ---
 author:
   name: "chxmxii_"
-date: 2023-08-11
+date: 2022-12-11
 linktitle: 
 tags:
  - devsecops
@@ -87,5 +87,16 @@ And voilà! We struck gold and managed to uncover the password. lets do the SSH 
   └─$ sshpass -p hereiamatctf907 ssh -o StrictHostKeyChecking=no vagrant@10.10.126.15
   ```
 #### Your Secret Crush
-switch root and run the following command to list secrets
-dd
+Here's a little nudge in the right direction: "If you want to keep a secret, you must also hide it from yourself." It's like a secret within a secret, right? And hey, remember how Kubernetes lets you stash away secrets? That's a pretty big hint! Now, hop into root mode and give this command a go to see a list of secrets. 🕵️‍♂️
++ ```bash
+  vagrant@johnny:~$ sudo ps aux | grep root
+  vagrant@johnny:~$ k0s kubectl get secret
+  ```  
+> The connection to the server 10.0.2.15:6443 was refused - did you specify the right host or port?
+> you can fix this by running the following commands
++ ```bash
+  sudo -i
+  swapoff -a
+  ```
+
+[to be continued..]
