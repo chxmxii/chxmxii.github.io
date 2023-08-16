@@ -824,7 +824,7 @@ Install Ansible</li>
 <li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>ssh loki@stlb01
 </span></span><span style="display:flex;"><span>sudo yum install -y haproxy
-</span></span><span style="display:flex;"><span>sudo vi /etc/haproxy/haproxy.conf
+</span></span><span style="display:flex;"><span>sudo vi /etc/haproxy/haproxy.cfg
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#make sure to bind on port 80, and to add all app servers within the backend app.</span>
 </span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">frontend main
@@ -849,6 +849,25 @@ Install Ansible</li>
 </ul>
 <hr>
 <h2 id="haproxy-lbr-troubleshooting">Haproxy LBR Troubleshooting</h2>
+<ul>
+<li>xFusionCorp Industries has an application running on Nautlitus infrastructure in Stratos Datacenter. The monitoring tool recognised that there is an issue with the haproxy service on LBR server. That needs to fixed to make the application work properly.</li>
+<li>Troubleshoot and fix the issue, and make sure haproxy service is running on Nautilus LBR server. Once fixed, make sure you are able to access the website using StaticApp button on the top bar.</li>
+</ul>
+<h6 id="solution-18">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Mischi3f ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no loki@stlb01
+</span></span><span style="display:flex;"><span>sudo systemctl start haproxy
+</span></span><span style="display:flex;"><span>sudo systemctl status haproxy
+</span></span><span style="display:flex;"><span>haproxy -f /etc/haproxy/haproxy.cfg -c
+</span></span><span style="display:flex;"><span>sudo vi +51 /etc/haproxy/haproxy.cfg
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#34;bind *:80&#34;</span> within the frontend main
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#34;roundrobin&#34;</span> within the backend static/app
+</span></span><span style="display:flex;"><span>haproxy -f /etc/haproxy/haproxy.cfg -c
+</span></span><span style="display:flex;"><span>sudo systemctl restart haproxy
+</span></span><span style="display:flex;"><span>sudo systemctl status haproxy  
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
