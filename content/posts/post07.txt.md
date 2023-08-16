@@ -808,7 +808,7 @@ Install Ansible
 + ```Shell
   ssh loki@stlb01
   sudo yum install -y haproxy
-  sudo vi /etc/haproxy/haproxy.conf
+  sudo vi /etc/haproxy/haproxy.cfg
   #make sure to bind on port 80, and to add all app servers within the backend app.
   "
   frontend main
@@ -832,3 +832,20 @@ Install Ansible
   ``` 
 ---
 ## Haproxy LBR Troubleshooting
+
++ xFusionCorp Industries has an application running on Nautlitus infrastructure in Stratos Datacenter. The monitoring tool recognised that there is an issue with the haproxy service on LBR server. That needs to fixed to make the application work properly.
++ Troubleshoot and fix the issue, and make sure haproxy service is running on Nautilus LBR server. Once fixed, make sure you are able to access the website using StaticApp button on the top bar.
+
+###### Solution
++ ```Shell
+  sshpass -p Mischi3f ssh -o StrictHostKeyChecking=no loki@stlb01
+  sudo systemctl start haproxy
+  sudo systemctl status haproxy
+  haproxy -f /etc/haproxy/haproxy.cfg -c
+  sudo vi +51 /etc/haproxy/haproxy.cfg
+  > "bind *:80" within the frontend main
+  > "roundrobin" within the backend static/app
+  haproxy -f /etc/haproxy/haproxy.cfg -c
+  sudo systemctl restart haproxy
+  sudo systemctl status haproxy  
+  ```
