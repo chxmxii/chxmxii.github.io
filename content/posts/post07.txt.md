@@ -810,8 +810,8 @@ Install Ansible
   sudo yum install -y haproxy
   sudo vi /etc/haproxy/haproxy.cfg
   #make sure to bind on port 80, and to add all app servers within the backend app.
-  "
-  frontend main
+  
+  "frontend main
     bind *:80
     acl url_static       path_beg       -i /static /images /javascript /stylesheets
     acl url_static       path_end       -i .jpg .gif .png .css .js
@@ -823,8 +823,8 @@ Install Ansible
     balance     roundrobin
     server   app1 172.16.238.10:3002 check
     server   app2 172.16.238.11:3002 check
-    server   app3 172.16.238.12:3002 check   
-  "#save and quit
+    server   app3 172.16.238.12:3002 check"   
+  #save and quit
   sudo systemctl restart haproxy
   curl localhost:80
   #verify
@@ -842,9 +842,10 @@ Install Ansible
   sudo systemctl start haproxy
   sudo systemctl status haproxy
   haproxy -f /etc/haproxy/haproxy.cfg -c
+  #I got misspelling errors in line 51,58 and 32
   sudo vi +51 /etc/haproxy/haproxy.cfg
-  > "bind *:80" within the frontend main
-  > "roundrobin" within the backend static/app
+  > "bind *:80" #line 32 within the frontend main
+  > "roundrobin" #line 51 and 58 within the backend static/app 
   haproxy -f /etc/haproxy/haproxy.cfg -c
   sudo systemctl restart haproxy
   sudo systemctl status haproxy  
