@@ -1867,6 +1867,38 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 </span></span><span style="display:flex;"><span>ansible-config dump | grep USER 
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="ansible-copy-module">Ansible Copy Module</h2>
+<ul>
+<li>There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below:</li>
+<li>a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes.</li>
+<li>b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-6">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>ansible --version
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34;</span> &gt; ansible/inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34;</span> &gt;&gt; ansible/inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34;</span> &gt;&gt; ansible/inventory
+</span></span><span style="display:flex;"><span>ansible all -i inventory  -m ping
+</span></span><span style="display:flex;"><span>vi ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory -C playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span>ansible all -i inventory  -a <span style="color:#e6db74">&#34;cat /opt/finance/index.html&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">no</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>: <span style="color:#ae81ff">src=https://chxmxii.github.io/portfolio/usr/src/finance/index.html dest=/opt/finance/</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-file-module">Ansible File Module</h2>
 ]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
 <h2 id="linux-timezones-setting">Linux TimeZones Setting</h2>
 <ul>
