@@ -194,3 +194,33 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   #verify
   ansible-config dump | grep USER 
   ```
+---
+## Ansible Copy Module
+
++ There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below:
++ a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes.
++ b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance.
++ Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
+
+###### Solution
++ ```Shell
+  ansible --version
+  echo "stapp01 ansible_user=tony ansible_password=Ir0nM@n" > ansible/inventory
+  echo "stapp02 ansible_user=steve ansible_password=Am3ric@" >> ansible/inventory
+  echo "stapp03 ansible_user=banner ansible_password=BigGr33n" >> ansible/inventory
+  ansible all -i inventory  -m ping
+  vi ansible/playbook.yml
+  ansible-playbook -i inventory -C playbook.yml
+  ansible-playbook -i inventory playbook.yml
+  ansible all -i inventory  -a "cat /opt/finance/index.html"
+  ```
++ ```yaml
+  ---
+  - hosts: all
+    gather_facts: no
+    become: true
+    tasks:
+      - copy: src=/usr/src/finance/index.html dest=/opt/finance/
+  ```
+---
+## Ansible File Module
