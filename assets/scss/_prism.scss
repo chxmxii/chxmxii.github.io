@@ -106,7 +106,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .token.constant,
 .token.symbol,
 .token.builtin {
-	color: hsl(53, 89%, 79%); /* #F9EE98 */
+	color: #dfa019ea; /* #F9EE98 */
 }
 
 .token.attr-name,
@@ -120,7 +120,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .style .token.string,
 .token.variable,
 .token.inserted {
-	color: hsl(315, 76%, 50%); /* #8F9D6A */
+	color: #2c8dcdea; /* #8F9D6A */
 }
 
 .token.atrule {
@@ -129,7 +129,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 
 .token.regex,
 .token.important {
-	color: hsl(42, 42%, 61%); /* #E9C062 */
+	color:#9be863e6; /* #E9C062 */
 }
 
 .token.important,
