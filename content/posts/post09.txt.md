@@ -208,11 +208,11 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   echo "stapp01 ansible_user=tony ansible_password=Ir0nM@n" > ansible/inventory
   echo "stapp02 ansible_user=steve ansible_password=Am3ric@" >> ansible/inventory
   echo "stapp03 ansible_user=banner ansible_password=BigGr33n" >> ansible/inventory
-  ansible all -i inventory  -m ping
+  ansible all -i ansible/inventory  -m ping
   vi ansible/playbook.yml
-  ansible-playbook -i inventory -C playbook.yml
-  ansible-playbook -i inventory playbook.yml
-  ansible all -i inventory  -a "cat /opt/finance/index.html"
+  ansible-playbook -i ansible/inventory -C ansible/playbook.yml
+  ansible-playbook -i ansible/inventory ansible/playbook.yml
+  ansible all -i ansible/inventory -a "cat /opt/finance/index.html"
   ```
 + ```yaml
   ---
@@ -224,3 +224,50 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   ```
 ---
 ## Ansible File Module
+
++ The Nautilus DevOps team is working to test several Ansible modules on servers in Stratos DC. Recently they wanted to test the file creation on remote hosts using Ansible. Find below more details about the task:
++ a. Create an inventory file ~/playbook/inventory on jump host and add all app servers in it.
++ b. Create a playbook ~/playbook/playbook.yml to create a blank file /tmp/data.txt on all app servers.
++ c. The /tmp/data.txt file permission must be 0755.
++ d. The user/group owner of file /tmp/data.txt must be tony on app server 1, steve on app server 2 and banner on app server 3.
++ Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments.
+
+###### Solution
++ ```shell
+  cd playbook
+  ansible --version
+  echo "stapp01 ansible_user=tony ansible_password=Ir0nM@n" > inventory
+  echo "stapp02 ansible_user=steve ansible_password=Am3ric@" >> inventory
+  echo "stapp03 ansible_user=banner ansible_password=BigGr33n" >> inventory
+  ansible all -i inventory  -m ping
+  vi playbook.yml
+  ansible-playbook -i inventory playbook.yml
+  #verify
+  ansible all -i inventory  -a "ls -l /tmp/data.txt"
+  ```
++ ```yaml
+  ---
+  - hosts: all
+    tasks:
+      - file:
+          path: /tmp/data.txt
+          state: touch
+          owner: tony
+          group: tony
+          mode: '0755'
+        when: ansible_hostname == "stapp01"
+      - file:
+          path: /tmp/data.txt
+          state: touch
+          owner: steve
+          group: steve
+          mode: '0755'
+        when: ansible_hostname == "stapp02"
+      - file:
+          path: /tmp/data.txt
+          state: touch
+          owner: banner
+          group: banner
+          mode: '0755'
+        when: ansible_hostname == "stapp03"
+  ```
