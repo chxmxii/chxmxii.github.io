@@ -233,6 +233,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 + Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments.
 
 ###### Solution
+
 + ```shell
   cd playbook
   ansible --version
