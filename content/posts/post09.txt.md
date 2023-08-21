@@ -287,3 +287,35 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   ansible all -i ansible/inventory -m ping
   ansible all -i ansible/inventory -a "id"
   ```
+---
+
+## Ansible Install Package
+
++ The Nautilus Application development team wanted to test some applications on app servers in Stratos Datacenter.
++ They shared some pre-requisites with the DevOps team, and packages need to be installed on app servers. Since we are already using Ansible for automating such tasks, please perform this task using Ansible as per details mentioned below:
++ Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it.
++ Create an Ansible playbook /home/thor/playbook/playbook.yml to install zip package on all app servers using Ansible yum module.
++ Make sure user thor should be able to run the playbook on jump host.
++ Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.
+
+###### Solution
+
++ ```shell
+  cd playbook
+  ansible --version
+  echo "stapp01 ansible_user=tony ansible_password=Ir0nM@n" > inventory
+  echo "stapp02 ansible_user=steve ansible_password=Am3ric@" >> inventory
+  echo "stapp03 ansible_user=banner ansible_password=BigGr33n" >> inventory
+  ansible all -i inventory  -m ping
+  vi playbook.yml
+  ansible-playbook -i inventory playbook.yml
+  #verify
+  ansible all -i inventory  -a "zip --help"
+  ```
++ ```yaml
+  ---
+  - hosts: all
+    become: yes
+    tasks:
+      - yum: name=zip state=installed
+  ```
