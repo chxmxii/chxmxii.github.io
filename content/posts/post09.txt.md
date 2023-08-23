@@ -362,3 +362,51 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   ``` 
 ---
 ## Ansible Blockinfile Module
+
++ The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. + Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below.
++ We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself.
++ Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running.
++ Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content:
+    "Welcome to XfusionCorp!
+    This is Nautilus sample file, created using Ansible!
+    Please do not modify this file manually!"
++ The /var/www/html/index.html file's user and group owner should be apache on all app servers.
++ The /var/www/html/index.html file's permissions should be 0644 on all app servers.
++ Note:
+  + i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
+  + ii. Do not use any custom or empty marker for blockinfile module.
+
+###### Solution
++ ```shell
+  vi ansible/playbook.yml
+  ansible-doc blockinfile
+  ansible-playbook --syntax-check ansible/playbook
+  ansible-playbook -i ansible/inventory ansible/playbook.yml
+  ansible -i ansible/inventory -a "ls -l /var/www/html"
+  for i in {1..3}; do curl stapp0$i:80; done
+  ```
++ ```yaml
+  ---
+  - hosts: all
+    become: true
+    tasks:
+      - package: 
+          name: httpd 
+          state: installed
+      - service: 
+          name: httpd 
+          state: started 
+          enabled: yes
+      - file:
+          path: /var/www/html/index.html
+          owner: apache
+          group: apache
+          mode: '0644'
+          state: touch
+      - blockinfile: 
+          path: /var/www/html/index.html 
+          block: |
+            Welcome to XfusionCorp!
+            This is Nautilus sample file, created using Ansible!
+            Please do not modify this file manually!    
+  ```
