@@ -869,6 +869,35 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>sudo systemctl status haproxy  
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="linux-network-services">Linux Network Services</h2>
+<ul>
+<li>Our monitoring tool has reported an issue in Stratos Datacenter. One of our app servers has an issue, as its Apache service is not reachable on port 3000 (which is the Apache port). The service itself could be down, the firewall could be at fault, or something else could be causing the issue.</li>
+<li>Use tools like telnet, netstat, etc. to find and fix the issue. Also make sure Apache is reachable from the jump host without compromising any security settings.</li>
+<li>Once fixed, you can test the same using command curl http://stapp01:3000 command from jump host.</li>
+</ul>
+<h6 id="solution-19">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>tony@stapp01,steve@stapp02,banner@stapp03<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no $i <span style="color:#e6db74">&#34;sudo -S systemctl enable httpd&#34;</span>; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..3<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> curl -I stapp0$i:3000; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyCheckng<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>sudo su 
+</span></span><span style="display:flex;"><span>apachectl configtest
+</span></span><span style="display:flex;"><span>httpd -t
+</span></span><span style="display:flex;"><span>netstat -lnutp | grep <span style="color:#ae81ff">3000</span>
+</span></span><span style="display:flex;"><span>kill -p &lt;PID&gt;
+</span></span><span style="display:flex;"><span>iptables -I INPUT -p tcp --destination-port <span style="color:#ae81ff">3000</span> -j ACCEPT
+</span></span><span style="display:flex;"><span>service iptables save
+</span></span><span style="display:flex;"><span>systemctl enable --now iptables
+</span></span><span style="display:flex;"><span>systemctl status iptables
+</span></span><span style="display:flex;"><span>systemctl enable httpd <span style="color:#f92672">&amp;&amp;</span> systemctl start httpd
+</span></span><span style="display:flex;"><span>curl localhost:3000
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from the jumphost</span>
+</span></span><span style="display:flex;"><span>curl -I stapp01:3000
+</span></span><span style="display:flex;"><span>telnet stapp01 <span style="color:#ae81ff">3000</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
