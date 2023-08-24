@@ -850,3 +850,30 @@ Install Ansible
   sudo systemctl restart haproxy
   sudo systemctl status haproxy  
   ```
+---
+## Linux Network Services
+
++ Our monitoring tool has reported an issue in Stratos Datacenter. One of our app servers has an issue, as its Apache service is not reachable on port 3000 (which is the Apache port). The service itself could be down, the firewall could be at fault, or something else could be causing the issue.
++ Use tools like telnet, netstat, etc. to find and fix the issue. Also make sure Apache is reachable from the jump host without compromising any security settings.
++ Once fixed, you can test the same using command curl http://stapp01:3000 command from jump host.
+
+###### Solution
++ ```Shell
+  for i in {tony@stapp01,steve@stapp02,banner@stapp03}; do ssh -o StrictHostKeyChecking=no $i "sudo -S systemctl enable httpd"; done
+  for i in {1..3}; do curl -I stapp0$i:3000; done
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyCheckng=no tony@stapp01
+  sudo su 
+  apachectl configtest
+  httpd -t
+  netstat -lnutp | grep 3000
+  kill -p <PID>
+  iptables -I INPUT -p tcp --destination-port 3000 -j ACCEPT
+  service iptables save
+  systemctl enable --now iptables
+  systemctl status iptables
+  systemctl enable httpd && systemctl start httpd
+  curl localhost:3000
+  #from the jumphost
+  curl -I stapp01:3000
+  telnet stapp01 3000
+  ```
