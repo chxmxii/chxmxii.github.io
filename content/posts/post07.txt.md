@@ -761,15 +761,15 @@ Install Ansible
   
 ###### Soluiton:
 + ```Shell
-  sshpass -p <password> ssh -o StrictHostKeyChecking=no <username>@<hostname>
-  sudo su -
-  systemctl start httpd
-  httpd -t
-  vi +<line> <configfile> #e.g vi +34 /etc/httpd/conf/httpd.conf and fix the line!
-  systemctl start httpd
-  systemctl status httpd
-  systemctl enable --now httpd
-  curl <hostname>:3002
+  $ sshpass -p <password> ssh -o StrictHostKeyChecking=no <username>@<hostname>
+  $ sudo su -
+  $ systemctl start httpd
+  $ httpd -t
+  $ vi +<line> <configfile> #e.g vi +34 /etc/httpd/conf/httpd.conf and fix the line!
+  $ systemctl start httpd
+  $ systemctl status httpd
+  $ systemctl enable --now httpd
+  $ curl <hostname>:3002
   ```
 ---
 ## Linux Firewalld Setup
@@ -783,19 +783,19 @@ Install Ansible
   
 ###### Solution
 + ```Shell
-  sshpass -p <password> ssh -o StrictHostKeyChecking=no <user>@<hostname>
-  systemctl status httpd #start if not
-  systemctl status nginx #start if not
-  sudo yum install firewalld -y 
-  sudo systemctl enable --now firewalld
-  sudo systemctl status firewalld
-  sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
-  sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="0.0.0.0/0" port port=8080 protocol="tcp" reject'
-  sudo firewall-cmd --get-default-zone
-  sudo firewall-cmd --list-all
+  $ sshpass -p <password> ssh -o StrictHostKeyChecking=no <user>@<hostname>
+  $ systemctl status httpd #start if not
+  $ systemctl status nginx #start if not
+  $ sudo yum install firewalld -y 
+  $ sudo systemctl enable --now firewalld
+  $ sudo systemctl status firewalld
+  $ sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+  $ sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="0.0.0.0/0" port port=8080 protocol="tcp" reject'
+  $ sudo firewall-cmd --get-default-zone
+  $ sudo firewall-cmd --list-all
   #verify from jump host
-  curl stapp01:80 #you should get "Working!"
-  curl stapp02:8080 #you should get "connection refused msg"
+  $ curl stapp01:80 #you should get "Working!"
+  $ curl stapp02:8080 #you should get "connection refused msg"
   ```
 ---
 ## Install and Configure HaProxy LBR
@@ -806,9 +806,9 @@ Install Ansible
 
 ###### Solution
 + ```Shell
-  ssh loki@stlb01
-  sudo yum install -y haproxy
-  sudo vi /etc/haproxy/haproxy.cfg
+  $ ssh loki@stlb01
+  $ sudo yum install -y haproxy
+  $ sudo vi /etc/haproxy/haproxy.cfg
   #make sure to bind on port 80, and to add all app servers within the backend app.
   
   "frontend main
@@ -825,10 +825,10 @@ Install Ansible
     server   app2 172.16.238.11:3002 check
     server   app3 172.16.238.12:3002 check"   
   #save and quit
-  sudo systemctl restart haproxy
-  curl localhost:80
+  $ sudo systemctl restart haproxy
+  $ curl localhost:80
   #verify
-  curl stlb01:80
+  $ curl stlb01:80
   ``` 
 ---
 ## Haproxy LBR Troubleshooting
@@ -838,17 +838,17 @@ Install Ansible
 
 ###### Solution
 + ```Shell
-  sshpass -p Mischi3f ssh -o StrictHostKeyChecking=no loki@stlb01
-  sudo systemctl start haproxy
-  sudo systemctl status haproxy
-  haproxy -f /etc/haproxy/haproxy.cfg -c
+  $ sshpass -p Mischi3f ssh -o StrictHostKeyChecking=no loki@stlb01
+  $ sudo systemctl start haproxy
+  $ sudo systemctl status haproxy
+  $ haproxy -f /etc/haproxy/haproxy.cfg -c
   #I got misspelling errors in line 51,58 and 32
-  sudo vi +51 /etc/haproxy/haproxy.cfg
+  $ sudo vi +51 /etc/haproxy/haproxy.cfg
   > "bind *:80" #line 32 within the frontend main
   > "roundrobin" #line 51 and 58 within the backend static/app 
-  haproxy -f /etc/haproxy/haproxy.cfg -c
-  sudo systemctl restart haproxy
-  sudo systemctl status haproxy  
+  $ haproxy -f /etc/haproxy/haproxy.cfg -c
+  $ sudo systemctl restart haproxy
+  $ sudo systemctl status haproxy  
   ```
 ---
 ## Linux Network Services
@@ -859,21 +859,62 @@ Install Ansible
 
 ###### Solution
 + ```Shell
-  for i in {tony@stapp01,steve@stapp02,banner@stapp03}; do ssh -o StrictHostKeyChecking=no $i "sudo -S systemctl enable httpd"; done
-  for i in {1..3}; do curl -I stapp0$i:3000; done
-  sshpass -p Ir0nM@n ssh -o StrictHostKeyCheckng=no tony@stapp01
-  sudo su 
-  apachectl configtest
-  httpd -t
-  netstat -lnutp | grep 3000
-  kill -p <PID>
-  iptables -I INPUT -p tcp --destination-port 3000 -j ACCEPT
-  service iptables save
-  systemctl enable --now iptables
-  systemctl status iptables
-  systemctl enable httpd && systemctl start httpd
-  curl localhost:3000
+  $ for i in {tony@stapp01,steve@stapp02,banner@stapp03}; do ssh -o StrictHostKeyChecking=no $i "sudo -S systemctl enable httpd"; done
+  $ for i in {1..3}; do curl -I stapp0$i:3000; done
+  $ sshpass -p Ir0nM@n ssh -o StrictHostKeyCheckng=no tony@stapp01
+  $ sudo su 
+  $ apachectl configtest
+  $ httpd -t
+  $ netstat -lnutp | grep 3000
+  $ kill -p <PID>
+  $ iptables -I INPUT -p tcp --destination-port 3000 -j ACCEPT
+  $ service iptables save
+  $ systemctl enable --now iptables
+  $ systemctl status iptables
+  $ systemctl enable httpd && systemctl start httpd
+  $ curl localhost:3000
   #from the jumphost
-  curl -I stapp01:3000
-  telnet stapp01 3000
+  $ curl -I stapp01:3000
+  $ telnet stapp01 3000
+  ```
+---
+## Linux Nginx as Reverse Proxy
+
++ Nautilus system admin's team is planning to deploy a front end application for their backup utility on Nautilus Backup Server, so that they can manage the backups of different websites from a graphical user interface. They have shared requirements to set up the same; please accomplish the tasks as per detail given below:
++ a. Install Apache Server on Nautilus Backup Server and configure it to use 8085 port (do not bind it to 127.0.0.1 only, keep it default i.e let Apache listen on server's IP, hostname, localhost, 127.0.0.1 etc).
++ b. Install Nginx webserver on Nautilus Backup Server and configure it to use 8097.
++ c. Configure Nginx as a reverse proxy server for Apache.
++ d. There is a sample index file /home/thor/index.html on Jump Host, copy that file to Apache's document root.
++ e. Make sure to start Apache and Nginx services.
++ f. You can test final changes using curl command, e.g curl http://<backup server IP or Hostname>:8097.
+  
+
+###### Solution:
++ ```Shell
+  $ scp index.html clint@stbkp01:/tmp/index.html 
+  $ sshpass -p H@wk3y3 ssh -o StrictHostKeyChecking=no
+  $ sudo su
+  $ yum install -y nginx httpd
+  $ vi /etc/httpd/conf/httpd.conf
+  > Listen 8085
+  $ vi /etc/nginx/nginx.conf
+     "user apache #change user to apache
+      server {
+        listen       8097 default_server; #change the listening port
+        listen       [::]:80 default_server;
+        server_name  _;
+        root         /var/www/html; #chage root
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+          proxy_pass http://127.0.0.1:8085/; #pass req to port 8085
+        }"
+  $ nginx -t
+  $ httpd -t
+  $ systemctl start nginx
+  $ systemctl start httpd
+  $ curl localhost:8097
+  $ curl stbkp01:8097 #from the jump host.
   ```
