@@ -918,3 +918,27 @@ Install Ansible
   $ curl localhost:8097
   $ curl stbkp01:8097 #from the jump host.
   ```
+---
+## Configure protected directories in Apache
+
++ xFusionCorp Industries has hosted several static websites on Nautilus Application Servers in Stratos DC. There are some confidential directories in the document root that need to be password protected. Since they are using Apache for hosting the websites, the production support team has decided to use .htaccess with basic auth. There is a website that needs to be uploaded to /var/www/html/itadmin on Nautilus App Server 1. However, we need to set up the authentication before that.
++ 1. Create /var/www/html/itadmin direcotry if doesn't exist.
++ 2. Add a user javed in htpasswd and set its password to B4zNgHA7Ya.
++ 3. There is a file /tmp/index.html present on Jump Server. Copy the same to the directory you created, please make sure default document root should remain /var/www/html. Also website should work on URL http://<app-server-hostname>:8080/itadmin/
+
+###### Solution
++ ```Shell
+  scp /tmp/index.html tony@stapp01:/tmp/index.html
+  sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no 
+  mkdir /var/www/html/itadmin/
+  cd $_
+  cp /tmp/index.html .
+  vi .htaccess
+    >AuthType Basic
+    >AuthName "Password Required"
+    >Require valid-user
+    >AuthUserFile /etc/httpd/.htpasswd
+  htpasswd -c /etc/httpd/.htpasswd javed 
+  > passwd:B4zNgHA7Ya
+  curl -u javed stapp01:8080/itadmin/
+  ```
