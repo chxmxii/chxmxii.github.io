@@ -940,6 +940,44 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>$ curl stbkp01:8097 <span style="color:#75715e">#from the jump host.</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="configure-protected-directories-in-apache">Configure protected directories in Apache</h2>
+<ul>
+<li>xFusionCorp Industries has hosted several static websites on Nautilus Application Servers in Stratos DC. There are some confidential directories in the document root that need to be password protected. Since they are using Apache for hosting the websites, the production support team has decided to use .htaccess with basic auth. There is a website that needs to be uploaded to /var/www/html/itadmin on Nautilus App Server 1. However, we need to set up the authentication before that.</li>
+<li>
+<ol>
+<li>Create /var/www/html/itadmin direcotry if doesn&rsquo;t exist.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>Add a user javed in htpasswd and set its password to B4zNgHA7Ya.</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>There is a file /tmp/index.html present on Jump Server. Copy the same to the directory you created, please make sure default document root should remain /var/www/html. Also website should work on URL http://<!-- raw HTML omitted -->:8080/itadmin/</li>
+</ol>
+</li>
+</ul>
+<h6 id="solution-21">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>scp /tmp/index.html tony@stapp01:/tmp/index.html
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no 
+</span></span><span style="display:flex;"><span>mkdir /var/www/html/itadmin/
+</span></span><span style="display:flex;"><span>cd $_
+</span></span><span style="display:flex;"><span>cp /tmp/index.html .
+</span></span><span style="display:flex;"><span>vi .htaccess
+</span></span><span style="display:flex;"><span>  &gt;AuthType Basic
+</span></span><span style="display:flex;"><span>  &gt;AuthName <span style="color:#e6db74">&#34;Password Required&#34;</span>
+</span></span><span style="display:flex;"><span>  &gt;Require valid-user
+</span></span><span style="display:flex;"><span>  &gt;AuthUserFile /etc/httpd/.htpasswd
+</span></span><span style="display:flex;"><span>htpasswd -c /etc/httpd/.htpasswd javed 
+</span></span><span style="display:flex;"><span>&gt; passwd:B4zNgHA7Ya
+</span></span><span style="display:flex;"><span>curl -u javed stapp01:8080/itadmin/
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
