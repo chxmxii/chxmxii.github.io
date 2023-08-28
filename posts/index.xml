@@ -978,6 +978,45 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span>curl -u javed stapp01:8080/itadmin/
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="heading"></h2>
+<ul>
+<li>We have a requirement where we want to password protect a directory in the Apache web server document root. We want to password protect http://<!-- raw HTML omitted -->:&lt;apache_port&gt;/protected URL as per the following requirements (you can use any website-url for it like localhost since there are no such specific requirements as of now). Setup the same on App server 3 as per below mentioned requirements:</li>
+<li>a. We want to use basic authentication.</li>
+<li>b. We do not want to use htpasswd file based authentication. Instead, we want to use PAM authentication, i.e Basic Auth + PAM so that we can authenticate with a Linux user.</li>
+<li>c. We already have a user siva with password Rc5C9EyvbU which you need to provide access to</li>
+<li>d. You can test the same using a curl command from jump host curl http://<!-- raw HTML omitted -->:&lt;apache_port&gt;/protected</li>
+</ul>
+<h6 id="solution-22">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>yum --enablerepo<span style="color:#f92672">=</span>epel -y install mod_authnz_external pwauth
+</span></span><span style="display:flex;"><span>cat /etc/httpd/conf/httpd.conf | grep Listen
+</span></span><span style="display:flex;"><span>curl localhost:8080/protected/index.html
+</span></span><span style="display:flex;"><span>vi /etc/httpd/conf.d/authnz_external.conf
+</span></span><span style="display:flex;"><span>vi /etc/pam.d/apache
+</span></span><span style="display:flex;"><span>&gt; auth    required   pam_sss.so
+</span></span><span style="display:flex;"><span>&gt; account required   pam_sss.so
+</span></span><span style="display:flex;"><span>httpd -t
+</span></span><span style="display:flex;"><span>systemctl start httpd <span style="color:#f92672">&amp;&amp;</span> systemctl enable --now httpd
+</span></span><span style="display:flex;"><span>curl localhost:8080/protected
+</span></span><span style="display:flex;"><span>curl -u siva:Rc5C9EyvbU localhost:8080/protected/
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from jumphost</span>
+</span></span><span style="display:flex;"><span>curl -u siva:Rc5C9EyvbU stapp03:8080/protected/
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>#/etc/httpd/conf.d/authnz_external.conf
+</span></span><span style="display:flex;"><span>DefineExternalAuth pwauth pipe /usr/bin/pwauth
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;Location</span> <span style="color:#960050;background-color:#1e0010">&#34;/protected&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        AuthType Basic
+</span></span><span style="display:flex;"><span>        AuthName &#34;PAM Authentication&#34;
+</span></span><span style="display:flex;"><span>        AuthBasicProvider external
+</span></span><span style="display:flex;"><span>        AuthExternal pwauth
+</span></span><span style="display:flex;"><span>        require user siva 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Location&gt;</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
