@@ -5,6 +5,7 @@ date: 2023-08-01
 tags:
   - DevOps
   - Sysadmin
+  - Ansible
 type:
 - post
 - posts
@@ -12,6 +13,9 @@ title: KodeKloud Engineer Ansible Challenges
 weight: 10
 series:
 - Hugo 101
+---
+![](/files/ansible.png#center)
+
 ---
 ## Ansible Unarchive Module	
 
