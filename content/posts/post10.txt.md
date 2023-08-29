@@ -13,6 +13,9 @@ weight: 10
 series:
 - Hugo 101
 ---
+![](/files/kube.png#center)
+
+---
 ## Kuberentes time check pod
 
 + The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.

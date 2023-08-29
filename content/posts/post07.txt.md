@@ -13,6 +13,8 @@ weight: 10
 series:
 - Hugo 101
 ---
+![](/files/linux.png#center)
+
 ---
 ## Web Server Security	
 
