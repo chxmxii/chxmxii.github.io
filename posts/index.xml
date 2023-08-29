@@ -1,4 +1,48 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<hr>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-jenkins-challenges/</link><pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
+<hr>
+<h2 id="jenkins-installation">Jenkins Installation</h2>
+<ul>
+<li>The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below:</li>
+<li>
+<ol>
+<li>Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>Jenkin&rsquo;s admin user name should be theadmin, password should be Adm!n321, full name should be Rose and email should be <a href="mailto:rose@jenkins.stratos.xfusioncorp.com">rose@jenkins.stratos.xfusioncorp.com</a>.
+Note:</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>For this task, ssh into the jenkins server using user root and password S3curePass from jump host.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>After installing the Jenkins server, please click on the Jenkins button on the top bar to access Jenkins UI and follow the on-screen instructions to create an admin user.</li>
+</ol>
+</li>
+</ul>
+<h6 id="solution">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p S3curePass ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no root@jenkins
+</span></span><span style="display:flex;"><span>yum install -y wget
+</span></span><span style="display:flex;"><span>wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+</span></span><span style="display:flex;"><span>rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+</span></span><span style="display:flex;"><span>yum install -y java-17-openjdk
+</span></span><span style="display:flex;"><span>yum install -y jenkins
+</span></span><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl start jenkins
+</span></span><span style="display:flex;"><span>cat /var/lib/jenkins/secrets/initialAdminPassword
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#open jenkins and create your first admin user</span>
+</span></span></code></pre></div></li>
+</ul>
+<p><img src="/files/jenkinstask.png#center" alt=""></p>
+]]></content></item><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
+<hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
 <li>During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below:</li>
@@ -1035,7 +1079,8 @@ AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="t
 <p><a href="https://chxmxii.gitbook.io/aws-ccp/">AWS CCP Exam Notes and tips</a></p>
 </li>
 </ul>
-]]></content></item><item><title>KodeKloud Engineer Docker Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</link><pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</guid><description>Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled.</description><content type="html"><![CDATA[<hr>
+]]></content></item><item><title>KodeKloud Engineer Docker Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</link><pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</guid><description>Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled.</description><content type="html"><![CDATA[<p><img src="/files/Docker.png#center" alt=""></p>
+<hr>
 <h2 id="docker-ports-mapping">Docker Ports Mapping</h2>
 <ul>
 <li>The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below:</li>
@@ -1534,7 +1579,9 @@ For more details check here.</li>
 <blockquote>
 <p>DONE!!</p>
 </blockquote>
-]]></content></item><item><title>KodeKloud Engineer Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</link><pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<h2 id="kuberentes-time-check-pod">Kuberentes time check pod</h2>
+]]></content></item><item><title>KodeKloud Engineer Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</link><pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<p><img src="/files/kube.png#center" alt=""></p>
+<hr>
+<h2 id="kuberentes-time-check-pod">Kuberentes time check pod</h2>
 <ul>
 <li>The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.</li>
 <li>Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.e busybox:latest.</li>
@@ -1819,7 +1866,9 @@ For more details check here.</li>
 </span></span></code></pre></div></li>
 </ul>
 <hr>
-]]></content></item><item><title>KodeKloud Engineer Ansible Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-ansible-challenges/</link><pubDate>Tue, 01 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-ansible-challenges/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<h2 id="ansible-unarchive-module">Ansible Unarchive Module</h2>
+]]></content></item><item><title>KodeKloud Engineer Ansible Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-ansible-challenges/</link><pubDate>Tue, 01 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-ansible-challenges/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<p><img src="/files/ansible.png#center" alt=""></p>
+<hr>
+<h2 id="ansible-unarchive-module">Ansible Unarchive Module</h2>
 <ul>
 <li>One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task:</li>
 <li>We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</li>
