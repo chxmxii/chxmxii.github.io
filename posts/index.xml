@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KodeKloud Engineer Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-jenkins-challenges/</link><pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KKE Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
 <hr>
 <h2 id="jenkins-installation">Jenkins Installation</h2>
 <ul>
@@ -60,7 +60,294 @@ Note:</li>
 <li>Search for both plugins Git,Gitlab.</li>
 <li>Click on &ldquo;Restart Jenkins when installation is complete and no jobs&rdquo;.</li>
 </ul>
-]]></content></item><item><title>KodeKloud Engineer Ansible Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-ansible-challenges/</link><pubDate>Mon, 21 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-ansible-challenges/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<p><img src="/files/ansible.png#center" alt=""></p>
+]]></content></item><item><title>KKE - Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-kubernetes-challenges/</link><pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<p><img src="/files/kube.png#center" alt=""></p>
+<hr>
+<h2 id="kuberentes-time-check-pod">Kuberentes time check pod</h2>
+<ul>
+<li>The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.</li>
+<li>Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.e busybox:latest.</li>
+<li>Create a config map called time-config with the data TIME_FREQ=11 in the same namespace.</li>
+<li>The time-check container should run the command: while true; do date; sleep $TIME_FREQ;done and should write the result to the location /opt/data/time/time-check.log. Remember you will also need to add an environmental variable TIME_FREQ in the container, which should pick value from the config map TIME_FREQ key.</li>
+<li>Create a volume log-volume and mount the same on /opt/data/time within the container.</li>
+<li>Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.</li>
+</ul>
+<h6 id="solution">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi ns.yml
+</span></span><span style="display:flex;"><span>vi configmap.yml
+</span></span><span style="display:flex;"><span>vi pod.yml
+</span></span><span style="display:flex;"><span>kubectl get ns
+</span></span><span style="display:flex;"><span>kubectl get configmap -n datacenter
+</span></span><span style="display:flex;"><span>kubectl get pods -n datacenter
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#ns.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Namespace</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">datacenter</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#configmap.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-config</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">datacenter</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">TIME_FREQ</span>: <span style="color:#e6db74">&#34;11&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pod.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-check</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">datacenter</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-check</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox:latest</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;while true; do date; sleep $TIME_FREQ;done &gt;&gt; /opt/data/time/time-check.log&#34;</span> ]
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">TIME_FREQ</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">valueFrom</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">configMapKeyRef</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-config</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">key</span>: <span style="color:#ae81ff">TIME_FREQ</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">log-volume</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/opt/data/time</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">log-volume</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir </span>: {}
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="deploy-apache-web-server-on-kubernetes-cluster">Deploy Apache Web Server on Kubernetes Cluster</h2>
+<ul>
+<li>There is an application that needs to be deployed on Kubernetes cluster under Apache web server. The Nautilus application development team has asked the DevOps team to deploy it. We need to develop a template as per requirements mentioned below:</li>
+<li>Create a namespace named as httpd-namespace-devops.</li>
+<li>Create a deployment named as httpd-deployment-devops under newly created namespace. For the deployment use httpd image with latest tag only and remember to mention the tag i.e httpd:latest, and make sure replica counts are 2.</li>
+<li>Create a service named as httpd-service-devops under same namespace to expose the deployment, nodePort should be 30004.</li>
+</ul>
+<h6 id="solution-1">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>touch <span style="color:#f92672">{</span>ns,dep,srv<span style="color:#f92672">}</span>.yml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify later</span>
+</span></span><span style="display:flex;"><span>kubectl get deployment -n httpd-namespace-devops 
+</span></span><span style="display:flex;"><span>kubectl get service -n httpd-namespace-devops
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#ns.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Namespace</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-namespace-devops</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#srv.yml</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-service-devops</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">httpd-namespace-devops</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">httpd_app_devops</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">3004</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#dep.yml</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-deployment-devops</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">httpd-namespace-devops</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">httpd_app_devops</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">httpd_app_devops</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-container</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="fix-issue-with-volumemounts-in-kubernetes">Fix Issue with VolumeMounts in Kubernetes:</h2>
+<hr>
+<h2 id="deploy-nginx-and-phpfpm-on-kubernetes">Deploy Nginx and Phpfpm on Kubernetes</h2>
+<ul>
+<li>The Nautilus Application Development team is planning to deploy one of the php-based application on Kubernetes cluster. As per discussion with DevOps team they have decided to use nginx and phpfpm. Additionally, they shared some custom configuration requirements. Below you can find more details. Please complete the task as per requirements mentioned below:</li>
+<li>Create a service to expose this app, the service type must be NodePort, nodePort should be 30012.</li>
+<li>Create a config map nginx-config for nginx.conf as we want to add some custom settings for nginx.conf.
+<ul>
+<li>Change default port 80 to 8096 in nginx.conf.</li>
+<li>Change default document root /usr/share/nginx to /var/www/html in nginx.conf.</li>
+<li>Update directory index to index index.html index.htm index.php in nginx.conf.</li>
+</ul>
+</li>
+<li>Create a pod named nginx-phpfpm .
+<ul>
+<li>Create a shared volume shared-files that will be used by both containers (nginx and phpfpm) also it should be a emptyDir volume.</li>
+<li>Map the ConfigMap we declared above as a volume for nginx container. Name the volume as nginx-config-volume, mount path should be /etc/nginx/nginx.conf and subPath should be nginx.conf</li>
+<li>Nginx container should be named as nginx-container and it should use nginx:latest image. PhpFPM container should be named as php-fpm-container and it should use php:7.0-fpm image.</li>
+<li>The shared volume shared-files should be mounted at /var/www/html location in both containers. Copy /opt/index.php from jump host to the nginx document root inside nginx container, once done you can access the app using App button on the top bar.</li>
+</ul>
+</li>
+<li>Before clicking on finish button always make sure to check if all pods are in running state.</li>
+<li>You can use any labels as per your choice.
+=&gt; Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.</li>
+</ul>
+<h6 id="solution-2">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">back-end</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8096</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">8096</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30012</span> 
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nginx.conf</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    events {} 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    http {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      server {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        listen 8096;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        index index.html index.htm index.php;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        root  /var/www/html;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        location ~ \.php$ {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          include fastcgi_params;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_param REQUEST_METHOD $request_method;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_pass 127.0.0.1:9000;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    } </span>    
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">back-end</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir</span>: {}
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config-volume</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">configMap</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-container</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config-volume</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/etc/nginx/nginx.conf</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">subPath</span>: <span style="color:#ae81ff">nginx.conf</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">php-fpm-container</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">php:7.0-fpm</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>thor@jump_host ~$ kubectl apply -f .
+</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl get all
+</span></span><span style="display:flex;"><span>NAME               READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>pod/nginx-phpfpm   2/2     Running   <span style="color:#ae81ff">0</span>          5m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                   TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>          AGE
+</span></span><span style="display:flex;"><span>service/kubernetes     ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP          76m
+</span></span><span style="display:flex;"><span>service/nginx-phpfpm   NodePort    10.96.72.3   &lt;none&gt;        8096:30012/TCP   5m
+</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl cp /opt/index.php nginx-phpfpm:/var/www/html/ --container<span style="color:#f92672">=</span>nginx-container
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="deploy-node-app-on-kubernetes">Deploy Node App on Kubernetes</h2>
+<ul>
+<li>The Nautilus development team has completed development of one of the node applications, which they are planning to deploy on a Kubernetes cluster. They recently had a meeting with the DevOps team to share their requirements. Based on that, the DevOps team has listed out the exact requirements to deploy the app. Find below more details:</li>
+<li>Create a deployment using gcr.io/kodekloud/centos-ssh-enabled:node image, replica count must be 2.</li>
+<li>Create a service to expose this app, the service type must be NodePort, targetPort must be 8080 and nodePort should be 30012.</li>
+<li>Make sure all the pods are in Running state after the deployment.</li>
+<li>You can check the application by clicking on NodeApp button on top bar.</li>
+<li>You can use any labels as per your choice.
+=&gt; Note: The kubectl on jump_host has been configured to work with the kubernetes cluster</li>
+</ul>
+<h6 id="solution-3">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">node-deployment</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">node-app</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">node-app</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">node-container</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">gcr.io/kodekloud/centos-ssh-enabled:node</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">node-service</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">node-app</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30012</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>thor@jump_host ~$ kubectl get pods
+</span></span><span style="display:flex;"><span>NAME                              READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>node-deployment-dd99d7b78-ftr2r   1/1     Running   <span style="color:#ae81ff">0</span>          2m2s
+</span></span><span style="display:flex;"><span>node-deployment-dd99d7b78-wshn6   1/1     Running   <span style="color:#ae81ff">0</span>          2m2s
+</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl get svc
+</span></span><span style="display:flex;"><span>NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>        AGE
+</span></span><span style="display:flex;"><span>kubernetes     ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP        30m
+</span></span><span style="display:flex;"><span>node-service   NodePort    10.96.174.163   &lt;none&gt;        80:30012/TCP   3m
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+]]></content></item><item><title>KKE - Ansible Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-ansible-challenges/</link><pubDate>Mon, 21 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-ansible-challenges/</guid><description>Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</description><content type="html"><![CDATA[<p><img src="/files/ansible.png#center" alt=""></p>
 <hr>
 <h2 id="ansible-unarchive-module">Ansible Unarchive Module</h2>
 <ul>
@@ -636,7 +923,7 @@ Please do not modify this file manually!&rdquo;</li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi ansible/playbook.yml
 </span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml --syntax-check
 </span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml 
-</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;ls -l /var/www/html/index.html&#34;</span>
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;ls -l /var/www/html/index.html&#34;</span> <span style="color:#f92672">&amp;&amp;</span>
 </span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;cat /var/www/html/index.html&#34;</span>
 </span></span></code></pre></div></li>
 <li>
@@ -651,7 +938,7 @@ Please do not modify this file manually!&rdquo;</li>
 </span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">group=&#34;apache&#34; mode=&#39;0644&#39;</span>
 </span></span></code></pre></div></li>
 </ul>
-]]></content></item><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
+]]></content></item><item><title>KKE Linux Challenges P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
 <hr>
 <h2 id="web-server-security">Web Server Security</h2>
 <ul>
@@ -1671,25 +1958,7 @@ Install Ansible</li>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Location&gt;</span>
 </span></span></code></pre></div></li>
 </ul>
-]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</link><pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
-RHCCS EX188 Notes and tips
-RHCSA EX200 Notes and tips
-AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
-<ul>
-<li>
-<p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE EX294 Notes and tips</a></p>
-</li>
-<li>
-<p><a href="https://chxmxii.github.io/portfolio/rhccs/rhccs.html">RHCCS EX188 Notes and tips</a></p>
-</li>
-<li>
-<p><a href="https://chxmxii.gitbook.io/system-management-tasks/">RHCSA EX200 Notes and tips</a></p>
-</li>
-<li>
-<p><a href="https://chxmxii.gitbook.io/aws-ccp/">AWS CCP Exam Notes and tips</a></p>
-</li>
-</ul>
-]]></content></item><item><title>KodeKloud Engineer Docker Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</link><pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-docker-challenges/</guid><description>Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled.</description><content type="html"><![CDATA[<p><img src="/files/Docker.png#center" alt=""></p>
+]]></content></item><item><title>KKE Docker Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-docker-challenges/</link><pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-docker-challenges/</guid><description>Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled.</description><content type="html"><![CDATA[<p><img src="/files/Docker.png#center" alt=""></p>
 <hr>
 <h2 id="docker-ports-mapping">Docker Ports Mapping</h2>
 <ul>
@@ -2189,294 +2458,8 @@ For more details check here.</li>
 <blockquote>
 <p>DONE!!</p>
 </blockquote>
-]]></content></item><item><title>KodeKloud Engineer Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</link><pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<p><img src="/files/kube.png#center" alt=""></p>
+]]></content></item><item><title>KKE Linux Challenges P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kke-linux-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kke-linux-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
 <hr>
-<h2 id="kuberentes-time-check-pod">Kuberentes time check pod</h2>
-<ul>
-<li>The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.</li>
-<li>Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.e busybox:latest.</li>
-<li>Create a config map called time-config with the data TIME_FREQ=11 in the same namespace.</li>
-<li>The time-check container should run the command: while true; do date; sleep $TIME_FREQ;done and should write the result to the location /opt/data/time/time-check.log. Remember you will also need to add an environmental variable TIME_FREQ in the container, which should pick value from the config map TIME_FREQ key.</li>
-<li>Create a volume log-volume and mount the same on /opt/data/time within the container.</li>
-<li>Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.</li>
-</ul>
-<h6 id="solution">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi ns.yml
-</span></span><span style="display:flex;"><span>vi configmap.yml
-</span></span><span style="display:flex;"><span>vi pod.yml
-</span></span><span style="display:flex;"><span>kubectl get ns
-</span></span><span style="display:flex;"><span>kubectl get configmap -n datacenter
-</span></span><span style="display:flex;"><span>kubectl get pods -n datacenter
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#ns.yml</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Namespace</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">datacenter</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#configmap.yml</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-config</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">datacenter</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">TIME_FREQ</span>: <span style="color:#e6db74">&#34;11&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#pod.yml</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-check</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">datacenter</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-check</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">busybox:latest</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">command</span>: [ <span style="color:#e6db74">&#34;sh&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;while true; do date; sleep $TIME_FREQ;done &gt;&gt; /opt/data/time/time-check.log&#34;</span> ]
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">env</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">TIME_FREQ</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">valueFrom</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">configMapKeyRef</span>:
-</span></span><span style="display:flex;"><span>              <span style="color:#f92672">name</span>: <span style="color:#ae81ff">time-config</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#f92672">key</span>: <span style="color:#ae81ff">TIME_FREQ</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">log-volume</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/opt/data/time</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">log-volume</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir </span>: {}
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Never</span>
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="deploy-apache-web-server-on-kubernetes-cluster">Deploy Apache Web Server on Kubernetes Cluster</h2>
-<ul>
-<li>There is an application that needs to be deployed on Kubernetes cluster under Apache web server. The Nautilus application development team has asked the DevOps team to deploy it. We need to develop a template as per requirements mentioned below:</li>
-<li>Create a namespace named as httpd-namespace-devops.</li>
-<li>Create a deployment named as httpd-deployment-devops under newly created namespace. For the deployment use httpd image with latest tag only and remember to mention the tag i.e httpd:latest, and make sure replica counts are 2.</li>
-<li>Create a service named as httpd-service-devops under same namespace to expose the deployment, nodePort should be 30004.</li>
-</ul>
-<h6 id="solution-1">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>touch <span style="color:#f92672">{</span>ns,dep,srv<span style="color:#f92672">}</span>.yml
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify later</span>
-</span></span><span style="display:flex;"><span>kubectl get deployment -n httpd-namespace-devops 
-</span></span><span style="display:flex;"><span>kubectl get service -n httpd-namespace-devops
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#ns.yml</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Namespace</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-namespace-devops</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#srv.yml</span>
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-service-devops</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">httpd-namespace-devops</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">httpd_app_devops</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">3004</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#dep.yml</span>
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-deployment-devops</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">httpd-namespace-devops</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">httpd_app_devops</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">httpd_app_devops</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd-container</span>
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="fix-issue-with-volumemounts-in-kubernetes">Fix Issue with VolumeMounts in Kubernetes:</h2>
-<hr>
-<h2 id="deploy-nginx-and-phpfpm-on-kubernetes">Deploy Nginx and Phpfpm on Kubernetes</h2>
-<ul>
-<li>The Nautilus Application Development team is planning to deploy one of the php-based application on Kubernetes cluster. As per discussion with DevOps team they have decided to use nginx and phpfpm. Additionally, they shared some custom configuration requirements. Below you can find more details. Please complete the task as per requirements mentioned below:</li>
-<li>Create a service to expose this app, the service type must be NodePort, nodePort should be 30012.</li>
-<li>Create a config map nginx-config for nginx.conf as we want to add some custom settings for nginx.conf.
-<ul>
-<li>Change default port 80 to 8096 in nginx.conf.</li>
-<li>Change default document root /usr/share/nginx to /var/www/html in nginx.conf.</li>
-<li>Update directory index to index index.html index.htm index.php in nginx.conf.</li>
-</ul>
-</li>
-<li>Create a pod named nginx-phpfpm .
-<ul>
-<li>Create a shared volume shared-files that will be used by both containers (nginx and phpfpm) also it should be a emptyDir volume.</li>
-<li>Map the ConfigMap we declared above as a volume for nginx container. Name the volume as nginx-config-volume, mount path should be /etc/nginx/nginx.conf and subPath should be nginx.conf</li>
-<li>Nginx container should be named as nginx-container and it should use nginx:latest image. PhpFPM container should be named as php-fpm-container and it should use php:7.0-fpm image.</li>
-<li>The shared volume shared-files should be mounted at /var/www/html location in both containers. Copy /opt/index.php from jump host to the nginx document root inside nginx container, once done you can access the app using App button on the top bar.</li>
-</ul>
-</li>
-<li>Before clicking on finish button always make sure to check if all pods are in running state.</li>
-<li>You can use any labels as per your choice.
-=&gt; Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.</li>
-</ul>
-<h6 id="solution-2">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">back-end</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8096</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">8096</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30012</span> 
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">ConfigMap</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">data</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nginx.conf</span>: |<span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    events {} 
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    http {
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      server {
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        listen 8096;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        index index.html index.htm index.php;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        root  /var/www/html;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        location ~ \.php$ {
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          include fastcgi_params;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_param REQUEST_METHOD $request_method;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fastcgi_pass 127.0.0.1:9000;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    } </span>    
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx-phpfpm</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tier</span>: <span style="color:#ae81ff">back-end</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir</span>: {}
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config-volume</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">configMap</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-container</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html</span>
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-config-volume</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/etc/nginx/nginx.conf</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">subPath</span>: <span style="color:#ae81ff">nginx.conf</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">php-fpm-container</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">image</span>: <span style="color:#ae81ff">php:7.0-fpm</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumeMounts</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">shared-files</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html</span>
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>thor@jump_host ~$ kubectl apply -f .
-</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl get all
-</span></span><span style="display:flex;"><span>NAME               READY   STATUS    RESTARTS   AGE
-</span></span><span style="display:flex;"><span>pod/nginx-phpfpm   2/2     Running   <span style="color:#ae81ff">0</span>          5m
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>NAME                   TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>          AGE
-</span></span><span style="display:flex;"><span>service/kubernetes     ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP          76m
-</span></span><span style="display:flex;"><span>service/nginx-phpfpm   NodePort    10.96.72.3   &lt;none&gt;        8096:30012/TCP   5m
-</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl cp /opt/index.php nginx-phpfpm:/var/www/html/ --container<span style="color:#f92672">=</span>nginx-container
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="deploy-node-app-on-kubernetes">Deploy Node App on Kubernetes</h2>
-<ul>
-<li>The Nautilus development team has completed development of one of the node applications, which they are planning to deploy on a Kubernetes cluster. They recently had a meeting with the DevOps team to share their requirements. Based on that, the DevOps team has listed out the exact requirements to deploy the app. Find below more details:</li>
-<li>Create a deployment using gcr.io/kodekloud/centos-ssh-enabled:node image, replica count must be 2.</li>
-<li>Create a service to expose this app, the service type must be NodePort, targetPort must be 8080 and nodePort should be 30012.</li>
-<li>Make sure all the pods are in Running state after the deployment.</li>
-<li>You can check the application by clicking on NodeApp button on top bar.</li>
-<li>You can use any labels as per your choice.
-=&gt; Note: The kubectl on jump_host has been configured to work with the kubernetes cluster</li>
-</ul>
-<h6 id="solution-3">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">node-deployment</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">node-app</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>: 
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">node-app</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">containers</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">node-container</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">gcr.io/kodekloud/centos-ssh-enabled:node</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">node-service</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">node-app</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">8080</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30012</span>
-</span></span></code></pre></div></li>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>thor@jump_host ~$ kubectl get pods
-</span></span><span style="display:flex;"><span>NAME                              READY   STATUS    RESTARTS   AGE
-</span></span><span style="display:flex;"><span>node-deployment-dd99d7b78-ftr2r   1/1     Running   <span style="color:#ae81ff">0</span>          2m2s
-</span></span><span style="display:flex;"><span>node-deployment-dd99d7b78-wshn6   1/1     Running   <span style="color:#ae81ff">0</span>          2m2s
-</span></span><span style="display:flex;"><span>thor@jump_host ~$ kubectl get svc
-</span></span><span style="display:flex;"><span>NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>        AGE
-</span></span><span style="display:flex;"><span>kubernetes     ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP        30m
-</span></span><span style="display:flex;"><span>node-service   NodePort    10.96.174.163   &lt;none&gt;        80:30012/TCP   3m
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-]]></content></item><item><title>KodeKloud Engineer System Administration Challenges - P1</title><link>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</link><pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/05/kodekloud-engineer-system-administration-challenges-p1/</guid><description>Linux TimeZones Setting During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&amp;rsquo;t match with that of the local datacenter&amp;rsquo;s timezone, which is America/Blanc-Sablon. solution : #ssh to app server 1 account and switch to root sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 sudo su - # change the timezone to America/Blanc-Sablon timedatectl set-timezone America/Blanc-Sablon #Verify timedatectl Linux User Files There was some users data copied on Nautilus App Server 1 at /home/usersdata location by the Nautilus production support team in Stratos DC.</description><content type="html"><![CDATA[<hr>
 <h2 id="linux-timezones-setting">Linux TimeZones Setting</h2>
 <ul>
 <li>During the daily standup, it was pointed out that the timezone across Nautilus Application Servers in Stratos Datacenter doesn&rsquo;t match with that of the local datacenter&rsquo;s timezone, which is America/Blanc-Sablon.</li>
