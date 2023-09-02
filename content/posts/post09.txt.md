@@ -566,5 +566,6 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
       - yum: name=httpd state=installed
       - service: name=httpd state=started enabled=true
       - copy: content="This is a Nautilus sample file, created using Ansible!" dest=/var/www/html/index.html owner=apache group="apache" mode='0655'
-      - lineinfile: path=/var/www/html/index.html line="Welcome to Nautilus Group!" insertafter=EOF
+      - lineinfile: path=/var/www/html/index.html line="Welcome to Nautilus Group!" insertbefore=BOF
   ```
+---
