@@ -8,7 +8,7 @@ tags:
 type:
 - post
 - posts
-title: KKE Docker Challenges 
+title: KKE - Docker Challenges 
 weight: 10
 series:
 - Hugo 101

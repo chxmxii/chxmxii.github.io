@@ -8,7 +8,7 @@ tags:
 type:
 - post
 - posts
-title: KKE Linux Challenges P1
+title: KKE - Linux Challenges P1
 weight: 10
 series:
 - Hugo 101

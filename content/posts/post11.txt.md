@@ -1,7 +1,7 @@
 ---
 author:
   name: "chxmxii_"
-date: 2023-08-28
+date: 2023-08-20
 tags:
   - DevOps
   - Jenkins
@@ -9,7 +9,7 @@ tags:
 type:
 - post
 - posts
-title: KKE Jenkins Challenges
+title: KKE - Jenkins Challenges
 weight: 10
 series:
 - Hugo 101
