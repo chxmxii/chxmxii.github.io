@@ -9,7 +9,7 @@ tags:
 type:
 - post
 - posts
-title: KodeKloud Engineer Ansible Challenges 
+title: KKE - Ansible Challenges 
 weight: 10
 series:
 - Hugo 101
@@ -555,7 +555,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
   vi ansible/playbook.yml
   ansible-playbook -i ansible/inventory ansible/playbook.yml --syntax-check
   ansible-playbook -i ansible/inventory ansible/playbook.yml 
-  ansible all -i ansible/inventory -a "ls -l /var/www/html/index.html"
+  ansible all -i ansible/inventory -a "ls -l /var/www/html/index.html" &&
   ansible all -i ansible/inventory -a "cat /var/www/html/index.html"
   ```
 + ```yaml

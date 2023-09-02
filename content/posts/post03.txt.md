@@ -8,11 +8,13 @@ tags:
 type:
 - post
 - posts
-title: KodeKloud Engineer System Administration Challenges - P1
+title: KKE Linux Challenges P1
 weight: 10
 series:
 - Hugo 101
 ---
+![](/files/linux.png#center)
+
 ---
 ## Linux TimeZones Setting	
 

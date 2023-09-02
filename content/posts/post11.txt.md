@@ -9,7 +9,7 @@ tags:
 type:
 - post
 - posts
-title: KodeKloud Engineer Jenkins Challenges
+title: KKE Jenkins Challenges
 weight: 10
 series:
 - Hugo 101

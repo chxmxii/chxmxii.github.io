@@ -8,7 +8,7 @@ tags:
 type:
 - post
 - posts
-title: KodeKloud Engineer Linux Challenges
+title: KKE Linux Challenges P2
 weight: 10
 series:
 - Hugo 101

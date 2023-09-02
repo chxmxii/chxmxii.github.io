@@ -1,14 +1,14 @@
 ---
 author:
   name: "chxmxii_"
-date: 2023-08-04
+date: 2023-08-25
 tags:
   - DevOps
   - Sysadmin
 type:
 - post
 - posts
-title: KodeKloud Engineer Kubernetes Challenges 
+title: KKE - Kubernetes Challenges 
 weight: 10
 series:
 - Hugo 101
