@@ -607,6 +607,50 @@ Please do not modify this file manually!&rdquo;</li>
 </span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">name=httpd state=started enabled=yes</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="ansible-lineinfile-module">Ansible Lineinfile Module</h2>
+<ul>
+<li>The Nautilus DevOps team want to install and set up a simple httpd web server on all app servers in Stratos DC. They also want to deploy a sample web page using Ansible. Therefore, write the required playbook to complete this task as per details mentioned below.</li>
+<li>We already have an inventory file under /home/thor/ansible directory on jump host. Write a playbook playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook perform below given tasks:</li>
+<li>Install httpd web server on all app servers, and make sure its service is up and running.</li>
+<li>Create a file /var/www/html/index.html with content:</li>
+</ul>
+<blockquote>
+<p>This is a Nautilus sample file, created using Ansible!</p>
+</blockquote>
+<ul>
+<li>Using lineinfile Ansible module add some more content in /var/www/html/index.html file. Below is the content:</li>
+</ul>
+<blockquote>
+<p>Welcome to xFusionCorp Industries!</p>
+</blockquote>
+<ul>
+<li>Also make sure this new line is added at the top of the file.</li>
+<li>The /var/www/html/index.html file&rsquo;s user and group owner should be apache on all app servers.</li>
+<li>The /var/www/html/index.html file&rsquo;s permissions should be 0644 on all app servers.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-15">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml --syntax-check
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml 
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;ls -l /var/www/html/index.html&#34;</span>
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;cat /var/www/html/index.html&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">yum</span>: <span style="color:#ae81ff">name=httpd state=installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">name=httpd state=started enabled=true</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>: <span style="color:#ae81ff">content=&#34;This is a Nautilus sample file, created using Ansible!&#34; dest=/var/www/html/index.html</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">lineinfile</span>: <span style="color:#ae81ff">path=/var/www/html/index.html line=&#34;Welcome to xFusionCorp Industries!&#34; owner=apache </span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">group=&#34;apache&#34; mode=&#39;0644&#39;</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KodeKloud Engineer Linux Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kodekloud-engineer-linux-challenges/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
 <hr>
 <h2 id="web-server-security">Web Server Security</h2>
