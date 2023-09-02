@@ -1,4 +1,22 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 25 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>KKE - Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-kubernetes-challenges/</link><pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<p><img src="/files/kube.png#center" alt=""></p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Chamsii Mouhib</title><link>https://chxmxii.github.io/portfolio/posts/</link><description>Recent content in Posts on Chamsii Mouhib</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 01 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Certifications exam notes</title><link>https://chxmxii.github.io/portfolio/posts/2023/09/certifications-exam-notes/</link><pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/09/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
+RHCCS EX188 Notes and tips
+RHCSA EX200 Notes and tips
+AWS CCP Exam Notes and tips</description><content type="html"><![CDATA[<h3 id="these-are-some-useful-notes-i-gathered-while-pursuing-my-certifications">These are some useful notes I gathered while pursuing my certifications</h3>
+<ul>
+<li>
+<p><a href="https://chxmxii.github.io/portfolio/rhce/main.html">RHCE EX294 Notes and tips</a></p>
+</li>
+<li>
+<p><a href="https://chxmxii.github.io/portfolio/rhccs/rhccs.html">RHCCS EX188 Notes and tips</a></p>
+</li>
+<li>
+<p><a href="https://chxmxii.gitbook.io/system-management-tasks/">RHCSA EX200 Notes and tips</a></p>
+</li>
+<li>
+<p><a href="https://chxmxii.gitbook.io/aws-ccp/">AWS CCP Exam Notes and tips</a></p>
+</li>
+</ul>
+]]></content></item><item><title>KKE - Kubernetes Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-kubernetes-challenges/</link><pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-kubernetes-challenges/</guid><description>Kuberentes time check pod The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it. Create a pod called time-check in the datacenter namespace. This pod should run a container called time-check, container should use the busybox image with latest tag only and remember to mention tag i.</description><content type="html"><![CDATA[<p><img src="/files/kube.png#center" alt=""></p>
 <hr>
 <h2 id="kuberentes-time-check-pod">Kuberentes time check pod</h2>
 <ul>
