@@ -589,4 +589,3 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
       - replace: path=/opt/sysops/media.txt regexp='KodeKloud' replace='xFusionCorp Industries'
         when: ansible_hostname=="stapp03"
   ```
----
