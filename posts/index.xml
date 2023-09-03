@@ -926,7 +926,6 @@ Please do not modify this file manually!&rdquo;</li>
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname==&#34;stapp03&#34;</span>
 </span></span></code></pre></div></li>
 </ul>
-<hr>
 ]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
 <hr>
 <h2 id="jenkins-installation">Jenkins Installation</h2>
