@@ -590,7 +590,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
         when: ansible_hostname=="stapp03"
   ```
 ---
-##
+## Ansible Create Users and Groups
 
 + Several new developers and DevOps engineers just joined the xFusionCorp industries. They have been assigned the Nautilus project, and as per the onboarding process we need to create user accounts for new joinees on at least one of the app servers in Stratos DC. We also need to create groups and make new users members of those groups. We need to accomplish this task using Ansible. Below you can find more information about the task.
 + There is already an inventory file ~/playbooks/inventory on jump host.
@@ -599,6 +599,41 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 + b. Also add developers and admins groups on the same server.
 + c. As per the list given in the users.yml file, make each user member of the respective group they are listed under.
 + d. Make sure home directory for all of the users under developers group is /var/www (not the default i.e /var/www/{USER}). Users under admins group should use the default home directory (i.e /home/devid for user devid).
-+ e. Set password GyQkFRVNr3 for all of the users under developers group and B4zNgHA7Ya for of the users under admins group. Make sure to use the password given in the ~/playbooks/secrets/vault.txt file as Ansible vault password to encrypt the original password strings. You can use ~/playbooks/secrets/vault.txt file as a vault secret file while running the playbook (make necessary changes in ~/playbooks/ansible.cfg file).
++ e. Set password TmPcZjtRQx for all of the users under developers group and YchZHRcLkL for of the users under admins group. Make sure to use the password given in the ~/playbooks/secrets/vault.txt file as Ansible vault password to encrypt the original password strings. You can use ~/playbooks/secrets/vault.txt file as a vault secret file while running the playbook (make necessary changes in ~/playbooks/ansible.cfg file).
 + f. All users under admins group must be added as sudo users. To do so, simply make them member of the wheel group as well.
 + Note: Validation will try to run the playbook using command ansible-playbook -i inventory add_users.yml so please make sure playbook works this way, without passing any extra arguments.
+
+###### Solution
+
++ ```yaml
+  ---
+  - hosts: stapp03
+    become: true
+    vars_files:
+      - ./data/users.yml
+    vars:
+      - password_admin: YchZHRcLkL
+      - password_dev: TmPcZjtRQx
+    tasks:
+      - group: 
+          name: admins 
+          state: present
+      - group: 
+          name: developers 
+          state: present
+      - user: 
+          name: "{{ item }}" 
+          groups: admins,wheel 
+          password: "{{ password_admin | password_hash('sha512') }}"
+          state: present
+        loop: "{{admins}}"
+      - user: 
+          name: "{{ item }}" 
+          password: "{{ password_dev | password_hash('sha512') }}"
+          state: present 
+          groups: developers,wheel
+          home: "/var/www/{{ item }}"
+        loop: "{{ developers }}"
+  ```
+---
+## Managing Jinja2 Templates Using Ansible:
