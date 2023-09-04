@@ -926,6 +926,20 @@ Please do not modify this file manually!&rdquo;</li>
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname==&#34;stapp03&#34;</span>
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="heading"></h2>
+<ul>
+<li>Several new developers and DevOps engineers just joined the xFusionCorp industries. They have been assigned the Nautilus project, and as per the onboarding process we need to create user accounts for new joinees on at least one of the app servers in Stratos DC. We also need to create groups and make new users members of those groups. We need to accomplish this task using Ansible. Below you can find more information about the task.</li>
+<li>There is already an inventory file ~/playbooks/inventory on jump host.</li>
+<li>On jump host itself there is a list of users in ~/playbooks/data/users.yml file and there are two groups — admins and developers —that have list of different users. Create a playbook ~/playbooks/add_users.yml on jump host to perform the following tasks on app server 3 in Stratos DC.</li>
+<li>a. Add all users given in the users.yml file on app server 3.</li>
+<li>b. Also add developers and admins groups on the same server.</li>
+<li>c. As per the list given in the users.yml file, make each user member of the respective group they are listed under.</li>
+<li>d. Make sure home directory for all of the users under developers group is /var/www (not the default i.e /var/www/{USER}). Users under admins group should use the default home directory (i.e /home/devid for user devid).</li>
+<li>e. Set password GyQkFRVNr3 for all of the users under developers group and B4zNgHA7Ya for of the users under admins group. Make sure to use the password given in the ~/playbooks/secrets/vault.txt file as Ansible vault password to encrypt the original password strings. You can use ~/playbooks/secrets/vault.txt file as a vault secret file while running the playbook (make necessary changes in ~/playbooks/ansible.cfg file).</li>
+<li>f. All users under admins group must be added as sudo users. To do so, simply make them member of the wheel group as well.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory add_users.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
 ]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
 <hr>
 <h2 id="jenkins-installation">Jenkins Installation</h2>
