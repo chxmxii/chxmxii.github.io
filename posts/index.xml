@@ -945,7 +945,7 @@ Please do not modify this file manually!&rdquo;</li>
 <li>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd playbooks
 </span></span><span style="display:flex;"><span>vi add_users.yml
-</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;vault_password_file=./secrets/vault.txt&#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;vault_password_file=./secrets/vault.txt&#34;</span> &gt;&gt; ansibe.cfg
 </span></span><span style="display:flex;"><span>ansible-vault encrypt add_users.yml
 </span></span><span style="display:flex;"><span>cat add_users.yml
 </span></span><span style="display:flex;"><span>ansible-playbook -i inventory add_users.yml
