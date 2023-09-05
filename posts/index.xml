@@ -985,6 +985,50 @@ Please do not modify this file manually!&rdquo;</li>
 </ul>
 <hr>
 <h2 id="managing-jinja2-templates-using-ansible">Managing Jinja2 Templates Using Ansible:</h2>
+<ul>
+<li>One of the Nautilus DevOps team members is working on to develop a role for httpd installation and configuration. Work is almost completed, however there is a requirement to add a jinja2 template for index.html file. Additionally, the relevant task needs to be added inside the role. The inventory file ~/ansible/inventory is already present on jump host that can be used. Complete the task as per details mentioned below:</li>
+<li>a. Update ~/ansible/playbook.yml playbook to run the httpd role on App Server 3.</li>
+<li>b. Create a jinja2 template index.html.j2 under /home/thor/ansible/role/httpd/templates/ directory and add a line This file was created using Ansible on <!-- raw HTML omitted --> (for example This file was created using Ansible on stapp01 in case of App Server 1). Also please make sure not to hard code the server name inside the template. Instead, use inventory_hostname variable to fetch the correct value.</li>
+<li>c. Add a task inside /home/thor/ansible/role/httpd/tasks/main.yml to copy this template on App Server 3 under /var/www/html/index.html. Also make sure that /var/www/html/index.html file&rsquo;s permissions are 0644.</li>
+<li>d. The user/group owner of /var/www/html/index.html file must be respective sudo user of the server (for example tony in case of stapp01).</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments</li>
+</ul>
+<h6 id="solution-17">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd ansible
+</span></span><span style="display:flex;"><span>vi playbook.yml <span style="color:#75715e">#add the desired stapp server on the &#34;hosts&#34; header</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;This file was created using Ansible on {{ inventory_hostname }}&#34;</span> &gt; /role/httpd/templates/index.html.j2
+</span></span><span style="display:flex;"><span>vi /role/httpd/tasks/main.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span>curl stapp03:80
+</span></span><span style="display:flex;"><span>  &gt; This file was created using Ansible on stapp03
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#...exisiting tasks</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">src</span>: <span style="color:#ae81ff">index.html.j2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/html/index.html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">src</span>: <span style="color:#ae81ff">index.html.j2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/index.html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">src</span>: <span style="color:#ae81ff">index.html.j2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/index.html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
 <hr>
 <h2 id="jenkins-installation">Jenkins Installation</h2>
