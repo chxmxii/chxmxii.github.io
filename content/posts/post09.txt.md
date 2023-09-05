@@ -607,7 +607,7 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 + ```shell
   cd playbooks
   vi add_users.yml
-  echo "vault_password_file=./secrets/vault.txt"
+  echo "vault_password_file=./secrets/vault.txt" >> ansibe.cfg
   ansible-vault encrypt add_users.yml
   cat add_users.yml
   ansible-playbook -i inventory add_users.yml
