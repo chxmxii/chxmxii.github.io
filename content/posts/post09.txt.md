@@ -604,7 +604,16 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
 + Note: Validation will try to run the playbook using command ansible-playbook -i inventory add_users.yml so please make sure playbook works this way, without passing any extra arguments.
 
 ###### Solution
-
++ ```shell
+  cd playbooks
+  vi add_users.yml
+  echo "vault_password_file=./secrets/vault.txt"
+  ansible-vault encrypt add_users.yml
+  cat add_users.yml
+  ansible-playbook -i inventory add_users.yml
+  ansible stapp03 -i inventory -m shell -a "id joy;id ray;cat /etc/passwd"
+  #for further verification, you can ssh to the stapp03.
+  ```
 + ```yaml
   ---
   - hosts: stapp03
