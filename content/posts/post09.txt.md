@@ -767,3 +767,4 @@ Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nod
           mode: '0755'
         when: ansible_hostname == "stapp03"
   ```
+> DONE...!
