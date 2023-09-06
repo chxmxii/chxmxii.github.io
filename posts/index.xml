@@ -1085,7 +1085,62 @@ Please do not modify this file manually!&rdquo;</li>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
 </span></span></code></pre></div></li>
 </ul>
-<pre tabindex="0"><code></code></pre>]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
+<hr>
+<h2 id="using-ansible-conditionals">Using Ansible Conditionals</h2>
+<ul>
+<li>
+<p>The Nautilus DevOps team had a discussion about, how they can train different team members to use Ansible for different automation tasks. There are numerous ways to perform a particular task using Ansible, but we want to utilize each aspect that Ansible offers. The team wants to utilise Ansible&rsquo;s conditionals to perform the following task:</p>
+</li>
+<li>
+<p>An inventory file is already placed under /home/thor/ansible directory on jump host, with all the Stratos DC app servers included.</p>
+</li>
+<li>
+<p>Create a playbook /home/thor/ansible/playbook.yml and make sure to use Ansible&rsquo;s when conditionals statements to perform the below given tasks.</p>
+</li>
+<li>
+<p>Copy blog.txt file present under /usr/src/finance directory on jump host to App Server 1 under /opt/finance directory. Its user and group owner must be user tony and its permissions must be 0755 .</p>
+</li>
+<li>
+<p>Copy story.txt file present under /usr/src/finance directory on jump host to App Server 2 under /opt/finance directory. Its user and group owner must be user steve and its permissions must be 0755 .</p>
+</li>
+<li>
+<p>Copy media.txt file present under /usr/src/finance directory on jump host to App Server 3 under /opt/finance directory. Its user and group owner must be user banner and its permissions must be 0755.</p>
+</li>
+<li>
+<p>NOTE: You can use ansible_nodename variable from gathered facts with when condition. Additionally, please make sure you are running the play for all hosts i.e use - hosts: all.</p>
+</li>
+<li>
+<p>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/finance/blog.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/finance/story.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/finance/media.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
 <hr>
 <h2 id="jenkins-installation">Jenkins Installation</h2>
 <ul>
