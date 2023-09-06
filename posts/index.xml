@@ -1029,7 +1029,63 @@ Please do not modify this file manually!&rdquo;</li>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
 </span></span></code></pre></div></li>
 </ul>
-]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
+<hr>
+<h2 id="ansible-setup-httpd-and-php">Ansible Setup Httpd and PHP</h2>
+<ul>
+<li>
+<p>Nautilus Application development team wants to test the Apache and PHP setup on one of the app servers in Stratos Datacenter. They want the DevOps team to prepare an Ansible playbook to accomplish this task. Below you can find more details about the task.</p>
+</li>
+<li>
+<p>There is an inventory file ~/playbooks/inventory on jump host.</p>
+</li>
+<li>
+<p>Create a playbook ~/playbooks/httpd.yml on jump host and perform the following tasks on App Server 3.</p>
+</li>
+<li>
+<p>a. Install httpd and php packages (whatever default version is available in yum repo).</p>
+</li>
+<li>
+<p>b. Change default document root of Apache to /var/www/html/myroot in default Apache config /etc/httpd/conf/httpd.conf. Make sure /var/www/html/myroot path exists (if not please create the same).</p>
+</li>
+<li>
+<p>c. There is a template ~/playbooks/templates/phpinfo.php.j2 on jump host. Copy this template to the Apache document root you created as phpinfo.php file and make sure user owner and the group owner for this file is apache user.</p>
+</li>
+<li>
+<p>d. Start and enable httpd service.</p>
+</li>
+<li>
+<p>Note: Validation will try to run the playbook using command ansible-playbook -i inventory httpd.yml, so please make sure the playbook works this way without passing any extra arguments.</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">stapp03</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">yum</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">php</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/var/www/html/myroot</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">directory</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">recurse</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">lineinfile</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/etc/httpd/conf/httpd.conf</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">regex</span>: <span style="color:#e6db74">&#39;^DocumentRoot &#34;/var/www/html&#34;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">line</span>: <span style="color:#e6db74">&#39;DocumentRoot &#34;/var/www/html/myroot&#34;&#39;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">template</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">templates/phpinfo.php.j2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/html/myroot/phpinfo.php</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">apache</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">apache</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div></li>
+</ul>
+<pre tabindex="0"><code></code></pre>]]></content></item><item><title>KKE - Jenkins Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</link><pubDate>Sun, 20 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-jenkins-challenges/</guid><description>Jenkins Installation The DevOps team of xFusionCorp Industries is planning to setup some CI/CD pipelines. After several meetings they have decided to use Jenkins server. So, we need to setup a Jenkins Server as soon as possible. Please complete the task as per requirements mentioned below: Install jenkins on jenkins server using yum utility only, and start its service. You might face timeout issue while starting the Jenkins service, please refer this link for help.</description><content type="html"><![CDATA[<p><img src="/files/jenkins.png#center" alt=""></p>
 <hr>
 <h2 id="jenkins-installation">Jenkins Installation</h2>
 <ul>
