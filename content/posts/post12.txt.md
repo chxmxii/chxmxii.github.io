@@ -9,12 +9,13 @@ tags:
 type:
 - post
 - posts
-title: KKE - GIT Challenges 
+title: KKE - Git Challenges 
 weight: 10
 series:
 - Hugo 101
 ---
 ![](/files/git.png#center)
+
 ---
 ## Git Install and Create Bare Repository
 
@@ -29,4 +30,3 @@ series:
   $ sudo mkdir /opt/blog.git && cd $_
   $ sudo git init -bare 
   ```
----
