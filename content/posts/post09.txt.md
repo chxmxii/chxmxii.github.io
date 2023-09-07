@@ -15,7 +15,6 @@ series:
 - Hugo 101
 ---
 ![](/files/ansible.png#center)
-
 ---
 ## Ansible Unarchive Module	
 
