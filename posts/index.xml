@@ -1277,6 +1277,21 @@ Note:</li>
 </span></span><span style="display:flex;"><span>$ sudo git init -bare 
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="git-clone-repositories">Git Clone Repositories</h2>
+<ul>
+<li>DevOps team created a new Git repository last week; however, as of now no team is using it. The Nautilus application development team recently asked for a copy of that repo on Storage server in Stratos DC. Please clone the repo as per details shared below:</li>
+<li>The repo that needs to be cloned is /opt/news.git</li>
+<li>Clone this git repository under /usr/src/kodekloudrepos directory. Please do not try to make any changes in the repo.</li>
+</ul>
+<h6 id="solution-1">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sshpass -p Bl@kW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
+</span></span><span style="display:flex;"><span>$ cd /usr/src/kodekloudrepos
+</span></span><span style="display:flex;"><span>$ sudo git clone /opt/news.git 
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KKE - Linux Challenges P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
 <hr>
 <h2 id="web-server-security">Web Server Security</h2>
