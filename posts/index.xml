@@ -1201,9 +1201,9 @@ Note:</li>
 <h6 id="solution-1">Solution</h6>
 <ul>
 <li>
-<pre tabindex="0"><code>+ Dashboard &gt; Manage Jenkins &gt; Plugin Manager.
-+ Search for both plugins Git,Gitlab.
-+ Click on &#34;Restart Jenkins when installation is complete and no jobs&#34;.
+<pre tabindex="0"><code class="language-M" data-lang="M">Dashboard &gt; Manage Jenkins &gt; Plugin Manager.
+Search for both plugins Git,Gitlab.
+Click on &#34;Restart Jenkins when installation is complete and no jobs&#34;.
 </code></pre></li>
 </ul>
 <hr>
@@ -1227,12 +1227,12 @@ Note:</li>
 <h6 id="solution-2">Solution</h6>
 <ul>
 <li>
-<pre tabindex="0"><code>+ Dashboard &gt; Manage Jenkins &gt; Jenkins’ own user database &gt; Create User. # Add new user and create user &#34;mark&#34;.
-+ Go to &#34;Plugin Manager&#34; and install &#34;Project-based Matrix Authorization Strategy&#34;.
-+ Change the &#34;Authorization&#34; strategy to &#34;Project-based Matrix&#34;
-+ add &#34;admin&#34; and assign the &#34;OVERALL ADMINISTER&#34;.
-+ add &#34;mark&#34; and assign both &#34;OVERALL READ&#34; and &#34;JOB READ&#34;.
-+ save the changes, and restart jenkins.
+<pre tabindex="0"><code class="language-M" data-lang="M">Dashboard &gt; Manage Jenkins &gt; Jenkins’ own user database &gt; Create User. # Add new user and create user &#34;mark&#34;.
+Go to &#34;Plugin Manager&#34; and install &#34;Project-based Matrix Authorization Strategy&#34;.
+Change the &#34;Authorization&#34; strategy to &#34;Project-based Matrix&#34;
+add &#34;admin&#34; and assign the &#34;OVERALL ADMINISTER&#34;.
+add &#34;mark&#34; and assign both &#34;OVERALL READ&#34; and &#34;JOB READ&#34;.
+save the changes, and restart jenkins.
 </code></pre></li>
 </ul>
 ]]></content></item><item><title>KKE - Git Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</guid><description>Git Install and Create Bare Repository The Nautilus development team shared requirements with the DevOps team regarding new application development.—specifically, they want to set up a Git repository for that project. Create a Git repository on Storage server in Stratos DC as per details given below: Install git package using yum on Storage server. After that create a bare repository /opt/blog.git (make sure to use exact name). Solution $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01 $ sudo yum install -y git $ sudo mkdir /opt/blog.</description><content type="html"><![CDATA[<p><img src="/files/git.png#center" alt=""></p>
