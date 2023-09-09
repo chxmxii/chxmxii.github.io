@@ -1235,57 +1235,6 @@ add &#34;mark&#34; and assign both &#34;OVERALL READ&#34; and &#34;JOB READ&#34;
 save the changes, and restart jenkins.
 </code></pre></li>
 </ul>
-<hr>
-<h2 id="git-fork-a-repository">Git Fork a Repository</h2>
-<ul>
-<li>There is a Git server used by the Nautilus project teams. Recently a new developer Jon joined the team and needs to start working on a project. To do so, he needs to fork an existing Git repository. Below you can find more details:</li>
-<li>Click on the Gitea UI button on the top bar. You should be able to access the Gitea page.</li>
-<li>Login to Gitea server using username jon and password Jon_pass123.</li>
-<li>There you will see a Git repository sarah/story-blog, fork it under jon user.</li>
-<li>Note: For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.</li>
-</ul>
-<h6 id="solution-3">Solution:</h6>
-<ul>
-<li>
-<pre tabindex="0"><code class="language-M" data-lang="M">Login
-Go to the repo sarah/story-blog and fork it.
-</code></pre></li>
-</ul>
-<hr>
-<h2 id="git-repository-update">Git Repository Update</h2>
-<ul>
-<li>The Nautilus development team started with new project development. They have created different Git repositories to manage respective project&rsquo;s source code. One of the repositories /opt/cluster.git was created recently. The team has given us a sample index.html file that is currently present on jump host under /tmp directory. The repository has been cloned at /usr/src/kodekloudrepos on storage server in Stratos DC.</li>
-<li>Copy sample index.html file from jump host to storage server under cloned repository at /usr/src/kodekloudrepos/cluster, further add/commit the file and push to the master branch.</li>
-</ul>
-<h6 id="solution-4">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ scp /tmp/index.html natasha@ststor01:/tmp/
-</span></span><span style="display:flex;"><span>$ sshpass -p Bl@kW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
-</span></span><span style="display:flex;"><span>$ cp /tmp/index.html /usr/src/kodekloudrepos/cluster/
-</span></span><span style="display:flex;"><span>$ sudo git add *
-</span></span><span style="display:flex;"><span>$ sudo git commit -m <span style="color:#e6db74">&#34;kodekloud&#34;</span>
-</span></span><span style="display:flex;"><span>$ sudo git push
-</span></span><span style="display:flex;"><span>$ sudo git logs
-</span></span></code></pre></div></li>
-</ul>
-<hr>
-<h2 id="git-repository-update-1">Git Repository Update</h2>
-<ul>
-<li>Nautilus developers are actively working on one of the project repositories, /usr/src/kodekloudrepos/blog. They were doing some testing and created few test branches, now they want to clean those test branches. Below are the requirements that have been shared with the DevOps team:</li>
-<li>On Storage server in Stratos DC delete a branch named xfusioncorp_blog from /usr/src/kodekloudrepos/blog git repo.</li>
-</ul>
-<h6 id="solution-5">Solution:</h6>
-<ul>
-<li>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sshpass -p Bl@kW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
-</span></span><span style="display:flex;"><span>$ cd /usr/src/kodekloudrepos/blog 
-</span></span><span style="display:flex;"><span>$ sudo git branch -a
-</span></span><span style="display:flex;"><span>$ sudo git checkout master <span style="color:#75715e">#to switch the current branch to master</span>
-</span></span><span style="display:flex;"><span>$ sudo git branch -d xfusioncorp_blog
-</span></span><span style="display:flex;"><span>$ sudo git bracnh -a
-</span></span></code></pre></div></li>
-</ul>
 ]]></content></item><item><title>KKE - Git Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</guid><description>Git Install and Create Bare Repository The Nautilus development team shared requirements with the DevOps team regarding new application development.—specifically, they want to set up a Git repository for that project. Create a Git repository on Storage server in Stratos DC as per details given below: Install git package using yum on Storage server. After that create a bare repository /opt/blog.git (make sure to use exact name). Solution $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01 $ sudo yum install -y git $ sudo mkdir /opt/blog.</description><content type="html"><![CDATA[<p><img src="/files/git.png#center" alt=""></p>
 <hr>
 <h2 id="git-install-and-create-bare-repository">Git Install and Create Bare Repository</h2>
@@ -1316,6 +1265,57 @@ Go to the repo sarah/story-blog and fork it.
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sshpass -p Bl@kW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
 </span></span><span style="display:flex;"><span>$ cd /usr/src/kodekloudrepos
 </span></span><span style="display:flex;"><span>$ sudo git clone /opt/news.git 
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="git-fork-a-repository">Git Fork a Repository</h2>
+<ul>
+<li>There is a Git server used by the Nautilus project teams. Recently a new developer Jon joined the team and needs to start working on a project. To do so, he needs to fork an existing Git repository. Below you can find more details:</li>
+<li>Click on the Gitea UI button on the top bar. You should be able to access the Gitea page.</li>
+<li>Login to Gitea server using username jon and password Jon_pass123.</li>
+<li>There you will see a Git repository sarah/story-blog, fork it under jon user.</li>
+<li>Note: For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.</li>
+</ul>
+<h6 id="solution-2">Solution:</h6>
+<ul>
+<li>
+<pre tabindex="0"><code class="language-M" data-lang="M">Login
+Go to the repo sarah/story-blog and fork it.
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="git-repository-update">Git Repository Update</h2>
+<ul>
+<li>The Nautilus development team started with new project development. They have created different Git repositories to manage respective project&rsquo;s source code. One of the repositories /opt/cluster.git was created recently. The team has given us a sample index.html file that is currently present on jump host under /tmp directory. The repository has been cloned at /usr/src/kodekloudrepos on storage server in Stratos DC.</li>
+<li>Copy sample index.html file from jump host to storage server under cloned repository at /usr/src/kodekloudrepos/cluster, further add/commit the file and push to the master branch.</li>
+</ul>
+<h6 id="solution-3">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ scp /tmp/index.html natasha@ststor01:/tmp/
+</span></span><span style="display:flex;"><span>$ sshpass -p Bl@kW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
+</span></span><span style="display:flex;"><span>$ cp /tmp/index.html /usr/src/kodekloudrepos/cluster/
+</span></span><span style="display:flex;"><span>$ sudo git add *
+</span></span><span style="display:flex;"><span>$ sudo git commit -m <span style="color:#e6db74">&#34;kodekloud&#34;</span>
+</span></span><span style="display:flex;"><span>$ sudo git push
+</span></span><span style="display:flex;"><span>$ sudo git logs
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="git-repository-update-1">Git Repository Update</h2>
+<ul>
+<li>Nautilus developers are actively working on one of the project repositories, /usr/src/kodekloudrepos/blog. They were doing some testing and created few test branches, now they want to clean those test branches. Below are the requirements that have been shared with the DevOps team:</li>
+<li>On Storage server in Stratos DC delete a branch named xfusioncorp_blog from /usr/src/kodekloudrepos/blog git repo.</li>
+</ul>
+<h6 id="solution-4">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sshpass -p Bl@kW ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no natasha@ststor01
+</span></span><span style="display:flex;"><span>$ cd /usr/src/kodekloudrepos/blog 
+</span></span><span style="display:flex;"><span>$ sudo git branch -a
+</span></span><span style="display:flex;"><span>$ sudo git checkout master <span style="color:#75715e">#to switch the current branch to master</span>
+</span></span><span style="display:flex;"><span>$ sudo git branch -d xfusioncorp_blog
+</span></span><span style="display:flex;"><span>$ sudo git bracnh -a
 </span></span></code></pre></div></li>
 </ul>
 ]]></content></item><item><title>KKE - Linux Challenges P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
