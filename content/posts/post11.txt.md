@@ -52,10 +52,10 @@ Note:
   + For these scenarios requiring changes to be done in a web UI, please take screenshots so you can share them with us for review in case your task is marked incomplete. You may also consider using screen recording software like loom.com to record and share your work.
   
 ###### Solution
-+ ```
-  + Dashboard > Manage Jenkins > Plugin Manager.
-  + Search for both plugins Git,Gitlab.
-  + Click on "Restart Jenkins when installation is complete and no jobs".
++ ``` M
+  Dashboard > Manage Jenkins > Plugin Manager.
+  Search for both plugins Git,Gitlab.
+  Click on "Restart Jenkins when installation is complete and no jobs".
   ```
 ---
 ## Jenkins Create Users
@@ -73,11 +73,11 @@ Note:
   + For these kind of scenarios that required changes to be done from a web UI, please take screenshots of your work so that you can share the same with us for review purpose (in case your task is marked incomplete or failed). You may also consider using a screen recording software such as loom.com to record and share your work.
 
 ###### Solution
-+ ```
-  + Dashboard > Manage Jenkins > Jenkins’ own user database > Create User. # Add new user and create user "mark".
-  + Go to "Plugin Manager" and install "Project-based Matrix Authorization Strategy".
-  + Change the "Authorization" strategy to "Project-based Matrix"
-  + add "admin" and assign the "OVERALL ADMINISTER".
-  + add "mark" and assign both "OVERALL READ" and "JOB READ".
-  + save the changes, and restart jenkins.
++ ``` M
+  Dashboard > Manage Jenkins > Jenkins’ own user database > Create User. # Add new user and create user "mark".
+  Go to "Plugin Manager" and install "Project-based Matrix Authorization Strategy".
+  Change the "Authorization" strategy to "Project-based Matrix"
+  add "admin" and assign the "OVERALL ADMINISTER".
+  add "mark" and assign both "OVERALL READ" and "JOB READ".
+  save the changes, and restart jenkins.
   ```
