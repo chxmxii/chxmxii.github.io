@@ -1207,46 +1207,21 @@ Note:</li>
 </code></pre></li>
 </ul>
 <hr>
-<h2 id="heading"></h2>
+<h2 id="jenkins-create-users">Jenkins Create Users</h2>
 <ul>
 <li>The Nautilus team is planning to use Jenkins for some of their CI/CD pipelines. DevOps team has just installed a fresh Jenkins server and they are configuring it further to be available for use.</li>
 <li>Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and password Adm!n321.</li>
 <li>It has only a sample job for now. A new developer has joined the Nautilus application development team and they want this user to be added to the Jenkins server as per the details mentioned below:</li>
-<li>
-<ol>
 <li>Create a jenkins user named mark with LQfKeWWxWD password, their full name should be Mark (it is case sensitive).</li>
-</ol>
-</li>
-<li>
-<ol start="2">
 <li>Using Project-based Matrix Authorization Strategy assign overall read permission to mark user.</li>
-</ol>
-</li>
-<li>
-<ol start="3">
 <li>Remember to remove all permissions for Anonymous users (if given) and make sure admin user has overall Administer permissions.</li>
-</ol>
-</li>
-<li>
-<ol start="4">
 <li>There is one existing job, make sure mark only has read permissions to that job (we are not worried about other permissions like Agent, SCM, etc.).</li>
-</ol>
-</li>
-<li>Note:</li>
-<li>
-<ol>
+<li>Note:
+<ul>
 <li>You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, in case Jenkins UI gets stuck when Jenkins service restarts in the back end, please make sure to refresh the UI page.</li>
-</ol>
-</li>
-<li>
-<ol start="2">
 <li>Do not immediately click on Finish button if you have restarted the Jenkins service, please wait for Jenkins login page to come back before finishing your task.</li>
-</ol>
-</li>
-<li>
-<ol start="3">
 <li>For these kind of scenarios that required changes to be done from a web UI, please take screenshots of your work so that you can share the same with us for review purpose (in case your task is marked incomplete or failed). You may also consider using a screen recording software such as loom.com to record and share your work.</li>
-</ol>
+</ul>
 </li>
 </ul>
 <h6 id="solution-2">Solution</h6>
