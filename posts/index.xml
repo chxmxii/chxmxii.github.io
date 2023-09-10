@@ -1235,6 +1235,58 @@ add &#34;mark&#34; and assign both &#34;OVERALL READ&#34; and &#34;JOB READ&#34;
 save the changes, and restart jenkins.
 </code></pre></li>
 </ul>
+<hr>
+<h2 id="jenkins-folders">Jenkins Folders</h2>
+<ul>
+<li>The DevOps team of xFusionCorp Industries is planning to create a number of Jenkins jobs for different tasks. To easily manage the jobs within Jenkins UI they decided to create different Folders for all Jenkins jobs based on usage/nature of these jobs. Based on the requirements shared below please perform the below mentioned task:</li>
+<li>Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and password Adm!n321.</li>
+<li>There are already two jobs httpd-php and services.</li>
+<li>Create a new folder called Apache under Jenkins UI.</li>
+<li>Move the above mentioned two jobs under Apache folder.</li>
+<li>Note:
+<ul>
+<li>You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, Jenkins UI sometimes gets stuck when Jenkins service restarts in the back end. In this case, please make sure to refresh the UI page.</li>
+<li>For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.</li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-3">Solution</h6>
+<ul>
+<li>
+<pre tabindex="0"><code class="language-M" data-lang="M">Install a plugin called &#34;Folder&#34; by cloudBee
+Create a new Item called &#34;Apache&#34; and set the type of the item to folder
+Right click on the jobs and move them to the apache folder
+Restart Jenkins.
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="jenkins-install-packages">Jenkins Install Packages</h2>
+<ul>
+<li>Some new requirements have come up to install and configure some packages on the Nautilus infrastructure under Stratos Datacenter. The Nautilus DevOps team installed and configured a new Jenkins server so they wanted to create a Jenkins job to automate this task. Find below more details and complete the task accordingly:</li>
+<li>Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and Adm!n321 password.</li>
+<li>Create a Jenkins job named install-packages and configure it to accomplish below given tasks.</li>
+<li>Add a string parameter named PACKAGE.</li>
+<li>Configure it to install a package on the storage server in Stratos Datacenter provided to the $PACKAGE parameter.</li>
+<li>Note:
+<ul>
+<li>You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also some times Jenkins UI gets stuck when Jenkins service restarts in the back end so in such case please make sure to refresh the UI page.</li>
+<li>Make sure Jenkins job passes even on repetitive runs as validation may try to build the job multiple times.</li>
+<li>For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.</li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-4">Solution</h6>
+<ul>
+<li>
+<pre tabindex="0"><code class="language-M" data-lang="M">Install The required SSH Plugins (SSH server, SSH plugin, SSH Credentials Plugin, SSH Agent Plugin)
+Create a new credential and store the username:password of user natasha
+Go the main config and add new SSH site add the hostname of storage server (ststr01) and add the credential saved by user natasha
+Create a new job called &#34;install-packages&#34; and add a string parameter PACKAGE.
+Click on &#34;execute shell script on remote hosting using ssh&#34; {BUILD}, add the following command
+`echo Bl@kW | sudo -S yum install -y $PACKAGE`
+You can test the job, trying to give PACKAGE a value of &#34;wget, zip&#34; etc..
+</code></pre></li>
+</ul>
 ]]></content></item><item><title>KKE - Git Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</guid><description>Git Install and Create Bare Repository The Nautilus development team shared requirements with the DevOps team regarding new application development.—specifically, they want to set up a Git repository for that project. Create a Git repository on Storage server in Stratos DC as per details given below: Install git package using yum on Storage server. After that create a bare repository /opt/blog.git (make sure to use exact name). Solution $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01 $ sudo yum install -y git $ sudo mkdir /opt/blog.</description><content type="html"><![CDATA[<p><img src="/files/git.png#center" alt=""></p>
 <hr>
 <h2 id="git-install-and-create-bare-repository">Git Install and Create Bare Repository</h2>
