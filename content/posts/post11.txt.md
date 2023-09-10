@@ -81,3 +81,46 @@ Note:
   add "mark" and assign both "OVERALL READ" and "JOB READ".
   save the changes, and restart jenkins.
   ```
+---
+## Jenkins Folders
+
++ The DevOps team of xFusionCorp Industries is planning to create a number of Jenkins jobs for different tasks. To easily manage the jobs within Jenkins UI they decided to create different Folders for all Jenkins jobs based on usage/nature of these jobs. Based on the requirements shared below please perform the below mentioned task:
++ Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and password Adm!n321.
++ There are already two jobs httpd-php and services.
++ Create a new folder called Apache under Jenkins UI.
++ Move the above mentioned two jobs under Apache folder.
++ Note:
+  + You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, Jenkins UI sometimes gets stuck when Jenkins service restarts in the back end. In this case, please make sure to refresh the UI page.
+  + For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
+
+###### Solution
++ ```M
+  Install a plugin called "Folder" by cloudBee
+  Create a new Item called "Apache" and set the type of the item to folder
+  Right click on the jobs and move them to the apache folder
+  Restart Jenkins.
+  ```
+---
+## Jenkins Install Packages
+
++ Some new requirements have come up to install and configure some packages on the Nautilus infrastructure under Stratos Datacenter. The Nautilus DevOps team installed and configured a new Jenkins server so they wanted to create a Jenkins job to automate this task. Find below more details and complete the task accordingly:
++ Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and Adm!n321 password.
++ Create a Jenkins job named install-packages and configure it to accomplish below given tasks.
++ Add a string parameter named PACKAGE.
++ Configure it to install a package on the storage server in Stratos Datacenter provided to the $PACKAGE parameter.
++ Note:
+  + You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also some times Jenkins UI gets stuck when Jenkins service restarts in the back end so in such case please make sure to refresh the UI page.
+  + Make sure Jenkins job passes even on repetitive runs as validation may try to build the job multiple times.
+  + For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
+  
+###### Solution
++ ```M
+  Install The required SSH Plugins (SSH server, SSH plugin, SSH Credentials Plugin, SSH Agent Plugin)
+  Create a new credential and store the username:password of user natasha
+  Go the main config and add new SSH site add the hostname of storage server (ststr01) and add the credential saved by user natasha
+  Create a new job called "install-packages" and add a string parameter PACKAGE.
+  Click on "execute shell script on remote hosting using ssh" {BUILD}, add the following command
+  `echo Bl@kW | sudo -S yum install -y $PACKAGE`
+  You can test the job, trying to give PACKAGE a value of "wget, zip" etc..
+
+  ```
