@@ -49,7 +49,7 @@ Note:
 + Once logged in, install Git and GitLab plugins. You might need to restart Jenkins service to install these plugins, so we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre.
 + Note:
   + Once you restart Jenkins service it will go down for some time so please wait for the Jenkins login page to come back before clicking on the Check button.
-  + For these scenarios requiring changes to be done in a web UI, please take screenshots so you can share them with us for review in case your task is marked incomplete. You may also consider using screen recording software like loom.com to record and share your work.
+
   
 ###### Solution
 + ``` M
@@ -70,7 +70,6 @@ Note:
 + Note:
   + You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, in case Jenkins UI gets stuck when Jenkins service restarts in the back end, please make sure to refresh the UI page.
   + Do not immediately click on Finish button if you have restarted the Jenkins service, please wait for Jenkins login page to come back before finishing your task.
-  + For these kind of scenarios that required changes to be done from a web UI, please take screenshots of your work so that you can share the same with us for review purpose (in case your task is marked incomplete or failed). You may also consider using a screen recording software such as loom.com to record and share your work.
 
 ###### Solution
 + ``` M
@@ -91,7 +90,6 @@ Note:
 + Move the above mentioned two jobs under Apache folder.
 + Note:
   + You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, Jenkins UI sometimes gets stuck when Jenkins service restarts in the back end. In this case, please make sure to refresh the UI page.
-  + For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
 
 ###### Solution
 + ```M
@@ -111,7 +109,6 @@ Note:
 + Note:
   + You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also some times Jenkins UI gets stuck when Jenkins service restarts in the back end so in such case please make sure to refresh the UI page.
   + Make sure Jenkins job passes even on repetitive runs as validation may try to build the job multiple times.
-  + For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
   
 ###### Solution
 + ```M
@@ -123,4 +120,25 @@ Note:
   `echo Bl@kW | sudo -S yum install -y $PACKAGE`
   You can test the job, trying to give PACKAGE a value of "wget, zip" etc..
 
+  ```
+---
+## Jenkins Views
+
++ The DevOps team of xFusionCorp Industries is planning to create a number of Jenkins jobs for different tasks. So to easily manage the jobs within Jenkins UI they decided to create different views for all Jenkins jobs based on usage/nature of these jobs, - for example nautilus-crons view for all cron jobs. Based on the requirements shared below please perform the below mentioned task:
++ Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and password Adm!n321.
++ Create a Jenkins job named nautilus-test-job.
++ Configure this job to run a simple bash command i.e echo "hello world!!".
++ Create a view named nautilus-crons (should be a List View) and make sure nautilus-test-job and nautilus-cron-job (which is already present on Jenkins) jobs are listed under this new view.
++ Schedule this newly created job to build periodically at every minute i.e * * * * * (please make sure to use the cron expression exactly same how it is mentioned here)
++ Make sure the job builds successfully.
++ Note:
++ You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, Jenkins UI sometimes gets stuck when Jenkins service restarts in the back end. In this case please make sure to refresh the UI page.
+
++ ```M
+  Login to jenkins
+  Create a new Item (JOB) with name "nautilus-test-job"
+  Within the "Build Trigger" select the option "Build periodically" and on the schedule box write "* * * * *"
+  Add "Execute as a shell commmand" and put the command `echo 'hello world!!'`. SAVE!
+  New create a new view in the dashboard and add the nautilus-test-job and nautilus-cron-job as a LIST VIEW.
+  Make sure to RUN the jobs before submitting.
   ```
