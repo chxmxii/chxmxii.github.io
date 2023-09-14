@@ -1339,7 +1339,9 @@ Make sure to RUN the jobs before submitting.
 <ul>
 <li>
 <pre tabindex="0"><code class="language-M" data-lang="M">Login to jenkins with the user admin
-Create a new job, add two parametes 
+Create a new job, add two parametes String and choices 
+Add build &#34;Execute as shell&#34; and run the command &#34;echo $Stage \n echo $env&#34;
+Run the job.
 </code></pre></li>
 </ul>
 ]]></content></item><item><title>KKE - Git Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</guid><description>Git Install and Create Bare Repository The Nautilus development team shared requirements with the DevOps team regarding new application development.—specifically, they want to set up a Git repository for that project. Create a Git repository on Storage server in Stratos DC as per details given below: Install git package using yum on Storage server. After that create a bare repository /opt/blog.git (make sure to use exact name). Solution $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01 $ sudo yum install -y git $ sudo mkdir /opt/blog.</description><content type="html"><![CDATA[<p><img src="/files/git.png#center" alt=""></p>
