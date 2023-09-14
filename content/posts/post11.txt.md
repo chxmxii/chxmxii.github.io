@@ -158,5 +158,7 @@ Note:
 ###### Solution
 + ```M
   Login to jenkins with the user admin
-  Create a new job, add two parametes 
+  Create a new job, add two parametes String and choices 
+  Add build "Execute as shell" and run the command "echo $Stage \n echo $env"
+  Run the job.
   ```
