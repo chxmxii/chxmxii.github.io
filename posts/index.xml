@@ -1322,6 +1322,26 @@ New create a new view in the dashboard and add the nautilus-test-job and nautilu
 Make sure to RUN the jobs before submitting.
 </code></pre></li>
 </ul>
+<hr>
+<h2 id="jenkins-parameterized-builds">Jenkins Parameterized Builds</h2>
+<ul>
+<li>A new DevOps Engineer has joined the team and he will be assigned some Jenkins related tasks. Before that, the team wanted to test a simple parameterized job to understand basic functionality of parameterized builds. He is given a simple parameterized job to build in Jenkins. Please find more details below:</li>
+<li>Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and password Adm!n321.</li>
+<li>Create a parameterized job which should be named as parameterized-job</li>
+<li>Add a string parameter named Stage; its default value should be Build.</li>
+<li>Add a choice parameter named env; its choices should be Development, Staging and Production.</li>
+<li>Configure job to execute a shell command, which should echo both parameter values (you are passing in the job).</li>
+<li>Build the Jenkins job at least once with choice parameter value Development to make sure it passes.</li>
+<li>Note:</li>
+<li>You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, Jenkins UI sometimes gets stuck when Jenkins service restarts in the back end. In this case, please make sure to refresh the UI page.</li>
+</ul>
+<h6 id="solution-5">Solution</h6>
+<ul>
+<li>
+<pre tabindex="0"><code class="language-M" data-lang="M">Login to jenkins with the user admin
+Create a new job, add two parametes 
+</code></pre></li>
+</ul>
 ]]></content></item><item><title>KKE - Git Challenges</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-git-challenges/</guid><description>Git Install and Create Bare Repository The Nautilus development team shared requirements with the DevOps team regarding new application development.—specifically, they want to set up a Git repository for that project. Create a Git repository on Storage server in Stratos DC as per details given below: Install git package using yum on Storage server. After that create a bare repository /opt/blog.git (make sure to use exact name). Solution $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01 $ sudo yum install -y git $ sudo mkdir /opt/blog.</description><content type="html"><![CDATA[<p><img src="/files/git.png#center" alt=""></p>
 <hr>
 <h2 id="git-install-and-create-bare-repository">Git Install and Create Bare Repository</h2>
