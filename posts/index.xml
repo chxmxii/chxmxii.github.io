@@ -1463,6 +1463,29 @@ Go to the repo sarah/story-blog and fork it.
 </span></span><span style="display:flex;"><span>$ sudo git branch -a
 </span></span></code></pre></div></li>
 </ul>
+<hr>
+<h2 id="git-merge-branches">Git Merge Branches</h2>
+<ul>
+<li>The Nautilus application development team has been working on a project repository /opt/demo.git. This repo is cloned at /usr/src/kodekloudrepos on storage server in Stratos DC. They recently shared the following requirements with DevOps team:</li>
+<li>Create a new branch nautilus in /usr/src/kodekloudrepos/demo repo from master and copy the /tmp/index.html file (present on storage server itself) into the repo. Further, add/commit this file in the new branch and merge back that branch into master branch. Finally, push the changes to the origin for both of the branches.</li>
+</ul>
+<h6 id="solution-7">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd /usr/src/kodekloudrepos/demo
+</span></span><span style="display:flex;"><span>$ sudo git branch -a
+</span></span><span style="display:flex;"><span>$ sudo git branch nautilus
+</span></span><span style="display:flex;"><span>$ sudo git checkout nautilus
+</span></span><span style="display:flex;"><span>$ sudo cp /tmp/index.html .
+</span></span><span style="display:flex;"><span>$ sudo git add *
+</span></span><span style="display:flex;"><span>$ sudo git commit -m <span style="color:#e6db74">&#34;kke&#34;</span>
+</span></span><span style="display:flex;"><span>$ sudo git checkout master
+</span></span><span style="display:flex;"><span>$ sudo git pull origin master
+</span></span><span style="display:flex;"><span>$ sudo git merge nautilus
+</span></span><span style="display:flex;"><span>$ sudo git push origin master
+</span></span><span style="display:flex;"><span>$ sudo git branch -a
+</span></span></code></pre></div></li>
+</ul>
 ]]></content></item><item><title>KKE - Linux Challenges P2</title><link>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</link><pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.github.io/portfolio/posts/2023/08/kke-linux-challenges-p2/</guid><description>Web Server Security During a recent security audit, the application security team of xFusionCorp Industries found security issues with the Apache web server on Nautilus App Server 1 server in Stratos DC. They have listed several security issues that need to be fixed on this server. Please apply the security settings below: a. On Nautilus App Server 1 it was identified that the Apache web server is exposing the version number.</description><content type="html"><![CDATA[<p><img src="/files/linux.png#center" alt=""></p>
 <hr>
 <h2 id="web-server-security">Web Server Security</h2>
