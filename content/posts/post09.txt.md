@@ -14,7 +14,7 @@ weight: 10
 series:
 - Hugo 101
 ---
-![](/files/ansible.png#center){ height=256px }
+![](/files/ansible.png#center){ CHXMXII }
 ---
 ## Ansible Unarchive Module	
 
