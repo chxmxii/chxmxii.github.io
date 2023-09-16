@@ -129,6 +129,7 @@ series:
 
 ###### Solution
 + ```shell
+  $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01
   $ cd /usr/src/kodekloudrepos/demo
   $ sudo git branch -a
   $ sudo git branch nautilus
@@ -141,4 +142,42 @@ series:
   $ sudo git merge nautilus
   $ sudo git push origin master
   $ sudo git branch -a
+  ```
+---
+## Git Manage Remotes
+
++ The xFusionCorp development team added updates to the project that is maintained under /opt/cluster.git repo and cloned under /usr/src/kodekloudrepos/cluster. Recently some changes were made on Git server that is hosted on Storage server in Stratos DC. The DevOps team added some new Git remotes, so we need to update remote on /usr/src/kodekloudrepos/cluster repository as per details mentioned below:
++ In /usr/src/kodekloudrepos/cluster repo add a new remote dev_cluster and point it to /opt/xfusioncorp_cluster.git repository.
++ There is a file /tmp/index.html on same server; copy this file to the repo and add/commit to master branch.
++ Finally push master branch to this new remote origin.
+
+###### Solution
++ ```shell
+  $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01
+  $ cd /usr/src/kodekloudrepos/cluster/
+  $ sudo git remote add dev_cluster /opt/xfusioncorp_cluster.git
+  $ sudo cp /tmp/index.html .
+  $ sudo git branch -a
+  $ sudo git add *
+  $ sudo git commit -m "kke"
+  $ sudo git push -uf dev_cluster master
+  $ sudo git branch -a
+  ```
+---
+## Git Revert Some Changes
+
++ The Nautilus application development team was working on a git repository /usr/src/kodekloudrepos/beta present on Storage server in Stratos DC. However, they reported an issue with the recent commits being pushed to this repo. They have asked the DevOps team to revert repo HEAD to last commit. Below are more details about the task:
++ In /usr/src/kodekloudrepos/beta git repository, revert the latest commit ( HEAD ) to the previous commit (JFYI the previous commit hash should be with initial commit message ).
++ Use revert beta message (please use all small letters for commit message) for the new revert commit.
+
+###### Solution
++ ```shell
+  $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01
+  $ cd /usr/src/kodekloudrepos/beta/
+  $ sudo git log
+  $ sudo git revert HEAD~1
+  $ sudo git revert 8f7896cd77c3204d4f111e78652958c386d2b241
+  $ sudo git add *
+  $ sudo git commit -m "revert beta"
+  $ sudo git push
   ```
