@@ -61,7 +61,7 @@ disableHugoGeneratorInject = false
 
   # Home subtitle of the index page.
   #
-  homeSubtitle = "System & DevOps Engineer | CTF Player | Music Producer"
+  homeSubtitle = "DevOps/SR Engineer | CTF Player | Music Producer"
  
 
   # Set a background for the homepage
@@ -199,10 +199,14 @@ disableHugoGeneratorInject = false
     name       = "Posts"
     url        = "/posts/"
   [[menu.main]]
+    identifier = "writeups"
+    name       = "Writeups"   
+    url        = "/writeups/"
+  [[menu.main]]
     identifier = "projects"
     name       = "Projects"   
     url        = "/projects/"
   [[menu.main]]
     identifier = "cv"
-    name       = "Resume"   
+    name       = "~Resume"   
     url        = "/cv.pdf"
