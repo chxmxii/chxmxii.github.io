@@ -14,7 +14,6 @@ series:
 - Hugo 101
 ---
 ![](/files/kube.png#center)
-
 ---
 ## Kuberentes time check pod
 
