@@ -182,5 +182,5 @@ Note:
 ###### Solution
 + ```text
   login to jenkins
-  Install the following plugins
+  Install the following plugins (git&ssh) 
   ```
