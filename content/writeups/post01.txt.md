@@ -264,7 +264,7 @@ series:
 
 + ```shell
   $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01
-  $ /usr/src/kodekloudrepos/blog
+  $ cd /usr/src/kodekloudrepos/blog
   $ sudo git status
   $ sudo git clean -f
   $ sudo git status
@@ -272,5 +272,42 @@ series:
 ---
 ## Git Stash
 
++ The Nautilus application development team was working on a git repository /usr/src/kodekloudrepos/demo present on Storage server in Stratos DC. One of the developers stashed some in-progress changes in this repository, but now they want to restore some of the stashed changes. Find below more details to accomplish this task:
++ Look for the stashed changes under /usr/src/kodekloudrepos/demo git repository, and restore the stash with stash@{1} identifier. Further, commit and push your changes to the origin.
 
 ###### Solution
++ ```shell
+  $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01
+  $ cd /usr/src/kodekloudrepos/demo
+  $ sudo git log
+  $ sudo git branch -a
+  $ sudo git stash list
+  $ sudo git stash show
+  $ sudo git stash pop stash@{1}
+  $ sudo git add *
+  $ sudo git commit 
+  $ sudo git commit -m "kke"
+  $ sudo git push
+  ```
+---
+## Git Rebase
+
+###### Solution
+---
+## Manage Git Repositories
+
+###### Solution
+---
+## Resolve Git Merge Conflicts
+
+###### Solution
+---
+## Git Hook
+
+###### Solution
+---
+## Git Setup from Scratch
+
+###### Solution
+---
+> DONE!
