@@ -319,6 +319,7 @@ series:
 
 ###### Solution
 + ```shell
+   $ sshpass -p Max_pass123 ssh -o StrictHostKeyChecking=no max@ststor01
     $ pwd
     $ git clone http://git.stratos.xfusioncorp.com/max/story_media.git
     $ cd story_media/
