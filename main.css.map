@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "/home/runner/work/portfolio/portfolio",
+	"sourceRoot": "/home/runner/work/chxmxii.github.io/chxmxii.github.io",
 	"sources": [
 		"assets/scss/main.scss",
 		"assets/scss/_normalize.scss",
