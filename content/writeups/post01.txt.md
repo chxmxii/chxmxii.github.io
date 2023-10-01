@@ -292,11 +292,46 @@ series:
 ---
 ## Git Rebase
 
++ The Nautilus application development team has been working on a project repository /opt/beta.git. This repo is cloned at /usr/src/kodekloudrepos on storage server in Stratos DC. They recently shared the following requirements with DevOps team:
++ One of the developers is working on feature branch and their work is still in progress, however there are some changes which have been pushed into the master branch, the developer now wants to rebase the feature branch with the master branch without loosing any data from the feature branch, also they don't want to add any merge commit by simply merging the master branch into the feature branch. Accomplish this task as per requirements mentioned.
+
 ###### Solution
++ ```shell
+    $ sshpass -p Bl@kW ssh -o StrictHostKeyChecking=no natasha@ststor01
+    $ cd /usr/src/kodekloudrepos/blog/
+    $ sudo git rebase master feature
+    $ sudo git push origin feature
+    $ sudo git pull origin feature
+    $ sudo git config pull.rebase true
+    $ sudo git pull origin feature
+    $ sudo git push origin feature 
+  ```
 ---
 ## Manage Git Repositories
 
++ A new developer just joined the Nautilus development team and has been assigned a new project for which he needs to create a new repository under his account on Gitea server. Additionally, there is some existing data that need to be added to the repo. Below you can find more details about the task:
++ Click on the Gitea UI button on the top bar. You should be able to access the Gitea UI. Login to Gitea server using username max and password Max_pass123.
++ Create a new git repository story_media under max user.
++ SSH into storage server using user max and password Max_pass123 and clone this newly created repository under user max home directory i.e /home/max.
++ Copy all files from location /usr/devops to the repository and commit/push your changes to the master branch. The commit message must be "add stories" (must be done in single commit).
++ Create a new branch max_cluster from master.
++ Copy a file story-index-max.txt from location /tmp/stories/ to the repository. This file has a typo, which you can fix by changing the word Mooose to Mouse. Commit and push the changes to the newly created branch. Commit message must be "typo fixed for Mooose" (must be done in single commit).
+
 ###### Solution
++ ```shell
+    $ pwd
+    $ git clone http://git.stratos.xfusioncorp.com/max/story_media.git
+    $ cd story_media/
+    $ cp /usr/devops/* .
+    $ git add *; git commit -m "add stories"; git push
+    $ git branch max_cluster
+    $ cp /tmp/stories/story-index-max.txt .
+    $ git checkout max_cluster
+    $ vi story-index-max.txt 
+    $ git branch -a
+    $ git add *; git commit -m "typo fixed for Mooose"; git push
+    $ git add story-index-max.txt; git commit -m "typo fixed for Mooose"; git push --set-upstream origin max_cluster
+  ```
 ---
 ## Resolve Git Merge Conflicts
 
