@@ -17,7 +17,7 @@ series:
 
 - [RHCE EX294 Notes and tips](https://chxmxii.tech/rhce/main.html)
 
-- [RHCCS EX188 Notes and tips](https://chxmxii.tech/portfolio/rhccs/rhccs.html)
+- [RHCCS EX188 Notes and tips](https://chxmxii.tech/rhccs/rhccs.html)
 
 - [RHCSA EX200 Notes and tips](https://chxmxii.gitbook.io/system-management-tasks/)
     
