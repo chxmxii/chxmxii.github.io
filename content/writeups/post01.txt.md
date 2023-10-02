@@ -319,7 +319,7 @@ series:
 
 ###### Solution
 + ```shell
-   $ sshpass -p Max_pass123 ssh -o StrictHostKeyChecking=no max@ststor01
+    $ sshpass -p Max_pass123 ssh -o StrictHostKeyChecking=no max@ststor01
     $ pwd
     $ git clone http://git.stratos.xfusioncorp.com/max/story_media.git
     $ cd story_media/
@@ -336,7 +336,20 @@ series:
 ---
 ## Resolve Git Merge Conflicts
 
++ Sarah and Max were working on writting some stories which they have pushed to the repository. Max has recently added some new changes and is trying to push them to the repository but he is facing some issues. Below you can find more details:
++ SSH into storage server using user max and password Max_pass123. Under /home/max you will find the story-blog repository. Try to push the changes to the origin repo and fix the issues. The story-index.txt must have titles for all 4 stories. Additionally, there is a typo in The Lion and the Mooose line where Mooose should be Mouse.
++ Click on the Gitea UI button on the top bar. You should be able to access the Gitea page. You can login to Gitea server from UI using username sarah and password Sarah_pass123 or username max and password Max_pass123.
+
 ###### Solution
++ ```shell
+    $ sshpass -p Max_pass123 ssh -o StrictHostKeyChecking=no max@ststor01
+    $ pwd
+    $ vi story-index.txt
+    $ git pull origin master
+    $ git add story-index.txt 
+    $ git commit -m "fix typo and merge request"
+    $ git push origin master
+  ``
 ---
 ## Git Hook
 
