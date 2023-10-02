@@ -349,7 +349,7 @@ series:
     $ git add story-index.txt 
     $ git commit -m "fix typo and merge request"
     $ git push origin master
-  ``
+  ```
 ---
 ## Git Hook
 
