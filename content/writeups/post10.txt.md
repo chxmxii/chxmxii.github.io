@@ -15,6 +15,52 @@ series:
 ---
 ![](/files/kube.png#center)
 ---
+## Create Pods in Kubernetes Cluster
+
++ The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below:
++ Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i.e httpd:latest.
++ Labels app should be set to httpd_app, also container should be named as httpd-container.
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: pod-httpd
+    labels:
+      app: httpd_app
+  spec:
+    containers:
+      - name: httpd-container
+        image: httpd:latest
+  ```
+---
+## Create Deployments in Kubernetes Cluster
+
++ The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform, as they are planning to migrate most of their applications on Kubernetes. Recently one of the team members has been assigned a task to create a deployment as per details mentioned below:
++ Create a deployment named httpd to deploy the application httpd using the image httpd:latest (remember to mention the tag as well)
+
+###### Solution
++ ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: httpd
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: httpd
+    template: 
+      metadata: 
+        labels:
+          app: httpd
+      spec:
+        containers:
+          - name: httpd
+            image: httpd:latest
+  ```
+---
 ## Kuberentes time check pod
 
 + The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.
@@ -287,9 +333,3 @@ series:
   node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
   ```
 ---
-##
-+ The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below:
-+ Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i.e httpd:latest.
-+ Labels app should be set to httpd_app, also container should be named as httpd-container.
-+ Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster
-  
