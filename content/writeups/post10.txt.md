@@ -61,6 +61,33 @@ series:
             image: httpd:latest
   ```
 ---
+## Create Namespaces in Kubernetes Cluster
+
++ The Nautilus DevOps team is planning to deploy some micro services on Kubernetes platform. The team has already set up a Kubernetes cluster and now they want set up some namespaces, deployments etc. Based on the current requirements, the team has shared some details as below:
+
++ Create a namespace named dev and create a POD under it; name the pod dev-nginx-pod and use nginx image with latest tag only and remember to mention tag i.e nginx:latest.
+
+###### Solution
+
++ ```yaml
+  ---
+  apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: dev
+  ---
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: dev-nginx-pod
+    namespace: dev
+  spec:
+    containers:
+    - name: nginx-dev
+      image: nginx:latest
+  ```
+
+---
 ## Kuberentes time check pod
 
 + The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.
