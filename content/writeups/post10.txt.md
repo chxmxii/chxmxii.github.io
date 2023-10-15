@@ -114,6 +114,67 @@ series:
           cpu: "100m"
   ```
 ---
+## Rolling Updates in Kubernetes
+
++ We have an application running on Kubernetes cluster using nginx web server. The Nautilus application development team has pushed some of the latest changes and those changes need be deployed. The Nautilus DevOps team has created an image nginx:1.19 with the latest changes.
++ Perform a rolling update for this application and incorporate nginx:1.19 image. The deployment name is nginx-deployment
++ Make sure all pods are up and running after the update.
+
+###### Solution
++ ```shell
+  $ kubectl get all
+  $ kubectl get deployment nginx-deployment -o yaml
+  $ kubectl set image deployment/nginx-deployment nginx-container=nginx:1.19
+  $ watch kubectl get pods 
+  $ kubectl rollout status deployment nginx-deployment
+  $ kubectl describe deployment nginx-deployment
+  ```
+---
+## Rollback a Deployment in Kubernetes
+
++ This morning the Nautilus DevOps team rolled out a new release for one of the applications. Recently one of the customers logged a complaint which seems to be about a bug related to the recent release. Therefore, the team wants to rollback the recent release.
++ There is a deployment named nginx-deployment; roll it back to the previous revision.
+
+###### Solution
++ ```shell
+  $ kubectl get deployment
+  $ kubectl get pods
+  $ kubectl rollout undo deployment  nginx-deployment 
+  $ kubectl rollout status deployment  nginx-deployment 
+  ```
+
+---
+## Create Replicaset in Kubernetes Cluster
+
++ The Nautilus DevOps team is going to deploy some applications on kubernetes cluster as they are planning to migrate some of their existing applications there. Recently one of the team members has been assigned a task to write a template as per details mentioned below:
++ Create a ReplicaSet using nginx image with latest tag only and remember to mention tag i.e nginx:latest and name it as nginx-replicaset.
++ Labels app should be nginx_app, labels type should be front-end.
++ The container should be named as nginx-container; also make sure replicas counts are 4.
+
+###### Solution
++ ```yaml
+  apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    name: nginx-replicaset
+    labels:
+      app: nginx_app
+      type: front-end
+  spec:
+    replicas: 4
+    selector:
+      matchLabels: 
+        type: front-end
+    template:
+      metadata:
+        labels:
+          type: front-end
+      spec:
+        containers:
+        - name: nginx-container
+          image: nginx:latest
+  ```
+---
 ## Kuberentes time check pod
 
 + The Nautilus DevOps team want to create a time check pod in a particular Kubernetes namespace and record the logs. This might be initially used only for testing purposes, but later can be implemented in an existing cluster. Please find more details below about the task and perform it.
