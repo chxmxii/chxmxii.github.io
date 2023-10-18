@@ -142,7 +142,38 @@ series:
   $ kubectl rollout undo deployment  nginx-deployment 
   $ kubectl rollout status deployment  nginx-deployment 
   ```
+--- 
+## Create Cronjobs in Kubernetes
 
++ There are some jobs/tasks that need to be run regularly on different schedules. Currently the Nautilus DevOps team is working on developing some scripts that will be executed on different schedules, but for the time being the team is creating some cron jobs in Kubernetes cluster with some dummy commands (which will be replaced by original scripts later). Create a cronjob as per details given below:
++ Create a cronjob named datacenter.
++ Set Its schedule to something like */8 * * * *, you set any schedule for now.
++ Container name should be cron-datacenter.
++ Use nginx image with latest tag only and remember to mention the tag i.e nginx:latest.
++ Run a dummy command echo Welcome to xfusioncorp!.
++ Ensure restart policy is OnFailure
+
+###### Solution
++ ```yaml
+  apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    name: datacenter
+  spec:
+    schedule: "*/8 * * * *"
+    jobTemplate: 
+      spec: 
+        template:
+          spec:
+            containers:
+            - name: cron-datacenter
+              image: nginx:latest
+              command: 
+              - /bin/sh
+              - -c
+              - echo Welcome to xfusioncorp!
+            restartPolicy: OnFailure
+  ```
 ---
 ## Create Replicaset in Kubernetes Cluster
 
@@ -232,7 +263,7 @@ series:
         emptyDir : {}
     restartPolicy: Never
   ```
---- 
+---
 ## Deploy Apache Web Server on Kubernetes Cluster
 
 + There is an application that needs to be deployed on Kubernetes cluster under Apache web server. The Nautilus application development team has asked the DevOps team to deploy it. We need to develop a template as per requirements mentioned below:
