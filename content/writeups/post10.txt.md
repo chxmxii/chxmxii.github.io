@@ -175,6 +175,34 @@ series:
             restartPolicy: OnFailure
   ```
 ---
+## 
+
++ The Nautilus DevOps team is working on to create few jobs in Kubernetes cluster. They might come up with some real scripts/commands to use, but for now they are preparing the templates and testing the jobs with dummy commands. Please create a job template as per details given below:
++ Create a job countdown-nautilus.
++ The spec template should be named as countdown-nautilus (under metadata), and the container should be named as container-countdown-nautilus
++ Use image debian with latest tag only and remember to mention tag i.e debian:latest, and restart policy should be Never.
++ Use command sleep 5
+
+###### Solution:
++ ```yaml
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: countdown-datacenter
+  spec:
+    template:
+      metadata:
+        name: countdown-datacenter
+      spec:
+        containers:
+        -  name: container-countdown-datacenter
+          image: centos:latest
+          command: ["sleep", "5"]
+        restartPolicy: Never 
+  # kubectl apply -f job.yml
+  # watch kubectl get jobs
+  ```
+---
 ## Create Replicaset in Kubernetes Cluster
 
 + The Nautilus DevOps team is going to deploy some applications on kubernetes cluster as they are planning to migrate some of their existing applications there. Recently one of the team members has been assigned a task to write a template as per details mentioned below:
