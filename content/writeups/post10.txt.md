@@ -175,7 +175,7 @@ series:
             restartPolicy: OnFailure
   ```
 ---
-## 
+## Countdown job in Kubernetes
 
 + The Nautilus DevOps team is working on to create few jobs in Kubernetes cluster. They might come up with some real scripts/commands to use, but for now they are preparing the templates and testing the jobs with dummy commands. Please create a job template as per details given below:
 + Create a job countdown-nautilus.
@@ -201,6 +201,20 @@ series:
         restartPolicy: Never 
   # kubectl apply -f job.yml
   # watch kubectl get jobs
+  ```
+---
+## Troubleshoot Issue With Pods
+
++ One of the junior DevOps team members was working on to deploy a stack on Kubernetes cluster. Somehow the pod is not coming up and its failing with some errors. We need to fix this as soon as possible. Please look into it.
++ There is a pod named webserver and the container under it is named as nginx-container. It is using image nginx:latest
++ There is a sidecar container as well named sidecar-container which is using ubuntu:latest image.
++ Look into the issue and fix it, make sure pod is in running state and you are able to access the app.
+
++ ```shell 
+  $ kubectl get pods
+  $ kubectl describe pod/webserver
+  $ kubectl edit pod/webserver
+  $ watch kubectl get pods
   ```
 ---
 ## Create Replicaset in Kubernetes Cluster
