@@ -217,6 +217,27 @@ series:
   $ watch kubectl get pods
   ```
 ---
+## Update an Existing Deployment in Kubernetes
+
++ There is an application deployed on Kubernetes cluster. Recently, the Nautilus application development team developed a new version of the application that needs to be deployed now. As per new updates some new changes need to be made in this existing setup. So update the deployment and service as per details mentioned below:
++ We already have a deployment named nginx-deployment and service named nginx-service. Some changes need to be made in this deployment and service, make sure not to delete the deployment and service.
++ Change the service nodeport from 30008 to 32165
++ Change the replicas count from 1 to 5
++ Change the image from nginx:1.18 to nginx:latest
+
+###### Solution:
++ ```shell
+  $ kubectl get all
+  $ kubectl get svc nginx-service -o yaml > sv.yml #edit the file and changee the port 
+  $ kubectl get deployments nginx-deployment -o yaml > dp.yml #edit the fiile and change the rreplicatset and image version  $ kubectl describe svc nginx-service
+  $ kubectl describe deployments.apps nginx-deployment 
+  $ kubectl apply -f sv.ym
+  $ kubectl apply -f dp.yml
+  $ kubectl describe svc nginx-service
+  $ kubectl describe deployments.apps nginx-deployment
+  ```
+
+---
 ## Create Replicaset in Kubernetes Cluster
 
 + The Nautilus DevOps team is going to deploy some applications on kubernetes cluster as they are planning to migrate some of their existing applications there. Recently one of the team members has been assigned a task to write a template as per details mentioned below:
