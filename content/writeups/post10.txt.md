@@ -596,6 +596,7 @@ series:
     - image: debian:latest
       name: volume-container-xfusion-1
       command: ["sleep"]
+      args: ["1000"]
       volumeMounts: 
       - name: volume-share
         mountPath: /tmp/blog
@@ -603,6 +604,8 @@ series:
       name: volume-container-xfusion-2
       command:
       - sleep
+      args:
+      - "1000"
       volumeMounts:
       - name: volume-share
         mountPath: /tmp/apps        
