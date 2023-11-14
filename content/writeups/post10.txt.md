@@ -572,7 +572,7 @@ series:
   node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
   ```
 ---
-## Volmes
+## Kubernetes Shared Volumes
 
 + We are working on an application that will be deployed on multiple containers within a pod on Kubernetes cluster. There is a requirement to share a volume among the containers to save some temporary data. The Nautilus DevOps team is developing a similar template to replicate the scenario. Below you can find more details about it.
 + Create a pod named volume-share-xfusion.
