@@ -572,3 +572,51 @@ series:
   node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
   ```
 ---
+## Volmes
+
++ We are working on an application that will be deployed on multiple containers within a pod on Kubernetes cluster. There is a requirement to share a volume among the containers to save some temporary data. The Nautilus DevOps team is developing a similar template to replicate the scenario. Below you can find more details about it.
++ Create a pod named volume-share-xfusion.
++ For the first container, use image debian with latest tag only and remember to mention the tag i.e debian:latest, container should be named as volume-container-xfusion-1, and run a sleep command for it so that it remains in running state. Volume volume-share should be mounted at path /tmp/blog.
++ For the second container, use image debian with the latest tag only and remember to mention the tag i.e debian:latest, container should be named as volume-container-xfusion-2, and again run a sleep command for it so that it remains in running state. Volume volume-share should be mounted at path /tmp/apps.
++ Volume name should be volume-share of type emptyDir.
++ After creating the pod, exec into the first container i.e volume-container-xfusion-1, and just for testing create a file blog.txt with any content under the mounted path of first container i.e /tmp/blog.
++ The file blog.txt should be present under the mounted path /tmp/apps on the second container volume-container-xfusion-2 as well, since they are using a shared volume.
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: volume-share-xfusion
+  spec:
+    volumes:
+    - name: volume-share
+      emptyDir: {}
+    containers:
+    - image: debian:latest
+      name: volume-container-xfusion-1
+      command: ["sleep"]
+      volumeMounts: 
+      - name: volume-share
+        mountPath: /tmp/blog
+    - image: debian:latest
+      name: volume-container-xfusion-2
+      command:
+      - sleep
+      volumeMounts:
+      - name: volume-share
+        mountPath: /tmp/apps        
+  ```
++ ```shell
+  thor@jump_host ~$ kubectl get pods
+  NAME                   READY   STATUS    RESTARTS   AGE
+  volume-share-xfusion   2/2     Running   0          8m15s
+  # list containers within the pod
+  thor@jump_host ~$ kubectl get pods volume-share-xfusion -o jsonpath="{.spec['containers'][*].name}"
+  volume-container-xfusion-1 volume-container-xfusion-2
+  #create blog.txt file within the first container
+  thor@jump_host ~$ kubectl exec pods/volume-share-xfusion -c volume-container-xfusion-1 -- touch /tmp/blog/blog.txt
+  #verify in container 2
+  thor@jump_host ~$ kubectl exec pods/volume-share-xfusion -c volume-container-xfusion-2 -- ls /tmp/apps
+  blog.txt
+  ```
