@@ -655,9 +655,9 @@ series:
         volumeMounts:
         - name: shared-logs
           mountPath: /var/log/nginx
-```
+  ```
 + ```sh
   $ kubectl create -f task.yml
   $ watch kubectl get pods
-  $ kubectl get pods webserver -o jsonpath="{.spec['containers'][*].name}"
+  $ kubectl get pods webserver -o jsonpath="{.spec['containers'][*].name}" 
   ```
