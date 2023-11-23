@@ -634,6 +634,7 @@ series:
 + Mount the volume shared-logs on both containers at location /var/log/nginx, all containers should be up and running.
 
 ###### Solution
+
 + ```yaml
   apiVersion: v1
   kind: Pod
