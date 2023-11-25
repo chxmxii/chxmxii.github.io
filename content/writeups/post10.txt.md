@@ -663,7 +663,7 @@ series:
   $ kubectl get pods webserver -o jsonpath="{.spec['containers'][*].name}" 
   ```
 ---
-##
+## Deploy Nginx Web Server on Kubernetes Cluster
 
 + Some of the Nautilus team developers are developing a static website and they want to deploy it on Kubernetes cluster. They want it to be highly available and scalable. Therefore, based on the requirements, the DevOps team has decided to create a deployment for it with multiple replicas. Below you can find more details about it:
 + Create a deployment using nginx image with latest tag only and remember to mention the tag i.e nginx:latest. Name it as nginx-deployment. The container should be named as nginx-container, also make sure replica counts are 3.
@@ -702,4 +702,38 @@ series:
     ports:
       - nodePort: 30011
         port: 80
+  ```
+  ---
+## Print Environment Variables
+  The Nautilus DevOps team is working on to setup some pre-requisites for an application that will send the greetings to different users. There is a sample deployment, that needs to be tested. Below is a scenario which needs to be configured on Kubernetes cluster. Please find below more details about it.
++ Create a pod named print-envars-greeting.
++ Configure spec as, the container name should be print-env-container and use bash image.
++ Create three environment variables:
+  + a. GREETING and its value should be Welcome to
+  + b. COMPANY and its value should be xFusionCorp
+  + c. GROUP and its value should be Group
+  + Use command to echo ["$(GREETING) $(COMPANY) $(GROUP)"] message.
+  + You can check the output using kubectl logs -f print-envars-greeting command.
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: print-envars-greeting
+  spec:
+    containers:
+    - name: print-env-container
+      image: bash
+      command: ["echo"]
+      args: ["$(msg)"]
+      env:
+        - name: GREETING
+          value: "Welcome to"
+        - name: COMPANY
+          value: "xFusionCorp"
+        - name: GROUP
+          value: "Group"
+        - name: msg
+          value: "$(GREETING) $(COMPANY) $(GROUP)"
   ```
