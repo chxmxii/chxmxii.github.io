@@ -118,7 +118,7 @@ series:
 
 + We have an application running on Kubernetes cluster using nginx web server. The Nautilus application development team has pushed some of the latest changes and those changes need be deployed. The Nautilus DevOps team has created an image nginx:1.19 with the latest changes.
 + Perform a rolling update for this application and incorporate nginx:1.19 image. The deployment name is nginx-deployment
-+ Make sure all pods are up and running after the update.
++ Make sure all pods are up and running afte  r the update.
 
 ###### Solution
 + ```shell
@@ -698,7 +698,7 @@ series:
   spec:
     type: NodePort
     selector:
-    app: static-app
+      app: static-app
     ports:
       - nodePort: 30011
         port: 80
@@ -736,4 +736,63 @@ series:
           value: "Group"
         - name: msg
           value: "$(GREETING) $(COMPANY) $(GROUP)"
+  ```
+---
+## Rolling Updates And Rolling Back Deployments in Kubernetes
+
++ There is a production deployment planned for next week. The Nautilus DevOps team wants to test the deployment update and rollback on Dev environment first so that they can identify the risks in advance. Below you can find more details about the plan they want to execute.
++ Create a namespace devops. Create a deployment called httpd-deploy under this new namespace, It should have one container called httpd, use httpd:2.4.25 image and 3 replicas. The deployment should use RollingUpdate strategy with maxSurge=1, and maxUnavailable=2. Also create a NodePort type service named httpd-service and expose the deployment on nodePort: 30008.
++ Now upgrade the deployment to version httpd:2.4.43 using a rolling update.
++ Finally, once all pods are updated undo the recent update and roll back to the previous/original version.
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: devops
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata: 
+    name: httpd-deploy
+    namespace: devops
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: httpd-deploy
+    template:
+      metadata:
+        labels:
+          app: httpd-deploy
+      spec:
+        containers:
+        - name: httpd
+          image: httpd:2.4.25
+    strategy:
+      type: RollingUpdate
+      rollingUpdate: 
+        maxSurge: 1
+        maxUnavailable: 2
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: httpd-service
+    namespace: devops
+  spec:
+    type: NodePort
+    selector:
+      app: httpd-deploy
+    ports:
+    - port: 80
+      nodePort: 30008
+  ```
++ ```shell
+  $ kubectl create -f task.yml
+  $ kubectl get -n devops deployments.apps
+  $ kubectl set image -n devops deployments/httpd-deploy httpd=httpd:2.4.43
+  $ kubectl rollout history -n xfusion deployments/httpd-deploy # You should see 1 and 2 versions. which means you are running the 3rd version
+  $ k rollout undo -n xfusion deployments/httpd-deploy # now you should see 2 and 3 versions. which means you are running the 1st version
   ```
