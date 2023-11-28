@@ -796,3 +796,54 @@ series:
   $ kubectl rollout history -n xfusion deployments/httpd-deploy # You should see 1 and 2 versions. which means you are running the 3rd version
   $ k rollout undo -n xfusion deployments/httpd-deploy # now you should see 2 and 3 versions. which means you are running the 1st version
   ```
+---
+## Deploy Jenkins on Kubernetes
+
++ The Nautilus DevOps team is planning to set up a Jenkins CI server to create/manage some deployment pipelines for some of the projects. They want to set up the Jenkins server on Kubernetes cluster. Below you can find more details about the task:
++ Create a namespace jenkins
++ Create a Service for jenkins deployment. Service name should be jenkins-service under jenkins namespace, type should be NodePort, nodePort should be 30008
++ Create a Jenkins Deployment under jenkins namespace, It should be name as jenkins-deployment , labels app should be jenkins , container name should be jenkins-container , use jenkins/jenkins image , containerPort should be 8080 and replicas count should be 1.  
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: jenkins
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: jenkins-service
+    namespace: jenkins
+  spec:
+    type: NodePort
+    selector:
+      app: jenkins
+    ports:
+    - port: 8080
+      nodePort: 30008
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: jenkins-deployment
+    namespace: jenkins
+    labels:
+      app: jenkins
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: jenkins
+    template:
+      metadata:
+        labels:
+          app: jenkins
+      spec:
+        containers:
+        - image: jenkins/jenkins
+          name: jenkins-container
+          ports:
+            - containerPort: 8080
+  ```
