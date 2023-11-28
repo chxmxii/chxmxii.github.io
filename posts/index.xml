@@ -1,6 +1,22 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Mouhib CHVMSI</title><link>https://chxmxii.tech/posts/</link><description>Recent content in Posts on Mouhib CHVMSI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 23 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.tech/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>LAB - DDoS Attack Mitigation using CrowdSec</title><link>https://chxmxii.tech/posts/2023/11/lab-ddos-attack-mitigation-using-crowdsec/</link><pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.tech/posts/2023/11/lab-ddos-attack-mitigation-using-crowdsec/</guid><description>Architecture &amp;hellip;</description><content type="html"><![CDATA[<h2 id="architecture">Architecture</h2>
-<p><img src="/files/crwsec.png" alt="">
-&hellip;</p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Mouhib CHVMSI</title><link>https://chxmxii.tech/posts/</link><description>Recent content in Posts on Mouhib CHVMSI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 23 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.tech/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost Your App's Security with this open-source tool.</title><link>https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./</link><pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./</guid><description>Ever wondered how to make your app more secure without diving into complex tech jargon? Meet CrowdSec, an open-source tool that&amp;rsquo;s here to simplify things for you. In this blog, I&amp;rsquo;ll take you through a beginner-friendly lab to enhance your app&amp;rsquo;s security. No need to be a tech guru – let&amp;rsquo;s make your app safer together!
+&amp;lt;/ /&amp;gt; CrowdSec – What is it and how does it work? So, you&amp;rsquo;ve heard about CrowdSec, and it sounds kinda cool, right?</description><content type="html"><![CDATA[<hr>
+<p>Ever wondered how to make your app more secure without diving into complex tech jargon? Meet CrowdSec, an open-source tool that&rsquo;s here to simplify things for you. In this blog, I&rsquo;ll take you through a beginner-friendly lab to enhance your app&rsquo;s security. No need to be a tech guru – let&rsquo;s make your app safer together!</p>
+<h2 id="filescrwlogopngcenter">&lt;/
+<img src="/files/crwlogo.png#center" alt="">/&gt;</h2>
+<hr>
+<h4 id="crowdsec--what-is-it-and-how-does-it-work">CrowdSec – What is it and how does it work?</h4>
+<p>So, you&rsquo;ve heard about CrowdSec, and it sounds kinda cool, right? Well, it is! Let&rsquo;s break it down without getting too techy.</p>
+<p>CrowdSec is like your app&rsquo;s superhero, but it&rsquo;s not just any hero—it&rsquo;s free and open-source. Think of it as this really smart engine that watches out for bad stuff happening to your app. It works super fast, like x60 faster than other tools (because it is written in GO), and it&rsquo;s all about spotting tricky behaviors.</p>
+<p>Now, let&rsquo;s talk logs. You know, those things your app spits out with a bunch of info that&rsquo;s hard to make sense of? CrowdSec comes to the rescue by making these logs easier to understand using grok patterns. It&rsquo;s like turning messy handwriting into a clear note.</p>
+<p>CrowdSec also has these cool things called scenarios. They&rsquo;re like scripts that tell CrowdSec what to look for, things like DDoS attacks or someone trying to sneak in. When these scenarios happen, CrowdSec has its buddies called bouncers, and they step in to protect your app. Teamwork, right?</p>
+<p>Oh, and there&rsquo;s an API thingy, which is like the brain of the operation. It keeps everything running smoothly.</p>
+<p>But what&rsquo;s really awesome is that CrowdSec isn&rsquo;t just about you. It&rsquo;s part of this big community—over 150 countries big! People share info about bad IPs and the types of attacks they faced. So, How cool is that?</p>
+<h4 id="what-does-ddos-mean">What does DDoS Mean?</h4>
+<h2 id="filesddosgifcenter"><img src="/files/ddos.gif#center" alt=""></h2>
+<h4 id="architecture">Architecture</h4>
+<p><img src="/files/crwsec.png#center" alt=""></p>
+<p>[TO BE CONTINUED]&hellip;</p>
+<p>[<code>$</code>]</p>
 ]]></content></item><item><title>Certifications exam notes</title><link>https://chxmxii.tech/posts/2023/09/certifications-exam-notes/</link><pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.tech/posts/2023/09/certifications-exam-notes/</guid><description>These are some useful notes I gathered while pursuing my certifications RHCE EX294 Notes and tips
 RHCCS EX188 Notes and tips
 RHCSA EX200 Notes and tips
