@@ -14,4 +14,6 @@ weight: 10
 series:
 - Hugo 101
 ---
+## Architecture
+![](/files/crwsec.png)
 ...
