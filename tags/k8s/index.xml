@@ -1,2 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>k8s on Mouhib CHVMSI</title><link>https://chxmxii.tech/tags/k8s/</link><description>Recent content in k8s on Mouhib CHVMSI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 23 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.tech/tags/k8s/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost Your App's Security with this open-source tool.</title><link>https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./</link><pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate><guid>https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./</guid><description>Ever wondered how to make your app more secure without diving into complex tech jargon? Meet CrowdSec, an open-source tool that&amp;rsquo;s here to simplify things for you. In this blog, I&amp;rsquo;ll take you through a beginner-friendly lab to enhance your app&amp;rsquo;s security. No need to be a tech guru – let&amp;rsquo;s make your app safer together!
-&amp;lt;/ /&amp;gt; CrowdSec – What is it and how does it work? So, you&amp;rsquo;ve heard about CrowdSec, and it sounds kinda cool, right?</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>k8s on Chamsii Mouhib</title>
+    <link>https://chxmxii.github.io/portfolio/tags/k8s/</link>
+    <description>Recent content in k8s on Chamsii Mouhib</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chxmxii.github.io/portfolio/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Nginx Web Server Deployement</title>
+      <link>https://chxmxii.github.io/portfolio/posts/2022/09/kubernetes-nginx-web-server-deployement/</link>
+      <pubDate>Sat, 10 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://chxmxii.github.io/portfolio/posts/2022/09/kubernetes-nginx-web-server-deployement/</guid>
+      <description>1 - Create nginx-deployement.yaml file :
+apiVersion : apps/v1 kind: Deployment metadata: name: nginx labels: app: nginx spec: replicas: 1 selector: matchlabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx ports: - containerPort: 80 2 - Create the deployment : kubectl create -f dep.yaml ⇒ This will create one pod with single NGINX container listening on port 80.
+3 - Verify :
+Kubectl get deployment</description>
+    </item>
+    
+  </channel>
+</rss>
