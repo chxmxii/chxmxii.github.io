@@ -3,8 +3,7 @@ author:
   name: "chxmxii_"
 date: 2023-11-23
 tags:
-  - k8s
-  - nginx
+  - Security
 linktitle: 
 type:
 - post

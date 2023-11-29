@@ -797,7 +797,7 @@ series:
   $ k rollout undo -n xfusion deployments/httpd-deploy # now you should see 2 and 3 versions. which means you are running the 1st version
   ```
 ---
-## Deploy Jenkins on Kubernetes
+## Deploy Jenkins on Kubernetes Cluster
 
 + The Nautilus DevOps team is planning to set up a Jenkins CI server to create/manage some deployment pipelines for some of the projects. They want to set up the Jenkins server on Kubernetes cluster. Below you can find more details about the task:
 + Create a namespace jenkins
@@ -846,4 +846,43 @@ series:
           name: jenkins-container
           ports:
             - containerPort: 8080
+  ```
+## Deploy Grafana on kubernetes Cluster
+
+The Nautilus DevOps teams is planning to set up a Grafana tool to collect and analyze analytics from some applications. They are planning to deploy it on Kubernetes cluster. Below you can find more details.
++ Create a deployment named grafana-deployment-nautilus using any grafana image for Grafana app. Set other parameters as per your choice.
++ Create NodePort type service with nodePort 32000 to expose the app.
+
+###### Solution
++ ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: grafana-deployment-datacenter
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: grafana
+    template:
+      metadata:
+        labels:
+          app: grafana
+      spec:
+        containers:
+        - image: grafana
+          name: grafana-container
+          containerPort: 3000
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: grafana-service
+  spec:
+    type: NodePort
+    selector:
+      app: grafana
+    ports:
+    - port: 3000
+      nodePort: 32000
   ```
