@@ -514,63 +514,6 @@ series:
   thor@jump_host ~$ kubectl cp /opt/index.php nginx-phpfpm:/var/www/html/ --container=nginx-container
   ```
 ---
-## Deploy Node App on Kubernetes 
-
-+ The Nautilus development team has completed development of one of the node applications, which they are planning to deploy on a Kubernetes cluster. They recently had a meeting with the DevOps team to share their requirements. Based on that, the DevOps team has listed out the exact requirements to deploy the app. Find below more details:
-+ Create a deployment using gcr.io/kodekloud/centos-ssh-enabled:node image, replica count must be 2.
-+ Create a service to expose this app, the service type must be NodePort, targetPort must be 8080 and nodePort should be 30012.
-+ Make sure all the pods are in Running state after the deployment.
-+ You can check the application by clicking on NodeApp button on top bar.
-+ You can use any labels as per your choice.
-=> Note: The kubectl on jump_host has been configured to work with the kubernetes cluster
-
-###### Solution:
-+ ```yaml
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: node-deployment
-    namespace: default
-  spec:
-    replicas: 2
-    selector:
-      matchLabels:
-        app: node-app
-    template:
-      metadata:
-        labels: 
-          app: node-app
-      spec:
-      containers:
-        - name: node-container
-          image: gcr.io/kodekloud/centos-ssh-enabled:node
-          ports:
-            - containerPort: 80
-  ---
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: node-service
-    namespace: default
-  spec:
-    type: NodePort
-    selector:
-      app: node-app
-    ports:
-      - port: 80
-        targetPort: 8080
-        nodePort: 30012
-  ```
-+ ```shell
-  thor@jump_host ~$ kubectl get pods
-  NAME                              READY   STATUS    RESTARTS   AGE
-  node-deployment-dd99d7b78-ftr2r   1/1     Running   0          2m2s
-  node-deployment-dd99d7b78-wshn6   1/1     Running   0          2m2s
-  thor@jump_host ~$ kubectl get svc
-  NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-  kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        30m
-  node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
-  ```
 ---
 ## Kubernetes Shared Volumes
 
@@ -847,6 +790,7 @@ series:
           ports:
             - containerPort: 8080
   ```
+---
 ## Deploy Grafana on kubernetes Cluster
 
 The Nautilus DevOps teams is planning to set up a Grafana tool to collect and analyze analytics from some applications. They are planning to deploy it on Kubernetes cluster. Below you can find more details.
@@ -854,6 +798,7 @@ The Nautilus DevOps teams is planning to set up a Grafana tool to collect and an
 + Create NodePort type service with nodePort 32000 to expose the app.
 
 ###### Solution
+
 + ```yaml
   apiVersion: apps/v1
   kind: Deployment
@@ -885,4 +830,111 @@ The Nautilus DevOps teams is planning to set up a Grafana tool to collect and an
     ports:
     - port: 3000
       nodePort: 32000
+  ```
+---
+## Deploy Tomcat App on Kubernetes
+
+A new java-based application is ready to be deployed on a Kubernetes cluster. The development team had a meeting with the DevOps team to share the requirements and application scope. The team is ready to setup an application stack for it under their existing cluster. Below you can find the details for this:
++ Create a namespace named tomcat-namespace-xfusion.
++ Create a deployment for tomcat app which should be named as tomcat-deployment-xfusion under the same namespace you created. Replica count should be 1, the container should be named as tomcat-container-xfusion, its image should be gcr.io/kodekloud/centos-ssh-enabled:tomcat and its container port should be 8080.
++ Create a service for tomcat app which should be named as tomcat-service-xfusion under the same namespace you created. Service type should be NodePort and nodePort should be 32227.
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: tomcat-namespace-xfusion
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: tomcat-deployment-xfusion
+    namespace: tomcat-namespace-xfusion
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: tomcat-xfusion
+    template:
+      metadata:
+        labels:
+          app: tomcat-xfusion
+      spec:
+        containers:
+        - image: gcr.io/kodekloud/centos-ssh-enabled:tomcat
+          name: tomcat-container-xfusion
+          ports:
+          - containerPort: 8080
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: tomcat-service-xfusion
+    namespace: tomcat-namespace-xfusion
+  spec:
+    type: NodePort
+    selector:
+      app: tomcat-xfusion
+    ports:
+    - port: 8080
+      nodePort: 32227
+  ```
+---
+## Deploy Node App on Kubernetes 
+
+The Nautilus development team has completed development of one of the node applications, which they are planning to deploy on a Kubernetes cluster. They recently had a meeting with the DevOps team to share their requirements. Based on that, the DevOps team has listed out the exact requirements to deploy the app. Find below more details:
++ Create a deployment using gcr.io/kodekloud/centos-ssh-enabled:node image, replica count must be 2.
++ Create a service to expose this app, the service type must be NodePort, targetPort must be 8080 and nodePort should be 30012.
++ Make sure all the pods are in Running state after the deployment.
++ You can check the application by clicking on NodeApp button on top bar.
++ You can use any labels as per your choice.
+=> Note: The kubectl on jump_host has been configured to work with the kubernetes cluster
+
+###### Solution:
++ ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-deployment
+    namespace: default
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: node-app
+    template:
+      metadata:
+        labels: 
+          app: node-app
+      spec:
+      containers:
+        - name: node-container
+          image: gcr.io/kodekloud/centos-ssh-enabled:node
+          ports:
+            - containerPort: 80
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: node-service
+    namespace: default
+  spec:
+    type: NodePort
+    selector:
+      app: node-app
+    ports:
+      - port: 80
+        targetPort: 8080
+        nodePort: 30012
+  ```
++ ```shell
+  thor@jump_host ~$ kubectl get pods
+  NAME                              READY   STATUS    RESTARTS   AGE
+  node-deployment-dd99d7b78-ftr2r   1/1     Running   0          2m2s
+  node-deployment-dd99d7b78-wshn6   1/1     Running   0          2m2s
+  thor@jump_host ~$ kubectl get svc
+  NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+  kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        30m
+  node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
   ```
