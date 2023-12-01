@@ -938,3 +938,22 @@ The Nautilus development team has completed development of one of the node appli
   kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        30m
   node-service   NodePort    10.96.174.163   <none>        80:30012/TCP   3m
   ```
+---
+## Troubleshoot Deployment issues in Kubernetes
+
+Last week, the Nautilus DevOps team deployed a redis app on Kubernetes cluster, which was working fine so far. This morning one of the team members was making some changes in this existing setup, but he made some mistakes and the app went down. We need to fix this as soon as possible. Please take a look.
++ The deployment name is redis-deployment. The pods are not in running state right now, so please look into the issue and fix the same.
+
++ ```yaml
+  #using the command `k get events` I found that kubernetes is crashing because of the following errors:
+  spec:
+    containers:
+    - image: redis:alpin #it should be alpine not alpine
+      imagePullPolicy: IfNotPresent
+      name: redis-container
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: redis-conig #it should be redis-config, use the command `k get cm`.
+      name: config       
+  ```
