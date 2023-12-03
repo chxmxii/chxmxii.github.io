@@ -1026,6 +1026,3 @@ A quick check on the vars on both containers!
   $ kubectl describe pod | grep -A 6 ENV
   ```
 > Click on the *App* button at the top right to open the app URL in a new tab, notice the msh "connected successfully".
-
-
-
