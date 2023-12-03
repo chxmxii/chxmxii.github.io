@@ -957,3 +957,75 @@ Last week, the Nautilus DevOps team deployed a redis app on Kubernetes cluster, 
         name: redis-conig #it should be redis-config, use the command `k get cm`.
       name: config       
   ```
+## Fix issue with LAMP Environment in Kubernetes
+
+One of the DevOps team member was trying to install a WordPress website on a LAMP stack which is essentially deployed on Kubernetes cluster. It was working well and we could see the installation page a few hours ago. However something is messed up with the stack now due to a website went down. Please look into the issue and fix it:
++ FYI, deployment name is lamp-wp and its using a service named lamp-service. The Apache is using http default port and nodeport is 30008. From the application logs it has been identified that application is facing some issues while connecting to the database in addition to other issues. Additionally, there are some environment variables associated with the pods like MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST.
+
+###### Solution
+To make the trouble shooting process easier, we will create aliases for the following commands:
++ ```shell
+  HTTP=$(kubectl get pod -o jsonpath='{.items[*].spec.containers[0].name}') ; echo "HTTP: $HTTP" # HTTP: httpd-php-container
+  MYSQL=$(kubectl get pod -o jsonpath='{.items[*].spec.containers[1].name}') ; echo "MYSQL: $MYSQL" # MYSQL: mysql-container0
+  POD=$(kubectl get pod -o jsonpath='{.items[*].metadata.name)}') ; echo "POD: $POD" # POD: lamp-wp-56c7c454fc-cq8c2
+  ```
+Okey, we can list our objects and inspect them.
++ ```shell
+  $ kubectl get pods,svc,cm,secrets,deployments
+  NAME                           READY   STATUS    RESTARTS   AGE
+  pod/lamp-wp-56c7c454fc-cq8c2   2/2     Running   0          45s
+
+  NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/lamp-wp   1/1     1            1           45s
+
+  NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+  service/kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        2m59s
+  service/lamp-service    NodePort    10.96.240.157   <none>        80:30009/TCP   45s
+  service/mysql-service   ClusterIP   10.96.254.52    <none>        3306/TCP       45s
+
+  NAME                     TYPE     DATA   AGE
+  secret/mysql-db-url      Opaque   1      47s
+  secret/mysql-host        Opaque   1      47s
+  secret/mysql-root-pass   Opaque   1      48s
+  secret/mysql-user-pass   Opaque   2      47s
+  ```
+You notice that the service is exposed at nodePort 30009 instead of 30008 which is already mentioned in the task description. To fix this we can edit the service.
++ ```shell
+  $ kubectl get svc lam-service -o yaml > fix.yml
+  $ sed -i "s/30009/30008/g" fix.yml
+  $ kubectl apply -f fix.yml
+  ```
+After checking the logs using `kubectl logs -f $POD -c $HTTP` it was shown that there was an incorrect variable. The deployment definiton was safe and following the instructions. Let's look inside the container HTTP itself.
++ ```shell
+  $ kubectl exec -it $POD -c $HTTP -- sh
+  $ cat app/index.php
+  <?php
+  $dbname = $_ENV['MYSQL_DATABASE'];
+  $dbuser = $_ENV['MYSQL_USER'];
+  $dbpass = $_ENV['MYSQL_PASSWORDS']; #fix to ['MYSQL_PASSWORD']
+  $dbhost = $_ENV['HOST_MYQSL']; #fix to ['MYSQL_HOST"]
+  
+  $connect = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
+  $test_query = "SHOW TABLES FROM $dbname";
+  $result = mysqli_query($test_query);
+
+  if ($result->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+    echo "Connected successfully";
+  ```
+HERE, we caught the TYPOOO!! $dbhost && $dbpass, lets fix them and restart the php-fpm server!
++ ```shell
+  $ service php-fpm restart
+  $ service php-fpm status
+  ```
+A quick check on the vars on both containers!
++ ```shell
+  $ kubectl exec -it $POD -c $HTTP -- env | grep -i MYSQL
+  $ kubectl exec -it $POD -c $MYSQL -- env | grep -i MYSQL
+  $ kubectl describe pod | grep -A 6 ENV
+  ```
+> Click on the *App* button at the top right to open the app URL in a new tab, notice the msh "connected successfully".
+
+
+
