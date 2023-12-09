@@ -1027,7 +1027,8 @@ A quick check on the vars on both containers!
   ```
 > Click on the *App* button at the top right to open the app URL in a new tab, notice the msh "connected successfully".
 ---
-## 
+## Deploy Lamp Stack on Kubernetes Cluster
+
 The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. They are going to use Apache as a web server and Mysql for database. The team had already gathered the requirements and now they want to make this website live. Below you can find more details:
 + Create a config map php-config for php.ini with variables_order = "EGPCS" data.
 + Create a deployment named lamp-wp.
@@ -1040,7 +1041,9 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
 + We already have /tmp/index.php file on jump_host server.
 + Copy this file into httpd container under Apache document root i.e /app and replace the dummy values for mysql related variables with the environment variables you have set for mysql related parameters. Please make sure you do not hard code the mysql related details in this file, you must use the environment variables to fetch those values.
 + You must be able to access this index.php on node port 30008 at the end, please note that you should see Connected successfully message while accessing this page.
+
 ###### Solution:
+
 + ```yaml
   apiVersion: v1
   kind: ConfigMap
@@ -1049,7 +1052,9 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
   data:
     php.ini: |
       variables_order="EGPCS"
+
   ---
+
   apiVersion: apps/v1
   kind: Deployment
   metadata:
@@ -1059,7 +1064,8 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
   spec:
     replicas: 1
     selector:
-      app: php-mysql-dep
+      matchLabels:
+        app: php-mysql-dep
     template:
       metadata:
         labels:
@@ -1068,44 +1074,73 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
         containers:
         - name: httpd-php-container
           image: webdevops/php-apache:alpine-3-php7
-          volumeMounts:
-          - mountPath: /opt/docker/etc/php/php.ini
-            name: php-config
-        - name: mysql-container
-          image: mysql:5.6
+          ports:
+          - containerPort: 80
           env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
-              secretRef:
+              secretKeyRef:
                 name: mysql-secrets
                 key: rootpassword
           - name: MYSQL_DATABASE
             valueFrom:
-              secretRef:
+              secretKeyRef:
                 name: mysql-secrets
                 key: database
           - name: MYSQL_USER
             valueFrom:
-              secretRef:
+              secretKeyRef:
                 name: mysql-secrets
                 key: user
           - name: MYSQL_PASSWORD
             valueFrom:
-              secretRef:
+              secretKeyRef:
                 name: mysql-secrets
                 key: password
           - name: MYSQL_HOST
             valueFrom:
-              secretRef:
+              secretKeyRef:
+                name: mysql-secrets
+                key: host
+          volumeMounts:
+          - mountPath: /opt/docker/etc/php/php.ini
+            name: php-config
+            subPath: php.ini
+        - name: mysql-container
+          image: mysql:5.6
+          ports:
+          - containerPort: 3306
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: rootpassword
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: database
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: password
+          - name: MYSQL_HOST
+            valueFrom:
+              secretKeyRef:
                 name: mysql-secrets
                 key: host
         volumes:
         - name: php-config
           configMap:
             name: php-config
-            items:
-              - key: php.ini
-                path: php.ini
+
   ---
   apiVersion: v1
   kind: Secret
@@ -1113,12 +1148,13 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
     name: mysql-secrets
   type: Opaque
   data:
-    rootpassword: cm9vdHBhc3N3b3JkCg==
-    database: bXlkYgo=
-    user: Y2h4bXhpaQo=
-    password: Y2h4bXhpaXBhc3N3b3JkCg==
-    host: Y2h4bXhpaXBhc3N3b3JkCg==
+    rootpassword: cm9vdHBhc3N3b3Jk
+    database: bXlkYg==
+    user: Y2h4bXhpaQ==
+    password: Y2h4bXhpaXBhc3N3b3Jk
+    host: bXlzcWwtc2VydmljZQ==
   ---
+
   apiVersion: v1
   kind: Service
   metadata:
@@ -1127,8 +1163,13 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
     type: NodePort
     ports:
     - port: 80
+      targetPort: 80
       nodePort: 30008
+    selector:
+      app: php-mysql-dep
+
   ---
+
   apiVersion: v1 
   kind: Service
   metadata:
@@ -1136,4 +1177,31 @@ The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. The
   spec:
     ports:
     - port: 3306
+    selector:
+      app: php-mysql-dep
+  ```
++ ```sh
+  $ kubectl get pods
+  $ HTTP=$(kubectl get pod  -o=jsonpath='{.items[*].spec.containers[0].name}')
+  $ POD=$(kubectl get pod  -o=jsonpath='{.items[*].metadata.name}')
+  $ kubectl cp /tmp/index.php $POD:/app -c $HTTP
+  $ kubectl exec -it $POD -c $HTTP -- bash
+  $ vi /app/index.php
+  ```
++ ```php
+  <?php
+  $dbname = $_ENV["MYSQL_DATABASE"];
+  $dbuser = $_ENV["MYSQL_USER"];
+  $dbpass = $_ENV["MYSQL_PASSWORD"];
+  $dbhost = $_ENV["MYSQL_HOST"];
+
+  $connect = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
+
+  $test_query = "SHOW TABLES FROM $dbname";
+  $result = mysqli_query($test_query);
+
+  if ($result->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+    echo "Connected successfully";
   ```
