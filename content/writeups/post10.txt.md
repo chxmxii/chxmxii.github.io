@@ -1026,3 +1026,114 @@ A quick check on the vars on both containers!
   $ kubectl describe pod | grep -A 6 ENV
   ```
 > Click on the *App* button at the top right to open the app URL in a new tab, notice the msh "connected successfully".
+---
+## 
+The Nautilus DevOps team want to deploy a PHP website on Kubernetes cluster. They are going to use Apache as a web server and Mysql for database. The team had already gathered the requirements and now they want to make this website live. Below you can find more details:
++ Create a config map php-config for php.ini with variables_order = "EGPCS" data.
++ Create a deployment named lamp-wp.
++ Create two containers under it. First container must be httpd-php-container using image webdevops/php-apache:alpine-3-php7 and second container must be mysql-container from image mysql:5.6. Mount php-config configmap in httpd container at /opt/docker/etc/php/php.ini location.
++ Create kubernetes generic secrets for mysql related values like myql root password, mysql user, mysql password, mysql host and mysql database. Set any values of your choice.
++ Add some environment variables for both containers:
++ MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD and MYSQL_HOST. Take their values from the secrets you created. Please make sure to use env field (do not use envFrom) to define the name-value pair of environment variables.
++ Create a node port type service lamp-service to expose the web application, nodePort must be 30008.
++ Create a service for mysql named mysql-service and its port must be 3306.
++ We already have /tmp/index.php file on jump_host server.
++ Copy this file into httpd container under Apache document root i.e /app and replace the dummy values for mysql related variables with the environment variables you have set for mysql related parameters. Please make sure you do not hard code the mysql related details in this file, you must use the environment variables to fetch those values.
++ You must be able to access this index.php on node port 30008 at the end, please note that you should see Connected successfully message while accessing this page.
+###### Solution:
++ ```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: php-config
+  data:
+    php.ini: |
+      variables_order="EGPCS"
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: lamp-wp
+    labels:
+      app: php-mysql-dep
+  spec:
+    replicas: 1
+    selector:
+      app: php-mysql-dep
+    template:
+      metadata:
+        labels:
+          app: php-mysql-dep
+      spec:
+        containers:
+        - name: httpd-php-container
+          image: webdevops/php-apache:alpine-3-php7
+          volumeMounts:
+          - mountPath: /opt/docker/etc/php/php.ini
+            name: php-config
+        - name: mysql-container
+          image: mysql:5.6
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretRef:
+                name: mysql-secrets
+                key: rootpassword
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretRef:
+                name: mysql-secrets
+                key: database
+          - name: MYSQL_USER
+            valueFrom:
+              secretRef:
+                name: mysql-secrets
+                key: user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretRef:
+                name: mysql-secrets
+                key: password
+          - name: MYSQL_HOST
+            valueFrom:
+              secretRef:
+                name: mysql-secrets
+                key: host
+        volumes:
+        - name: php-config
+          configMap:
+            name: php-config
+            items:
+              - key: php.ini
+                path: php.ini
+  ---
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: mysql-secrets
+  type: Opaque
+  data:
+    rootpassword: cm9vdHBhc3N3b3JkCg==
+    database: bXlkYgo=
+    user: Y2h4bXhpaQo=
+    password: Y2h4bXhpaXBhc3N3b3JkCg==
+    host: Y2h4bXhpaXBhc3N3b3JkCg==
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: lamp-service
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      nodePort: 30008
+  ---
+  apiVersion: v1 
+  kind: Service
+  metadata:
+    name: mysql-service
+  spec:
+    ports:
+    - port: 3306
+  ```
