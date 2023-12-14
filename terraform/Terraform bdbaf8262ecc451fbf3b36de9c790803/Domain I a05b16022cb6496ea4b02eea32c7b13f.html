@@ -1,0 +1,693 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Domain I:</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a05b1602-2cb6-496e-a4b0-2eea32c7b13f" class="page sans"><header><h1 class="page-title">Domain I:</h1><p class="page-description"></p></header><div class="page-body"><ul id="d45ba848-7db1-4542-900f-2529256821bd" class="toggle"><li><details open=""><summary><mark class="highlight-blue">Understand Infrastructure as code concepts.</mark></summary><ul id="5f210d6a-4643-4c83-bccd-e1d8c31a3b6c" class="toggle"><li><details open=""><summary><mark class="highlight-purple">Explain what IaC is:</mark></summary><ul id="13dd70fd-5bc8-451c-aa86-3854f44df530" class="bulleted-list"><li style="list-style-type:disc">IaC allows you to write a configuration script to automate the (creating, updating, or destroying) cloud infrastructure.<ul id="8622d126-1579-43a8-9eba-556ca4ba9954" class="bulleted-list"><li style="list-style-type:circle">IaC is a blueprint of your infrastructure.</li></ul><ul id="0a14805d-6c2a-4ad3-ab4b-9cabcb66bd64" class="bulleted-list"><li style="list-style-type:circle">It allows you to easily share, version, or inventory your cloud infrastructure.</li></ul></li></ul></details></li></ul><ul id="0965e8f1-3ba2-47b6-98d3-cf5d7c1957ad" class="toggle"><li><details open=""><summary><mark class="highlight-purple">IaC Concepts:</mark></summary><ul id="789d3d88-f516-4af2-aa10-ce2a386a2813" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Infrastructure Lifecycle:</mark><ul id="584a20f7-8542-4839-aa8d-6bb852742352" class="bulleted-list"><li style="list-style-type:circle">A number of clearly defined and distinct work phases which are used by DevOps Engineers to plan, design, build, test, deliver, maintain, and retire cloud infrastructure.</li></ul></li></ul><ul id="31cbce51-028e-4385-bc50-d95f9ac21a03" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Infrastructure Lifecycle Advantages:</mark><ul id="580d1fa7-2442-499c-8429-36fc53abe034" class="bulleted-list"><li style="list-style-type:circle"><strong>Reliability:</strong> IaC makes changes idempotent, consistent, repeatable, and predictable.</li></ul><ul id="afde3f82-6694-43b8-b773-d285e7f55dfa" class="bulleted-list"><li style="list-style-type:circle"><strong>Manageability</strong>: Ability to enable mutation via code, Revised with minimal changes.</li></ul><ul id="e5a1b748-709e-4f6d-970d-3e8f1e9b946a" class="bulleted-list"><li style="list-style-type:circle"><strong>Sensibility</strong>: avoid financial and reputational losses to even loss of life when considering government and military dependencies on infrastructure. </li></ul></li></ul><ul id="d2751a61-dabc-4602-a633-1314435319cc" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Provisioning vs Deployment vs Orchestration:</mark><ul id="7b428830-019f-4eec-8f20-6b4e443fa00d" class="bulleted-list"><li style="list-style-type:circle"><strong>Provisioning: </strong>To prepare a server with systems, data, and software, and make it ready for network operation. <p id="6a60e57f-2106-411c-9fec-f6b173b28305" class="">→ Using configuration management tools like Puppet, Ansible, Chef, Bash scripts, and PowerShell. <mark class="highlight-teal"><code>When you launch a cloud service and configure it you are “provisioning”</code></mark></p></li></ul><ul id="395f0ace-42c3-4671-ac16-40e3659197b0" class="bulleted-list"><li style="list-style-type:circle">Deployment: Deployment is the act of delivering a version of your application to run a provisioned server. Deployment cloud be performed via AWS CodePipeline, Harness, Jenkins, Github Actions, CirecleCI</li></ul><ul id="7b631a69-5dfa-473a-8dfe-ce2686ae1d80" class="bulleted-list"><li style="list-style-type:circle">Orchestration: the act of coordinating multiple systems or services. It is a common term when working with microservices, and containers. It could be k8s, Salt, Fabric</li></ul></li></ul><ul id="c21146e8-8da7-4767-884b-b75556f8bff1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Configuration Drift:</mark><ul id="0c374ed6-3f4c-4bec-aa24-62e5fd91b477" class="bulleted-list"><li style="list-style-type:circle">is when provisioned infrastructure has an unexpected configuration change due to:<ul id="15779238-3dd9-45fc-8b6c-df23de3c80dc" class="bulleted-list"><li style="list-style-type:square">team members manually adjusting configuration options.</li></ul><ul id="6c1b2c2d-9b6a-4b1c-a908-4d81dbc74301" class="bulleted-list"><li style="list-style-type:square">malicious actors</li></ul><ul id="b6ddec92-dd5a-4acc-86b9-09457f1574ea" class="bulleted-list"><li style="list-style-type:square">side effects from APIs, SDK or CLIs</li></ul><p id="49d349c1-8cf8-4ad9-9178-2e3614ebb881" class="">→ Configuration drift going unnoticed could be loss or breach of cloud services and residing data or result in interruption of services or unexpected downtime.</p></li></ul><p id="1861c02e-e535-4a2f-a3d9-96bc890a352b" class=""><mark class="highlight-teal">⇒ Detecting configuration drift?</mark><div class="indented"><p id="22eb5ab4-615c-42de-9ea0-7fc8f0b06578" class="">You can detect any configuration drift using:</p><ul id="6afcc5a5-ab89-46bb-b3db-15a29433f058" class="bulleted-list"><li style="list-style-type:disc">A compliance tool that can detect misconfiguration, (AWS Config, Azure Policies, GCP Security Health Analytics..)</li></ul><ul id="8612455f-6780-4748-b399-f2124ee17937" class="bulleted-list"><li style="list-style-type:disc">Built-in support for drift detection</li></ul><ul id="192af1d3-f9d0-44db-ad05-58b12b632c5e" class="bulleted-list"><li style="list-style-type:disc">Storing the expected state e.g Terraform state files</li></ul></div></p><p id="ba5f165a-733d-42e0-95e7-eb7ead852c27" class=""><mark class="highlight-teal">⇒ How to correct configuration drift?</mark><div class="indented"><p id="337fdfc8-291e-44a3-bcce-1fdf47aab167" class="">To correct any configuration drift you can use:</p><ul id="5e048b7b-86d9-452e-b01c-a6573a859b26" class="bulleted-list"><li style="list-style-type:disc">A compliance tool that can remediate misconfiguration e.g AWS Config</li></ul><ul id="d2c92071-b9f6-42da-a80d-7f6c29e6b593" class="bulleted-list"><li style="list-style-type:disc">Terraform refresh and plan commands</li></ul><ul id="982e471b-edc8-4cf7-a625-79b2e528e224" class="bulleted-list"><li style="list-style-type:disc">Manually correcting the configuration (not recommended)</li></ul><ul id="06646826-056b-4f81-8050-52d5cc86938d" class="bulleted-list"><li style="list-style-type:disc">Tearing down and setting up the infrastructure again</li></ul></div></p><p id="14377a62-bb92-4819-8752-0111c8d14638" class=""><mark class="highlight-teal">⇒ How to prevent configuration drift?</mark><div class="indented"><ul id="53fd231d-569f-4bf0-b29d-a916087058eb" class="bulleted-list"><li style="list-style-type:disc">Immutable infrastructure always creates and destroys, never reuse. (B-G deployment strategy)</li></ul><ul id="35563af3-e13d-425a-8f58-c3007c0773e3" class="bulleted-list"><li style="list-style-type:disc">Servers are never modified after they are deployed</li></ul><ul id="36922592-599d-4c47-be2c-3bc45bf25284" class="bulleted-list"><li style="list-style-type:disc">Baking AMI images or containers via AWS Image builder or HashiCorp Packer, or a build server e.g Cloud Run</li></ul><ul id="0cbc4456-4662-403f-9e72-f71957cf3b3b" class="bulleted-list"><li style="list-style-type:disc">Using GitOps to version control our IaC and peer review every single via Pull Reqs </li></ul></div></p></li></ul><ul id="d0bbd3a3-6a42-4e3f-bf8b-c4f3f4127c12" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Immutable Infra Guarantee:</mark><ul id="3c49b7e3-5afd-4ddc-b871-77feae6af9ff" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">Cloud Resource Failure</mark> - What if an EC2 instance fails a status check?</li></ul><ul id="39e27166-8979-4984-b2f8-4b8864fa9ce8" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">Application Faiule </mark>- What if your post-installation script fails due to a change in package,</li></ul><ul id="733a3fdf-6537-43bb-b0eb-82a3ec45f0d3" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">Time to deploy</mark></li></ul></li></ul><ul id="04b7187d-e5a7-4092-b66b-746cd9623f30" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">HashiCorp Products:</mark><ul id="14d3306f-1927-4c9c-a700-c7a9082d4146" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">Boundary: </mark>secure remote access systems based on trusted identity.</li></ul><ul id="543ff22b-3c3d-4aa5-bedd-0af1a8c7253e" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">Consul</mark>: Service discovery platform</li></ul><ul id="e4f669df-eeb9-4b71-a505-409fe806e696" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">Nomad</mark>: scheduling and deployment of tasks across worker nodes in a cluster</li></ul><ul id="7cb71297-144e-45eb-971d-c64edad9d95f" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">Packer: </mark>a tool for building VMIs for later deployment</li></ul><ul id="dbc1315e-7ba7-4f84-93db-7a8eade4303b" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">vagrant</mark>: building and maintenance of reproducible software development envs</li></ul><ul id="a63045a9-56c7-4f2b-8703-874bc5d5f0ac" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">terraform</mark><mark class="highlight-purple">: </mark>iac which enable provisioning and adapting virtual infra across all major cp</li></ul><ul id="f794ebc6-3c39-4a50-b105-8a656d0090c4" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">vault</mark>: secrets management, identity-based access, encrypting data…</li></ul><ul id="ec75711b-9355-4479-8ed9-81ab95991566" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">Waypoint</mark>: a modern workflow to build, deploy and release across platforms</li></ul></li></ul><p id="e1271082-617f-4ddc-b0ef-1e09b592cca0" class="">
+</p><p id="6cacce6f-c927-43c2-a5b7-c7692e265ff6" class="">
+</p></details></li></ul><ul id="1dd7d3eb-6e0b-4c7d-adb2-00e82826e38f" class="toggle"><li><details open=""><summary><mark class="highlight-purple">Terraform Basics: </mark></summary><ul id="faed4f05-5bee-4a4b-9b81-b03ddfe576be" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Terraform Cloud:</mark><ul id="6418d59d-a973-4bf9-90d6-a429b93c14cb" class="bulleted-list"><li style="list-style-type:circle">Terraform Cloud is a SaaS offering for:<ul id="a731ab5d-ef19-4be7-9c6a-2f04e70ce312" class="bulleted-list"><li style="list-style-type:square">Remote state storage</li></ul><ul id="9a8c8a6b-961b-46d8-826d-a2516d0218c9" class="bulleted-list"><li style="list-style-type:square">Version control integrations</li></ul><ul id="6227da6c-3f83-477e-84ee-99288494aeac" class="bulleted-list"><li style="list-style-type:square">Flexible workflows</li></ul><ul id="461be275-b2b5-4202-9f80-5b52c9857a5e" class="bulleted-list"><li style="list-style-type:square">collaborate on infrastructure changes in a single unified web portal.</li></ul></li></ul></li></ul><ul id="4800b52e-6aeb-4577-ab35-2ff3d20c0979" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Terraform lifecycle:</mark><ul id="02c194fb-e193-4612-a3ee-b826e92bfe2d" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Code</mark>: Write or update your terraform config fil</li></ul><ul id="c5ca76d7-1356-4f8a-9e6e-40ebd618f2be" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Init</mark>: initialize your project pull the latest providers and modules</li></ul><ul id="7af30928-58f3-4a35-9cfe-c393125b8c22" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Plan</mark>: Speculate what will change or generate a saved execution plan</li></ul><ul id="ef5e31d7-0e60-4bff-9f38-05ea4aa53fc4" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Validate</mark>: Ensure types and values are valid, and the required attributes are present</li></ul><ul id="178fb30b-4e1f-416f-96c4-949a3392a00f" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Apply</mark>: Execute the terraform plan provisioning the infrastructure</li></ul><ul id="dd909af4-9342-43bf-adc0-ea30c3ff00a8" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Destroy</mark>: Destroy the remote infrastructure if you want. </li></ul></li></ul><ul id="876943a9-6038-470a-a152-4aadc70e3df3" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Change Automation:</mark><ul id="818f63f2-5495-4479-9464-b2d606d14704" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">Change Management:</mark><ul id="540c4c38-e3ca-4531-bf8f-249f3c21bfbc" class="bulleted-list"><li style="list-style-type:square">A Standard approach to applying the change, and resolving conflicts brought about by the change in the context of IaC, change management is the procedure that will be followed when resources are modified and applied via configuration script.</li></ul></li></ul><ul id="0dfc79c1-3666-481c-845a-6f4cc334b64b" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">Change Automation:</mark><ul id="8dae566c-58eb-4586-bf75-f170ba20067e" class="bulleted-list"><li style="list-style-type:square">A way of automatically creating a consistent, systematic, and predictable way of managing change requests via controls and policies.<br/><br/><mark class="highlight-red">→</mark> Change automation allows you to know what terraform will change and in what order.</li></ul></li></ul></li></ul><p id="a4d9beaf-7f71-438b-a6d9-17d6bc30e149" class="">  <mark class="highlight-yellow"> ⇒</mark> Terraform uses change automation in the form of execution plans and resource graphs to apply and review complex ChangeSets (A collection of commits that represent changes made to the versioning repo, IaC uses Change ChangeSets so you can see what has changed by who overtime).</p><ul id="2196426f-6346-4b4a-8658-977364e3bf6c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Executions Plans:</mark><ul id="0a756587-262d-4d6a-880b-540e74f0e9d9" class="bulleted-list"><li style="list-style-type:circle">A manual review of what will add, change or destroy before you apply changes eg. terraform apply. resources and config settings will be listed, and it will indicate what will be added, changed or destroyed if this plan is approved.</li></ul><ul id="4f8b032e-dc8c-4a26-b8c1-b3087746079f" class="bulleted-list"><li style="list-style-type:circle">You can visualize an  execution plan as a graph using the terraform graph command, then terraform will output GraphViz file.</li></ul></li></ul><ul id="bd072c36-cf56-42b1-a3d1-af5f333a1bf2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Resource Graph:</mark><ul id="df93213b-9427-4d6b-857e-6e1090505326" class="bulleted-list"><li style="list-style-type:circle">Terraform builds a dependency graph from terraform configurations, and walks this graph to generate plans, refresh state and more.</li></ul><figure id="a88089b4-bfff-484b-a4b9-1f5474634d71" class="image"><a href="Domain%20I%20a05b16022cb6496ea4b02eea32c7b13f/Untitled.png"><img style="width:623px" src="Domain%20I%20a05b16022cb6496ea4b02eea32c7b13f/Untitled.png"/></a></figure></li></ul><ul id="029b2262-eb38-4ba2-95a7-388672c02f33" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Use Cases:</mark><ul id="a39a3cd1-f447-4c32-8856-94bbf4d2f864" class="bulleted-list"><li style="list-style-type:circle">IaC for Exotic Providers: terraform supports a variety of providers outside of GCP, aws, azure etc..</li></ul><ul id="faf6b522-4f70-4bbb-9b90-33d69e8ac84d" class="bulleted-list"><li style="list-style-type:circle">Multi-Tier Applications: Terraform by default makes it easy to divide large and complex applications into isolate configuration scripts.</li></ul><ul id="e4a7e49e-063c-4c72-af8d-db32a73994a5" class="bulleted-list"><li style="list-style-type:circle">Disposable env: Easily stand up an environment for a software demo or a temporary development env </li></ul><ul id="6036b17f-90f8-4ce5-8b81-87a0f8fe1527" class="bulleted-list"><li style="list-style-type:circle">Resources Schedulers: terraform can be used to dynamically schedule the docker containers, hadoop, spark and other software tools..</li></ul><ul id="d6493e65-2efa-4af2-ad24-78ae7eb149ac" class="bulleted-list"><li style="list-style-type:circle">Multi-Cloud Deployment:  Terraform is a cloud-agnostic and allows a single config to be used to manage multiple providers, and even to handle cross-cloud dependencies.</li></ul></li></ul><ul id="c9b722f0-1b1a-46ad-8519-2d0164944db4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Terraform Core and Terraform Plugins:</mark><ul id="8bf04c1b-faab-47ec-b7b1-3aba56b0a6ff" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-pink">Terraform Core: </mark>uses remote procedure calls RPC to communicate with terraform plugins.</li></ul><ul id="764b9537-d0df-4881-b520-a60fd026c7d6" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-pink">Terraform Plugins: </mark>expose an implementation for a specific service, or provisioner.</li></ul></li></ul><ul id="4426274a-2d29-46cb-9ce9-2fbcecae5956" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Input and variables: </mark><ul id="a7702e8d-fc7f-4e42-a92e-8c9ef6ad2c24" class="bulleted-list"><li style="list-style-type:circle">Variables can be separated in<mark class="highlight-purple"> something.tfvars</mark> file.</li></ul><ul id="2aa06c7f-a3f7-41b5-98ee-f1f46f650dc1" class="bulleted-list"><li style="list-style-type:circle">you can call the variable with var.something</li></ul><ul id="1b4b6427-349e-4523-881d-c9cabe6700f2" class="bulleted-list"><li style="list-style-type:circle">sensitive data can be added (bool value)</li></ul><ul id="b00e328d-5c60-4d5f-8cc0-f910c62d1b1c" class="bulleted-list"><li style="list-style-type:circle">you can specify the var during the “apply”</li></ul><ul id="e329a0f7-8f6f-4bb8-a69d-2b7bf7030fb5" class="bulleted-list"><li style="list-style-type:circle">types: string, number, bool, list, set, map, object, tuple</li></ul><ul id="aab8ca91-b865-4654-b626-55536cb78cf5" class="bulleted-list"><li style="list-style-type:circle">example:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4096d683-23e9-4fab-b73a-d5a16ec9036f" class="code"><code class="language-JavaScript">variable &quot;user_credentials&quot; {
+  type = object ({
+    name = string
+    address = string
+ })
+  sensitive = true
+ }
+resource &quot;some_resource&quot; &quot;a&quot; {
+	name = var.user_credentials.name
+  address = var.user_credentials.address
+}</code></pre></li></ul></li></ul><ul id="a75ca362-7bc4-4fe5-9096-1e042ab7b482" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Output: </mark><ul id="21129cd4-c6df-4c90-bf30-2d7adad5c3b8" class="bulleted-list"><li style="list-style-type:circle">return values from the config file.</li></ul><ul id="95de032f-87b1-4f7a-b0ee-8938ea9aecc4" class="bulleted-list"><li style="list-style-type:circle">example:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d398c11-9d88-4349-a322-0afe8acc546c" class="code"><code class="language-JavaScript">output “instance_private_ip” {
+  value = aws_instance.server.private_ip
+ }</code></pre></li></ul></li></ul></details></li></ul><ul id="f8471faa-a476-4d16-b9e1-737bd56642c0" class="toggle"><li><details open=""><summary><mark class="highlight-purple">Terraform Provisioners: </mark></summary><p id="ed594977-845b-4f68-a949-70cfd1042da5" class="">
+</p></details></li></ul></details></li></ul><p id="5adeabfb-12bb-439d-94e1-c94ea41c8a16" class="">
+</p><ol type="1" id="70c79b20-ff6e-41c2-a299-7249e6804042" class="numbered-list" start="1"><li>Handle Terraform and provider installation and versioning</li></ol><ol type="1" id="7abac9d9-0c92-44be-847a-d16cdd43a241" class="numbered-list" start="2"><li>Describe plugin-based architecture</li></ol><ol type="1" id="b2397d43-42ff-4398-ae24-32a79f27b4d9" class="numbered-list" start="3"><li>Demonstrate using multiple providers</li></ol><ol type="1" id="a072895f-86d4-4e2a-adef-be47f6593e19" class="numbered-list" start="4"><li>Describe how terraform finds and fetches providers</li></ol><ol type="1" id="91f92a29-6e40-47e5-9463-200bba8e301b" class="numbered-list" start="5"><li>Explain when to use and not user provisioners and when to use local-exec or remote-exec</li></ol><p id="c66f5844-83db-46b0-b6f2-80e164d8baf8" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
