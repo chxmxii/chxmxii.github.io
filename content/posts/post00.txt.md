@@ -22,3 +22,7 @@ series:
 - [RHCSA EX200 Notes and tips](https://chxmxii.gitbook.io/system-management-tasks/)
     
 - [AWS CCP Exam Notes and tips](https://chxmxii.gitbook.io/aws-ccp/)
+
+- [Certified Kubernetes Administrator]() -> ...
+
+- [Terraform Certified Associate](https://chxmxii.tech/terraform/main.html)
