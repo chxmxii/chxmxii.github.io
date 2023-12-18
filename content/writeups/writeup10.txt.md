@@ -1249,3 +1249,108 @@ There are some applications that need to be deployed on Kubernetes cluster and t
         - name: ic-volume-datacenter
           emptyDir: {}
   ```
+---
+## Persistent Volumes in Kubernetes
+
++ The Nautilus DevOps team is working on a Kubernetes template to deploy a web application on the cluster. There are some requirements to create/use persistent volumes to store the application code, and the template needs to be designed accordingly. Please find more details below:
++ Create a PersistentVolume named as pv-xfusion. Configure the spec as storage class should be manual, set capacity to 3Gi, set access mode to ReadWriteOnce, volume type should be hostPath and set path to /mnt/dba (this directory is already created, you might not be able to access it directly, so you need not to worry about it).
++ Create a PersistentVolumeClaim named as pvc-xfusion. Configure the spec as storage class should be manual, request 1Gi of the storage, set access mode to ReadWriteOnce.
++ Create a pod named as pod-xfusion, mount the persistent volume you created with claim name pvc-xfusion at document root of the web server, the container within the pod should be named as container-xfusion using image nginx with latest tag only (remember to mention the tag i.e nginx:latest).
++ Create a node port type service named web-xfusion using node port 30008 to expose the web server running within the pod.
+
+###### Solution:
++ ```yaml
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata: 
+    name: pv-xfusion
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 3Gi
+    accessModes:
+      - ReadWriteOnce
+    hostPath: 
+      path: /mnt/dba 
+  ---
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata: 
+    name: pvc-xfusion
+  spec:
+    storageClassName: manual
+    resources:
+      requests: 
+        storage: 1Gi
+    accessModes:
+      - ReadWriteOnce
+  ---
+  apiVersion: v1
+  kind: Pod
+  metadata: 
+    name: pod-xfusion
+    labels:
+      app: webapp
+  spec:
+    volumes:
+      - name: web-server-volume
+        persistentVolumeClaim:
+          claimName: pvc-xfusion
+    containers:
+    - name: container-xfusion
+      image: nginx:latest
+      ports:
+      - containerPort: 80
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: web-server-volume
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: web-xfusion
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30008
+    selector:
+      app: webapp
+  ```
+---
+## Manage Secrets in Kubernetes
+
++ The Nautilus DevOps team is working to deploy some tools in Kubernetes cluster. Some of the tools are licence based so that licence information needs to be stored securely within Kubernetes cluster. Therefore, the team wants to utilize Kubernetes secrets to store those secrets. Below you can find more details about the requirements:
+
++ We already have a secret key file media.txt under /opt location on jump host. Create a generic secret named media, it should contain the password/license-number present in media.txt file.
++ Also create a pod named secret-xfusion.
++ Configure pod's spec as container name should be secret-container-xfusion, image should be fedora preferably with latest tag (remember to mention the tag with image). Use sleep command for container so that it remains in running state. Consume the created secret and mount it under /opt/games within the container.
++ To verify you can exec into the container secret-container-xfusion, to check the secret key under the mounted path /opt/games.
+
+###### Solution:
++ ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: secret-xfusion
+  spec:
+    containers:
+    - name: secret-container-xfusion
+      image: fedora:latest
+      command: ['/bin/bash', '-c','sleep 200']
+      volumeMounts:
+      - name: secret-licence
+        mountPath: "/opt/games"
+        readOnly: true
+    volumes: 
+    - name: secret-licence 
+      secret:
+        secretName: media
+  ```
++ ```shell
+  $ kubectl create secret generic media --from-file=/opt/media.txt
+  $ kubectl create -f pod.yml
+  $ kubectl get secrets,pods
+  $ kubectl exec -it secret-xfusion -c secret-container-xfusion -- ls /opt/games
+  ```
