@@ -1,5 +1,5 @@
 <!doctype html><html lang=en><link rel=icon href=https://chxmxii.tech/mor.jpg type=image/icontype><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:chxmxii_]"><meta name=description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta name=keywords content=",DevOps,Sysadmin"><meta name=robots content="noodp"><meta name=theme-color content><link rel=canonical href=https://chxmxii.tech/writeups/writeup10.txt/><title>KKE - Kubernetes Challenges :: Mouhib CHVMSI
-</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=https://chxmxii.tech/main.f9efc3f937d6f1177418d008b46474fa1df286cee3b42e861ea657dc0d31f2fe.css><link rel=apple-touch-icon sizes=180x180 href=https://chxmxii.tech/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://chxmxii.tech/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://chxmxii.tech/favicon-16x16.png><link rel=manifest href=https://chxmxii.tech/site.webmanifest><link rel=mask-icon href=https://chxmxii.tech/safari-pinned-tab.svg color><link rel="shortcut icon" href=https://chxmxii.tech/favicon.ico><meta name=msapplication-TileColor content><meta itemprop=name content="KKE - Kubernetes Challenges"><meta itemprop=description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta itemprop=datePublished content="2023-08-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-08-25T00:00:00+00:00"><meta itemprop=wordCount content="6361"><meta itemprop=image content="https://chxmxii.tech"><meta itemprop=keywords content="DevOps,Sysadmin,"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://chxmxii.tech"><meta name=twitter:title content="KKE - Kubernetes Challenges"><meta name=twitter:description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:title" content="KKE - Kubernetes Challenges"><meta property="og:description" content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:type" content="article"><meta property="og:url" content="https://chxmxii.tech/writeups/writeup10.txt/"><meta property="og:image" content="https://chxmxii.tech"><meta property="article:section" content="writeups"><meta property="article:published_time" content="2023-08-25T00:00:00+00:00"><meta property="article:modified_time" content="2023-08-25T00:00:00+00:00"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/09/certifications-exam-notes/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup09.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup04.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup01.txt/"><meta property="article:published_time" content="2023-08-25 00:00:00 +0000 UTC"></head><body><div class=container><header class=header><span class=header__inner><a href=https://chxmxii.tech/ style=text-decoration:none><div class=logo><span class=logo__mark></span><span class=logo__text>C:\Users\chxmxii\</span>
+</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=https://chxmxii.tech/main.f9efc3f937d6f1177418d008b46474fa1df286cee3b42e861ea657dc0d31f2fe.css><link rel=apple-touch-icon sizes=180x180 href=https://chxmxii.tech/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://chxmxii.tech/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://chxmxii.tech/favicon-16x16.png><link rel=manifest href=https://chxmxii.tech/site.webmanifest><link rel=mask-icon href=https://chxmxii.tech/safari-pinned-tab.svg color><link rel="shortcut icon" href=https://chxmxii.tech/favicon.ico><meta name=msapplication-TileColor content><meta itemprop=name content="KKE - Kubernetes Challenges"><meta itemprop=description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta itemprop=datePublished content="2023-08-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-08-25T00:00:00+00:00"><meta itemprop=wordCount content="7422"><meta itemprop=image content="https://chxmxii.tech"><meta itemprop=keywords content="DevOps,Sysadmin,"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://chxmxii.tech"><meta name=twitter:title content="KKE - Kubernetes Challenges"><meta name=twitter:description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:title" content="KKE - Kubernetes Challenges"><meta property="og:description" content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:type" content="article"><meta property="og:url" content="https://chxmxii.tech/writeups/writeup10.txt/"><meta property="og:image" content="https://chxmxii.tech"><meta property="article:section" content="writeups"><meta property="article:published_time" content="2023-08-25T00:00:00+00:00"><meta property="article:modified_time" content="2023-08-25T00:00:00+00:00"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/09/certifications-exam-notes/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup09.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup04.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup01.txt/"><meta property="article:published_time" content="2023-08-25 00:00:00 +0000 UTC"></head><body><div class=container><header class=header><span class=header__inner><a href=https://chxmxii.tech/ style=text-decoration:none><div class=logo><span class=logo__mark></span><span class=logo__text>C:\Users\chxmxii\</span>
 <span class=logo__text style=color:#ff3c36>writeup10.txt</span>
 <span class=logo__cursor style=background-color:#ff3c36></span></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=https://chxmxii.tech/about.txt/ style=text-decoration:none class=name>About</a></li><li><a href=https://chxmxii.tech/posts/ style=text-decoration:none class=name>Posts</a></li><li><a href=https://chxmxii.tech/projects/ style=text-decoration:none class=name>Projects</a></li><li><a href=https://chxmxii.tech/writeups/ style=text-decoration:none class=name>Writeups</a></li><li><a href=https://chxmxii.tech/cv.pdf style=text-decoration:none class=name>~Resume</a></li></ul></nav><span class=menu-trigger><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info></p></div><article><h2 class=post-title><a href=https://chxmxii.tech/writeups/writeup10.txt/>KKE - Kubernetes Challenges</a></h2><div class=post-content><h2 id=fileskubepngcenter><img src=https://chxmxii.tech/files/kube.png#center alt></h2><h2 id=create-pods-in-kubernetes-cluster>Create Pods in Kubernetes Cluster</h2><ul><li>The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below:</li><li>Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i.e httpd:latest.</li><li>Labels app should be set to httpd_app, also container should be named as httpd-container.</li></ul><h6 id=solution>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
 </span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
@@ -938,5 +938,262 @@
 </span></span><span style=display:flex><span>$ kubectl create -f pod.yml
 </span></span><span style=display:flex><span>$ kubectl get secrets,pods
 </span></span><span style=display:flex><span>$ kubectl exec -it secret-xfusion -c secret-container-xfusion -- ls /opt/games
+</span></span></code></pre></div></li></ul><hr><h2 id=environment-variables-in-kubernetes>Environment Variables in Kubernetes</h2><p>There are a number of parameters that are used by the applications. We need to define these as environment variables, so that we can use them as needed within different configs. Below is a scenario which needs to be configured on Kubernetes cluster. Please find below more details about the same.</p><ul><li><p>Create a pod named envars.</p></li><li><p>Container name should be fieldref-container, use image httpd preferable latest tag, use command <code>sh</code>, <code>-c</code> and <em>args</em> should be
+<code>'while true; do echo -en '/n'; printenv NODE_NAME POD_NAME; printenv POD_IP POD_SERVICE_ACCOUNT; sleep 10; done;'</code></p></li><li><p>Define Four environment variables as mentioned below:</p><ul><li>The first env should be named as NODE_NAME, set valueFrom fieldref and fieldPath should be spec.nodeName.</li><li>The second env should be named as POD_NAME, set valueFrom fieldref and fieldPath should be metadata.name.</li><li>The third env should be named as POD_IP, set valueFrom fieldref and fieldPath should be status.podIP.</li><li>The fourth env should be named as POD_SERVICE_ACCOUNT, set valueFrom fieldref and fieldPath shoulbe be spec.serviceAccountName.</li><li>Set restart policy to Never.</li><li>To check the output, exec into the pod and use <code>printenv</code> command.</li></ul></li></ul><h6 id=solution-28>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>envars</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>fieldref-container</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>httpd:latest</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>command</span>: [<span style=color:#e6db74>&#39;sh&#39;</span>,<span style=color:#e6db74>&#39;-c&#39;</span>]
+</span></span><span style=display:flex><span>    <span style=color:#f92672>args</span>: 
+</span></span><span style=display:flex><span>    - <span style=color:#ae81ff>while true; do </span>
+</span></span><span style=display:flex><span>        <span style=color:#ae81ff>echo -en &#39;/n&#39;; </span>
+</span></span><span style=display:flex><span>        <span style=color:#ae81ff>printenv NODE_NAME POD_NAME; </span>
+</span></span><span style=display:flex><span>        <span style=color:#ae81ff>printenv POD_IP POD_SERVICE_ACCOUNT; </span>
+</span></span><span style=display:flex><span>        <span style=color:#ae81ff>sleep 10; </span>
+</span></span><span style=display:flex><span>      <span style=color:#ae81ff>done;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>NODE_NAME</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>fieldRef</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>fieldPath</span>: <span style=color:#ae81ff>spec.nodeName</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>POD_NAME</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>fieldRef</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>fieldPath</span>: <span style=color:#ae81ff>metadata.name</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>POD_IP</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>fieldRef</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>fieldPath</span>: <span style=color:#ae81ff>status.podIP</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>POD_SERVICE_ACCOUNT</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>valueFrom</span>: 
+</span></span><span style=display:flex><span>        <span style=color:#f92672>fieldRef</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>fieldPath</span>: <span style=color:#ae81ff>spec.serviceAccountName</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>restartPolicy</span>: <span style=color:#ae81ff>Never</span>
+</span></span></code></pre></div></li></ul><h2 id=run-the-following-command-to-verify-kubectl-exec--it-podsenvars--c-fieldref-container----bash>Run the following command to verify <code>kubectl exec -it pods/envars -c fieldref-container -- bash</code></h2><h2 id=kubernetes-lemp-setup>Kubernetes LEMP Setup</h2><p>The Nautilus DevOps team want to deploy a static website on Kubernetes cluster. They are going to use Nginx, phpfpm and MySQL for the database. The team had already gathered the requirements and now they want to make this website live. Below you can find more details:</p><p>Create some secrets for MySQL.</p><ul><li><p>Create a secret named mysql-root-pass wih key/value pairs as below:</p><blockquote><p>name: password
+value: R00t</p></blockquote></li><li><p>Create a secret named mysql-user-pass with key/value pairs as below:</p></li></ul><blockquote><p>name: username
+value: kodekloud_rin
+name: password
+value: TmPcZjtRQx</p></blockquote><ul><li><p>Create a secret named mysql-db-url with key/value pairs as below:</p><blockquote><p>name: database
+value: kodekloud_db7</p></blockquote></li><li><p>Create a secret named mysql-host with key/value pairs as below:</p><blockquote><p>name: host
+value: mysql-service</p></blockquote></li><li><p>Create a config map php-config for php.ini with variables_order = &ldquo;EGPCS&rdquo; data.</p></li><li><p>Create a deployment named lemp-wp.</p></li><li><p>Create two containers under it. First container must be nginx-php-container using image webdevops/php-nginx:alpine-3-php7 and second container must be mysql-container from image mysql:5.6. Mount php-config configmap in nginx container at /opt/docker/etc/php/php.ini location.</p></li></ul><ol><li>Add some environment variables for both containers:</li></ol><blockquote><p>MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD and MYSQL_HOST. Take their values from the secrets you created. Please make sure to use env field (do not use envFrom) to define the name-value pair of environment variables.</p></blockquote><ul><li>Create a node port type service lemp-service to expose the web application, nodePort must be 30008.</li><li>Create a service for mysql named mysql-service and its port must be 3306.</li><li>We already have a /tmp/index.php file on jump_host server.</li><li>Copy this file into the nginx container under document root i.e /app and replace the dummy values for mysql related variables with the environment variables you have set for mysql related parameters. Please make sure you do not hard code the mysql related details in this file, you must use the environment variables to fetch those values.</li><li>Once done, you must be able to access this website using Website button on the top bar, please note that you should see Connected successfully message while accessing this page.</li></ul><h6 id=solution-29>Solution:</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ConfigMap</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>php-config</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>data</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>php.ini</span>: |<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    variables_order=&#34;EGPCS&#34;</span>    
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>lemp-wp</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>php-mysql-dep</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>php-mysql-dep</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>php-mysql-dep</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-php-container </span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>webdevops/php-nginx:alpine-3-php7</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_ROOT_PASSWORD</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-root-pass</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_USER</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>username</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_DATABASE</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-db-url</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>database</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_PASSWORD</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_HOST</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-host</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>host</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/opt/docker/etc/php/php.ini</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>php-config</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>subPath</span>: <span style=color:#ae81ff>php.ini</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-container</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>mysql:5.6</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_ROOT_PASSWORD</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-root-pass</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_USER</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>username</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_DATABASE</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-db-url</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>database</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_PASSWORD</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_HOST</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-host</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>key</span>: <span style=color:#ae81ff>host</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>php-config</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>configMap</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>php-config</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>lemp-service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>nodePort</span>: <span style=color:#ae81ff>30008</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>php-mysql-dep</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1 </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>php-mysql-dep</span>
+</span></span></code></pre></div></li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>kubectl create secret generic mysql-root-pass --from-literal<span style=color:#f92672>=</span>password<span style=color:#f92672>=</span>r00t <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span><span style=color:#f92672>&amp;&amp;</span> kubectl create secret generic mysql-user-pass --from-literal<span style=color:#f92672>=</span>username<span style=color:#f92672>=</span>kodekloud_rin --from-literal<span style=color:#f92672>=</span>password<span style=color:#f92672>=</span>TmPcZjtRQx <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span><span style=color:#f92672>&amp;&amp;</span> kubectl create secret generic mysql-db-url --from-literal<span style=color:#f92672>=</span>database<span style=color:#f92672>=</span>kodekloud_db7 <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span><span style=color:#f92672>&amp;&amp;</span> kubectl create secret generic mysql-host --from-literal<span style=color:#f92672>=</span>host<span style=color:#f92672>=</span>mysql-service <span style=color:#ae81ff>\
+</span></span></span></code></pre></div></li></ul><hr><h2 id=kubernetes-troubleshooting>Kubernetes Troubleshooting</h2><p>One of the Nautilus DevOps team members was working on to update an existing Kubernetes template. Somehow, he made some mistakes in the template and it is failing while applying. We need to fix this as soon as possible, so take a look into it and make sure you are able to apply it without any issues. Also, do not remove any component from the template like pods/deployments/volumes etc.</p><ul><li>/home/thor/mysql_deployment.yml is the template that needs to be fixed.</li></ul><h6 id=solution-30>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1 </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>PersistentVolume</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-pv</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>local</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>storageClassName</span>: <span style=color:#ae81ff>standard</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>capacity</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>250Mi</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>accessModes</span>: [<span style=color:#e6db74>&#39;ReadWriteOnce&#39;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#f92672>hostPath</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;/mnt/data&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>persistentVolumeReclaimPolicy</span>: <span style=color:#ae81ff>Retain</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1 </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>PersistentVolumeClaim</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-pv-claim</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-app </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>storageClassName</span>: <span style=color:#ae81ff>standard</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>accessModes</span>: [<span style=color:#e6db74>&#39;ReadWriteOnce&#39;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>250Mi</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-app  </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>port</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>nodePort</span>: <span style=color:#ae81ff>30011</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql_app</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>tier</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-deployment</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-app</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>strategy</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>Recreate</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-app</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>tier</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-app</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>tier</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>image</span>: <span style=color:#ae81ff>mysql:5.6</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_ROOT_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-root-pass</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_DATABASE</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-db-url</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>database</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_USER</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>username</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-persistent-storage</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/var/lib/mysql</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-persistent-storage</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>persistentVolumeClaim</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>claimName</span>: <span style=color:#ae81ff>mysql-pv-claim</span>
 </span></span></code></pre></div></li></ul></div></article><hr><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://chxmxii.tech/tags/devops/>DevOps</a></span>
 <span class=tag><a href=https://chxmxii.tech/tags/sysadmin/>Sysadmin</a></span></p></div><div id=particles-js style=position:fixed;inset:0;z-index:-1></div><script src=https://chxmxii.tech/js/particles.min.js></script><script>particlesJS("particles-js",{particles:{number:{value:25,density:{enable:!0,value_area:800}},color:{value:"#424569"},shape:{type:"circle",stroke:{width:0,color:"#ff3f38"},polygon:{nb_sides:5},image:{src:"img/github.svg",width:100,height:100}},opacity:{value:.2305594644660164,random:!1,anim:{enable:!1,speed:1,opacity_min:.1,sync:!1}},size:{value:3,random:!0,anim:{enable:!1,speed:40,size_min:.1,sync:!1}},line_linked:{enable:!0,distance:150,color:"#ff3f38",opacity:.19875815902242794,width:1},move:{enable:!0,speed:6,direction:"none",random:!1,straight:!1,out_mode:"out",bounce:!1,attract:{enable:!1,rotateX:600,rotateY:1200}}},interactivity:{detect_on:"canvas",events:{onhover:{enable:!1,mode:"repulse"},onclick:{enable:!1,mode:"push"},resize:!0},modes:{grab:{distance:400,line_linked:{opacity:1}},bubble:{distance:400,size:40,duration:2,opacity:8,speed:3},repulse:{distance:200,duration:.4},push:{particles_nb:4},remove:{particles_nb:2}}},retina_detect:!0})</script></main></div><footer class=footer><div class=footer__inner><div class=footer__content><span>© All right reserved chxmxii - 2022</span></div></div><div class=footer__inner><div class=footer__content><span></span></div></div></footer></div><script type=text/javascript src=https://chxmxii.tech/bundle.min.ada905442d53eafc5c125b84cffce974e971bcb52433fb67db20c5af5b964cea37ebd2c16ee6457894372eac0911dd0428f88da966c8e885b160fc6c0fe0fed6.js integrity="sha512-rakFRC1T6vxcEluEz/zpdOlxvLUkM/tn2yDFr1uWTOo369LBbuZFeJQ3LqwJEd0EKPiNqWbI6IWxYPxsD+D+1g=="></script></body></html>
