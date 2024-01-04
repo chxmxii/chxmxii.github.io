@@ -1409,8 +1409,10 @@ There are a number of parameters that are used by the applications. We need to d
     restartPolicy: Never
   ```
 
-+ Run the following command to verify `kubectl exec -it pods/envars -c fieldref-container -- bash`
-
++ Run the following command to verify 
++ ```shell
+  kubectl exec -it pods/envars -c fieldref-container -- bash 
+  ```
 ---
 ## Kubernetes LEMP Setup
 
