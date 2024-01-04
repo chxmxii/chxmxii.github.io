@@ -1408,9 +1408,12 @@ There are a number of parameters that are used by the applications. We need to d
             fieldPath: spec.serviceAccountName
     restartPolicy: Never
   ```
-Run the following command to verify `kubectl exec -it pods/envars -c fieldref-container -- bash`
+
++ Run the following command to verify `kubectl exec -it pods/envars -c fieldref-container -- bash`
+
 ---
 ## Kubernetes LEMP Setup
+
 The Nautilus DevOps team want to deploy a static website on Kubernetes cluster. They are going to use Nginx, phpfpm and MySQL for the database. The team had already gathered the requirements and now they want to make this website live. Below you can find more details:
 
 Create some secrets for MySQL.
@@ -1419,10 +1422,10 @@ Create some secrets for MySQL.
   value: R00t
 
 + Create a secret named mysql-user-pass with key/value pairs as below:
->name: username
-value: kodekloud_rin
-name: password
-value: TmPcZjtRQx
+  >name: username
+  value: kodekloud_rin
+  name: password
+  value: TmPcZjtRQx
 
 + Create a secret named mysql-db-url with key/value pairs as below:
   >name: database
@@ -1432,9 +1435,9 @@ value: TmPcZjtRQx
   >name: host
   value: mysql-service
 
-+ Create a config map php-config for php.ini with variables_order = "EGPCS" data.
++ Create a config map php-config for php.ini with `variables_order = "EGPCS"` data.
 + Create a deployment named lemp-wp.
-+ Create two containers under it. First container must be nginx-php-container using image webdevops/php-nginx:alpine-3-php7 and second container must be mysql-container from image mysql:5.6. Mount php-config configmap in nginx container at /opt/docker/etc/php/php.ini location.
++ Create two containers under it. **First container** must be nginx-php-container using image webdevops/php-nginx:alpine-3-php7 and **second container** must be mysql-container from image mysql:5.6. Mount php-config configmap in nginx container at /opt/docker/etc/php/php.ini location.
 1) Add some environment variables for both containers:
 > MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD and MYSQL_HOST. Take their values from the secrets you created. Please make sure to use env field (do not use envFrom) to define the name-value pair of environment variables.
 
