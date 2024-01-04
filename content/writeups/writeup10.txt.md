@@ -1354,3 +1354,325 @@ There are some applications that need to be deployed on Kubernetes cluster and t
   $ kubectl get secrets,pods
   $ kubectl exec -it secret-xfusion -c secret-container-xfusion -- ls /opt/games
   ```
+---
+## Environment Variables in Kubernetes
+
+There are a number of parameters that are used by the applications. We need to define these as environment variables, so that we can use them as needed within different configs. Below is a scenario which needs to be configured on Kubernetes cluster. Please find below more details about the same.
+
++ Create a pod named envars.
++ Container name should be fieldref-container, use image httpd preferable latest tag, use command `sh`, `-c` and *args* should be
+`'while true; do echo -en '/n'; printenv NODE_NAME POD_NAME; printenv POD_IP POD_SERVICE_ACCOUNT; sleep 10; done;'`
+
++ Define Four environment variables as mentioned below:
+  + The first env should be named as NODE_NAME, set valueFrom fieldref and fieldPath should be spec.nodeName.
+  + The second env should be named as POD_NAME, set valueFrom fieldref and fieldPath should be metadata.name.
+  + The third env should be named as POD_IP, set valueFrom fieldref and fieldPath should be status.podIP.
+  + The fourth env should be named as POD_SERVICE_ACCOUNT, set valueFrom fieldref and fieldPath shoulbe be spec.serviceAccountName.
+  + Set restart policy to Never.
+  + To check the output, exec into the pod and use `printenv` command.
+
+###### Solution
++ ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: envars
+  spec:
+    containers:
+    - name: fieldref-container
+      image: httpd:latest
+      command: ['sh','-c']
+      args: 
+      - while true; do 
+          echo -en '/n'; 
+          printenv NODE_NAME POD_NAME; 
+          printenv POD_IP POD_SERVICE_ACCOUNT; 
+          sleep 10; 
+        done;
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: POD_SERVICE_ACCOUNT
+        valueFrom: 
+          fieldRef:
+            fieldPath: spec.serviceAccountName
+    restartPolicy: Never
+  ```
+Run the following command to verify `kubectl exec -it pods/envars -c fieldref-container -- bash`
+---
+## Kubernetes LEMP Setup
+The Nautilus DevOps team want to deploy a static website on Kubernetes cluster. They are going to use Nginx, phpfpm and MySQL for the database. The team had already gathered the requirements and now they want to make this website live. Below you can find more details:
+
+Create some secrets for MySQL.
++ Create a secret named mysql-root-pass wih key/value pairs as below:
+  >name: password
+  value: R00t
+
++ Create a secret named mysql-user-pass with key/value pairs as below:
+>name: username
+value: kodekloud_rin
+name: password
+value: TmPcZjtRQx
+
++ Create a secret named mysql-db-url with key/value pairs as below:
+  >name: database
+  value: kodekloud_db7
+
++ Create a secret named mysql-host with key/value pairs as below:
+  >name: host
+  value: mysql-service
+
++ Create a config map php-config for php.ini with variables_order = "EGPCS" data.
++ Create a deployment named lemp-wp.
++ Create two containers under it. First container must be nginx-php-container using image webdevops/php-nginx:alpine-3-php7 and second container must be mysql-container from image mysql:5.6. Mount php-config configmap in nginx container at /opt/docker/etc/php/php.ini location.
+1) Add some environment variables for both containers:
+> MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD and MYSQL_HOST. Take their values from the secrets you created. Please make sure to use env field (do not use envFrom) to define the name-value pair of environment variables.
+
++ Create a node port type service lemp-service to expose the web application, nodePort must be 30008.
++ Create a service for mysql named mysql-service and its port must be 3306.
++ We already have a /tmp/index.php file on jump_host server.
++ Copy this file into the nginx container under document root i.e /app and replace the dummy values for mysql related variables with the environment variables you have set for mysql related parameters. Please make sure you do not hard code the mysql related details in this file, you must use the environment variables to fetch those values.
++ Once done, you must be able to access this website using Website button on the top bar, please note that you should see Connected successfully message while accessing this page.
+
+###### Solution:
++ ```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: php-config
+  data:
+    php.ini: |
+      variables_order="EGPCS"
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: lemp-wp
+    labels:
+      app: php-mysql-dep
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: php-mysql-dep
+    template:
+      metadata:
+        labels:
+          app: php-mysql-dep
+      spec:
+        containers:
+        - name: nginx-php-container 
+          image: webdevops/php-nginx:alpine-3-php7
+          ports:
+          - containerPort: 80
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-pass
+                  key: password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-pass
+                  key: username
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-db-url
+                  key: database
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-pass
+                  key: password
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-host
+                  key: host
+          volumeMounts:
+          - mountPath: /opt/docker/etc/php/php.ini
+            name: php-config
+            subPath: php.ini
+        - name: mysql-container
+          image: mysql:5.6
+          ports:
+          - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-pass
+                  key: password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-pass
+                  key: username
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-db-url
+                  key: database
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-pass
+                  key: password
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-host
+                  key: host
+        volumes:
+        - name: php-config
+          configMap:
+            name: php-config
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: lemp-service
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30008
+    selector:
+      app: php-mysql-dep
+  ---
+  apiVersion: v1 
+  kind: Service
+  metadata:
+    name: mysql-service
+  spec:
+    ports:
+    - port: 3306
+    selector:
+      app: php-mysql-dep
+  ```
+
++ ```shell
+  kubectl create secret generic mysql-root-pass --from-literal=password=r00t \
+  && kubectl create secret generic mysql-user-pass --from-literal=username=kodekloud_rin --from-literal=password=TmPcZjtRQx \
+  && kubectl create secret generic mysql-db-url --from-literal=database=kodekloud_db7 \
+  && kubectl create secret generic mysql-host --from-literal=host=mysql-service \
+  ```
+---
+## Kubernetes Troubleshooting
+
+One of the Nautilus DevOps team members was working on to update an existing Kubernetes template. Somehow, he made some mistakes in the template and it is failing while applying. We need to fix this as soon as possible, so take a look into it and make sure you are able to apply it without any issues. Also, do not remove any component from the template like pods/deployments/volumes etc.
+
++ /home/thor/mysql_deployment.yml is the template that needs to be fixed.
+
+###### Solution;
++ ```yaml
+  apiVersion: v1 
+  kind: PersistentVolume
+  metadata:
+    name: mysql-pv
+    labels:
+      type: local
+  spec:
+    storageClassName: standard
+    capacity:
+      storage: 250Mi
+    accessModes: ['ReadWriteOnce']
+    hostPath:
+      path: "/mnt/data"
+    persistentVolumeReclaimPolicy: Retain
+  ---
+  apiVersion: v1 
+  kind: PersistentVolumeClaim
+  metadata:
+    name: mysql-pv-claim
+    labels:
+      app: mysql-app 
+  spec:
+    storageClassName: standard
+    accessModes: ['ReadWriteOnce']
+    resources:
+      requests:
+        storage: 250Mi
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: mysql
+    labels:
+      app: mysql-app  
+  spec:
+    type: NodePort
+    ports:
+      - targetPort: 3306
+        port: 3306
+        nodePort: 30011
+    selector:
+      app: mysql_app
+      tier: mysql
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: mysql-deployment
+    labels:
+      app: mysql-app
+  spec:
+    strategy:
+      type: Recreate
+    selector:
+      matchLabels:
+        app: mysql-app
+        tier: mysql
+    template:
+      metadata:
+        labels:
+          app: mysql-app
+          tier: mysql
+      spec:
+        containers:
+        - image: mysql:5.6
+          name: mysql
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-root-pass
+                key: password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-db-url
+                key: database
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-user-pass
+                key: username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-user-pass
+                key: password
+          ports:
+          - containerPort: 3306
+          volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+        volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+  ```
