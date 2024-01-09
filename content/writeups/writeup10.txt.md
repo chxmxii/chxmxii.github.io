@@ -1681,3 +1681,152 @@ One of the Nautilus DevOps team members was working on to update an existing Kub
           persistentVolumeClaim:
             claimName: mysql-pv-claim
   ```
+  ---
+
+## Deploy Iron Gallery App on Kubernetes
+
+There is an iron gallery app that the Nautilus DevOps team was developing. They have recently customized the app and are going to deploy the same on the Kubernetes cluster. Below you can find more details:
+
+Create a namespace iron-namespace-devops
+**Create a deployment iron-gallery-deployment-devops** for iron gallery under the same namespace you created.
+  + Labels run should be iron-gallery.
+  + Replicas count should be 1.
+  + Selector's matchLabels run should be iron-gallery.
+  + Template labels run should be iron-gallery under metadata.
+  + The container should be named as iron-gallery-container-devops, use kodekloud/irongallery:2.0 image ( use exact image name / tag ).
+  + Resources limits for memory should be 100Mi and for CPU should be 50m.
+  + First volumeMount name should be config, its mountPath should be /usr/share/nginx/html/data.
+  + Second volumeMount name should be images, its mountPath should be /usr/share/nginx/html/uploads.
+  + First volume name should be config and give it emptyDir and second volume name should be images, also give it emptyDir.
+
+**Create a deployment iron-db-deployment-devops** for iron db under the same namespace.
+  + Labels db should be mariadb.
+  + Replicas count should be 1.
+  + Selector's matchLabels db should be mariadb.
+  + Template labels db should be mariadb under metadata.
+  + The container name should be iron-db-container-devops, use kodekloud/irondb:2.0 image ( use exact image name / tag ).
+  + Define environment, set `MYSQL_DATABASE` its value should be **database_web**, set `MYSQL_ROOT_PASSWORD` and `MYSQL_PASSWORD` value should be with some complex passwords for DB connections, and MYSQL_USER value should be any custom user ( except root ).
+  + Volume mount name should be db and its mountPath should be /var/lib/mysql. Volume name should be db and give it an emptyDir.
+
+**Create a service for iron db** which should be named iron-db-service-devops under the same namespace. Configure spec as selector's db should be mariadb. **Protocol** should be `TCP`, port and **targetPort** should be `3306` and its type should be **ClusterIP**.
+
+**Create a service for iron gallery** which should be named iron-gallery-service-devops under the same namespace. Configure spec as selector's run should be iron-gallery. **Protocol** should be `TCP`, port and **targetPort** should be `80`, **nodePort** should be `32678` and its type should be **NodePort**.
+
+###### Solution: 
++ ```yaml
+  apiVersion: v1 
+  metadata:
+    name: iron-namespace-devops
+  kind: Namespace
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      run: iron-gallery
+    name: iron-gallery-deployment-devops
+    namespace: iron-namespace-devops
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        run: iron-gallery
+    template:
+      metadata:
+        labels:
+          run: iron-gallery 
+      spec:
+        containers:
+        - image: kodekloud/irongallery:2.0
+          name: iron-gallery-container-devops
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "50m"
+          volumeMounts:
+          - name: config
+            mountPath: /usr/share/nginx/html/data
+          - name: images
+            mountPath: /usr/share/nginx/html/uploads
+        volumes:
+        - name: config
+          emptyDir: {}
+        - name: images
+          emptyDir: {}
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      db: mariadb
+    name: iron-db-deployment-devops
+    namespace: iron-namespace-devops
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        db: mariadb
+    template:
+      metadata:
+        labels:
+          db: mariadb
+      spec:
+        containers:
+        - image: kodekloud/irondb:2.0
+          name: iron-db-container-devops
+          env:
+          - name: MYSQL_DATABASE
+            value: database_web
+          - name: MYSQL_ROOT_PASSWORD
+            value: d8p055W0rD4R00t.
+          - name: MYSQL_PASSWORD
+            value: d8p055W0rD4Us3R0
+          - name: MYSQL_USER
+            value: chxmxii
+          volumeMounts:
+          - name: db
+            mountPath: /var/lib/mysql
+        volumes:
+        - name: db
+          emptyDir: {}
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: iron-db-service-devops
+    namespace: iron-namespace-devops
+  spec: 
+    selector:
+      db: mariadb
+    ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: iron-gallery-service-devops
+    namespace: iron-namespace-devops
+  spec: 
+    type: NodePort
+    selector:
+      run: iron-gallery
+    ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 32678 
+  ```
+---
+## Fix Python App Deployed on Kubernetes Cluster
+
+One of the DevOps engineers was trying to deploy a python app on Kubernetes cluster. Unfortunately, due to some mis-configuration, the application is not coming up. Please take a look into it and fix the issues. Application should be accessible on the specified nodePort.
++ The deployment name is python-deployment-devops, its using poroko/flask-demo-appimage. The deployment and service of this app is already deployed.
++ nodePort should be 32345 and targetPort should be python flask app's default port.
+
+###### Solution;
++ ```shell
+  $ kubectl get deploy -o yaml #notice the image name is not as mentioned in the description; fix that to "poroko/flask-demo-app"
+  $ kubectl get svc # notice the svc is mapping port 8080 instead of port 5000, fix that too!
+  $ kubectl edit svc python-flask-svc #change the port and target port to 5000 and you are good to go!
+  ```
