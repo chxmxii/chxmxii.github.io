@@ -1,5 +1,5 @@
 <!doctype html><html lang=en><link rel=icon href=https://chxmxii.tech/mor.jpg type=image/icontype><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:chxmxii_]"><meta name=description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta name=keywords content=",DevOps,Sysadmin"><meta name=robots content="noodp"><meta name=theme-color content><link rel=canonical href=https://chxmxii.tech/writeups/writeup10.txt/><title>KKE - Kubernetes Challenges :: Mouhib CHVMSI
-</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=https://chxmxii.tech/main.f9efc3f937d6f1177418d008b46474fa1df286cee3b42e861ea657dc0d31f2fe.css><link rel=apple-touch-icon sizes=180x180 href=https://chxmxii.tech/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://chxmxii.tech/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://chxmxii.tech/favicon-16x16.png><link rel=manifest href=https://chxmxii.tech/site.webmanifest><link rel=mask-icon href=https://chxmxii.tech/safari-pinned-tab.svg color><link rel="shortcut icon" href=https://chxmxii.tech/favicon.ico><meta name=msapplication-TileColor content><meta itemprop=name content="KKE - Kubernetes Challenges"><meta itemprop=description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta itemprop=datePublished content="2023-08-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-08-25T00:00:00+00:00"><meta itemprop=wordCount content="8091"><meta itemprop=image content="https://chxmxii.tech"><meta itemprop=keywords content="DevOps,Sysadmin,"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://chxmxii.tech"><meta name=twitter:title content="KKE - Kubernetes Challenges"><meta name=twitter:description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:title" content="KKE - Kubernetes Challenges"><meta property="og:description" content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:type" content="article"><meta property="og:url" content="https://chxmxii.tech/writeups/writeup10.txt/"><meta property="og:image" content="https://chxmxii.tech"><meta property="article:section" content="writeups"><meta property="article:published_time" content="2023-08-25T00:00:00+00:00"><meta property="article:modified_time" content="2023-08-25T00:00:00+00:00"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/09/certifications-exam-notes/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup09.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup04.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup01.txt/"><meta property="article:published_time" content="2023-08-25 00:00:00 +0000 UTC"></head><body><div class=container><header class=header><span class=header__inner><a href=https://chxmxii.tech/ style=text-decoration:none><div class=logo><span class=logo__mark></span><span class=logo__text>C:\Users\chxmxii\</span>
+</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=https://chxmxii.tech/main.f9efc3f937d6f1177418d008b46474fa1df286cee3b42e861ea657dc0d31f2fe.css><link rel=apple-touch-icon sizes=180x180 href=https://chxmxii.tech/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://chxmxii.tech/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://chxmxii.tech/favicon-16x16.png><link rel=manifest href=https://chxmxii.tech/site.webmanifest><link rel=mask-icon href=https://chxmxii.tech/safari-pinned-tab.svg color><link rel="shortcut icon" href=https://chxmxii.tech/favicon.ico><meta name=msapplication-TileColor content><meta itemprop=name content="KKE - Kubernetes Challenges"><meta itemprop=description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta itemprop=datePublished content="2023-08-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-08-25T00:00:00+00:00"><meta itemprop=wordCount content="9924"><meta itemprop=image content="https://chxmxii.tech"><meta itemprop=keywords content="DevOps,Sysadmin,"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://chxmxii.tech"><meta name=twitter:title content="KKE - Kubernetes Challenges"><meta name=twitter:description content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:title" content="KKE - Kubernetes Challenges"><meta property="og:description" content="Create Pods in Kubernetes Cluster The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below: Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i."><meta property="og:type" content="article"><meta property="og:url" content="https://chxmxii.tech/writeups/writeup10.txt/"><meta property="og:image" content="https://chxmxii.tech"><meta property="article:section" content="writeups"><meta property="article:published_time" content="2023-08-25T00:00:00+00:00"><meta property="article:modified_time" content="2023-08-25T00:00:00+00:00"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./"><meta property="og:see_also" content="https://chxmxii.tech/posts/2023/09/certifications-exam-notes/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup09.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup04.txt/"><meta property="og:see_also" content="https://chxmxii.tech/writeups/writeup01.txt/"><meta property="article:published_time" content="2023-08-25 00:00:00 +0000 UTC"></head><body><div class=container><header class=header><span class=header__inner><a href=https://chxmxii.tech/ style=text-decoration:none><div class=logo><span class=logo__mark></span><span class=logo__text>C:\Users\chxmxii\</span>
 <span class=logo__text style=color:#ff3c36>writeup10.txt</span>
 <span class=logo__cursor style=background-color:#ff3c36></span></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=https://chxmxii.tech/about.txt/ style=text-decoration:none class=name>About</a></li><li><a href=https://chxmxii.tech/posts/ style=text-decoration:none class=name>Posts</a></li><li><a href=https://chxmxii.tech/projects/ style=text-decoration:none class=name>Projects</a></li><li><a href=https://chxmxii.tech/writeups/ style=text-decoration:none class=name>Writeups</a></li><li><a href=https://chxmxii.tech/cv.pdf style=text-decoration:none class=name>~Resume</a></li></ul></nav><span class=menu-trigger><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info></p></div><article><h2 class=post-title><a href=https://chxmxii.tech/writeups/writeup10.txt/>KKE - Kubernetes Challenges</a></h2><div class=post-content><h2 id=fileskubepngcenter><img src=https://chxmxii.tech/files/kube.png#center alt></h2><h2 id=create-pods-in-kubernetes-cluster>Create Pods in Kubernetes Cluster</h2><ul><li>The Nautilus DevOps team has started practicing some pods and services deployment on Kubernetes platform as they are planning to migrate most of their applications on Kubernetes platform. Recently one of the team members has been assigned a task to create a pod as per details mentioned below:</li><li>Create a pod named pod-httpd using httpd image with latest tag only and remember to mention the tag i.e httpd:latest.</li><li>Labels app should be set to httpd_app, also container should be named as httpd-container.</li></ul><h6 id=solution>Solution</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
 </span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
@@ -1302,5 +1302,427 @@ value: mysql-service</p></blockquote></li><li><p>Create a config map php-config 
 </span></span></code></pre></div></li></ul><hr><h2 id=fix-python-app-deployed-on-kubernetes-cluster>Fix Python App Deployed on Kubernetes Cluster</h2><p>One of the DevOps engineers was trying to deploy a python app on Kubernetes cluster. Unfortunately, due to some mis-configuration, the application is not coming up. Please take a look into it and fix the issues. Application should be accessible on the specified nodePort.</p><ul><li>The deployment name is python-deployment-devops, its using poroko/flask-demo-appimage. The deployment and service of this app is already deployed.</li><li>nodePort should be 32345 and targetPort should be python flask app&rsquo;s default port.</li></ul><h6 id=solution-32>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ kubectl get deploy -o yaml <span style=color:#75715e>#notice the image name is not as mentioned in the description; fix that to &#34;poroko/flask-demo-app&#34;</span>
 </span></span><span style=display:flex><span>$ kubectl get svc <span style=color:#75715e># notice the svc is mapping port 8080 instead of port 5000, fix that too!</span>
 </span></span><span style=display:flex><span>$ kubectl edit svc python-flask-svc <span style=color:#75715e>#change the port and target port to 5000 and you are good to go!</span>
-</span></span></code></pre></div></li></ul></div></article><hr><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://chxmxii.tech/tags/devops/>DevOps</a></span>
-<span class=tag><a href=https://chxmxii.tech/tags/sysadmin/>Sysadmin</a></span></p></div><div id=particles-js style=position:fixed;inset:0;z-index:-1></div><script src=https://chxmxii.tech/js/particles.min.js></script><script>particlesJS("particles-js",{particles:{number:{value:25,density:{enable:!0,value_area:800}},color:{value:"#424569"},shape:{type:"circle",stroke:{width:0,color:"#ff3f38"},polygon:{nb_sides:5},image:{src:"img/github.svg",width:100,height:100}},opacity:{value:.2305594644660164,random:!1,anim:{enable:!1,speed:1,opacity_min:.1,sync:!1}},size:{value:3,random:!0,anim:{enable:!1,speed:40,size_min:.1,sync:!1}},line_linked:{enable:!0,distance:150,color:"#ff3f38",opacity:.19875815902242794,width:1},move:{enable:!0,speed:6,direction:"none",random:!1,straight:!1,out_mode:"out",bounce:!1,attract:{enable:!1,rotateX:600,rotateY:1200}}},interactivity:{detect_on:"canvas",events:{onhover:{enable:!1,mode:"repulse"},onclick:{enable:!1,mode:"push"},resize:!0},modes:{grab:{distance:400,line_linked:{opacity:1}},bubble:{distance:400,size:40,duration:2,opacity:8,speed:3},repulse:{distance:200,duration:.4},push:{particles_nb:4},remove:{particles_nb:2}}},retina_detect:!0})</script></main></div><footer class=footer><div class=footer__inner><div class=footer__content><span>© All right reserved chxmxii - 2022</span></div></div><div class=footer__inner><div class=footer__content><span></span></div></div></footer></div><script type=text/javascript src=https://chxmxii.tech/bundle.min.ada905442d53eafc5c125b84cffce974e971bcb52433fb67db20c5af5b964cea37ebd2c16ee6457894372eac0911dd0428f88da966c8e885b160fc6c0fe0fed6.js integrity="sha512-rakFRC1T6vxcEluEz/zpdOlxvLUkM/tn2yDFr1uWTOo369LBbuZFeJQ3LqwJEd0EKPiNqWbI6IWxYPxsD+D+1g=="></script></body></html>
+</span></span></code></pre></div><hr></li></ul><h2 id=deploy-redis-deployment-on-kubernetes>Deploy Redis Deployment on Kubernetes</h2><p>The Nautilus application development team observed some performance issues with one of the application that is deployed in Kubernetes cluster. After looking into number of factors, the team has suggested to use some in-memory caching utility for DB service. After number of discussions, they have decided to use Redis. Initially they would like to deploy Redis on kubernetes cluster for testing and later they will move it to production. Please find below more details about the task:</p><ul><li>Create a redis deployment with following parameters:</li><li>Create a config map called my-redis-config having maxmemory 2mb in redis-config.</li><li>Name of the deployment should be redis-deployment, it should use
+redis:alpine image and container name should be redis-container. Also make sure it has only 1 replica.</li><li>The container should request for 1 CPU.</li><li>Mount 2 volumes:</li><li>An Empty directory volume called data at path /redis-master-data.</li><li>A configmap volume called redis-config at path /redis-master.</li><li>The container should expose the port 6379.</li><li>Finally, redis-deployment should be in an up and running state.</li></ul><h6 id=solution-33>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ConfigMap</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>my-redis-config</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>data</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>redis-config</span>: |<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    maxmemory 2mb</span>    
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis-deployment</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis-deployment</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>creationTimestamp</span>: <span style=color:#66d9ef>null</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis-deployment</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>image</span>: <span style=color:#ae81ff>redis:alpine</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-container</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>cpu</span>: <span style=color:#e6db74>&#34;1&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>data</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/redis-master-data</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-config</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/redis-master</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        -  <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>data</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>emptyDir</span>: {}
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-config</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>configMap</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>my-redis-config</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>items</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>key</span>: <span style=color:#ae81ff>redis-config</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>path</span>: <span style=color:#ae81ff>redis.conf </span>
+</span></span></code></pre></div></li></ul><hr><h2 id=heading></h2><p>A new MySQL server needs to be deployed on Kubernetes cluster. The Nautilus DevOps team was working on to gather the requirements. Recently they were able to finalize the requirements and shared them with the team members to start working on it. Below you can find the details:</p><ul><li>Create a PersistentVolume mysql-pv, its capacity should be 250Mi, set other parameters as per your preference.</li><li>Create a PersistentVolumeClaim to request this PersistentVolume storage. Name it as mysql-pv-claim and request a 250Mi of storage. Set other parameters as per your preference.</li><li>Create a deployment named mysql-deployment, use any mysql image as per your preference. Mount the PersistentVolume at mount path /var/lib/mysql.</li><li>Create a NodePort type service named mysql and set nodePort to 30007.</li><li>Create a secret named mysql-root-pass having a key pair value, where key is password and its value is YUIidhb667, create another secret named mysql-user-pass having some key pair values, where frist key is username and its value is kodekloud_joy, second key is password and value is BruCStnMT5, create one more secret named mysql-db-url, key name is database and value is kodekloud_db2<ul><li>Define some Environment variables within the container:</li><li>name: MYSQL_ROOT_PASSWORD, should pick value from secretKeyRef name: mysql-root-pass and key: password</li><li>name: MYSQL_DATABASE, should pick value from secretKeyRef name: mysql-db-url and key: database</li><li>name: MYSQL_USER, should pick value from secretKeyRef name: mysql-user-pass key key: username</li><li>name: MYSQL_PASSWORD, should pick value from secretKeyRef name: mysql-user-pass and key: password</li></ul></li></ul><h6 id=solution-34>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>  <span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>PersistentVolume</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-pv</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>capacity</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>250Mi</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>accessModes</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>ReadWriteOnce</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>hostPath</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;/data&#34;</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>PersistentVolumeClaim</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-pv-claim</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>250Mi</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>accessModes</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>ReadWriteOnce</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-deployment</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-deployment</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-deployment</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-vol-pv</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>persistentVolumeClaim</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>claimName</span>: <span style=color:#ae81ff>mysql-pv-claim</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>image</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-vol-pv</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/var/lib/mysql</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_ROOT_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-root-pass</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_DATABASE</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-db-url</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>database</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_USER</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>username</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>valueFrom</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>secretKeyRef</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-user-pass</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>key</span>: <span style=color:#ae81ff>password</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>mysql-deployment</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>nodePort</span>: <span style=color:#ae81ff>30007</span> 
+</span></span></code></pre></div></li><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ kubectl create secret generic mysql-root-pass --from-literal<span style=color:#f92672>=</span>password<span style=color:#f92672>=</span>YUIidhb667
+</span></span><span style=display:flex><span>$ kubectl create secret generic mysql-user-pass --from-literal<span style=color:#f92672>=</span>username<span style=color:#f92672>=</span>kodekloud_joy --from-literal<span style=color:#f92672>=</span>password<span style=color:#f92672>=</span>BruCStnMT5
+</span></span><span style=display:flex><span>$ kubectl create secret generic mysql-db-url --from-literal<span style=color:#f92672>=</span>database<span style=color:#f92672>=</span>kodekloud_db2µ
+</span></span><span style=display:flex><span>$ kubectl create secret generic mysql-db-url --from literal<span style=color:#f92672>=</span>database<span style=color:#f92672>=</span>kodekloud_db2µ
+</span></span></code></pre></div></li></ul><hr><h2 id=kubernetes-nginx-and-php-fpm-setup>Kubernetes Nginx and Php FPM Setup</h2><p>The Nautilus Application Development team is planning to deploy one of the php-based applications on Kubernetes cluster. As per the recent discussion with DevOps team, they have decided to use nginx and phpfpm. Additionally, they also shared some custom configuration requirements. Below you can find more details. Please complete this task as per requirements mentioned below:</p><ul><li>Create a service to expose this app, the service type must be NodePort, nodePort should be 30012.</li><li>Create a config map named nginx-config for nginx.conf as we want to add some custom settings in nginx.conf.<ul><li>Change the default port 80 to 8093 in nginx.conf.</li><li>Change the default document root /usr/share/nginx to /var/www/html in nginx.conf.</li><li>Update the directory index to index index.html index.htm index.php in nginx.conf.</li></ul></li><li>Create a pod named nginx-phpfpm .</li><li>Create a shared volume named shared-files that will be used by both containers (nginx and phpfpm) also it should be a emptyDir volume.</li><li>Map the ConfigMap we declared above as a volume for nginx container. Name the volume as nginx-config-volume, mount path should be /etc/nginx/nginx.conf and subPath should be nginx.conf</li><li>Nginx container should be named as nginx-container and it should use nginx:latest image. PhpFPM container should be named as php-fpm-container and it should use php:8.2-fpm-alpine image.</li><li>The shared volume shared-files should be mounted at /var/www/html location in both containers. Copy /opt/index.php from jump host to the nginx document root inside the nginx container, once done you can access the app using App button on the top bar.</li></ul><h6 id=solution-35>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>fpm-app</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-phpfpm</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>shared-files</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>emptyDir</span>: {}
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-config-volume</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>configMap</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-config</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-container</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>image</span>: <span style=color:#ae81ff>nginx:latest</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>shared-files</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/var/www/html</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-config-volume</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/etc/nginx/nginx.conf</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>subPath</span>: <span style=color:#ae81ff>nginx.conf</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>phpfpm-container</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>image</span>: <span style=color:#ae81ff>php:8.2-fpm-alpine</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>shared-files</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/var/www/html</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>fpm-svc</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>fpm-svc</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>fpm-app</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>nodePort</span>: <span style=color:#ae81ff>30012</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>port</span>: <span style=color:#ae81ff>8093</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>8093</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ConfigMap</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx-config</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>data</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>nginx.conf</span>: |<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    user nginx;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    worker_processes  1;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    events {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      worker_connections  10240;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    http {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      server {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          listen       8093;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          server_name  localhost;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          location / {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            root   /var/www/html;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            index  index.html index.htm index.php;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }</span>    
+</span></span><span style=display:flex><span><span style=color:#75715e>#k cp /opt/index.php nginx-phpfpm:/var/www/html</span>
+</span></span></code></pre></div></li></ul><hr><h2 id=deploy-drupal-app-on-kubernetes>Deploy Drupal App on Kubernetes</h2><p>We need to deploy a Drupal application on Kubernetes cluster. The Nautilus application development team want to setup a fresh Drupal as they will do the installation on their own. Below you can find the requirements, they have shared with us.</p><ul><li>Configure a persistent volume drupal-mysql-pv with hostPath = /drupal-mysql-data (/drupal-mysql-data directory already exists on the worker Node i.e jump host), 5Gi of storage and ReadWriteOnce access mode.
++Configure one PersistentVolumeClaim named drupal-mysql-pvc with storage request of 3Gi and ReadWriteOnce access mode.</li><li>Create a deployment drupal-mysql with 1 replica, use mysql:5.7 image. Mount the claimed PVC at /var/lib/mysql.
+Create a deployment drupal with 1 replica and use drupal:8.6 image.</li><li>Create a NodePort type service which should be named as drupal-service and nodePort should be 30095.</li><li>Create a service drupal-mysql-service to expose mysql deployment on port 3306.
++Set rest of the configration for deployments, services, secrets etc as per your preferences. At the end you should be able to access the Drupal installation page by clicking on App button.</li></ul><h6 id=solution-36>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>PersistentVolume</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal-mysql-pv</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>capacity</span>: 
+</span></span><span style=display:flex><span>    <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>5Gi</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>accessModes</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>ReadWriteOnce</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>hostPath</span>: 
+</span></span><span style=display:flex><span>    <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/drupal-mysql-data</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>PersistentVolumeClaim</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal-mysql-pvc</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>3Gi</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>accessModes</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>ReadWriteOnce</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal-mysql</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal-mysql</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal-mysql</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal-mysql</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pvc-vol</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>persistentVolumeClaim</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>claimName</span>: <span style=color:#ae81ff>drupal-mysql-pvc</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>image</span>: <span style=color:#ae81ff>mysql:5.7</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>mysql-container</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>volumeMounts</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pvc-vol</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/var/lib/mysql</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#ae81ff>rootpassword</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MYSQL_ROOT_PASSWORD</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#ae81ff>rootpasswordtoo</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>image</span>: <span style=color:#ae81ff>drupal:8.6</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal-container</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal-service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>nodePort</span>: <span style=color:#ae81ff>30095</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drupal-mysql-service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>3306</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>drupal-mysql</span>
+</span></span></code></pre></div></li></ul><hr><h2 id=deploy-guest-book-app-on-kubernetes>Deploy Guest Book App on Kubernetes</h2><p>The Nautilus Application development team has finished development of one of the applications and it is ready for deployment. It is a guestbook application that will be used to manage entries for guests/visitors. As per discussion with the DevOps team, they have finalized the infrastructure that will be deployed on Kubernetes cluster. Below you can find more details about it.</p><h4 id=back-end-tier>BACK-END TIER</h4><ul><li><p>Create a deployment named redis-master for Redis master.</p><ul><li>Replicas count should be 1.</li><li>Container name should be master-redis-nautilus and it should use image redis.</li><li>Request resources as CPU should be 100m and Memory should be 100Mi.</li><li>Container port should be redis default port i.e 6379.</li><li></li></ul></li><li><p>Create a service named redis-master for Redis master. Port and targetPort should be Redis default port i.e 6379.</p></li><li><p>Create another deployment named redis-slave for Redis slave.</p><ul><li>Replicas count should be 2.</li><li>Container name should be slave-redis-nautilus and it should use gcr.io/google_samples/gb-redisslave:v3 image.</li><li>Requests resources as CPU should be 100m and Memory should be 100Mi.</li><li>Define an environment variable named GET_HOSTS_FROM and its value should be dns.</li><li>Container port should be Redis default port i.e 6379.</li></ul></li><li><p>Create another service named redis-slave. It should use Redis default port i.e 6379.</p></li></ul><h4 id=front-end-tier>FRONT END TIER</h4><ul><li><p>Create a deployment named frontend.</p><ul><li>Replicas count should be 3.</li><li>Container name should be php-redis-nautilus and it should use gcr.io/google-samples/gb-frontend@sha256:cbc8ef4b0a2d0b95965e0e7dc8938c270ea98e34ec9d60ea64b2d5f2df2dfbbf image.</li><li>Request resources as CPU should be 100m and Memory should be 100Mi.</li><li>Define an environment variable named as GET_HOSTS_FROM and its value should be dns.</li><li>Container port should be 80.</li></ul></li><li><p>Create a service named frontend. Its type should be NodePort, port should be 80 and its nodePort should be 30009.</p></li></ul><h6 id=solution-37>Solution;</h6><ul><li><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-master</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>master-redis-nautilus</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>cpu</span>: <span style=color:#e6db74>&#34;100m&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>memory</span>: <span style=color:#e6db74>&#34;100Mi&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-master</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>port</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-slave</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis-slave-app</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis-slave-app</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>slave-redis-nautilus</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>gcr.io/google_samples/gb-redisslave:v3</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>cpu</span>: <span style=color:#e6db74>&#34;100m&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>memory</span>: <span style=color:#e6db74>&#34;100Mi&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>GET_HOSTS_FROM </span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#ae81ff>dns</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1 </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>redis-slave</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>redis-slave-app</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>port</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>6379</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>frontend</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>frontend-app</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>frontend-app</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>image</span>: <span style=color:#ae81ff>gcr.io/google-samples/gb-frontend@sha256:cbc8ef4b0a2d0b95965e0e7dc8938c270ea98e34ec9d60ea64b2d5f2df2dfbbf</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>php-redis-nautilus</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>resources</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>requests</span>:
+</span></span><span style=display:flex><span>            <span style=color:#f92672>cpu</span>: <span style=color:#e6db74>&#34;100m&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>memory</span>: <span style=color:#e6db74>&#34;100Mi&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>GET_HOSTS_FROM </span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#ae81ff>dns</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1 </span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>frontend</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>app</span>: <span style=color:#ae81ff>frontend-app</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>protocol</span>: <span style=color:#ae81ff>TCP</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>port</span>: <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>nodePort</span>: <span style=color:#ae81ff>30009</span>
+</span></span></code></pre></div></li></ul><hr><blockquote><p>DONE! DANKE!</p></blockquote></div></article><hr><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg>
+<span class=tag><a href=https://chxmxii.tech/tags/devops/>DevOps</a></span>
+<span class=tag><a href=https://chxmxii.tech/tags/sysadmin/>Sysadmin</a></span></p></div><div id=particles-js style=position:fixed;inset:0;z-index:-1></div><script src=https://chxmxii.tech/js/particles.min.js></script><script>particlesJS("particles-js",{particles:{number:{value:25,density:{enable:!0,value_area:800}},color:{value:"#424569"},shape:{type:"circle",stroke:{width:0,color:"#ff3f38"},polygon:{nb_sides:5},image:{src:"img/github.svg",width:100,height:100}},opacity:{value:.2305594644660164,random:!1,anim:{enable:!1,speed:1,opacity_min:.1,sync:!1}},size:{value:3,random:!0,anim:{enable:!1,speed:40,size_min:.1,sync:!1}},line_linked:{enable:!0,distance:150,color:"#ff3f38",opacity:.19875815902242794,width:1},move:{enable:!0,speed:6,direction:"none",random:!1,straight:!1,out_mode:"out",bounce:!1,attract:{enable:!1,rotateX:600,rotateY:1200}}},interactivity:{detect_on:"canvas",events:{onhover:{enable:!1,mode:"repulse"},onclick:{enable:!1,mode:"push"},resize:!0},modes:{grab:{distance:400,line_linked:{opacity:1}},bubble:{distance:400,size:40,duration:2,opacity:8,speed:3},repulse:{distance:200,duration:.4},push:{particles_nb:4},remove:{particles_nb:2}}},retina_detect:!0})</script></main></div><footer class=footer><div class=footer__inner><div class=footer__content><span>© All right reserved chxmxii - 2022</span></div></div><div class=footer__inner><div class=footer__content><span></span></div></div></footer></div><script type=text/javascript src=https://chxmxii.tech/bundle.min.b1dc444a7108174ae3d2294f982be5e99e844ae2b8d58eeea19d929bde0338be4d12ed8a4dfc67194dcc6726fa6a82705119c0d7e4edd4de9294be6535ea7b7f.js integrity="sha512-sdxESnEIF0rj0ilPmCvl6Z6ESuK41Y7uoZ2Sm94DOL5NEu2KTfxnGU3MZyb6aoJwURnA1+Tt1N6SlL5lNep7fw=="></script></body></html>

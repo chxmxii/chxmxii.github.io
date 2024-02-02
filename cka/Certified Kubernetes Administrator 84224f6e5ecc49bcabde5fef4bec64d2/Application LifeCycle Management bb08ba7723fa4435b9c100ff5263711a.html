@@ -1,0 +1,766 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Application LifeCycle Management</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="bb08ba77-23fa-4435-b9c1-00ff5263711a" class="page sans"><header><img class="page-cover-image" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/k8s.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/logo.png"/></div><h1 class="page-title">Application LifeCycle Management</h1><p class="page-description"></p></header><div class="page-body"><ul id="943c1f78-27e6-4ba0-ba7a-ef5b81612be9" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Rolling Updates and Rollbacks</strong></mark></summary><ul id="325a3fcf-0cc1-4516-8e51-df25c17e8edc" class="bulleted-list"><li style="list-style-type:disc">On the deployment creation, a new rollout creates a deployment revision 1. This can help us keep track of the changes made to our deployment and enable us to roll back to the previous version of deployment if necessary.</li></ul><ul id="0f9f5fa3-6cdb-45d5-8b48-691911bc7cad" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>kubectl rollout status deploy/my-dep</code></mark><mark class="highlight-blue"> </mark>⇒ Check the status of our rollout.</li></ul><ul id="499d1dcd-678d-457a-9b50-0d88b43329ab" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>kubectl rollout history deploy/my-dep</code></mark><mark class="highlight-blue"> </mark>⇒ Check the revisions and history of the rollout. </li></ul><ul id="e6bb0829-4825-49d4-b741-77545f196850" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>kubectl set image deploy/my-dep nginx=nginx:1.8.1</code></mark><mark class="highlight-blue"> </mark>⇒ Upgrade the container image of your application.</li></ul><ul id="6adf0b3e-5016-4968-a3f8-af8b8fd6e15a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>kubectl rollout undo deploy/my-deb</code></mark><mark class="highlight-blue"> </mark>⇒ Roll back to the previous version.</li></ul><ul id="648200ea-ce3d-4e10-91bf-19948b655c66" class="bulleted-list"><li style="list-style-type:disc"><strong>Strategies: </strong><ul id="e8076fa1-b543-490c-a654-5e84fca451c6" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue"><strong>Recreate </strong></mark>⇒ Destroys all the running instances and deploys the new ones. <figure id="22dcb653-1057-44f9-8e9d-48c6806e49be" class="image"><a href="Application%20LifeCycle%20Management%20bb08ba7723fa4435b9c100ff5263711a/Untitled.png"><img style="width:624px" src="Application%20LifeCycle%20Management%20bb08ba7723fa4435b9c100ff5263711a/Untitled.png"/></a></figure></li></ul><ul id="bf8aec93-e55f-4000-8408-56a106b53641" class="bulleted-list"><li style="list-style-type:circle"><strong><mark class="highlight-blue">Rolling Update</mark></strong> ⇒  Destory and deploy the instances one by one. <strong>Default strategy.</strong><figure id="d04a95aa-079e-49e4-b1f4-52de346caca1" class="image"><a href="Application%20LifeCycle%20Management%20bb08ba7723fa4435b9c100ff5263711a/Untitled%201.png"><img style="width:845px" src="Application%20LifeCycle%20Management%20bb08ba7723fa4435b9c100ff5263711a/Untitled%201.png"/></a></figure></li></ul></li></ul></details></li></ul><ul id="e4e74e53-358b-4780-8d37-6abcd907f5fc" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Application Commands &amp; Args</strong></mark></summary><ul id="8fe03902-8192-401d-a487-f12d95e2c60f" class="bulleted-list"><li style="list-style-type:disc">To override the <code>ENTRYPOINT</code> use the <mark class="highlight-blue"><code>command</code></mark> field.</li></ul><ul id="e76a1df7-aaed-4436-a36f-51ed76824f63" class="bulleted-list"><li style="list-style-type:disc">To override the <code>CMD</code> use the <mark class="highlight-blue"><code>args</code></mark> field.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="47014d67-7166-42d6-96ae-3f4428c771c0" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+	name: my-pod
+spec:
+	containers:
+	- image: nginx:1.8.1
+		name: nginx-container
+		command: [&quot;sleep&quot;]
+		args: [&quot;10&quot;]</code></pre></details></li></ul><ul id="d87de4c1-aeab-405f-b122-2166eb2672b3" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Configure Environment Variables</strong></mark></summary><ul id="63c290fa-117b-479f-ac67-c865b9710f31" class="bulleted-list"><li style="list-style-type:disc">Kubernetes allows users to provide env variables when defining Pods.</li></ul><ul id="0c3dafb2-265a-4898-a9ad-3933a6c3a10b" class="bulleted-list"><li style="list-style-type:disc">You can define your vars under the env field.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e5a25872-80a3-4c89-8021-e780c8581465" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+	name: my-pod
+spec:
+	containers:
+	- image: mysql:1.2
+		name: mysql-container
+		env:
+			- name: MYSQL_USER
+				value: chxmxii</code></pre></li></ul></details></li></ul><ul id="80b5035d-ad49-42ea-acbc-c5ffb95d9b16" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Configure ConfigMaps</strong></mark></summary><ul id="22c4c525-5218-4f97-a5f7-fe6b7bb0e0fd" class="bulleted-list"><li style="list-style-type:disc">When managing a lot of pods, it will become difficult to manage the env data stored within the definition files. Thus, Kubernetes uses <strong>ConfigMaps </strong>to manage them centrally. </li></ul><ul id="78cf978e-783a-483c-88b2-4d16c7ff2ec9" class="bulleted-list"><li style="list-style-type:disc"><strong>ConfigMaps</strong> are used to pass configuration data in the form of key-value pairs.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e26fd438-242e-4bd3-ac5f-f14f2f9fe8c7" class="code"><code class="language-YAML">#Imperative way:
+$ kubectl create configmap &lt;cm_name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;
+$ kubectl create configmap &lt;cm_name&gt; --from-file=&lt;file_path&gt;
+#Declartiv approch:
+apiVersion: v1
+kind: ConfigMap
+metadata:
+	name: &lt;cm_name&gt;
+data:
+	&lt;key&gt;:&lt;value&gt;
+...
+#working with configmaps
+$ kubectl create -f .
+$ kubectl get configmaps
+$ kubectl describe configmaps
+#Injecting configmaps in pods
+apiVersion: v1
+kind: Pod
+metadata:
+	name: myApp
+spec:
+	containers:
+	- name: nginx-container
+		image: nginx:latest
+		ports:
+			- containerPort: 8080
+		envFrom:
+			- configMapRef:
+					name: nginx-conf </code></pre></details></li></ul><ul id="80c23889-01c2-4dcd-a718-935d4548a1ad" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Configure Secrets</strong></mark></summary><ul id="5c00e198-070e-49c6-befb-5260d818f41e" class="bulleted-list"><li style="list-style-type:disc">Sometimes you want to store sensitive information like passwords or keys, But storing them within a configMap is not the best choice since they will exposed in plain text. Kubernetes offers another feature <strong><em>Secrets, </em></strong>Which is similar to ConfigMaps but instead, they are used to store data in an encoded or hashed format.</li></ul><ul id="49e03fcd-5d91-49d7-88c1-3e23d11ad17f" class="bulleted-list"><li style="list-style-type:disc">Using Secrets is very simple, just like configMaps you just create them and then you inject them within your pod.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2f07bba2-8605-4e88-9a2c-a55d4841d75b" class="code"><code class="language-YAML">#Imperative way
+$ kubectl create secret &lt;type(usually generic&gt; &lt;secret_name&gt; --from-literal=key=value --from-literal=key1=value1
+$ kubectl create secret &lt;type&gt; &lt;secret_name&gt; --from-fime=/path/to/file
+$ kubectl get secrets
+$ kubectl describe secrets
+#Declarative way
+apiVersion: v1
+kind: Secrets
+metadata:
+	name: &lt;secret_name&gt;
+type: &lt;secret_type&gt; #e.g. Opaque
+data:
+	&lt;key&gt;:&lt;value&gt; #e.g value should be b64 encoded password: bXlwYXNzd29yZA== 
+#Inject secret within a pod
+apiVersion: v1
+kind: Pod
+metadata:
+	name: myPod
+spec:
+	containers: 
+	- image: mysql
+		name: mysql-container
+		envFrom:
+			- secretRef:
+					name: &lt;secret_name&gt;
+#OR you can call values only.
+		env: 
+			- name: MYSQL_PASSWORD
+				valueFrom:
+					secretKeyRef:
+						name: MySQL-secrets
+						key: password</code></pre></li></ul><ul id="5aa7a1a3-7e7b-4396-982c-d00a1d86d94f" class="bulleted-list"><li style="list-style-type:disc"><strong>Type of Secrets</strong><table id="e88af141-404c-4549-a845-3500a00eb603" class="simple-table"><tbody><tr id="01c58adc-5685-4f8e-8ab7-4940a7af708e"><td id="AZRF" class="" style="width:325.9005584716797px"><strong>Built-in Type</strong></td><td id="DWD?" class="" style="width:287.2528381347656px"><strong>Usage</strong></td></tr><tr id="8634f604-152b-42a4-b1f0-1d4f321d3417"><td id="AZRF" class="" style="width:325.9005584716797px">Opaque</td><td id="DWD?" class="" style="width:287.2528381347656px">arbitrary user-defined data</td></tr><tr id="934f926a-e92b-408c-bff4-65fad1479437"><td id="AZRF" class="" style="width:325.9005584716797px"><a href="http://kubernetes.io/service-account-token">kubernetes.io/service-account-token</a></td><td id="DWD?" class="" style="width:287.2528381347656px">ServiceAccount token</td></tr><tr id="4666e5c3-d036-4287-b29f-b53bc5fee68f"><td id="AZRF" class="" style="width:325.9005584716797px">kubernetes.io/dockercfg</td><td id="DWD?" class="" style="width:287.2528381347656px">kubernetes.io/dockercfg</td></tr><tr id="fc666a7e-e244-4dac-a631-a8c53c80aeb0"><td id="AZRF" class="" style="width:325.9005584716797px">kubernetes.io/dockerconfigjson</td><td id="DWD?" class="" style="width:287.2528381347656px">serialized ~/.docker/config.json file</td></tr><tr id="303ae2c5-8b45-4556-b72f-23b99ea6efaf"><td id="AZRF" class="" style="width:325.9005584716797px">kubernetes.io/basic-auth</td><td id="DWD?" class="" style="width:287.2528381347656px">credentials for basic authentication</td></tr><tr id="b09d9d57-9738-4d3f-8f40-1713be0dbbfc"><td id="AZRF" class="" style="width:325.9005584716797px">kubernetes.io/ssh-auth</td><td id="DWD?" class="" style="width:287.2528381347656px">credentials for SSH authentication</td></tr><tr id="3e1b44fe-d5ad-4d35-b372-a9442eca65b9"><td id="AZRF" class="" style="width:325.9005584716797px">kubernetes.io/tls</td><td id="DWD?" class="" style="width:287.2528381347656px">data for a TLS client or server</td></tr><tr id="fdeb2852-67fe-4f7f-a2df-6b21564a7812"><td id="AZRF" class="" style="width:325.9005584716797px">bootstrap.kubernetes.io/token</td><td id="DWD?" class="" style="width:287.2528381347656px">bootstrap token data</td></tr></tbody></table></li></ul></details></li></ul><ul id="cec4bd74-55c9-4420-9d7f-d6c3b9e9f9a4" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Multi Container Pods</strong></mark></summary><ul id="e01a1b85-568f-4cf9-90ae-964ee489cdfc" class="bulleted-list"><li style="list-style-type:disc">A pod is the smallest component in Kubernetes, It can carry from 1 to ++ containers. those containers will share the same network namespace, shared volumes, and the same life cycle which means containers will be created and destroyed together and can refer to each other as <a href="http://localhost">localhost</a>. This way you don’t have to establish volume sharing or services between Pods, to enable communication between them. <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="21279f25-a4be-4ef4-a719-7c9f65726da1" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+	name: my-web-app
+spec:
+	containers:
+	- name: myapp
+		image: myapp
+		ports:
+			- containerPort: 8080
+	- name: queue-listener
+		image: queue-listener</code></pre></li></ul><ul id="8ad3a7c1-7d49-4ffd-ac9f-07cd785becf5" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Design Patterns</strong></mark><ul id="bfb3fd6f-5962-4826-bdaa-6ff24fa4aef5" class="bulleted-list"><li style="list-style-type:circle"><strong>Sidecar pattern</strong><ul id="6ee94fb0-f759-4c28-946c-300a5f09e9c2" class="bulleted-list"><li style="list-style-type:square">Used to enhance or extend the functionality of the main container.</li></ul><ul id="6d9843a5-6b48-441a-ab7b-aedfcaac14bc" class="bulleted-list"><li style="list-style-type:square">e.g. logging utilities, sync services, watchers, and monitoring agents.</li></ul></li></ul><ul id="30d6fc3c-05cd-4eae-85b6-89453afa4e90" class="bulleted-list"><li style="list-style-type:circle"><strong>Adaptor pattern</strong><ul id="b622fb09-9abb-47b0-8f80-cd1e32277ac8" class="bulleted-list"><li style="list-style-type:square">Used to reformat the output by the primary container in a specific manner that fits the standards across your apps. It acts as a reverse proxy.</li></ul><ul id="2b12d4e9-7e82-4099-9af4-f2b6f148748f" class="bulleted-list"><li style="list-style-type:square">e.g. prometheus-exporter</li></ul></li></ul><ul id="e988fbc9-b675-466f-ba66-9fcadc6f0bfb" class="bulleted-list"><li style="list-style-type:circle"><strong>Ambassador pattern</strong><ul id="73f78334-35aa-44a8-8f01-d29e494030e0" class="bulleted-list"><li style="list-style-type:square">Used to send network requests on behalf of the main application. It acts as a client proxy.</li></ul></li></ul></li></ul></details></li></ul><p id="ad588c57-15e7-4db4-8869-cb45bee058b2" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
