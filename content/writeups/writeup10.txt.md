@@ -1830,3 +1830,535 @@ One of the DevOps engineers was trying to deploy a python app on Kubernetes clus
   $ kubectl get svc # notice the svc is mapping port 8080 instead of port 5000, fix that too!
   $ kubectl edit svc python-flask-svc #change the port and target port to 5000 and you are good to go!
   ```
+  ----
+## Deploy Redis Deployment on Kubernetes
+
+The Nautilus application development team observed some performance issues with one of the application that is deployed in Kubernetes cluster. After looking into number of factors, the team has suggested to use some in-memory caching utility for DB service. After number of discussions, they have decided to use Redis. Initially they would like to deploy Redis on kubernetes cluster for testing and later they will move it to production. Please find below more details about the task:
++ Create a redis deployment with following parameters:
++ Create a config map called my-redis-config having maxmemory 2mb in redis-config.
++ Name of the deployment should be redis-deployment, it should use
+redis:alpine image and container name should be redis-container. Also make sure it has only 1 replica.
++ The container should request for 1 CPU.
++ Mount 2 volumes:
++ An Empty directory volume called data at path /redis-master-data.
++ A configmap volume called redis-config at path /redis-master.
++ The container should expose the port 6379.
++ Finally, redis-deployment should be in an up and running state.
+
+###### Solution;
+
++ ```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: my-redis-config
+  data:
+    redis-config: |
+      maxmemory 2mb
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: redis-deployment
+    name: redis-deployment
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: redis-deployment
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: redis-deployment
+      spec:
+        containers:
+        - image: redis:alpine
+          name: redis-container
+          resources:
+            requests:
+              cpu: "1"
+          volumeMounts:
+          - name: data
+            mountPath: /redis-master-data
+          - name: redis-config
+            mountPath: /redis-master
+          ports:
+          -  containerPort: 6379
+        volumes:
+        - name: data
+          emptyDir: {}
+        - name: redis-config
+          configMap:
+            name: my-redis-config
+            items:
+            - key: redis-config
+              path: redis.conf 
+  ```
+---
+##
+
+A new MySQL server needs to be deployed on Kubernetes cluster. The Nautilus DevOps team was working on to gather the requirements. Recently they were able to finalize the requirements and shared them with the team members to start working on it. Below you can find the details:
+
++ Create a PersistentVolume mysql-pv, its capacity should be 250Mi, set other parameters as per your preference.
++ Create a PersistentVolumeClaim to request this PersistentVolume storage. Name it as mysql-pv-claim and request a 250Mi of storage. Set other parameters as per your preference.
++ Create a deployment named mysql-deployment, use any mysql image as per your preference. Mount the PersistentVolume at mount path /var/lib/mysql.
++ Create a NodePort type service named mysql and set nodePort to 30007.
++ Create a secret named mysql-root-pass having a key pair value, where key is password and its value is YUIidhb667, create another secret named mysql-user-pass having some key pair values, where frist key is username and its value is kodekloud_joy, second key is password and value is BruCStnMT5, create one more secret named mysql-db-url, key name is database and value is kodekloud_db2
+  + Define some Environment variables within the container:
+  + name: MYSQL_ROOT_PASSWORD, should pick value from secretKeyRef name: mysql-root-pass and key: password
+  + name: MYSQL_DATABASE, should pick value from secretKeyRef name: mysql-db-url and key: database
+  + name: MYSQL_USER, should pick value from secretKeyRef name: mysql-user-pass key key: username
+  + name: MYSQL_PASSWORD, should pick value from secretKeyRef name: mysql-user-pass and key: password
+
+###### Solution;
++ ```yaml
+    apiVersion: v1
+    kind: PersistentVolume
+  metadata:
+    name: mysql-pv
+  spec:
+    capacity:
+      storage: 250Mi
+    accessModes:
+    - ReadWriteOnce
+    hostPath:
+      path: "/data"
+  ---
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: mysql-pv-claim
+  spec:
+    resources:
+      requests:
+        storage: 250Mi
+    accessModes:
+    - ReadWriteOnce
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: mysql-deployment
+    name: mysql-deployment
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: mysql-deployment
+    template:
+      metadata:
+        labels:
+          app: mysql-deployment
+      spec:
+        volumes:
+        - name: mysql-vol-pv
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+        containers:
+        - image: mysql
+          name: mysql
+          volumeMounts:
+            - name: mysql-vol-pv
+              mountPath: /var/lib/mysql
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-root-pass
+                key: password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-db-url
+                key: database
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-user-pass
+                key: username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-user-pass
+                key: password
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: mysql
+  spec:
+    type: NodePort
+    selector:
+      app: mysql-deployment
+    ports:
+    - port: 3306
+      nodePort: 30007 
+  ```
+
++ ```shell
+  $ kubectl create secret generic mysql-root-pass --from-literal=password=YUIidhb667
+  $ kubectl create secret generic mysql-user-pass --from-literal=username=kodekloud_joy --from-literal=password=BruCStnMT5
+  $ kubectl create secret generic mysql-db-url --from-literal=database=kodekloud_db2µ
+  $ kubectl create secret generic mysql-db-url --from literal=database=kodekloud_db2µ
+  ```
+---
+## Kubernetes Nginx and Php FPM Setup
+
+The Nautilus Application Development team is planning to deploy one of the php-based applications on Kubernetes cluster. As per the recent discussion with DevOps team, they have decided to use nginx and phpfpm. Additionally, they also shared some custom configuration requirements. Below you can find more details. Please complete this task as per requirements mentioned below:
++ Create a service to expose this app, the service type must be NodePort, nodePort should be 30012.
++ Create a config map named nginx-config for nginx.conf as we want to add some custom settings in nginx.conf.
+  + Change the default port 80 to 8093 in nginx.conf.
+  + Change the default document root /usr/share/nginx to /var/www/html in nginx.conf.
+  + Update the directory index to index index.html index.htm index.php in nginx.conf.
++ Create a pod named nginx-phpfpm .
++ Create a shared volume named shared-files that will be used by both containers (nginx and phpfpm) also it should be a emptyDir volume.
++ Map the ConfigMap we declared above as a volume for nginx container. Name the volume as nginx-config-volume, mount path should be /etc/nginx/nginx.conf and subPath should be nginx.conf
++ Nginx container should be named as nginx-container and it should use nginx:latest image. PhpFPM container should be named as php-fpm-container and it should use php:8.2-fpm-alpine image.
++ The shared volume shared-files should be mounted at /var/www/html location in both containers. Copy /opt/index.php from jump host to the nginx document root inside the nginx container, once done you can access the app using App button on the top bar.
+
+###### Solution; 
++ ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    labels:
+      app: fpm-app
+    name: nginx-phpfpm
+  spec:
+    volumes:
+      - name: shared-files
+        emptyDir: {}
+      - name: nginx-config-volume
+        configMap:
+          name: nginx-config
+    containers:
+      - name: nginx-container
+        image: nginx:latest
+        volumeMounts:
+          - name: shared-files
+            mountPath: /var/www/html
+          - name: nginx-config-volume
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+      - name: phpfpm-container
+        image: php:8.2-fpm-alpine
+        volumeMounts:
+          - name: shared-files
+            mountPath: /var/www/html
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: fpm-svc
+    name: fpm-svc
+  spec:
+    type: NodePort
+    selector:
+      app: fpm-app
+    ports:
+    - nodePort: 30012
+      port: 8093
+      protocol: TCP
+      targetPort: 8093
+  ---
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: nginx-config
+  data:
+    nginx.conf: |
+      user nginx;
+      worker_processes  1;
+      events {
+        worker_connections  10240;
+      }
+      http {
+        server {
+            listen       8093;
+            server_name  localhost;
+            location / {
+              root   /var/www/html;
+              index  index.html index.htm index.php;
+          }
+        }
+      }
+  #k cp /opt/index.php nginx-phpfpm:/var/www/html
+  ```
+----
+
+## Deploy Drupal App on Kubernetes
+
+We need to deploy a Drupal application on Kubernetes cluster. The Nautilus application development team want to setup a fresh Drupal as they will do the installation on their own. Below you can find the requirements, they have shared with us.
++ Configure a persistent volume drupal-mysql-pv with hostPath = /drupal-mysql-data (/drupal-mysql-data directory already exists on the worker Node i.e jump host), 5Gi of storage and ReadWriteOnce access mode.
++Configure one PersistentVolumeClaim named drupal-mysql-pvc with storage request of 3Gi and ReadWriteOnce access mode.
++ Create a deployment drupal-mysql with 1 replica, use mysql:5.7 image. Mount the claimed PVC at /var/lib/mysql.
+  Create a deployment drupal with 1 replica and use drupal:8.6 image.
++ Create a NodePort type service which should be named as drupal-service and nodePort should be 30095.
++ Create a service drupal-mysql-service to expose mysql deployment on port 3306.
++Set rest of the configration for deployments, services, secrets etc as per your preferences. At the end you should be able to access the Drupal installation page by clicking on App button.
+
+###### Solution;
++ ```yaml
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: drupal-mysql-pv
+  spec:
+    capacity: 
+      storage: 5Gi
+    accessModes:
+    - ReadWriteOnce
+    hostPath: 
+      path: /drupal-mysql-data
+  ---
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: drupal-mysql-pvc
+  spec:
+    resources:
+      requests:
+        storage: 3Gi
+    accessModes:
+    - ReadWriteOnce
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: drupal-mysql
+    name: drupal-mysql
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: drupal-mysql
+    template:
+      metadata:
+        labels:
+          app: drupal-mysql
+      spec:
+        volumes:
+        - name: pvc-vol
+          persistentVolumeClaim:
+            claimName: drupal-mysql-pvc
+        containers:
+        - image: mysql:5.7
+          name: mysql-container
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+          - name: pvc-vol
+            mountPath: /var/lib/mysql
+          env:
+          - name: MYSQL_PASSWORD
+            value: rootpassword
+          - name: MYSQL_ROOT_PASSWORD
+            value: rootpasswordtoo
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: drupal
+    name: drupal
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: drupal
+    template:
+      metadata:
+        labels:
+          app: drupal
+      spec:
+        containers:
+        - image: drupal:8.6
+          name: drupal-container
+          ports:
+            - containerPort: 80
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: drupal-service
+  spec:
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 30095
+    selector:
+      app: drupal
+    type: NodePort
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: drupal-mysql-service
+  spec:
+    ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: 3306
+    selector:
+      app: drupal-mysql
+  ```
+---
+## Deploy Guest Book App on Kubernetes
+
+The Nautilus Application development team has finished development of one of the applications and it is ready for deployment. It is a guestbook application that will be used to manage entries for guests/visitors. As per discussion with the DevOps team, they have finalized the infrastructure that will be deployed on Kubernetes cluster. Below you can find more details about it.
+
+#### BACK-END TIER
+
++ Create a deployment named redis-master for Redis master.
+  + Replicas count should be 1.
+  + Container name should be master-redis-nautilus and it should use image redis.
+  + Request resources as CPU should be 100m and Memory should be 100Mi.
+  + Container port should be redis default port i.e 6379.
+  + 
++ Create a service named redis-master for Redis master. Port and targetPort should be Redis default port i.e 6379.
+
++ Create another deployment named redis-slave for Redis slave.
+  + Replicas count should be 2.
+  + Container name should be slave-redis-nautilus and it should use gcr.io/google_samples/gb-redisslave:v3 image.
+  + Requests resources as CPU should be 100m and Memory should be 100Mi.
+  + Define an environment variable named GET_HOSTS_FROM and its value should be dns.
+  + Container port should be Redis default port i.e 6379.
+
++ Create another service named redis-slave. It should use Redis default port i.e 6379.
+
+#### FRONT END TIER
+
++ Create a deployment named frontend.
+  + Replicas count should be 3.
+  + Container name should be php-redis-nautilus and it should use gcr.io/google-samples/gb-frontend@sha256:cbc8ef4b0a2d0b95965e0e7dc8938c270ea98e34ec9d60ea64b2d5f2df2dfbbf image.
+  + Request resources as CPU should be 100m and Memory should be 100Mi.
+  + Define an environment variable named as GET_HOSTS_FROM and its value should be dns.
+  + Container port should be 80.
+
++ Create a service named frontend. Its type should be NodePort, port should be 80 and its nodePort should be 30009.
+
+###### Solution;
++ ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: redis-master
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: redis
+    template:
+      metadata:
+        labels:
+          app: redis
+      spec:
+        containers:
+        - name: master-redis-nautilus
+          image: redis
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+          ports:
+          - containerPort: 6379
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: redis-master
+  spec:
+    selector:
+      app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: redis-slave
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: redis-slave-app
+    template:
+      metadata:
+        labels:
+          app: redis-slave-app
+      spec:
+        containers:
+        - name: slave-redis-nautilus
+          image: gcr.io/google_samples/gb-redisslave:v3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+          env:
+          - name: GET_HOSTS_FROM 
+            value: dns
+          ports:
+          - containerPort: 6379
+  ---
+  apiVersion: v1 
+  kind: Service
+  metadata:
+    name: redis-slave
+  spec:
+    selector:
+      app: redis-slave-app
+    ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: frontend
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: frontend-app
+    template:
+      metadata:
+        labels:
+          app: frontend-app
+      spec:
+        containers:
+        - image: gcr.io/google-samples/gb-frontend@sha256:cbc8ef4b0a2d0b95965e0e7dc8938c270ea98e34ec9d60ea64b2d5f2df2dfbbf
+          name: php-redis-nautilus
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+          env:
+          - name: GET_HOSTS_FROM 
+            value: dns
+          ports:
+          - containerPort: 80
+  ---
+  apiVersion: v1 
+  kind: Service
+  metadata:
+    name: frontend
+  spec:
+    type: NodePort
+    selector:
+      app: frontend-app
+    ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30009
+  ```
+---
+> DONE! DANKE!

@@ -23,6 +23,6 @@ series:
     
 - [AWS CCP Exam Notes and tips](https://chxmxii.gitbook.io/aws-ccp/)
 
-- [Certified Kubernetes Administrator](https://chxmxii.tech) 
+- [Certified Kubernetes Administrator](https://chxmxii.tech/cka/cka.html) 
 
 - [Terraform Certified Associate](https://chxmxii.tech/terraform/main.html)

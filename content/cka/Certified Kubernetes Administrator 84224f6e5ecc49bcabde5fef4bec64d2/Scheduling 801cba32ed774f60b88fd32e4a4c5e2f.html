@@ -1,0 +1,826 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Scheduling </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="801cba32-ed77-4f60-b88f-d32e4a4c5e2f" class="page sans"><header><img class="page-cover-image" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/k8s.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/logo.png"/></div><h1 class="page-title">Scheduling </h1><p class="page-description"></p></header><div class="page-body"><ul id="2801d4a6-480d-4763-8681-ceed111be7f9" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Manual Scheduling</mark></strong></summary><ul id="dcdbc832-704d-478f-8c79-93b7326b7bf8" class="bulleted-list"><li style="list-style-type:disc">When you don’t specify the <mark class="highlight-blue"><code>nodeName</code></mark> field while creating the manifest, Kubernetes automatically adds it. </li></ul><ul id="233c00bc-fa47-40a6-95f3-204db1ffaa19" class="bulleted-list"><li style="list-style-type:disc">Without a Scheduler, the easiest way to schedule a pod is to simply set the nodeName field within your Pod manifest file.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f450d110-d73d-4bb7-8366-a076d29a28e2" class="code"><code class="language-YAML">apiVersion: v1 
+kind: Pod
+metadata:
+	name: egschudling
+spec:
+	containers:
+	- image: busybox
+		name: testsch
+	nodeName: node01</code></pre></li></ul><ul id="b8a5a4ef-f458-4b1f-97ff-ac78b4907c49" class="bulleted-list"><li style="list-style-type:disc">You can also assign the Pod to another node after creation, Kubernetes won’t let you modify the <mark class="highlight-blue"><code>nodeName</code></mark> property of the Pod, hence, you will have to create a Binding object and send a <strong>POST</strong> request to the <strong>POD Binding API</strong>.<p id="91754dcb-839a-4f9f-8d7f-31998deb3594" class=""> </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3906f5fe-3cff-4a4b-8135-b9e796fa08c9" class="code"><code class="language-YAML">apiVersion: v1
+kind: Binding
+metadata:
+  name: nginx
+
+target:
+  apiVersion: v1
+  kind: Node
+  name: node02
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a97a9bf3-de99-4bac-94d1-a258523845b7" class="code"><code class="language-Shell">curl --header &quot;Content-Type: application/json&quot; --request POST --data
+&#x27;{
+  &quot;apiVersion&quot;: &quot;v1&quot;,
+  &quot;kind&quot;: &quot;Binding&quot;,
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;nginx&quot;
+  },
+  &quot;target&quot;: {
+    &quot;apiVersion&quot;: &quot;v1&quot;,
+    &quot;kind&quot;: &quot;Node&quot;,
+    &quot;name&quot;: &quot;node02&quot;
+  }
+}&#x27; http://$SERVER/api/v1/namespaces/dafault/pods/$PODNAME/binding</code></pre></li></ul></details></li></ul><ul id="f382ead6-190b-439f-9204-0a8e5a4fa423" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Labels and Selectors</mark></strong></summary><ul id="0d0ecda0-6f12-4e2e-9957-24141ee95d0b" class="bulleted-list"><li style="list-style-type:disc">To make it easy to manage objects, Kubernetes uses <strong>Labels</strong> and <strong>Selectors</strong> to group and connect things together.<br/><br/></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="290326c1-e5eb-4849-a795-6cb02cc56ce6" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+	name: nginx
+	labels:
+		app: App1
+		function: Front-end
+spec:
+	containers:
+	- name: frontend
+		image: nginx
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+	name: simple-webapp
+	labels:
+		app: App1
+		function: Front-end
+	annotations:
+     buildversion: 1.34
+spec:
+	replicas: 2
+	selectors:
+		matchLabels:
+			app: App1
+	template:
+		metadata:
+			name: nginx
+			labels:
+				app: App1
+				function: Front-end
+		spec:
+			containers:
+			- name: frontend
+				image: nginx</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f31e241b-48dc-49bc-a7f4-a36c3a707ba9" class="code"><code class="language-Shell">$ kubectl get pods --selector app=App1</code></pre><ul id="a2831481-55b7-44d8-9180-ef8c06f44568" class="bulleted-list"><li style="list-style-type:disc">While labels and selectors are used to group objects together, annotations are used to record other details for informative purposes.</li></ul></details></li></ul><ul id="9afd3a7b-ac0e-4b0f-bf78-b6b34afe4a2e" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Taints and tolerations</strong></mark></summary><ul id="66befd30-07ed-431a-8889-903b1fdd2c43" class="bulleted-list"><li style="list-style-type:disc">Taints and tolerations are mainly used to make sure that <mark class="highlight-blue"><strong>Pods </strong></mark>are placed on the appropriate <strong><mark class="highlight-blue">Node.</mark></strong></li></ul><ul id="d3d73315-57f3-43fe-8f38-e34ca3207c6d" class="bulleted-list"><li style="list-style-type:disc">You can taint a Node using the following command → <mark class="highlight-blue"><code>$ </code></mark><mark class="highlight-default"><code>kubectl</code></mark><mark class="highlight-blue"><code> taint </code></mark><mark class="highlight-default"><code>nodes </code></mark><mark class="highlight-blue"><code>[NODE_NAME] [KEY]</code></mark><mark class="highlight-default"><code>=</code></mark><mark class="highlight-blue"><code>[VALUE]</code></mark><mark class="highlight-default"><code>:</code></mark><mark class="highlight-blue"><code>[TAINT-EFFECT]</code></mark><ul id="12844c85-4870-48dd-944e-69a8f31a12c4" class="bulleted-list"><li style="list-style-type:circle">Taint effects define how nodes should react to pods that don’t tolerate it.<ul id="35730c2d-817e-4fe5-993f-0bd5435cc0d3" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-blue"><strong>NoSchedule </strong></mark>→ Instructs Kubernetes not to schedule any new pods to the node unless the pod tolerates the node. </li></ul><ul id="0cd8535a-5b79-43fb-a027-4981c6bbf9d6" class="bulleted-list"><li style="list-style-type:square"><strong><mark class="highlight-blue">PreferNoSchedule</mark></strong> → Will only schedule the Pod if there is no suitable untainted node found.  </li></ul><ul id="52287478-8ce8-4d19-a827-bb8494ad8aec" class="bulleted-list"><li style="list-style-type:square"><strong><mark class="highlight-blue">NoExecute</mark></strong> → Will not schedule new pods, existing pods will be evicted.</li></ul></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a91394a0-672a-4615-aaa2-43c021cd9153" class="code"><code class="language-Shell">// e.g to taint and untaint a node.
+$ kubectl taint node node01 app=blue:NoSchedule
+// untaint the node by adding [-]
+$ kubectl taint node node01 app=blue:NoSchedule-</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e0a63fad-e821-48eb-81bd-6ca1c073a5af" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata: 
+	name: myapp-prod
+spec:
+	containers:
+	- name: nginx
+		image: nginx:latest
+	tolerations:
+	- key: &quot;app&quot;
+		operator: &quot;Equal&quot;
+		value: &quot;blue&quot;
+		effect: &quot;NoSchedule&quot;</code></pre><p id="728ee41e-4f9e-4bb1-9599-3baea1a52c1e" class="">⇒ <strong>Taints and Tolerations do not tell the pod to go to a particular node. Instead, they tell the node to only accept pods with certain tolerations.</strong></p></li></ul></details></li></ul><ul id="f900db2c-e484-4c8f-8671-633e6990f44a" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Node Selectors</strong></mark></summary><ul id="39318bc9-dc5a-432c-baa5-b2775ff1a731" class="bulleted-list"><li style="list-style-type:disc">A simple Pod scheduling feature that allows scheduling Pod onto a Node whose labels match the Node Selector labels specified by the user  </li></ul><ul id="8de8fe93-70cc-44d3-89a4-4a4b109d77a2" class="bulleted-list"><li style="list-style-type:disc">You can label a node using the following command → <mark class="highlight-default"><code>$ kubectl </code></mark><mark class="highlight-blue"><code>label </code></mark><mark class="highlight-default"><code>nodes &lt;node-name&gt; </code></mark><mark class="highlight-blue"><code>&lt;label-key&gt;=&lt;label-value&gt;</code></mark></li></ul><ul id="2db86685-90f7-4023-b46c-f8d3b8d0df34" class="bulleted-list"><li style="list-style-type:disc">You can specify the appropriate node by adding the <mark class="highlight-blue"><code>nodeSelector</code></mark> field within your Pod definition file.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="61e381cc-73ff-44f4-bc30-88e3e802c0e0" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+	name: testpod
+spec:
+	containers:
+	- name: mycont
+		image: busybox
+	nodeSelector:
+		size: large</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="84c21d6a-c2f4-42dd-8abf-cde0b378574b" class="code"><code class="language-YAML">$ kubectl label node node01 size=large</code></pre></li></ul></details></li></ul><ul id="5fb627db-1991-4b9c-afd0-c20098984e3d" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Node affinity</mark></strong></summary><ul id="0d907e23-31c9-4b06-98db-dc8c81432442" class="bulleted-list"><li style="list-style-type:disc">Node affinity ensures that Pods are only scheduled on particular nodes.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="87a37d73-19ca-4ffd-9e37-dea498645f3c" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+	name: my-pod
+spec:
+	containers:
+	- name: nginx-cont
+		image: nginx
+	affinity:
+		nodeAffinity:
+			requiredDuringSchedulingIgnoredDuringExecution: 
+				nodeSelectorTerms:
+				- matchExpression:
+					- key: size
+						operator: In
+						values:
+						- Large
+						- Medium</code></pre></li></ul><ul id="c3dc35e9-70e7-4ec2-9e31-bf1ecda051e8" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Node affinity types:</strong></mark><ul id="2b872bbc-c6c5-4995-89a4-c5fb58be575d" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">required</mark><strong>DuringScheduling</strong><mark class="highlight-blue">Ignored</mark><strong>During</strong><mark class="highlight-blue">Execution</mark><ul id="c2514331-a4b9-45c6-98b5-cc1cd003f3a6" class="bulleted-list"><li style="list-style-type:square">Used when the placement of Pod is crucial, If matching node does not exist the Pod will not be schedule. </li></ul></li></ul><ul id="252087aa-bddb-4792-96f0-bab3f2810768" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue">preferred</mark><strong>DuringScheduling</strong><mark class="highlight-blue">Ignored</mark><strong>During</strong><mark class="highlight-blue">Execution</mark><ul id="fead4ceb-0774-498d-a8e5-fad0c29bdc87" class="bulleted-list"><li style="list-style-type:square">Used when the placement of Pod not as important as running the workloa, It simply ignores the node affinity rules and place the Pod on any available node. </li></ul></li></ul><p id="c7fb8352-36d0-4f21-a5c4-9feaba30aeeb" class="">⇒ <strong></strong><mark class="highlight-blue"><code><strong>IgnoredDuringExecution</strong></code></mark><mark class="highlight-blue"><strong> </strong></mark><strong>means that if the node labels change after Kubernetes schedules the Pod, the Pod continues to run.</strong></p></li></ul><ul id="c4ec2c1c-8d16-47af-86e4-1b6199380b55" class="bulleted-list"><li style="list-style-type:disc"><strong><mark class="highlight-blue">Operators:</mark></strong><table id="40b7fe61-afa9-4004-a290-52ed8b1fa501" class="simple-table"><tbody><tr id="301b292d-228f-4aea-90bb-62aa301af9cd"><td id="xyE?" class="" style="width:159.9971466064453px"><strong>Operator</strong></td><td id="muz~" class="" style="width:481.9942932128906px"><strong>Behavior</strong></td></tr><tr id="5bfe8135-df97-4845-b62c-3e77de8f1db8"><td id="xyE?" class="" style="width:159.9971466064453px">In</td><td id="muz~" class="" style="width:481.9942932128906px">The label value is present in the supplied set of strings</td></tr><tr id="5e727c73-090c-4c5e-bf18-1a71a4a9140c"><td id="xyE?" class="" style="width:159.9971466064453px">NotIn</td><td id="muz~" class="" style="width:481.9942932128906px">The label value is not present in the supplied set of strings</td></tr><tr id="c1a54fdd-90b1-4d46-896d-1beaae7a7815"><td id="xyE?" class="" style="width:159.9971466064453px">Exists</td><td id="muz~" class="" style="width:481.9942932128906px">A label with this key exists on the object</td></tr><tr id="6ddc3f64-55c5-4967-9d24-f5a519b45200"><td id="xyE?" class="" style="width:159.9971466064453px">DoesNotExist</td><td id="muz~" class="" style="width:481.9942932128906px">No label with this key exists on the object</td></tr><tr id="ec096fff-1ed7-4822-941d-06b8820c63e2"><td id="xyE?" class="" style="width:159.9971466064453px">Gt (nodeAffinity only)</td><td id="muz~" class="" style="width:481.9942932128906px">The supplied value will be parsed as an integer, and that integer is less than the integer that results from parsing the value of a label named by this selector</td></tr><tr id="916f1998-10e2-4525-8871-df18e30e356d"><td id="xyE?" class="" style="width:159.9971466064453px">Lt (nodeAffinity only)</td><td id="muz~" class="" style="width:481.9942932128906px">The supplied value will be parsed as an integer, and that integer is greater than the integer that results from parsing the value of a label named by this selector</td></tr></tbody></table></li></ul></details></li></ul><ul id="aee36c7a-3699-4719-bf2f-ecd4c181276a" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">DaemonSets</mark></strong></summary><ul id="a0adb375-18ff-43d6-9745-cd6ab3bd83e0" class="bulleted-list"><li style="list-style-type:disc"><strong>DaemonSets </strong>ensures that one copy of a <strong>Pod </strong>is present and running in all nodes within the cluster. and when a <strong>node </strong>is removed the <strong>Pod </strong>is automatically removed too. good e.g. of a <strong>DaemonSet </strong>is <strong>kube-proxy.</strong></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="00cda305-783b-433f-9dbb-5a3de74b40d4" class="code"><code class="language-YAML">## DaemonSet Definition file
+apiVersion: v1
+kind: DaemonSet
+metadata:
+	name: monitoring-daemon
+spec:
+	template:
+		metadata:	
+			labels:
+				app: monitoring-agent
+		selectors:	
+			matchLabels:
+				app: monitoring-agent	
+		containers:
+		- name: monitoring-agent-container
+			image: monitoring-agent:latest</code></pre></details></li></ul><ul id="526e6e64-d086-4634-81d1-e0b6324dab1b" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Static Pods</mark></strong></summary><ul id="264d2dca-1f85-4054-a2d1-96719b99455e" class="bulleted-list"><li style="list-style-type:disc">Statics Pods are a type of pod that is not managed via the Kube-API server, instead, it is directly bound to the Kubelet agent on the node.</li></ul><ul id="88e4d476-0047-406b-9587-67492b9fd81d" class="bulleted-list"><li style="list-style-type:disc">Note that with the presence of the API server, the static pods running on a node are visible on the API server with the format <mark class="highlight-blue"><code>&lt;container-name&gt;-&lt;node-name&gt;</code></mark> but cannot be controlled by the API server.</li></ul><ul id="c4250b05-d937-49ba-b749-d4d663c61093" class="bulleted-list"><li style="list-style-type:disc">It is important to note that Kubelet can manage the PODS on its own, one requirement is to have a container engine to run the containers. Suppose there is no API server to send the instructions. In that case, you can configure Kubelet to read the POD definitions from a directory on the server designated to store information about Pods. Kubelet will periodically check the directory for files, read them, create them on the host, and eventually ensure they stay alive, Kubelet will also delete the pods once the file is removed.</li></ul><ul id="d0134d9c-1cab-4f76-a852-8d8f91817645" class="bulleted-list"><li style="list-style-type:disc">You can store the Pods manifest in any Dir, make sure you pass the path to that folder as an option while running the Kubelet.service <mark class="highlight-blue"><code>--pod-manifest-path=/etc/Kubernetes/manifests</code></mark>.<mark class="highlight-blue"> </mark><figure id="d81106dc-18dc-4c19-bbaa-28a9f2d31f12" class="image"><a href="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/Untitled.png"><img style="width:651px" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/Untitled.png"/></a></figure><p id="c326c95d-28b0-4e10-809d-eb4347ff25f4" class="">Another way to configure this is by providing another config file using the <code>--config</code> option and defining the Dir path as a static pod path in that file <mark class="highlight-blue"><code>staticPodPath=/etc/kubernetes/manifests</code></mark>.</p></li></ul><ul id="58754444-1c81-4421-a1ef-bf4a07a9663c" class="bulleted-list"><li style="list-style-type:disc">Once the static pods are created you can check them using <mark class="highlight-blue">docker CLI.</mark><p id="e4c88441-2c8a-4b6a-a54d-dbcfe0bf2b4c" class="">⇒ You can use Static Pods to deploy the control plane components as Pods on the node.</p></li></ul></details></li></ul><ul id="5f7723fc-2efc-44a3-9b2b-c593a59d8ceb" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Multiple Schedulers </mark></strong></summary><ul id="1383d82f-7bc0-40cb-9a4a-d23ddbf000df" class="bulleted-list"><li style="list-style-type:disc">Kubernetes allows you to create custom schedulers and use them as the default scheduler or an additional scheduler in the K8S cluster. That way you can instruct Kubernetes to use a specific scheduler when creating the POD. <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ab450ee2-cafe-461b-829d-351e7b7241bd" class="code"><code class="language-YAML">$ cat /etc/kubernetes/manifests/my-custom-kube-scheduler.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-scheduler
+  namespace: kube-system
+spec:
+  containers:
+  - command: 
+    - kube-scheduler
+    - --address=127.0.0.127
+    - --kubeconfig=/etc/kubernetes/scheduler.--kubeconfig
+    - --leader-elect=true
+    - --scheduler-name=my-custom-kube-scheduler
+    image: k8s.gcr.io/kube-scheduler-amd64:v1:18.6
+    name: kube-scheduler</code></pre></li></ul><ul id="10966429-2a73-436c-9f1d-654426dfe40c" class="bulleted-list"><li style="list-style-type:disc">Note that if you have multiple copies of the scheduler running on different master nodes, you can set the <mark class="highlight-blue"><code>leader-elect</code></mark><mark class="highlight-blue"> </mark>option to <mark class="highlight-blue"><code>true</code></mark><mark class="highlight-blue"> </mark>if you want only one copy of the same scheduler can be active at a time. <mark class="highlight-blue"><code>false</code></mark> in cases where you don’t have multiple masters.</li></ul><ul id="918c156c-4c37-419a-af18-ec7e0a32eddb" class="bulleted-list"><li style="list-style-type:disc">When creating the POD you can specify the scheduler service you want to use.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="acba84a5-b3de-4130-ae67-7177caceac66" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      
+  schedulerName: my-custom-kube-scheduler
+
+# to verify use the command $ kubectl get events</code></pre><p id="8691cb25-58f9-4a6d-8c79-3f64c4e3a1f9" class="">⇒ Is important to note that if the scheduler is not configured correctly, then the Pod will continue to remain in Pending state. </p></li></ul></details></li></ul><p id="0e0628ff-abb1-4344-9742-a46b84c2b8a1" class="">
+</p><p id="feb5ccce-b5a4-4558-8acf-06befa47ee5d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

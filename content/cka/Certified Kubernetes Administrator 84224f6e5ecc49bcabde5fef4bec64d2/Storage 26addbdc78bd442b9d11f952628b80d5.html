@@ -1,0 +1,749 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Storage</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="26addbdc-78bd-442b-9d11-f952628b80d5" class="page sans"><header><img class="page-cover-image" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/k8s.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="Scheduling%20801cba32ed774f60b88fd32e4a4c5e2f/logo.png"/></div><h1 class="page-title">Storage</h1><p class="page-description"></p></header><div class="page-body"><ul id="cc5f7ce8-ca39-4db0-b4fb-ccb3e7750ac3" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Container Storage Interface</strong></mark></summary><ul id="e864d1d1-03b5-4746-9ac5-f88fddfbb9d3" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>CRI; </strong></mark>The Container Runtime Interface is a standard that defines how an orchestration solution would communicate with container runtime like docker. If any new CRI is developed, they can simply follow the CRI standards. </li></ul><ul id="384a29e8-3e7d-4553-8abc-318dd1455d1b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>CNI;</strong></mark> The Container Network Interface was developed to support different networking solutions. Any new networking vendors could simply develop their plugins based on the CNI standards and make their solution work with Kubernetes.</li></ul><ul id="0db3afb5-1abf-4af9-ba2a-2137f37abf2c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>CSI;</strong></mark><ul id="035dd10d-31fe-4579-bc52-324cae123829" class="bulleted-list"><li style="list-style-type:circle">The container storage interface was developed to support multiple storage solutions. With CSI, you can now write your own drivers for your own storage to work with Kubernetes.</li></ul><ul id="727e616c-f5e3-4ce6-a2fe-b2fb5ec0498c" class="bulleted-list"><li style="list-style-type:circle">Vendors like AWS EBS, Azure DISK, NetApp, Dell EMC Isilon, GlusterFS, etc.. have their own CSI drivers.</li></ul><ul id="be1c87f4-9d8f-46c2-a330-dc921d6669d9" class="bulleted-list"><li style="list-style-type:circle">It is important to note that CSI is a universal standard and if implemented, allows any container orchestration tool to work with any storage vendor with a supported plugin</li></ul></li></ul><figure id="9ecdbae2-a9e1-42e1-a8f1-44d31a13829c" class="image"><a href="Storage%2026addbdc78bd442b9d11f952628b80d5/Untitled.png"><img style="width:730px" src="Storage%2026addbdc78bd442b9d11f952628b80d5/Untitled.png"/></a></figure></details></li></ul><ul id="4ad2ede3-e35c-4b2e-89f2-2adad09fac17" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Volumes in Kubernetes</strong></mark></summary><ul id="4c463d47-8369-4431-9f33-975c76e6f212" class="bulleted-list"><li style="list-style-type:disc">Pods are transient. When a Pod is created to process data and then deleted, the data processed by it gets deleted as well. </li></ul><ul id="a1e3efb9-213c-47f4-a9fd-d81c3a424090" class="bulleted-list"><li style="list-style-type:disc">To persist data, we attach a volume to the Pod. The data processed by the Pod is now stored in the volume, and even after the Pod is deleted, the data remains.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d665421-0457-4782-a153-86f6cc85bf51" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+  name: counter-pod
+spec:
+  containers:
+  - name: counter-container
+    image: ubuntu:alpine
+    volumeMounts:
+    - mountPath: /numbers
+      name: counter-vol
+  volumes:
+  - name: counter-vol
+    hostPath:
+      path: /tmp/numbers</code></pre><ul id="ea3ffd4a-30f4-4cd9-93fa-398cd2343a6e" class="bulleted-list"><li style="list-style-type:disc"><strong>Options;</strong><ul id="297f6609-81e7-4f21-acb4-9f9f6a527b98" class="bulleted-list"><li style="list-style-type:circle">The <strong><mark class="highlight-blue">hostPath </mark></strong>option is used to configure a directory. (not recommended for use in a multi-node cluster).</li></ul><ul id="dee1bfeb-4d7a-4633-97cd-24dbfe972c31" class="bulleted-list"><li style="list-style-type:circle">Kubernetes supports several types of standard storage solutions such as NFS, glusterFS, Flocker, CephFS, and AWS EBS.<ul id="61840e10-2e30-4b29-8f79-9f2a56e9ec51" class="bulleted-list"><li style="list-style-type:square">To configure an AWS EBS as the a volume, we use the field <mark class="highlight-blue"><code>awsElasticBlockStore</code></mark><mark class="highlight-blue"> </mark>with <code><mark class="highlight-blue">volumeID</mark></code><mark class="highlight-blue"> </mark>and <code><mark class="highlight-blue">fsType</mark></code></li></ul></li></ul></li></ul></details></li></ul><ul id="f49b6b61-7816-46dc-adea-a1a9aa6ef601" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Persistent Volumes</strong></mark></summary><ul id="2a4a0c67-6076-4938-b394-6823542e113c" class="bulleted-list"><li style="list-style-type:disc">Persistent volumes allow you to manage storage centrally.</li></ul><ul id="d9cb7c97-1cb9-4c46-ae71-a4636d4cca23" class="bulleted-list"><li style="list-style-type:disc">A persistent volume is a cluster-wide pool of storage volumes configured by an administrator to be used by users deploying applications on the cluster. The users can now select storage from this pool using persistent volume claims.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="70e4b928-9918-477e-9107-2dab9fdc905e" class="code"><code class="language-YAML">apiVersion: v1
+kind: PersistentVolume
+metadata:
+	name: pv-vol
+spec:
+	accessModes:
+	- ReadWriteOnce
+	capacity:
+		storage: 1Gi
+	hostPath:
+		path: /data
+	persistentVolumeReclaimPolicy: Retain</code></pre><ul id="758a73c2-cad9-48ad-b26a-99e1992fd872" class="bulleted-list"><li style="list-style-type:disc"><strong>accessModes;</strong> defines how a volume should be mounted on the hosts.<table id="cd49171a-07ec-4fc0-8080-33541ad4f7db" class="simple-table"><thead class="simple-table-header"><tr id="3a744706-ad62-432b-9db2-aed679687e09"><th id="Z^k=" class="simple-table-header-color simple-table-header" style="width:35px"><mark class="highlight-blue"><strong>0</strong></mark></th><th id="|ZwL" class="simple-table-header-color simple-table-header" style="width:215px">ReadOnlyMany</th></tr></thead><tbody><tr id="80fe30e7-8c05-4162-a21c-e8cb3b83a158"><th id="Z^k=" class="simple-table-header-color simple-table-header" style="width:35px"><mark class="highlight-blue"><strong>1</strong></mark></th><td id="|ZwL" class="" style="width:215px"><strong>ReadWriteOnce</strong></td></tr><tr id="96a1b956-2957-4a81-b507-056cdda7f873"><th id="Z^k=" class="simple-table-header-color simple-table-header" style="width:35px"><strong><mark class="highlight-blue">2</mark></strong></th><td id="|ZwL" class="" style="width:215px"><strong>ReadWriteMany</strong></td></tr></tbody></table></li></ul><ul id="2e7f65d9-52e5-4fcf-a21a-99a8837f774f" class="bulleted-list"><li style="list-style-type:disc"><strong>Capacity;</strong> used to specify the amount of storage to be reserved for this persistent volume.</li></ul><ul id="290529e2-d54a-4ac2-ba4b-5f9a95d1b649" class="bulleted-list"><li style="list-style-type:disc"><strong>Volume type; </strong>we used hostPath which uses storage from the nodes local dir.</li></ul><ul id="8fec1c40-d4dd-422f-8af1-6381c460a356" class="bulleted-list"><li style="list-style-type:disc">When the PVC is deleted, the PV by default is set to retain meaning the PV will remain until it is manually deleted by the admin. It is not available for reuse by any other claims.<table id="2f35df7c-26f2-483e-9bbf-002e78a2fa0f" class="simple-table"><tbody><tr id="052e8a0c-6dad-4e53-bfea-a9053f9ead66"><td id="gJ|G" class="" style="width:72px"><mark class="highlight-blue">Retain</mark></td><td id="BI?x" class="">default for manually created PVs.</td></tr><tr id="e3775a9a-8888-4612-a7fc-7851707f7945"><td id="gJ|G" class="" style="width:72px"><mark class="highlight-blue">Delete</mark></td><td id="BI?x" class="">default for dynamically provisioned PVs.</td></tr><tr id="566d781b-ed92-4f5c-8b34-46f0ec191ec6"><td id="gJ|G" class="" style="width:72px"><mark class="highlight-blue">Recycle</mark></td><td id="BI?x" class="">Deprecatd.</td></tr></tbody></table></li></ul></details></li></ul><ul id="befde854-7dc6-43cd-a85e-be675544067a" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Persistent Volumes Claims</strong></mark></summary><ul id="d3b5d66a-bb8f-4a79-bcf0-b564e2cf6b02" class="bulleted-list"><li style="list-style-type:disc">PV and PVC are two separate objects, An admin creates a set of PV and a user creates PVC to use the PV.</li></ul><ul id="edfd6a22-1917-4ed2-b162-c942910bb5d6" class="bulleted-list"><li style="list-style-type:disc">Once the PVC is created, Kubernetes binds the PV to claims based on the request properties set on the volume.</li></ul><ul id="f661fe22-b180-4f3e-86c8-395be489862c" class="bulleted-list"><li style="list-style-type:disc">Every PVC is bound to a single PV since there is a <mark class="highlight-blue">1→1 </mark>relationship between claims and volumes. You can use a particular volume by using labels and selectors. However, During the binding process, Kubernetes tries to find a PV that has a sufficient capacity as requested by the claim and any other request properties such as accessModes, StorageClass, etc.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b1c4b0be-c8d0-44cd-a53b-b550037f6f43" class="code"><code class="language-YAML">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-vol
+spec:
+  capacity:
+    storage: 500Mi
+  accessModes: [&quot;ReadWriteMany&quot;]
+  hostPath:
+    path: /data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes: [&quot;ReadWriteMany&quot;]
+  resources:
+    requests:
+      storage: 250Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mycontainer
+    image: busybox
+    volumeMounts:
+    - mountPath: /logs
+      name: mypodclaim
+  volumes: 
+  - name: mypodclaim
+    persistentVolumeClaim:
+      claimName: my-pvc</code></pre></li></ul></details></li></ul><ul id="bd31b0c5-52b2-4487-95ac-43547316e457" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Storage Classes</mark></strong></summary><ul id="0aada24a-b871-4f2b-9132-77c1dc5dc28b" class="bulleted-list"><li style="list-style-type:disc">When using storage from a cloud provider, we need to manually provision the storage before we can create a PV using it. This is called <strong>Static Provisioning.</strong></li></ul><ul id="6bf733fb-3a73-486a-a26f-1dff2ac9fd77" class="bulleted-list"><li style="list-style-type:disc">In <strong>dynamic provisioning</strong>, a provisioner is created which can automatically provision storage on the cloud and attach them to the pod when the claim is made. This is achieved by creating a <strong><mark class="highlight-blue">StorageClass </mark></strong>object.</li></ul><ul id="cb8d401b-5c16-4197-b2e9-75921f31a090" class="bulleted-list"><li style="list-style-type:disc">When using <strong>Storage classes</strong>, we don’t need to create <strong>PVs</strong> manually. We create a PVC with a storage class, and the storage class will handle the PV creation and bind it to the PVC.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2c42c318-0746-46d8-848b-593481389d72" class="code"><code class="language-YAML">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+	name: gcp-storage
+provisioner: kubernetes.io/gce-pd
+parameters:
+	type: pd-ssd
+	replication-type: regional-pd</code></pre><ul id="3c766be9-f37b-4701-be6c-51bae59bb526" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue"><code>provisioner</code></mark>; depends on the type of underlying storage being used. <mark class="highlight-blue"><code>kubernetes.io/no-provisioner</code></mark><mark class="highlight-blue"> </mark>means dynamic provisioning is disabled.</li></ul><ul id="f4364704-6730-4559-955b-7a4e36e914d4" class="bulleted-list"><li style="list-style-type:circle">Using <strong>parameters</strong>, we can create classes of storage.</li></ul></li></ul><ul id="38b0b7b9-15c2-4530-b21c-9a744af96e6e" class="bulleted-list"><li style="list-style-type:disc"><strong>ReclaimPolicy and VolumeBindingMode;</strong><ul id="9210e906-173f-4eee-88e4-9b176dfdadc8" class="bulleted-list"><li style="list-style-type:circle"><code><mark class="highlight-blue">reclaimPolicy</mark></code><mark class="highlight-blue"> </mark>defines the behavior of the PV when the PVC is deleted.<ul id="df47585e-e7fe-4e16-8b48-d7626804e1a1" class="bulleted-list"><li style="list-style-type:square"><strong>delete; </strong>delete the PV when the PVC is deleted.</li></ul><ul id="7753793e-391a-4440-a9e2-55bb072adf67" class="bulleted-list"><li style="list-style-type:square"><strong>Retain; </strong>retain the PV when the PVC is deleted.</li></ul></li></ul><ul id="8a4fe906-5be2-48c0-8766-29cec366d7ba" class="bulleted-list"><li style="list-style-type:circle"><code><mark class="highlight-blue">volumeBindingMode</mark></code><mark class="highlight-blue"> </mark>defines when the volume should be created and bound to a PVC.<ul id="41f6000a-82e3-4b26-ae07-3ae3d75234f4" class="bulleted-list"><li style="list-style-type:square"><strong>WaitForFireConsumer; </strong>wait for a pod to use the PVC</li></ul><ul id="56e1696d-45c3-4690-a207-b16942635e23" class="bulleted-list"><li style="list-style-type:square"><strong>Immediate; </strong>immediately create a volume and bind it to the PVC.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15627c80-3f39-4703-b65a-e34d5d6eec42" class="code"><code class="language-YAML">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+	name: gcp-storage
+provisioner: kubernetes.io/gce-pd
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer</code></pre></li></ul></li></ul></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
