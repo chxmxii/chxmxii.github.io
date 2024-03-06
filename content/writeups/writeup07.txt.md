@@ -981,3 +981,37 @@ Install Ansible
           require user siva 
   </Location>
   ```
+---
+
+###### Solution;
++ ```shell
+  #!/bin/bash
+
+  db_name="kodekloud_db01"
+  db_user="kodekloud_roy"
+  db_pass="asdfgdsd"
+
+  existing_db=$(mysql -uroot -e "SHOW DATABASES" | grep ${db_name})
+
+  if [ -n "${existing_db}" ]; then
+      echo "Databse already exists."
+  else
+      mysql -u root -e "CREATE DATABASE ${db_name}"
+      echo "Database ${db_name} has been created."
+  fi
+  mysql -u root  -e "CREATE USER '${db_user}'@'%' IDENTIFIED BY '${db_password}';
+                      GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_user}'@'%';
+                      FLUSH PRIVILEGES;"
+
+  t_count=$(mysql -uroot -e "USE ${db_name}; SHOW TABLES;" | wc -l)
+
+  if [ "${t_count}" -gt 0 ]; then
+    echo "Databse is not empty."
+  else
+    mysql -uroot ${db_name} < /opt/db_backups/db.sql
+    echo "Imported database dump into ${db_name} database."
+  fi
+
+  mysqldump -uroot ${db_name} > /opt/db_backups/${db_name}.sql
+  echo "Databse dump created at /opt/db_backups/${db_name}.sql"
+  ``` 
