@@ -98,7 +98,7 @@ overlay                                            overlay  300G   23G  278G   8
 fs-0779524599b7d5e7e.efs.us-west-1.amazonaws.com:/ nfs4     8.0E     0  8.0E   0% /efs
 tmpfs                                              tmpfs     60G   12K   60G   1% /var/run/secrets/kubernetes.io/serviceaccount
 tmpfs                                              tmpfs     64M     0   64M   0% /dev/null
-```
+```dfdf
 
 we can we have a fs system from this endpoint mounted on /efs, though i found the flag, but the challenge doesn't end here as we don't have the permission to read that file
 
