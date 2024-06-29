@@ -945,6 +945,44 @@ Install Ansible
   curl -u javed stapp01:8080/itadmin/
   ```
 ---
+##  Install and Configure Nginx as an LBR
+
+Day by day traffic is increasing on one of the websites managed by the Nautilus production support team. Therefore, the team has observed a degradation in website performance. Following discussions about this issue, the team has decided to deploy this application on a high availability stack i.e on Nautilus infra in Stratos DC. They started the migration last month and it is almost done, as only the LBR server configuration is pending. Configure LBR server as per the information given below:
+
++ Install nginx on LBR (load balancer) server.
+
++ Configure load-balancing with the an http context making use of all App Servers.
+
++ Make sure you do not update the apache port that is already defined in the apache configuration on all app servers, also make sure apache service is up and running on all app servers.
+
++ Once done, you can access the website using StaticApp button on the top bar.
+
+###### Solution
+
++ ```sh
+  sshpass -p Mischi3f ssh -o StrictHostKeyChecking=no loki@stlb01
+  sudo yum install -y nginx
+  sudo vi /etc/nginx/nginx.conf
+  > "http {
+      upstream staticapp {
+        server stapp01:8083;
+        server stapp02:8083;
+        server stapp03:8083;
+      }
+      server {
+        listen 80;
+        location / {
+          proxy_pass http://staticapp;
+        }
+      }
+    }"
+  sudo nginx -t
+  sudo systemctl start nginx
+  sudo systemctl enable nginx
+  sudo systemctl status nginx
+
+  ```
+---
 ##
 
 + We have a requirement where we want to password protect a directory in the Apache web server document root. We want to password protect http://<website-url>:<apache_port>/protected URL as per the following requirements (you can use any website-url for it like localhost since there are no such specific requirements as of now). Setup the same on App server 3 as per below mentioned requirements:
@@ -982,6 +1020,7 @@ Install Ansible
   </Location>
   ```
 ---
+## Bash scripts if/else statements
 
 ###### Solution;
 + ```shell
@@ -994,10 +1033,10 @@ Install Ansible
   existing_db=$(mysql -uroot -e "SHOW DATABASES" | grep ${db_name})
 
   if [ -n "${existing_db}" ]; then
-      echo "Databse already exists."
+      echo "Database already exists"
   else
       mysql -u root -e "CREATE DATABASE ${db_name}"
-      echo "Database ${db_name} has been created."
+      echo "Database kodekloud_db01 has been created"
   fi
   mysql -u root  -e "CREATE USER '${db_user}'@'%' IDENTIFIED BY '${db_password}';
                       GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_user}'@'%';
@@ -1006,12 +1045,11 @@ Install Ansible
   t_count=$(mysql -uroot -e "USE ${db_name}; SHOW TABLES;" | wc -l)
 
   if [ "${t_count}" -gt 0 ]; then
-    echo "Databse is not empty."
+    echo "databse is not empty"
   else
     mysql -uroot ${db_name} < /opt/db_backups/db.sql
-    echo "Imported database dump into ${db_name} database."
+    echo "imported database dump into kodekloud_db01 database."
   fi
 
-  mysqldump -uroot ${db_name} > /opt/db_backups/${db_name}.sql
-  echo "Databse dump created at /opt/db_backups/${db_name}.sql"
+  mysqldump -uroot ${db_name} > /opt/db_backups/${db_name}.sql  
   ``` 
