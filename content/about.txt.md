@@ -4,7 +4,7 @@ date = "202-04-09"
 aliases = ["about-me","contact"]
 [ author ]
   name = "About me"
-
+  
 +++
 
 > Greetings, I am *Chamsi Mouhib*, also known as *chxmxii*. I am a highly motivated and ambitious Cybersecurity Engineering student with a deep passion for Cloud and Cybersecurity. I am particularly enthusiastic about automation tools and actively engage in the cybersecurity community, regularly participating in Capture The Flag (CTF) events with a specific focus on *web && 4n6*  challenges. My strong desire to learn and grow drives me to continually expand my skill set and knowledge, and I always seek opportunities to learn from others.
