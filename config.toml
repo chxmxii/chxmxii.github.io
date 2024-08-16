@@ -208,5 +208,5 @@ disableHugoGeneratorInject = false
     url        = "/projects/"
   [[menu.main]]
     identifier = "cv"
-    name       = "Resume"   
+    name       = "~Resume"   
     url        = "/error.html"
