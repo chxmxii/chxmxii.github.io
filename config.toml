@@ -1,4 +1,4 @@
-baseURL = "https://chxmxii.tech"
+baseURL = "https://chxmxii.me"
 title   = "Mouhib CHVMSI"
 languageCode = "en-us"
 theme = "hello-friend-ng"
@@ -65,7 +65,7 @@ disableHugoGeneratorInject = false
  
 
   # Set a background for the homepage
-  backgroundImage = "https://chxmxii.tech/bg.gif"
+  backgroundImage = "https://chxmxii.me/bg.gif"
 
   # Prefix of link to the git commit detail page. GitInfo must be enabled.
   #
