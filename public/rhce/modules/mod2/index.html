@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="All rights reserved - @chxmxii_ ">
+<meta name="description" content="Module II : Using advanced ansible solutionModule II : Using advanced ansible solution1 - Using task controlUsing loops and items Loops allows you to iterate through a simple list of itemsEach item in a loop can be a dictionary with multiple keys Using Register variables with loopsRegisters are used to store the output of a command and address it as a variableYou can use the register then in a conditional or in a loopUsing when to run tasks conditionally when are used to run tasks conditionallyA condition can be used to run a task only if the condition is true.Playbooks vars, regs vars, and facts can be used in conditions and make sure that tasks only run if specific conditions are trueFor instance, check if a user/file exists, if a certain amount of memory is available, etc.The simplest example of a condition, is to check whether a Boolean variable is true or false.You can also check and see if a non-boolean variable has a value and use that value in the conditional. Or use a conditional in which you compare the value of a fact to the specific value of a variableExamples :ansible_machine == “x86_64”ansible_distribution_major_version == “8”ansible_memfree_mb (==,&lt;,&gt;,≤,≠) 1024my_var is definedmy_var is not definedmy_var (equal my_var is defined).ansible_distribution in supported_distosTesting Multiple Conditions Use and or or and group the conditions with ()example : when: ansible_distribution == “CentOs” or ansible_distribution == “RedHat”when: ansible_machine == “x86_64” and ansible_distribution == “CentOS”You can also test the condition using a list and then all of the condition must be trueUsing handlersHandlers allow you to configure playbooks in a way that one task will only run if another task has been running successfullyUse the notify statement from the main task to trigger the handlerHandlers are typically used to restart services or reboot hosts use force_handlers: True to run handlers in case of failure.Using blocksa block is a logical group of tasks and they are used to control how tasks are executed.one block can be enabled using a single whenblocks can be used in error condition handlingUse block to define the main tasks to runuse rescue to define tasks that will run in case the tasks in the block fail.Use always to define tasks that will run, regardless the success or failure of the block and rescue tasksDealing with failuresAnsible looks at the exit status of a task to determine whether it has failed.When any task fails, Ansible aborts the rest of the play on that host and continues with the next hostUse ignore_errors in a task to ignore failuresUse force_handlers to force a handler that has been triggered to run ,even if another task fails.Use failed_when to identify when the task has failed.fail module can be used to print a message that informs why a task has failed. ignore_errors must set to yes Make sure to register the result of the command and analyze the output whenever using failed_when or fail.Managing changed statusManaging the changed status may be important, as handlers trigger the changed statusThe result of a command can be registered, and the registered variable can be scanned for specific text to determine that a change has occurredThis allows ansible to report a changed status, where it normally would not, thus allowing handlers to be triggeredusing change_when is usable in two cases:To allow handlers to run when a change would not normally trigger.To disable commands that run successful to report a changed status " />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/rhce/modules/mod2/" />
+
+
+    <title>
+        
+             :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Mouhib CHVMSI">
+  <meta itemprop="description" content="Module II : Using advanced ansible solutionModule II : Using advanced ansible solution1 - Using task controlUsing loops and items Loops allows you to iterate through a simple list of itemsEach item in a loop can be a dictionary with multiple keys Using Register variables with loopsRegisters are used to store the output of a command and address it as a variableYou can use the register then in a conditional or in a loopUsing when to run tasks conditionally when are used to run tasks conditionallyA condition can be used to run a task only if the condition is true.Playbooks vars, regs vars, and facts can be used in conditions and make sure that tasks only run if specific conditions are trueFor instance, check if a user/file exists, if a certain amount of memory is available, etc.The simplest example of a condition, is to check whether a Boolean variable is true or false.You can also check and see if a non-boolean variable has a value and use that value in the conditional. Or use a conditional in which you compare the value of a fact to the specific value of a variableExamples :ansible_machine == “x86_64”ansible_distribution_major_version == “8”ansible_memfree_mb (==,&lt;,&gt;,≤,≠) 1024my_var is definedmy_var is not definedmy_var (equal my_var is defined).ansible_distribution in supported_distosTesting Multiple Conditions Use and or or and group the conditions with ()example : when: ansible_distribution == “CentOs” or ansible_distribution == “RedHat”when: ansible_machine == “x86_64” and ansible_distribution == “CentOS”You can also test the condition using a list and then all of the condition must be trueUsing handlersHandlers allow you to configure playbooks in a way that one task will only run if another task has been running successfullyUse the notify statement from the main task to trigger the handlerHandlers are typically used to restart services or reboot hosts use force_handlers: True to run handlers in case of failure.Using blocksa block is a logical group of tasks and they are used to control how tasks are executed.one block can be enabled using a single whenblocks can be used in error condition handlingUse block to define the main tasks to runuse rescue to define tasks that will run in case the tasks in the block fail.Use always to define tasks that will run, regardless the success or failure of the block and rescue tasksDealing with failuresAnsible looks at the exit status of a task to determine whether it has failed.When any task fails, Ansible aborts the rest of the play on that host and continues with the next hostUse ignore_errors in a task to ignore failuresUse force_handlers to force a handler that has been triggered to run ,even if another task fails.Use failed_when to identify when the task has failed.fail module can be used to print a message that informs why a task has failed. ignore_errors must set to yes Make sure to register the result of the command and analyze the output whenever using failed_when or fail.Managing changed statusManaging the changed status may be important, as handlers trigger the changed statusThe result of a command can be registered, and the registered variable can be scanned for specific text to determine that a change has occurredThis allows ansible to report a changed status, where it normally would not, thus allowing handlers to be triggeredusing change_when is usable in two cases:To allow handlers to run when a change would not normally trigger.To disable commands that run successful to report a changed status ">
+  <meta itemprop="wordCount" content="2355">
+  <meta itemprop="image" content="http://localhost:1313/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="Mouhib CHVMSI">
+  <meta name="twitter:description" content="Module II : Using advanced ansible solutionModule II : Using advanced ansible solution1 - Using task controlUsing loops and items Loops allows you to iterate through a simple list of itemsEach item in a loop can be a dictionary with multiple keys Using Register variables with loopsRegisters are used to store the output of a command and address it as a variableYou can use the register then in a conditional or in a loopUsing when to run tasks conditionally when are used to run tasks conditionallyA condition can be used to run a task only if the condition is true.Playbooks vars, regs vars, and facts can be used in conditions and make sure that tasks only run if specific conditions are trueFor instance, check if a user/file exists, if a certain amount of memory is available, etc.The simplest example of a condition, is to check whether a Boolean variable is true or false.You can also check and see if a non-boolean variable has a value and use that value in the conditional. Or use a conditional in which you compare the value of a fact to the specific value of a variableExamples :ansible_machine == “x86_64”ansible_distribution_major_version == “8”ansible_memfree_mb (==,&lt;,&gt;,≤,≠) 1024my_var is definedmy_var is not definedmy_var (equal my_var is defined).ansible_distribution in supported_distosTesting Multiple Conditions Use and or or and group the conditions with ()example : when: ansible_distribution == “CentOs” or ansible_distribution == “RedHat”when: ansible_machine == “x86_64” and ansible_distribution == “CentOS”You can also test the condition using a list and then all of the condition must be trueUsing handlersHandlers allow you to configure playbooks in a way that one task will only run if another task has been running successfullyUse the notify statement from the main task to trigger the handlerHandlers are typically used to restart services or reboot hosts use force_handlers: True to run handlers in case of failure.Using blocksa block is a logical group of tasks and they are used to control how tasks are executed.one block can be enabled using a single whenblocks can be used in error condition handlingUse block to define the main tasks to runuse rescue to define tasks that will run in case the tasks in the block fail.Use always to define tasks that will run, regardless the success or failure of the block and rescue tasksDealing with failuresAnsible looks at the exit status of a task to determine whether it has failed.When any task fails, Ansible aborts the rest of the play on that host and continues with the next hostUse ignore_errors in a task to ignore failuresUse force_handlers to force a handler that has been triggered to run ,even if another task fails.Use failed_when to identify when the task has failed.fail module can be used to print a message that informs why a task has failed. ignore_errors must set to yes Make sure to register the result of the command and analyze the output whenever using failed_when or fail.Managing changed statusManaging the changed status may be important, as handlers trigger the changed statusThe result of a command can be registered, and the registered variable can be scanned for specific text to determine that a change has occurredThis allows ansible to report a changed status, where it normally would not, thus allowing handlers to be triggeredusing change_when is usable in two cases:To allow handlers to run when a change would not normally trigger.To disable commands that run successful to report a changed status ">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/rhce/modules/mod2/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="Mouhib CHVMSI">
+  <meta property="og:description" content="Module II : Using advanced ansible solutionModule II : Using advanced ansible solution1 - Using task controlUsing loops and items Loops allows you to iterate through a simple list of itemsEach item in a loop can be a dictionary with multiple keys Using Register variables with loopsRegisters are used to store the output of a command and address it as a variableYou can use the register then in a conditional or in a loopUsing when to run tasks conditionally when are used to run tasks conditionallyA condition can be used to run a task only if the condition is true.Playbooks vars, regs vars, and facts can be used in conditions and make sure that tasks only run if specific conditions are trueFor instance, check if a user/file exists, if a certain amount of memory is available, etc.The simplest example of a condition, is to check whether a Boolean variable is true or false.You can also check and see if a non-boolean variable has a value and use that value in the conditional. Or use a conditional in which you compare the value of a fact to the specific value of a variableExamples :ansible_machine == “x86_64”ansible_distribution_major_version == “8”ansible_memfree_mb (==,&lt;,&gt;,≤,≠) 1024my_var is definedmy_var is not definedmy_var (equal my_var is defined).ansible_distribution in supported_distosTesting Multiple Conditions Use and or or and group the conditions with ()example : when: ansible_distribution == “CentOs” or ansible_distribution == “RedHat”when: ansible_machine == “x86_64” and ansible_distribution == “CentOS”You can also test the condition using a list and then all of the condition must be trueUsing handlersHandlers allow you to configure playbooks in a way that one task will only run if another task has been running successfullyUse the notify statement from the main task to trigger the handlerHandlers are typically used to restart services or reboot hosts use force_handlers: True to run handlers in case of failure.Using blocksa block is a logical group of tasks and they are used to control how tasks are executed.one block can be enabled using a single whenblocks can be used in error condition handlingUse block to define the main tasks to runuse rescue to define tasks that will run in case the tasks in the block fail.Use always to define tasks that will run, regardless the success or failure of the block and rescue tasksDealing with failuresAnsible looks at the exit status of a task to determine whether it has failed.When any task fails, Ansible aborts the rest of the play on that host and continues with the next hostUse ignore_errors in a task to ignore failuresUse force_handlers to force a handler that has been triggered to run ,even if another task fails.Use failed_when to identify when the task has failed.fail module can be used to print a message that informs why a task has failed. ignore_errors must set to yes Make sure to register the result of the command and analyze the output whenever using failed_when or fail.Managing changed statusManaging the changed status may be important, as handlers trigger the changed statusThe result of a command can be registered, and the registered variable can be scanned for specific text to determine that a change has occurredThis allows ansible to report a changed status, where it normally would not, thus allowing handlers to be triggeredusing change_when is usable in two cases:To allow handlers to run when a change would not normally trigger.To disable commands that run successful to report a changed status ">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="rhce">
+    <meta property="og:image" content="http://localhost:1313/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">mod2</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/rhce/modules/mod2/"></a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Module II : Using advanced ansible solution</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4876ed3f-6078-4510-8210-0018b9ff9190" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="redhat.png"/></div><h1 class="page-title">Module II : Using advanced ansible solution</h1></header><div class="page-body"><ul id="0431977d-d8b9-4a01-89c0-832528dd92cc" class="toggle"><li><details open=""><summary>1 - Using task control</summary><ul id="ba9d611a-176b-45e3-a83d-dca875dcb0ee" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Using loops and items </mark><ul id="11065b2b-3c36-46eb-a96c-02daaae66c1e" class="bulleted-list"><li style="list-style-type:circle">Loops allows you to iterate through a simple list of items</li></ul><ul id="bdfce186-2786-4a25-9e17-935105179115" class="bulleted-list"><li style="list-style-type:circle">Each item in a loop can be a dictionary with multiple keys </li></ul></li></ul><ul id="a205460a-c99f-4043-8fc9-1ea2562424fb" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Using Register variables with loops</mark><ul id="9ae5990d-9dba-4c92-9d8f-37c1e4970f28" class="bulleted-list"><li style="list-style-type:circle">Registers are used to store the output of a command and address it as a variable</li></ul><ul id="a852169b-0a0d-4934-8253-c2fb0d6d8cd9" class="bulleted-list"><li style="list-style-type:circle">You can use the register then in a conditional or in a loop</li></ul></li></ul><ul id="67ebd90b-27c7-4d05-8bf1-f2e77b81f972" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Using </mark><mark class="highlight-teal"><strong>when</strong></mark><mark class="highlight-red"> to run tasks conditionally </mark><ul id="d170d83f-61cc-4c98-9daf-1c637e6adcd8" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue"><strong>when</strong></mark> are used to run tasks conditionally</li></ul><ul id="458f92db-86c3-4adc-a6b2-33b094df89fa" class="bulleted-list"><li style="list-style-type:circle">A condition can be used to run a task only if the condition is true.</li></ul><ul id="59566a90-6155-4931-b492-51e473538d30" class="bulleted-list"><li style="list-style-type:circle">Playbooks vars, regs vars, and facts can be used in conditions and make sure that tasks only run if specific conditions are true</li></ul><ul id="5fbc3bbd-a7ec-4e4b-8277-b6f0d4b43a53" class="bulleted-list"><li style="list-style-type:circle">For instance, check if a user/file exists, if a certain amount of memory is available, etc.</li></ul><ul id="f45c63b3-0213-4722-a847-fa0f1bd3ccf4" class="bulleted-list"><li style="list-style-type:circle">The simplest example of a condition, is to check whether a Boolean variable is true or false.</li></ul><ul id="2ef50a89-7e26-4a83-b360-ab1e1323108d" class="bulleted-list"><li style="list-style-type:circle">You can also check and see if a non-boolean variable has a value and use that value in the conditional. Or use a conditional in which you compare the value of a fact to the specific value of a variable<ul id="6c9aeb03-75c5-4811-918f-60b80b14c263" class="bulleted-list"><li style="list-style-type:square">Examples :<ul id="51d9536b-e7cc-45ec-9ce6-53c9ebc442a2" class="bulleted-list"><li style="list-style-type:disc">ansible_machine == “x86_64”</li></ul><ul id="c94fb9c6-4e5b-4a69-9fcc-598b793ebcd9" class="bulleted-list"><li style="list-style-type:disc">ansible_distribution_major_version == “8”</li></ul><ul id="047eb431-8606-4f8c-a7c2-57e43e41d30c" class="bulleted-list"><li style="list-style-type:disc">ansible_memfree_mb (==,&lt;,&gt;,≤,≠) 1024</li></ul><ul id="59cd837f-9d5a-4992-bd62-ccfea62ddcd0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-pink">my_var</mark> is defined</li></ul><ul id="487e8ad6-dcfa-4e32-ae3c-b466ea9f10c0" class="bulleted-list"><li style="list-style-type:disc">my_var is not defined</li></ul><ul id="08d87076-6c7c-47f5-97b7-d85dcf32b0da" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-pink">my_var </mark>(equal my_var is defined).</li></ul><ul id="462a35db-2d92-434a-b5c2-c2e13093795d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><strong>ansible_distribution </strong></mark>in <mark class="highlight-blue"><strong>supported_distos</strong></mark></li></ul></li></ul></li></ul></li></ul><ul id="f6e4dde0-e181-4397-8a7f-7ce3abfca83f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Testing Multiple Conditions </mark><ul id="6165e5c4-a676-42ab-b948-cc3a1d35acbb" class="bulleted-list"><li style="list-style-type:circle">Use <strong><mark class="highlight-yellow">and</mark></strong><strong> </strong>or<mark class="highlight-yellow"><strong> or</strong></mark> and group the conditions with <strong><mark class="highlight-yellow">()</mark></strong><ul id="61051fee-c201-4989-b7a6-726781b68902" class="bulleted-list"><li style="list-style-type:square">example : <ul id="c4da35c6-c249-44a6-8b7b-c770c2028039" class="bulleted-list"><li style="list-style-type:disc"><strong>when: ansible_distribution == “CentOs” or ansible_distribution == “RedHat”</strong></li></ul><ul id="824c8b57-95c3-4914-a9d2-3ef634fe7fe6" class="bulleted-list"><li style="list-style-type:disc"><strong>when: ansible_machine == “x86_64” and ansible_distribution == “CentOS”</strong></li></ul></li></ul></li></ul><ul id="abb712ef-ef05-4cd0-aab6-eaa6935175da" class="bulleted-list"><li style="list-style-type:circle">You can also test the condition using a list and then all of the condition must be true</li></ul></li></ul><ul id="8c28e98e-deb2-45c5-b472-cce0589fa05b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Using handlers</mark><ul id="715ee445-4dcb-416a-a228-c8157f5243d9" class="bulleted-list"><li style="list-style-type:circle">Handlers allow you to configure playbooks in a way that one task will only run if another task has been running successfully</li></ul><ul id="acba2b57-70a5-4274-a978-191f1c75e808" class="bulleted-list"><li style="list-style-type:circle">Use the notify statement from the main task to trigger the handler</li></ul><ul id="070cfdc0-3efa-4be4-b67f-76b0a6c03073" class="bulleted-list"><li style="list-style-type:circle">Handlers are typically used to restart services or reboot hosts </li></ul><ul id="d5f0234c-3e7e-4b4c-9ff5-ecc5b14fc0c1" class="bulleted-list"><li style="list-style-type:circle">use <mark class="highlight-blue"><strong>force_handlers: True</strong></mark> to run handlers in case of failure.</li></ul></li></ul><ul id="ec7f4d7c-f777-4c22-92be-27d0b73d48c0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Using blocks</mark><ul id="163dece0-d8c8-4357-9fef-c8fbeddc9cb7" class="bulleted-list"><li style="list-style-type:circle">a block is a logical group of tasks and they are used to control how tasks are executed.</li></ul><ul id="e53de619-aab1-4183-ac39-01dbfefe4de2" class="bulleted-list"><li style="list-style-type:circle">one block can be enabled using a single <mark class="highlight-blue"><strong>when</strong></mark></li></ul><ul id="9894e8c2-2566-4ef1-9020-6b19abb1721d" class="bulleted-list"><li style="list-style-type:circle">blocks can be used in error condition handling<ul id="6e13ed5c-32d0-437e-b34b-490845bfa0e6" class="bulleted-list"><li style="list-style-type:square">Use <mark class="highlight-pink">block</mark> to define the main tasks to run</li></ul><ul id="5185d28d-b841-4fde-a55d-f4a45bfe2dd6" class="bulleted-list"><li style="list-style-type:square">use <mark class="highlight-pink">rescue</mark> to define tasks that will run in case the tasks in the<mark class="highlight-pink"> block</mark> fail.</li></ul><ul id="066011c9-fc71-4267-959d-ad43a51a9b54" class="bulleted-list"><li style="list-style-type:square">Use <mark class="highlight-pink">always</mark> to define tasks that will run, regardless the success or failure of the <mark class="highlight-pink">block</mark> and <mark class="highlight-pink">rescue </mark>tasks</li></ul></li></ul></li></ul><ul id="2e8626c9-92c0-4a56-9785-75c20da7a2c4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Dealing with failures</mark><ul id="7a46e39a-380f-4ac2-ae9d-7e842835b773" class="bulleted-list"><li style="list-style-type:circle">Ansible looks at the exit status of a task to determine whether it has failed.</li></ul><ul id="985f4a97-c2e3-46f8-970e-9fb13fcf9f12" class="bulleted-list"><li style="list-style-type:circle">When any task fails, Ansible aborts the rest of the play on that host and continues with the next host<ul id="371c96b1-a0b9-40b0-8d72-63e7bf7d2419" class="bulleted-list"><li style="list-style-type:square">Use<mark class="highlight-yellow"><strong> ignore_errors</strong></mark> in a task to ignore failures</li></ul><ul id="3d6e05d9-06cc-4429-bfe6-3168c02b8547" class="bulleted-list"><li style="list-style-type:square">Use <mark class="highlight-yellow"><strong>force_handlers</strong></mark> to force a handler that has been triggered to run ,even if another task fails.</li></ul><ul id="7b3342cc-c99e-4ece-b2fd-afd5609d4a11" class="bulleted-list"><li style="list-style-type:square">Use <strong><mark class="highlight-yellow">failed_when</mark></strong> to identify when the task has failed.</li></ul><ul id="6887d0a0-94fe-4f4d-80e5-cc73a78d6baf" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow"><strong>fail</strong></mark><mark class="highlight-yellow"> </mark>module can be used to print a message that informs why a task has failed. <mark class="highlight-blue"><strong>ignore_errors </strong></mark>must set to yes </li></ul><ul id="b8b372ae-aec6-4109-a8fd-42507e44a18e" class="bulleted-list"><li style="list-style-type:square">Make sure to register the result of the command and analyze the output whenever using <strong><mark class="highlight-yellow">failed_when </mark></strong>or <strong><mark class="highlight-yellow">fail</mark></strong>.</li></ul></li></ul></li></ul><ul id="537be42f-2c76-4854-b2ee-4e1df41f5c90" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Managing changed status</mark><ul id="bfd31b9d-cc1a-4f61-b846-f704f1d0bdd1" class="bulleted-list"><li style="list-style-type:circle">Managing the changed status may be important, as handlers trigger the changed status</li></ul><ul id="762bf915-0953-4eb4-8d92-7e977cbca33f" class="bulleted-list"><li style="list-style-type:circle">The result of a command can be registered, and the registered variable can be scanned for specific text to determine that a change has occurred</li></ul><ul id="d2583e21-761d-4cb6-9075-c849bde26062" class="bulleted-list"><li style="list-style-type:circle">This allows ansible to report a changed status, where it normally would not, thus allowing handlers to be triggered</li></ul><ul id="6da8f126-b18c-4fbb-9e3f-589bde916e53" class="bulleted-list"><li style="list-style-type:circle">using <mark class="highlight-pink"><strong>change_when</strong></mark> is usable in two cases:<ul id="2fec7e29-4372-49fa-b3dd-bb4b0cc6445a" class="bulleted-list"><li style="list-style-type:square">To allow handlers to run when a change would not normally trigger.</li></ul><ul id="6c0da78c-21cc-409e-8884-102afea62a2e" class="bulleted-list"><li style="list-style-type:square">To disable commands that run successful to report a changed status</li></ul></li></ul></li></ul><p id="4c200312-d788-4c02-81be-f07f538d436b" class="">
+</p></details></li></ul><ul id="406839bf-395c-412d-8844-1aa12b4d4b08" class="toggle"><li><details open=""><summary>2 - Deploying files using JINJA2 templates</summary><ul id="3335eaa8-5b8e-4f08-a20e-0fef4b74e14c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><strong>Using Modules to Manipulate Files:</strong></mark><ul id="43f257c4-0d63-49d5-bf98-050a2ebd5885" class="bulleted-list"><li style="list-style-type:circle">Modules are availabe for managing files:<ul id="1c7860ba-8813-4502-b408-c451a2c3242b" class="bulleted-list"><li style="list-style-type:square"> <mark class="highlight-yellow"><strong>lineinfile </strong></mark>: ensures that a line is in a file, useful for changing a single line in a file.</li></ul><ul id="20b8eea6-2ded-45b6-be17-aa41f7328868" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow"><strong>blockinfile: </strong></mark>manipulates multi-line blocks of text in files.</li></ul><ul id="ed80712f-ea2b-4f63-8650-5e071ff6fd35" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow"><strong>copy:</strong></mark> copies a file from local or remote machine to a location on a managed host.</li></ul><ul id="bf4f3b90-620e-4737-8e0f-553cdd6aea5a" class="bulleted-list"><li style="list-style-type:square"><strong><mark class="highlight-yellow">fetch: </mark></strong>used to fetch a file from a remote machine and store it on the controller node.</li></ul><ul id="b1c0fbe6-428d-4159-baa2-966ff840f250" class="bulleted-list"><li style="list-style-type:square"><strong><mark class="highlight-yellow">file: </mark></strong>sets attributes to file, and can also create and remove files, symbolic links and more.</li></ul></li></ul></li></ul><ul id="fece8fd7-d464-4ff7-9d39-b56adcb11645" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><strong>Managing SELinux File Context</strong></mark><ul id="c2a817b7-a154-4a2c-bf32-31b690b1a3ce" class="bulleted-list"><li style="list-style-type:circle">file module.</li></ul><ul id="ee0d5ec3-f4c5-4a3b-921f-7b52ab81decd" class="bulleted-list"><li style="list-style-type:circle">sefcontext : manages SELinux file context in the SELinux Policy (but not on files)<p id="10106aec-9702-4c44-b78b-a56944b574fd" class="">  ⇒After using the secontext you will need to run the command/file module to applicate the changes “restrocon”</p></li></ul><ul id="66bc61af-106c-4ed2-8e54-bf8b66eeb188" class="bulleted-list"><li style="list-style-type:circle">the file module sets SELinux context directly on the file (like the chcon command) and not in the policy.</li></ul></li></ul><ul id="a2387344-0ac9-4199-9033-8b09a2b67ecc" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><strong>Using Jinja2 Templates</strong></mark><ul id="6a430ff2-5b7d-4892-9f5a-549ea4d9a43f" class="bulleted-list"><li style="list-style-type:circle">While <mark class="highlight-blue">lineinfile</mark> and<mark class="highlight-blue"> blockinfile</mark> can be used t apply simple modifications to files. Jinja2 templates can be used for more advanced modifications</li></ul><ul id="a9cc7aba-4b0c-4a54-b7f0-dabba4280d4a" class="bulleted-list"><li style="list-style-type:circle">While using templates, the target files are automatically customized using vars and facts.</li></ul><ul id="ddd7a2eb-f134-4fd6-821e-0688722e6ea4" class="bulleted-list"><li style="list-style-type:circle">in a jinja2 template, you will find multiple elements :<ul id="cd4da5fd-ec6a-44c2-aad1-84cfcae092b6" class="bulleted-list"><li style="list-style-type:square">data</li></ul><ul id="d0661313-190e-4c70-b7c3-292face5765b" class="bulleted-list"><li style="list-style-type:square">variables</li></ul><ul id="8fedb040-449f-4c89-82dd-bfdfa0c15f59" class="bulleted-list"><li style="list-style-type:square">expressions</li></ul><ul id="f44de7d2-ac9a-4446-8e79-e542253094f6" class="bulleted-list"><li style="list-style-type:square">control structures </li></ul></li></ul><ul id="c3147001-e988-4555-b08e-cff32d33723d" class="bulleted-list"><li style="list-style-type:circle">The vars in the template are replaced with their values when the jinja2 template is rendered to the target file on the managed host.</li></ul><ul id="3e0b1ccf-66cf-494a-b7a7-c42bda43da94" class="bulleted-list"><li style="list-style-type:circle">If using variables, they can be specified using the vars section of the playbook.</li></ul><ul id="4565b788-e20f-4463-9019-07635332ff9b" class="bulleted-list"><li style="list-style-type:circle">Alternatively, Ansible facts can be used as variables.</li></ul><ul id="bb4d396b-360c-4cd1-a559-a0949999a20a" class="bulleted-list"><li style="list-style-type:circle">To prevent administrators from overwriting files that are managed by Ansible, set the<code> ansible_managed = Ansible managed</code> in ansible.cfg, also on top of the jinja2 template, set the<mark class="highlight-teal"><strong> </strong></mark><mark class="highlight-purple"><strong>{{ ansible_managed }}</strong></mark><mark class="highlight-purple"> </mark>variable.</li></ul></li></ul><ul id="a2369da1-9f0d-4bda-a851-6ad70b466efb" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal"><strong>Using Control Structures in Jinja2</strong></mark><ul id="2810d200-1b46-48be-9725-44844e512838" class="bulleted-list"><li style="list-style-type:circle">In jinja2 templates, control structures can be used to organize the template in an optimal way.</li></ul><ul id="97dd49d5-3131-478a-a6cc-a2b03d11e2fb" class="bulleted-list"><li style="list-style-type:circle">The for statement can be used to iterate through a variable and use all values in the variable</li></ul><ul id="cda4bb4a-34e1-4a08-9f75-29c7eab061c9" class="bulleted-list"><li style="list-style-type:circle">The if statement can be used to have the template work with a variable if another variable is defined.</li></ul></li></ul></details></li></ul><ul id="f9ee2633-8b74-401d-b0b2-cce8f02453ea" class="toggle"><li><details open=""><summary>3 - Using Ansible Roles</summary><ul id="ac11775c-a9e0-4c09-9625-89f3807fe1ca" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Understanding Directory Structure Best Practices</mark><ul id="be3aaece-60cb-4190-a2c6-63f030319934" class="bulleted-list"><li style="list-style-type:circle">When working with Ansible, it’s recommended to use project directories so that contents can be organized in a consistent way.</li></ul><ul id="d5517ed5-ed77-41cf-8878-597166058770" class="bulleted-list"><li style="list-style-type:circle">Each project directory may have its own ansible.cfg, inventory as well as playbooks.</li></ul><ul id="d6d201e3-b26b-437f-8cbd-d92573bcdf64" class="bulleted-list"><li style="list-style-type:circle">Roles can be used to standardize and easily re-use specific parts of Ansible</li></ul><ul id="056b6075-e9b6-442f-be29-1c81bd345c0b" class="bulleted-list"><li style="list-style-type:circle">Role is a complete project dedicated to a specific task that is going to be included in the main playbook </li></ul></li></ul><ul id="cd17ae56-6bb0-4f76-ad45-e466a9d634ea" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Understanding Ansible Roles</mark><ul id="30fa46cd-0883-4ed7-9744-e1ab48005491" class="bulleted-list"><li style="list-style-type:circle">Code used in one playbook can be useful in other playbooks also.</li></ul><ul id="6e9d16a9-dac2-4e2a-8f74-88f77d019cac" class="bulleted-list"><li style="list-style-type:circle">A role is a collections of tasks, variables, files, templates and other resources in a fixed directory structure that, as such, can be easily included from a playbook</li></ul><ul id="14797169-6f5e-49dc-b165-9325102f218d" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow">Typical directories inside a role: </mark><ul id="a437fdf6-9d5d-4549-97ed-6b85e08531a8" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">defaults </mark>:  contains default values of role vars.</li></ul><ul id="bf55d386-3002-47d3-86e9-533269a12151" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">files</mark> : contains static files that are needed from the role tasks</li></ul><ul id="4e9425f8-9d32-4070-8927-53cf4a4304b2" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">handlers </mark>: has a main.yml that defines handlers used in the role.</li></ul><ul id="05883f3d-b4ee-4715-9ff9-123904589e5a" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">meta </mark>: has a main.yml that may be used to include role metadata, such as info about the author, license, dependencies, and more.</li></ul><ul id="5c55aabc-5e8f-445e-9ada-3ba0227ceace" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">tasks</mark>: contains a main.yml that defines the role task definitions</li></ul><ul id="ff60845b-07b5-4c2a-a046-71a3c2e97947" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">templates</mark>: used to store jinja2 templates</li></ul><ul id="8885445f-9c7d-49cd-953a-a34ea2f9600b" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">tests</mark>: may contain an optimal inventory file, as well as test.yml playbook that can be used to test the role.</li></ul><ul id="8c964047-e3f4-4423-94c3-5d72075c5404" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-pink">vars</mark>: may contain a main.yml with standard variables for the role (not meant to be overwritten) </li></ul></li></ul><ul id="1bd6e815-2e4d-4b5a-bc38-8b9f1ce2aba7" class="bulleted-list"><li style="list-style-type:circle">Variables can be defined at different levels in a role :<ul id="78352897-7a93-45ed-8e0e-a9c062b7b59b" class="bulleted-list"><li style="list-style-type:square">vars/main.yml ⇒ has the role default vars, and they are not intended to be overwritten</li></ul><ul id="13c3584b-3501-460a-8f6d-24b19e5e1e04" class="bulleted-list"><li style="list-style-type:square">defaults/main.yml ⇒ contains default vars, but they have a low precedence and can be overwritten. </li></ul></li></ul><ul id="5aa45327-fdec-4dde-bb8e-98c55f001fe8" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Understanding role location : </mark><ul id="6a30d61c-f8b7-45ce-89d0-c022a1da3ff2" class="bulleted-list"><li style="list-style-type:square">Role can be stored at a default location, and from there can easily be used from playbooks.<ul id="7f444813-f17b-41d6-8b88-6e5f48cb5e43" class="bulleted-list"><li style="list-style-type:disc">./roles has highest precedence</li></ul><ul id="d099c0c3-f987-4d64-8c29-c5de2b60a328" class="bulleted-list"><li style="list-style-type:disc">~/.ansible/roles is checked after that </li></ul><ul id="795857d8-69f2-4009-93b6-bf92aa939351" class="bulleted-list"><li style="list-style-type:disc">/etc/ansible/roles is checked next</li></ul><ul id="76489675-4b3e-4668-bddb-4a9014d063d3" class="bulleted-list"><li style="list-style-type:disc">/usr/share/ansible/roles is check last.</li></ul></li></ul></li></ul><ul id="6734b49d-4494-4bbb-8096-23f22cc56f82" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Using Roles in a playbook : </mark><ul id="fdecc247-ff62-4083-b7e8-cef824fe3b88" class="bulleted-list"><li style="list-style-type:square">When roles are used, they will run before any task that is defined in the playbook.</li></ul></li></ul><ul id="ee11dc72-37a0-4047-a68b-d801b310417f" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Defining Role variables : </mark><ul id="c1685df7-2902-4d44-8a49-12971f782bde" class="bulleted-list"><li style="list-style-type:square">When calling a  role, role variables can be defined<ul id="bfdb4e4a-4504-4bd3-a7fb-707d0145e58b" class="bulleted-list"><li style="list-style-type:disc">role: role1</li></ul><ul id="3576d98c-ba89-43b1-8770-a72a7cacb274" class="bulleted-list"><li style="list-style-type:disc">role: role2
+var1: man
+var2: women</li></ul></li></ul></li></ul><ul id="de7582de-95bc-46bc-a272-6e4acf4bce52" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Using Ansible Galaxy for standard Roles</mark><ul id="08cb3b28-b706-4878-ab51-764da34ade0a" class="bulleted-list"><li style="list-style-type:square">Admins can define their own roles, or standard roles can be used from Ansible-Galaxy</li></ul><ul id="20b4b8e8-6ec3-4ebe-b08b-e66b17d9a8e9" class="bulleted-list"><li style="list-style-type:square">Ansible-Galaxy is a public website where community provided roles are offered</li></ul><ul id="f4668025-b60d-436e-bf7b-a53ca4691aa9" class="bulleted-list"><li style="list-style-type:square">An easy-to-use search interface is available at galaxy.ansible.com</li></ul></li></ul></li></ul><ul id="a9e4cbba-8ef5-4641-8a28-1149e2c2c613" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using the Ansible Galaxy CLI</mark><ul id="29ae3f05-a091-4c92-ab8a-7f66cee246ed" class="bulleted-list"><li style="list-style-type:circle"><strong>ansible-galaxy search </strong>will search for roles<ul id="da30fcf3-6494-4362-aae5-3b272ef5c3b2" class="bulleted-list"><li style="list-style-type:square">If an argument is provided, ansible-galaxy will search for this arg in the role description</li></ul><ul id="105da4a5-acfd-4b3d-b563-87483604a264" class="bulleted-list"><li style="list-style-type:square">Use —author, —platforms and galaxy-tags to narrow down the search results</li></ul><p id="80983c61-6999-4007-b15c-d81e0d137794" class=""><code>=&gt; ansible-galaxy search wordpress —platforms El</code></p><ul id="2474f73f-8f0e-47dd-bef0-a95fa6f2b2f0" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal"><code>ansible-galaxy info bertvv.wordpress</code></mark> ⇒ provides infos about roles<ul id="c19b008e-9b5a-4b07-9a0b-02476f652613" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">ansible-galaxy install </mark>downloads a role and installs it in ~/.ansible/roles</li></ul><ul id="18188c00-72f0-402c-8a7d-7de0fa783d06" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">ansible-galaxy list</mark> shows installed roles</li></ul><ul id="094de81d-29d5-4bce-b3f6-5f3d63ccd9fa" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">ansible-galaxy remove</mark> can be used to clean up and remove roles</li></ul></li></ul></li></ul><ul id="7afcff3e-de6a-42ab-b001-1d6c621abdfb" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-purple">ansible-galaxy init</mark> creates a directory structure that can be used to start developing your own role<strong> exp</strong>:<mark class="highlight-pink"><code> ansible-galaxy init &lt;user_name&gt;.&lt;role_name&gt;</code></mark></li></ul><ul id="f866c339-192a-4a64-8b87-afdcfa45947a" class="bulleted-list"><li style="list-style-type:circle">Using a requirements File<ul id="7b6f1b0d-dc8e-4157-97bc-87e4af833641" class="bulleted-list"><li style="list-style-type:square"><strong>ansible-galaxy c</strong>an be used to install a list of roles based on definition in a requirements file</li></ul><ul id="4bae7576-70d4-4b7f-bed5-06f7cc84e521" class="bulleted-list"><li style="list-style-type:square">A <strong>requirement file </strong>is a YAML file that defines a list of required roles that are specified using the<mark class="highlight-red"> src </mark>keyword</li></ul><ul id="f4de277f-3284-41f3-bfdb-103432a7871e" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">src</mark> keyword can contain the name of a role from Ansible Galaxy, or a URL to a custom location pointing to your own roles</li></ul><ul id="6ccf005a-e879-4edd-b7e1-acdab4edc431" class="bulleted-list"><li style="list-style-type:square">Create roles/requirements.yml in the projects directory to use it, and always specify the optional version attribute, to avoid getting surprises when a newer version of a role has become available.<ul id="67c81aba-04cf-437e-bfac-39be3b38031f" class="bulleted-list"><li style="list-style-type:disc">- <mark class="highlight-yellow">src:</mark><mark class="highlight-yellow"><strong> </strong></mark><strong>file:///opt/local/roles/myrole.tar
+ </strong><mark class="highlight-yellow"> name</mark><strong>: myrole
+  </strong><mark class="highlight-yellow">version: </mark><strong>1.0</strong></li></ul><ul id="f7df20f2-62c5-410e-9ef2-b940cdfdfd3d" class="bulleted-list"><li style="list-style-type:disc">to install roles using requirements file, use :
+<mark class="highlight-purple"><code>ansible-galaxy install -r roles/requirement.yml</code></mark></li></ul></li></ul></li></ul></li></ul><ul id="6e86cf40-080b-443b-97f5-cf693f014e31" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Creating Custom Roles</mark><ul id="125d46ac-6633-4b3f-8885-f6435d0aba83" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>ansible-galaxy init &lt;role_name&gt;</code></mark> to create the role directory structure</li></ul><ul id="516e495a-22e5-41fe-adf7-8eab0825ec8c" class="bulleted-list"><li style="list-style-type:circle">Mind the location of the directory structure, you can put it in the local project directory or in a directory that is accessible for all projects</li></ul><ul id="14c7e2a4-becf-4050-ab49-e0fb647ebdbc" class="bulleted-list"><li style="list-style-type:circle">Populate the required role files as discussed before</li></ul><ul id="518e67e6-0557-4da8-a3a6-fda652376b29" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red"><strong>Best practices : </strong></mark><ul id="fd8e3943-4b77-48e6-baed-f126877b841f" class="bulleted-list"><li style="list-style-type:square">Each role should have its own version control repository</li></ul><ul id="c7eb6590-7721-4a55-83ff-c52548227c46" class="bulleted-list"><li style="list-style-type:square">Don’t put sensitive information in the role, but in the local playbooks or Ansible Vault instead</li></ul><ul id="a55f9862-1fef-4dd4-88ef-edec8822e6e7" class="bulleted-list"><li style="list-style-type:square">don’t forget to edit <a href="http://README.md">README.md</a> and meta/main.yml</li></ul><ul id="c5ce1c55-8b0a-495b-bea2-44951b7cd0c2" class="bulleted-list"><li style="list-style-type:square">Roles should be dedicated to one task/function. Use multiple roles to manage multiple tasks/functions </li></ul><ul id="bffea92e-f12a-4310-b8a8-30f32fa139fa" class="bulleted-list"><li style="list-style-type:square">role dependencies can be defined in <mark class="highlight-purple">meta/main.yml</mark></li></ul><ul id="116a511f-0ae7-40ae-bedc-72e1b871d7fd" class="bulleted-list"><li style="list-style-type:square">Dependencies listed here will be installed automatically when role is used.</li></ul><ul id="d37f2f66-9814-4141-83fb-5d723fe50e16" class="bulleted-list"><li style="list-style-type:square">Conditional roles call a role dynamically, using the <mark class="highlight-orange">include_role </mark>module</li></ul><ul id="8294a3cd-2de3-4ea5-8db9-a6a0124d8c75" class="bulleted-list"><li style="list-style-type:square">Conditional roles can be comined with conditional statements<ul id="e7b4bb56-935e-4b54-8fb7-7d96ce4cf9cd" class="bulleted-list"><li style="list-style-type:disc">This makes it so a role will only run if the conditional statement is true</li></ul><ul id="419b8b13-22cc-4170-828f-d20a384cbfe2" class="bulleted-list"><li style="list-style-type:disc">use<mark class="highlight-yellow"> include_role</mark> in a task statement to do so..<ul id="06315af0-85ee-4ae8-af1a-65889da9e2af" class="bulleted-list"><li style="list-style-type:circle">⇒ example :
+<code>- - - 
+- hosts : &lt;hostname&gt;
+  tasks:
+  - include_role:
+       name: wrole_name&gt;
+    when : &lt;condition&gt;</code></li></ul></li></ul></li></ul></li></ul></li></ul><ul id="ba819239-6d8c-4e11-8aff-72094ab3f59a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Managing order of Execution</mark><ul id="8bc36728-909b-4ab1-82bb-3ddbbd26b3ff" class="bulleted-list"><li style="list-style-type:circle">Role tasks are always executed before playbook tasks</li></ul><ul id="186dcb7b-2de8-411c-a652-23c9361e69d1" class="bulleted-list"><li style="list-style-type:circle">Next, playbook tasks are executed and then, handlers are executed</li></ul><ul id="191a8283-e7fc-4cc0-b41f-337f9f56826a" class="bulleted-list"><li style="list-style-type:circle">Use <strong><mark class="highlight-pink">pre_tasks </mark></strong>to define playbook tasks are to be executed before the tasks in a role.</li></ul><ul id="e09ee307-748a-48e7-ad67-cdc01e9e037c" class="bulleted-list"><li style="list-style-type:circle">Use <mark class="highlight-pink"><strong>post_tasks</strong></mark> to define playbook tasks that are executed after playbook tasks and roles.</li></ul></li></ul><ul id="e95bf814-03e8-40c9-bbbd-7935242ddb3c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Understanding Collections:</mark><ul id="b01ee09e-0879-4396-a0bf-b51fbedd52e5" class="bulleted-list"><li style="list-style-type:circle">Collection are a new way to bundle Ansible contents to make it more manageable</li></ul><ul id="dee52122-9ff4-48e3-91bd-062e4600d798" class="bulleted-list"><li style="list-style-type:circle">Collections can have different sources, including the Ansible community and RedHat partners.</li></ul><ul id="9732a572-468d-49b8-8e4e-93137985d8e4" class="bulleted-list"><li style="list-style-type:circle">The collection may contain the following:<ul id="2e2eba53-c50a-4406-b97c-5e65b42e956d" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow"><strong>modules:</strong></mark> that provide the ansible core functionality</li></ul><ul id="f63210a8-70a2-4e70-bead-e89184469a7c" class="bulleted-list"><li style="list-style-type:square"><strong><mark class="highlight-yellow">roles:</mark></strong> that can be included in playbooks for common task execution.</li></ul><ul id="366c46fe-27cb-4a48-8720-f2208b98eabc" class="bulleted-list"><li style="list-style-type:square"><strong><mark class="highlight-yellow">plugins</mark></strong>: that extend the python code on the Ansible control host.</li></ul></li></ul><ul id="80247e64-9147-40e9-b590-cb9a1089c061" class="bulleted-list"><li style="list-style-type:circle">Collections have a Fully Qualified Collection Name (FQCN), such as<strong><mark class="highlight-pink"> ansible.netcommon</mark></strong></li></ul><ul id="0803f64c-ad6e-4691-8cad-c9656cc51038" class="bulleted-list"><li style="list-style-type:circle">Before collection, you would address just a module name such as<strong> </strong><strong><mark class="highlight-teal">user</mark></strong>, now you address this module as <mark class="highlight-teal"><strong>ansible.builtin.user</strong></mark></li></ul><ul id="7be87ca9-5844-4531-bc4a-73a3221386da" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-pink"><strong>collections</strong></mark> keyword is used to define the collection you are going to use in the play header.
+exp ⇒ <code>ansible.posix.selinux &lt;&gt; selinux</code></li></ul><ul id="0ce2c1e9-a258-4f55-bb10-99ae5b3407ba" class="bulleted-list"><li style="list-style-type:circle">Example of collections/requirements.yml
+- collection:
+      - name: &lt;collec_name&gt;
+      - source</li></ul><ul id="6b9b6ff4-4a62-4c8c-bfca-63cafaa65c02" class="bulleted-list"><li style="list-style-type:circle">collections name can be found easly using<mark class="highlight-yellow"><strong> ansible-doc -l | grep aws</strong></mark></li></ul><ul id="653c51ff-1fe9-42c9-a9a7-cdc1a3ef2593" class="bulleted-list"><li style="list-style-type:circle"><code>ansible-galaxy collection list</code> to list all the collection</li></ul><ul id="f59e7f89-1811-46db-9523-346019a48247" class="bulleted-list"><li style="list-style-type:circle">Investigate in : ~/.ansible/collections/ansible_collections/ansible/posix</li></ul><ul id="8a2273b6-9624-419e-9d5f-5c8ddba1d78c" class="bulleted-list"><li style="list-style-type:circle">example : ansible-doc ansible.posix.selinux </li></ul></li></ul></details></li></ul><ul id="f93076db-c3fc-4861-8be7-ef7b9afab477" class="toggle"><li><details open=""><summary>4 - Using RHEL system Roles </summary><ul id="93eda2f2-6296-4ae6-9fb1-c077c225f2f5" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">Understanding RHEL system Roles</mark><ul id="31a3a5a1-a4c1-49ae-81c5-1c161fb0913b" class="bulleted-list"><li style="list-style-type:circle">RHEL system roles are provided to configure standard RHEL operations<ul id="1db06587-acad-477a-8a78-4ce6f7664354" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">rhel-system-roles.kdump</mark> configures the kdump crash recovery service</li></ul><ul id="3e9078d3-6cd7-49e6-9fd4-c1f0ae5c7d23" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal"><a href="http://rhel-system-roles.network">rhel-system-roles.network</a></mark><mark class="highlight-teal"> </mark>configures network interfaces</li></ul><ul id="00d6133f-fa7c-437d-9263-1ae4848f45d4" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">rhel-system-roles.selinux</mark> manages all aspects of selinux.</li></ul><ul id="bdc759ef-7e2a-433a-bc7f-b48d7d5afbf6" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">rhel-system-roles.timesync</mark> is used to setup Network time protocol or precision time protocol</li></ul><ul id="598570cc-d0a3-457e-af0f-df1381ac2c68" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">rhel-system-roles.postfix </mark>is used to config a host as a postfix MTA</li></ul><ul id="19990425-835a-4ea2-a28a-2a91036dcd62" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">rhel-system-roles.firewall </mark>config a firewall.</li></ul><ul id="7085e23c-6aec-4763-9233-7930a55d0f57" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">rhel-system-roles.tuned </mark>config the tuned service</li></ul></li></ul></li></ul><ul id="dd83bdef-4b15-4f55-a504-18e09c689e89" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">Installing RHEL System Roles</mark><ul id="f6a5ab0d-9486-42a8-9f71-4a94f64bdda5" class="bulleted-list"><li style="list-style-type:circle">Use<mark class="highlight-orange"><code> yum install rhel-system-roles </code></mark>to install them in /usr/share/ansible/roles directory, and a symbolic link is provided with the name Linux-system-roles to provide maximum compatibility.</li></ul></li></ul><ul id="b7eb2f1c-7076-41d1-96b3-c36dc9a57f6c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">Using the RHEL SELinux System Role</mark><ul id="e88bcbac-aec7-4d58-998c-660f8223eed3" class="bulleted-list"><li style="list-style-type:circle">The rhel-system-role.selinux can do several things:<ul id="bd393128-31db-444f-9bff-6f0066f56257" class="bulleted-list"><li style="list-style-type:square">set enforcing or permissive mode / run restorecon / set selinux file context / set seliux user mappings.</li></ul></li></ul><ul id="96789d7d-cfe0-448b-b205-32586fc76a5b" class="bulleted-list"><li style="list-style-type:circle">a reboot is required after making changes</li></ul><ul id="18be6119-cb50-44e5-b434-b258634299c2" class="bulleted-list"><li style="list-style-type:circle">Variables:<ul id="4362ed78-b104-4bc1-9e67-8e66e276e3e1" class="bulleted-list"><li style="list-style-type:square">selinux_state</li></ul><ul id="59c06aa3-4f3a-4ccf-a07a-a29cf481821c" class="bulleted-list"><li style="list-style-type:square">selinux_booleans</li></ul><ul id="57cab263-718b-4cd2-9db7-ea00f8da7fa9" class="bulleted-list"><li style="list-style-type:square">selinux_fcontexts</li></ul><ul id="c854b95f-a91d-4b54-8986-4f0607c1dd6c" class="bulleted-list"><li style="list-style-type:square">selinux_restore_dirs</li></ul><ul id="b822bfc3-aa4e-44ca-a9bb-057ae15b3f60" class="bulleted-list"><li style="list-style-type:square">selinux_ports</li></ul></li></ul></li></ul><ul id="662ad0c0-94ed-4b93-969f-5990a4479ec7" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple">Using the RHEL TimeSync System Role.</mark><ul id="650066ea-071a-4757-81a7-d088959a7fee" class="bulleted-list"><li style="list-style-type:circle">rhel-system-roles.timesync can be used to manage time synchronization</li></ul><ul id="996c8194-d5b0-466a-980b-4d4b04ae584c" class="bulleted-list"><li style="list-style-type:circle">vars:<ul id="f235d685-6c64-4c41-8a26-ab4116fc1bf3" class="bulleted-list"><li style="list-style-type:square">timesync_ntp_servers<ul id="55e94b11-d7f1-4c38-b0fd-9db867c367cf" class="bulleted-list"><li style="list-style-type:disc">hostname: shows the hostname</li></ul><ul id="35dcffba-d343-4145-b45a-d3fe9e837570" class="bulleted-list"><li style="list-style-type:disc">iburst: specifies that fast iburst sync should be used.</li></ul></li></ul><ul id="f5837c7d-4e94-4093-a822-f4274a996324" class="bulleted-list"><li style="list-style-type:square">timezone</li></ul></li></ul></li></ul></details></li></ul><ul id="eb1621e6-0fbf-4676-91f1-0a0bd2051d32" class="toggle"><li><details open=""><summary>5 - Using ansible in large environments</summary><ul id="3a4986f8-09ee-46b8-8e76-b1ca003470a4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Managing inventory</mark><ul id="7a4935f7-65b8-4b6a-b00a-f20f10b06c9d" class="bulleted-list"><li style="list-style-type:circle">Multiple inventories can be used, for instance by putting multiple inventory files in a directory and use that as the source of inventory.</li></ul><ul id="f6e852ee-3ed2-42de-bbe6-3427829a8bde" class="bulleted-list"><li style="list-style-type:circle">If the inventory specified is a dir, all inventory files in that dir are considered includ dynamic and static invs.</li></ul></li></ul><ul id="c1b1ac33-4500-4439-b07b-befed2be5450" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Addressing Host Patterns</mark><ul id="12ab1546-63b3-4790-8f5e-b890c19868ef" class="bulleted-list"><li style="list-style-type:circle">“&amp;” ⇒ commun hosts
+”!” ⇒ but not
+”*” ⇒ wildcard</li></ul><figure id="3160dd02-2a9a-4b6e-8a84-2e90fcb4366d" class="image"><a href="assests/ss.png"><img style="width:208px" src="assests/ss.png"/></a></figure></li></ul><ul id="4e1b76d3-dd23-4764-aab1-1b857fea9663" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Configuring Parallelism</mark></li></ul><ul id="ef7a497b-1ae7-49e5-b918-896b47619c52" class="bulleted-list"><li style="list-style-type:disc">Ansible can run on multiple managed hosts simultaneously, but by default the maximum number of simultaneous hosts is limited to five</li></ul><ul id="06763d7c-8d65-4501-937c-51e63fecea1b" class="bulleted-list"><li style="list-style-type:disc">set<strong><mark class="highlight-red"> forks =n</mark></strong> in ansible.cfg to change the maximum number of simultaneous hosts or use <mark class="highlight-red">-f nn</mark> as args to ansible[-playbook] command.</li></ul><ul id="854e04b8-8b34-4e48-a0d5-a0307c296e9f" class="bulleted-list"><li style="list-style-type:disc">user <strong>serial</strong> keyword to run hosts through the entire play in batches</li></ul><ul id="e23e63e4-b4d3-4fd9-8959-aba64cc937d4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">Organizing Directory Structure</mark><ul id="f3d8211f-fbef-45d1-84ca-9a14e66771b9" class="bulleted-list"><li style="list-style-type:circle">if playbooks grow larger, it is common to use modularity by using includes and imports</li></ul><ul id="e7bdad00-c3ec-4c23-aa30-d01d15af6e0e" class="bulleted-list"><li style="list-style-type:circle">use<mark class="highlight-red"><strong> import_playbook</strong></mark> to import a playbook.</li></ul><ul id="372ad08d-f2d5-4cad-99e3-64458719e0e2" class="bulleted-list"><li style="list-style-type:circle">task file is a flat list of tasks, use<mark class="highlight-red"> import_tasks</mark> to statically import a task file in the playbook, it will be included at the location where it is imported. </li></ul><ul id="bf9f024c-15f8-4d5d-8fd3-cd3b16272918" class="bulleted-list"><li style="list-style-type:circle">use<mark class="highlight-red"> include_tasks </mark>to include a task file</li></ul><ul id="3ccd754e-0cad-47a8-b8e0-b90f693164f0" class="bulleted-list"><li style="list-style-type:circle"></li></ul></li></ul></details></li></ul><ul id="b53e7041-5eee-49d5-85d2-62705592029e" class="toggle"><li><details open=""><summary>6 - Ansible troubleshooting </summary><ul id="c658b1e1-de84-4d2e-8bcf-1b0aadb449ac" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Managing Ansible logs</mark><ul id="346f6530-2665-40cd-b8e4-8b48c8fa0fd3" class="bulleted-list"><li style="list-style-type:circle">By default, ansible is not configured to log its output anywhere</li></ul><ul id="c607f951-1e4c-45ee-8a69-57e0965b3f2e" class="bulleted-list"><li style="list-style-type:circle">set log_path in ansible.cfg to write logs to a specific destination<ul id="96ee0341-5dc0-4493-9ceb-0e64fa5267e6" class="bulleted-list"><li style="list-style-type:square">⇒ create this file under the project file</li></ul></li></ul><ul id="ef16c94c-b51d-4c81-ac05-eaaf481419ea" class="bulleted-list"><li style="list-style-type:circle">make sure to use log rotation.</li></ul></li></ul><ul id="404ed325-1bb8-4d4d-ba93-89b54f953788" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using the debug module</mark><ul id="e68a6385-4c5e-481e-b664-377cbb746d88" class="bulleted-list"><li style="list-style-type:circle">debug module is used to show values of vars in a playbook</li></ul><ul id="7325ec78-5f09-4f68-9d0a-c2fb6df6e8c2" class="bulleted-list"><li style="list-style-type:circle">Also to show msgs in specific errors situations</li></ul></li></ul><ul id="8d9e8101-ecf5-45ac-86cc-b9fd3540121a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using check mode</mark><ul id="eeca13c3-218f-47ac-a87f-da841c6d2ce4" class="bulleted-list"><li style="list-style-type:circle">use<code> ansible-playbook --check /  --diff for changes made by the templates files on the nodes)</code></li></ul><ul id="3e127954-a62b-478f-aae6-17c7562d4556" class="bulleted-list"><li style="list-style-type:circle">modules in the playbook must support check mode</li></ul><ul id="efd88a2d-8094-4502-b7a4-a932c5b8f316" class="bulleted-list"><li style="list-style-type:circle">set <mark class="highlight-purple">check_mode:</mark> yes within the task to always run that specific task in check mode</li></ul><ul id="5aa82d97-5f3d-4632-8497-0ca362840268" class="bulleted-list"><li style="list-style-type:circle"></li></ul></li></ul><ul id="6490cfcc-435d-4a32-9159-3a453d8e8576" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using Modules for Troubleshooting and testing</mark><ul id="f50a9601-9ec2-4f6a-836e-e6c5f61e6759" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">uri:</mark> checks content that is returned from a specific URL</li></ul><ul id="2addc2f8-8c0b-446e-b2d6-0328432404f3" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">script:</mark> runs a script from the control node on the managed hosts</li></ul><ul id="37abb823-5e8d-4de8-b173-c5c5c41db9f3" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">stat: </mark>check the status of fils; use it to register a variable and next test to determine if a file exist.<ul id="c3136023-2782-4d53-943a-06a036efa30e" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">atime: </mark>last access time of the file</li></ul><ul id="7bb95a80-81b2-4648-b564-aaad46788a45" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">isdir: </mark>true if file is a dir</li></ul><ul id="432102ca-6b70-466f-94a9-23399eefba70" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">exists:</mark> true if file exists</li></ul><ul id="42a9c976-87dc-4835-948a-29813014b7d3" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-teal">size: </mark>size in bytes</li></ul></li></ul><ul id="7ce448cc-5f00-40fb-9e85-159194137c72" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red">assert: </mark>this module will fail with an error if a specific condition is not met.</li></ul></li></ul><ul id="cfe94a8b-6488-4818-8250-9ce73fe18234" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Troubleshooting connection issues</mark><ul id="e4a1cc0d-1607-4504-a9a3-462323d1c61e" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Authentication issues:</mark><ul id="5f700eef-562a-4aca-9b49-5e2047d308e6" class="bulleted-list"><li style="list-style-type:square">Confirm <mark class="highlight-purple">remote_user </mark>setting and existence.</li></ul><ul id="f3d8c192-76a8-4636-a4d1-cacb1eea0293" class="bulleted-list"><li style="list-style-type:square">confirm host key setup</li></ul><ul id="6ec72f15-391a-41ae-8876-e624fc4ac1dc" class="bulleted-list"><li style="list-style-type:square">verify <mark class="highlight-purple">become</mark> and <mark class="highlight-purple">become_user</mark></li></ul><ul id="4d45f5f8-f695-4ec8-b906-4148ae2f7884" class="bulleted-list"><li style="list-style-type:square">check <mark class="highlight-purple">sudo</mark></li></ul></li></ul><ul id="129ca8c3-6cff-44d8-91a9-96711b161221" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal">Connecting to managed hosts: </mark></li></ul><ul id="5e8bfb8d-0699-4051-a71a-2458dceaf47c" class="bulleted-list"><li style="list-style-type:circle">Using adhoc commands!<ul id="a4f56615-463b-4eb6-81eb-e6b8c32acaeb" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-red">ping </mark>to test network connectivity</li></ul><ul id="a96916c5-3db4-44fe-ba18-972fd6d782b9" class="bulleted-list"><li style="list-style-type:square"><code>--become </code>to test privesc<ul id="7e55f259-5bc5-407a-9beb-f3445e4915a5" class="bulleted-list"><li style="list-style-type:disc"><code>ansible node1 -m ping --become</code></li></ul></li></ul><ul id="a2275ee3-4609-412d-a71e-5a1b000ba400" class="bulleted-list"><li style="list-style-type:square">command module to test diff items.</li></ul></li></ul></li></ul><ul id="9129cb3c-d60d-4528-b753-3a18f4537997" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Analyzing playbook errors</mark><ul id="41b17e53-8f22-48cb-b2e1-3450127e6a88" class="bulleted-list"><li style="list-style-type:circle">verbosity levels:</li></ul><ul id="ee803c87-fab7-4e85-ad61-27e365fc8eb1" class="bulleted-list"><li style="list-style-type:circle">-v : output data</li></ul><ul id="e7bed408-175a-4601-8dae-0f9a887ba671" class="bulleted-list"><li style="list-style-type:circle">-vv : output and input data</li></ul><ul id="c987b8ea-35b8-4db2-b289-e7f33080d448" class="bulleted-list"><li style="list-style-type:circle">-vvv : +connections info</li></ul><ul id="4f3ccc48-d47a-4ef6-89b7-2033d09fd0a6" class="bulleted-list"><li style="list-style-type:circle">-vvvv : additional info, executed scripts and the user who’s running tasks. </li></ul></li></ul><ul id="907c2d07-cc83-45a0-b21e-1f7742d623b2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">avoiding errors in playbook best practices </mark><ul id="50363f81-b92e-44ad-bb3f-c19524ae400e" class="bulleted-list"><li style="list-style-type:circle">name of plays should make sense</li></ul><ul id="957fa87f-0b2d-4f67-9f16-9dbd1b2f8f04" class="bulleted-list"><li style="list-style-type:circle">include comments</li></ul><ul id="3e9b69ab-4e73-4c8a-812f-e5fd03076f9f" class="bulleted-list"><li style="list-style-type:circle">use includes and imports when the play gets bigger</li></ul></li></ul></details></li></ul></div></article></body></html>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

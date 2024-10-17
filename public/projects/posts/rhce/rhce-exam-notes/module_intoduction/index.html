@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="All rights reserved - @chxmxii_ ">
+<meta name="description" content="Module IntoductionModule Intoduction1 - Installing ansible 1.1 - understanding ansible Ansible is CMS tool which allows you to manage all the host nodes through one control node.
+" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/projects/posts/rhce/rhce-exam-notes/module_intoduction/" />
+
+
+    <title>
+        
+             :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Mouhib CHVMSI">
+  <meta itemprop="description" content="Module IntoductionModule Intoduction1 - Installing ansible 1.1 - understanding ansible Ansible is CMS tool which allows you to manage all the host nodes through one control node.">
+  <meta itemprop="wordCount" content="1540">
+  <meta itemprop="image" content="http://localhost:1313/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="Mouhib CHVMSI">
+  <meta name="twitter:description" content="Module IntoductionModule Intoduction1 - Installing ansible 1.1 - understanding ansible Ansible is CMS tool which allows you to manage all the host nodes through one control node.">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/projects/posts/rhce/rhce-exam-notes/module_intoduction/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="Mouhib CHVMSI">
+  <meta property="og:description" content="Module IntoductionModule Intoduction1 - Installing ansible 1.1 - understanding ansible Ansible is CMS tool which allows you to manage all the host nodes through one control node.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="og:image" content="http://localhost:1313/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">Module_Intoduction</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/projects/posts/rhce/rhce-exam-notes/module_intoduction/"></a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Module Intoduction</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ee8d48fb-4c19-4f9f-83c7-b58c5ac75df7" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="Module%20Intoduction%20ee8d48fb4c194f9f83c7b58c5ac75df7/osicons_redhat.png"/></div><h1 class="page-title">Module Intoduction</h1></header><div class="page-body"><ul id="793fb124-4543-4590-af1d-a99d8b439d05" class="toggle"><li><details open=""><summary>1 - Installing ansible </summary><p id="52e4bb9d-0f43-49be-8c38-db7556002a3f" class="">1.1 - understanding ansible <div class="indented"><p id="3137d9ae-be68-46a5-9fa0-f9f54ddb6cd8" class=""><mark class="highlight-blue">A</mark>nsible is CMS  tool which allows you  to manage all the host nodes through one control node.</p></div></p><p id="28259b1e-5d27-472a-899f-19718af7afe8" class="">1.2 - Host requirements<div class="indented"><p id="2e3815a5-8af9-49e6-b809-dec9331760a4" class=""><mark class="highlight-blue">B</mark>asically, all you need to setup is ansible and python on the control node and python only for slave nodes, as ansible will run python scripts on the slave nodes.</p><p id="702d252a-5916-4515-ba9a-50e4731748d8" class=""><mark class="highlight-blue">A</mark>nother thing you need is setting up ssh to access the slave nodes.</p><p id="abdde5ac-3472-4e4d-a230-aba092f27194" class=""><mark class="highlight-blue">A</mark> dedicated user account to manage the slave nodes. in my case I named it ansible, slave1,2,3..</p><p id="34e8ae28-5dd3-4881-948c-be4e12e3cbe1" class=""><mark class="highlight-blue">S</mark>udoers config file to give the privillege.</p><p id="b8daa7c4-c495-479f-a961-69838d082884" class=""><mark class="highlight-blue">F</mark>ixed IP addresses to make it easier.</p><p id="4fd4da8b-77df-4f77-a40d-8e340abff557" class=""><mark class="highlight-blue">S</mark>etting up DNS configurations.</p></div></p><p id="924c1458-3631-4c87-9c88-7bc95edc3ba3" class="">1.3 - Installing ansible on the control node.<div class="indented"><p id="4f3c1bf8-c1be-4136-ade0-bcb47ab71f00" class="">Ansible can be installed from repos, or using the python pip installer.</p><ul id="1603edd7-d274-4717-bb50-afb9156039a5" class="bulleted-list"><li style="list-style-type:disc">Using pip:<ul id="f20f534d-4f0e-4c53-9dba-eab9771a1792" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>yum install python3</code></mark></li></ul><ul id="8adae2d2-2243-45bb-815a-5b5d5971dd8a" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>yum -y install python3-pip</code></mark></li></ul><ul id="0a88b214-fac7-4967-8899-1798c85d26c2" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>alternatives —set python /usr/bin/python3</code></mark></li></ul><ul id="fce3ee39-87ce-417f-ba53-1cbb329990e2" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>su - ansible; pip3 install ansible —user</code></mark></li></ul><ul id="0379fdfc-bcd1-48c4-a39c-cc2b042e024b" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>ansible —version</code></mark></li></ul></li></ul><ul id="93cd9c00-8600-400c-9c0c-f99f9f62676d" class="bulleted-list"><li style="list-style-type:disc">Using repos:<ul id="cb4addfa-ba7a-4e30-9b48-e2873187986d" class="bulleted-list"><li style="list-style-type:circle"><code>subscription-manager repos —list</code></li></ul><ul id="5492cba8-0b77-4751-b631-783506275f8d" class="bulleted-list"><li style="list-style-type:circle"><code>subscription-manager repos —enable=ansible-2-for-rhel-8-x86_64-rpms</code></li></ul><ul id="bf0d117b-0040-4423-abc1-55835d471253" class="bulleted-list"><li style="list-style-type:circle"><code>use yum install ansible</code></li></ul><ul id="62ad7472-93f1-457e-a68b-1d1e04183444" class="bulleted-list"><li style="list-style-type:circle"><code>ansible —version</code></li></ul><ul id="bd2d11ba-f010-4304-8a94-1cfcb0737550" class="bulleted-list"><li style="list-style-type:circle"><code>yum install python3 for the managed nodes</code></li></ul><p id="21731b82-a1a0-45a2-a6a9-6921ced15f1e" class="">
+</p></li></ul></div></p><p id="fad46edd-ad06-482b-b1a2-1656f4ece7d6" class="">1.4 - Preparing managed nodes<div class="indented"><p id="f7a600f1-be55-4d19-8e04-7eb80c64d951" class=""><mark class="highlight-teal">S</mark>o in order to prepare the managed nodes, all you need to do is creating a user account and give and add it to sudoers file.<div class="indented"><ul id="86819fe3-2a6f-4064-96ee-40b9beca0ab9" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>useradd user &amp;&amp; echo passwd | passwd —stdin user</code></mark></li></ul><ul id="b326bafa-1c03-4ee3-adcd-ff72422cab2e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>echo “user ALL=(ALL) NOPASSWD:ALL” &gt; /etc/sudoers.d/user</code></mark></li></ul><ul id="50bcea0c-bb49-4bfe-ade1-f7acb92ac58e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>from control node : ssh-copy-id user@slave1; ssh-copy-id user@slave2</code></mark></li></ul><ul id="1210b90e-0646-4b24-8b74-282edfc141ba" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>yum install python3</code></mark></li></ul><ul id="9ee496b3-fc3f-465d-8bb0-6bf1e6d05138" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><code>alternativs set python /usr/bin/python3</code></mark></li></ul></div></p></div></p><p id="a1245854-5dac-45d8-9f3d-7c3844fd46ae" class="">1.5 - Verifying ansible installation<div class="indented"><p id="03cd5da2-b5bc-411c-8909-6b01bf0fe261" class=""><mark class="highlight-yellow"><code>ansible —version</code></mark><mark class="highlight-yellow">.</mark></p><p id="f3b5a439-489a-41d1-9546-bf834fcc151b" class="">Also make sure to ssh into the slave machines without any probs.</p></div></p></details></li></ul><ul id="f2056261-80cf-47ed-8c1a-c054ad278289" class="toggle"><li><details open=""><summary>2 - Setting up a managed environment :</summary><p id="f398cf5f-a22f-429b-8280-9ca693a4bcd2" class="">     <mark class="highlight-blue">2.1 Setting up static inventory:</mark><div class="indented"><ul id="6655213a-686c-414b-8ad1-0340fec4660d" class="bulleted-list"><li style="list-style-type:disc">In Ansible environment you need to know which machines are manageable from an Ansible perspective.</li></ul><ul id="5a55477a-069c-4d6a-ab6a-33a84b740b0f" class="bulleted-list"><li style="list-style-type:disc">Static inventory is used to manage individual machines, hostnames, ips are used to define the machines.</li></ul><ul id="1f266de8-adb8-4070-b2ec-3648ad6fb1f1" class="bulleted-list"><li style="list-style-type:disc">You can set a group of hosts in inventory to make it easy to address multiple hosts at once</li></ul><ul id="cc536146-9df6-46fc-bea1-7a221f46f397" class="bulleted-list"><li style="list-style-type:disc">Variables can be used. but is deprecated practice</li></ul><ul id="ae506c2c-2414-4737-bca5-75afff2c375e" class="bulleted-list"><li style="list-style-type:disc">Ranges can be used, exp : server[1:20] server1 to server20, or 192.168.[4:5].[0:255]</li></ul><ul id="058c4a99-231d-467c-b757-7fe5a9836d45" class="bulleted-list"><li style="list-style-type:disc">Locations of the inventory files : <ul id="56b62f4e-3a67-482c-b3d0-0b43fd5f217a" class="bulleted-list"><li style="list-style-type:circle">By default &amp; ansible will look at if if -i option is not used :<code> /etc/ansible/hosts</code></li></ul><ul id="014fc158-7458-4356-a906-36f043492898" class="bulleted-list"><li style="list-style-type:circle">Can be specified through the <code>ansible.cfg</code></li></ul><ul id="14dbf2a5-ab11-4617-854e-35ee58bc6c37" class="bulleted-list"><li style="list-style-type:circle">option<code> -i inventory</code> can specify the location of the inventory.</li></ul></li></ul><ul id="e65f4214-6658-45de-a1ea-69f8c878eeab" class="bulleted-list"><li style="list-style-type:disc">Example of a static Inventory file :<ul id="1b22c033-b1e7-4a32-af17-939df36e6079" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>[webservers]
+web1.example.com
+[fileservers]
+file1.example.com
+[servers:children]
+webservers
+fileservers</code></mark></li></ul></li></ul><ul id="b18ed658-d0f7-4561-981c-9be273bcb1e4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">small Lab :</mark><ul id="b1488138-009b-4c2d-b65d-6c542c97eac9" class="bulleted-list"><li style="list-style-type:circle">mkdir project1</li></ul><ul id="b33f03f0-8b4e-4ef7-99cb-ecc00317cedd" class="bulleted-list"><li style="list-style-type:circle">vim inventory</li></ul><ul id="346aa42b-fdc4-4aed-8e32-ca493a321bda" class="bulleted-list"><li style="list-style-type:circle">ansible -i inventory all(OR)ungrouped —list-hosts</li></ul></li></ul><p id="be9d38a1-18c5-4e5b-b084-8c6480d28135" class=""><mark class="highlight-blue">2.2 Understanding Dynamic Inventory:</mark></p><ul id="d652ec90-58f0-4383-9542-6c87be5f50fd" class="bulleted-list"><li style="list-style-type:disc">Dynamic Inventory is recommended to be used when managing many machines in a rack server for example.</li></ul><ul id="5c04691c-2def-4379-8582-53dc4c9ab5c7" class="bulleted-list"><li style="list-style-type:disc">Dynamic Inventory is basically a script  to discover all of the different servers that are living in the cloud and the ones that are being added to the cloud environment</li></ul><ul id="5507e92c-3f4b-4c04-86d5-cc8430da7cc6" class="bulleted-list"><li style="list-style-type:disc">These scripts are referred to in the same way as static inventory, but must have the <mark class="highlight-teal">+x </mark>permission set.</li></ul><ul id="d1410409-805c-4bc1-8dfd-a1c48bf30740" class="bulleted-list"><li style="list-style-type:disc">check github for many dynamic inventory scripts.</li></ul><p id="b317aee3-2e04-4a94-aac8-8b577ba6c6c2" class=""><mark class="highlight-blue">2.3 Understanding Ansible Configuration Files:</mark></p><ul id="6c97f896-e7b2-45ca-ad93-ea3f0f0db597" class="bulleted-list"><li style="list-style-type:disc">Sample ansibe.cfg configuration file:
+<mark class="highlight-teal"><code>[default]
+inventory = &lt;inventory_file.name&gt;
+remote_user= identfication of the user used to reach out to the managed machines.
+host_key_checking = false ⇒ to make ansible a lit bit tolerant in case anything is wrong with ssh host keys.
+[privelege_escalation ⇒ How to run tasks on the remote vms]
+become = True ⇒ to run tasks as somebody else.
+become_method = Sudo ⇒by default sudo
+become_user = root 
+become_ask_pass = false ⇒ to tell ansible that we don’t need to provide a password! running tasks as root, using sudo without any interaction.</code></mark></li></ul><ul id="0dfb386b-7f36-4a12-9b21-904e0caa4097" class="bulleted-list"><li style="list-style-type:disc"> Locations :<ul id="2e8728e6-daeb-4a8d-8ff0-cbd9da6a5038" class="bulleted-list"><li style="list-style-type:circle">/etc/ansible/ansible.cfg is the defaut location.</li></ul><ul id="55526ffd-3e96-43be-96ee-8f0a3b1a2aa4" class="bulleted-list"><li style="list-style-type:circle">~/.ansible.cfg if exists will overwrite the default</li></ul><ul id="20406ce9-318a-4848-ab25-9dfb1eac3d55" class="bulleted-list"><li style="list-style-type:circle">./ansible.cfg is the configuration file in the current ansible project directory and it will always have precedence if it exists (the most common way)</li></ul><ul id="62793710-0fba-497e-ad15-1ffdbe107bdf" class="bulleted-list"><li style="list-style-type:circle">If the variable <mark class="highlight-red">ANSIBLE_CONFIG</mark> exists to refer to a specific config file, this will always have precedence.</li></ul><ul id="bec6ff45-7910-4a02-9a66-a2ebe35ea244" class="bulleted-list"><li style="list-style-type:circle">ansible —version to find which configuration file currently is used.
+</li></ul></li></ul><p id="67f997c7-6c77-4273-bc0f-e845223fa28f" class=""><mark class="highlight-blue">2.4 Managing Ansible Configuration Files:</mark></p></div></p></details></li></ul><ul id="04e869b5-6752-4f3c-acfe-d30d63673032" class="toggle"><li><details open=""><summary>3- Using Adhoc commands</summary><ul id="ac9f8d7f-5933-4deb-abcf-19f64c92c6f9" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Using Ad Hoc Commands:</mark><ul id="a95598e5-b70f-4480-b385-2d1080d8e4fa" class="bulleted-list"><li style="list-style-type:circle">Ad Hoc commands are used to make a quick setup just from the CLI without making it too complicated.</li></ul><ul id="44d8bf19-facf-44ef-b98d-fa85622b61e3" class="bulleted-list"><li style="list-style-type:circle">Basic structure : <mark class="highlight-yellow"><code>ansible &lt;hosts&gt; -m &lt;module_name&gt; -a ‘module_args’  -i &lt;inventory_name&gt;</code></mark></li></ul><ul id="4b65f39b-6f37-4cbf-9c99-2be1e486b44c" class="bulleted-list"><li style="list-style-type:circle">example 1: <mark class="highlight-pink"><code>ansible all -m user -a ‘name=chxmxi’</code></mark></li></ul><ul id="5aaa9363-9420-4aec-b7af-39a9841deff2" class="bulleted-list"><li style="list-style-type:circle">example 2:<mark class="highlight-pink"><code> ansible all -m command -a ‘id chxmxi’</code></mark></li></ul></li></ul><ul id="0c2b668f-fd4e-4438-9e47-4edfa00f8d79" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Understanding Ansible Modules</mark><ul id="ddfbf93c-7d1f-4fe9-b1ef-6d767a7a91d0" class="bulleted-list"><li style="list-style-type:circle">Modules allow you to perform specific tasks on managed hosts.</li></ul><ul id="7ef9ea5d-d503-4d45-a989-a839bc29ed42" class="bulleted-list"><li style="list-style-type:circle">Modules are used to tell ansible what you want it to do, either in ad-hoc commands as well as in playbooks</li></ul><ul id="2ee9b8ef-19e6-490b-865f-763a2e76b5ea" class="bulleted-list"><li style="list-style-type:circle">user ansible-doc -l for a list of modules currently available (You can develop your own modules)</li></ul><ul id="d818aa1d-e3cd-4440-a780-29f4c7aa2939" class="bulleted-list"><li style="list-style-type:circle">ansible-doc will show which arguments are available and which are required.</li></ul><ul id="5f42be8b-81e0-4872-88a6-f1446990ccdb" class="bulleted-list"><li style="list-style-type:circle">Ansible modules are<mark class="highlight-red"> idempotent:</mark> which means that when running them again they’ll give the same result and if a task has already been configured, they won’t do it again.</li></ul></li></ul><ul id="6604a96b-0c9a-4cc6-b3dd-28e8dff832db" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Using ansible-doc to get Module Documentation</mark><ul id="e9c89a14-3a24-4080-a56b-c5cbe644475b" class="bulleted-list"><li style="list-style-type:circle">The ansible-doc command provides documentation about modules</li></ul><ul id="f7ddd289-60db-4ab3-bc1c-b7502e1923d1" class="bulleted-list"><li style="list-style-type:circle">Use ansible-doc -l for a list of all modules</li></ul><ul id="b9659044-a041-4e29-a48e-15e03df7e011" class="bulleted-list"><li style="list-style-type:circle">ansible-doc &lt;module_name&gt; to get the documentation for a specific module<ul id="8099b670-319a-4b23-a380-560db24b0923" class="bulleted-list"><li style="list-style-type:square">Modules status :<ul id="e6ecf2e4-6ae1-44a9-83a1-28eb9f56de64" class="bulleted-list"><li style="list-style-type:disc">Stableinterface: the module is safe to use</li></ul><ul id="ccd8567f-681b-49eb-b77a-54d7875106b7" class="bulleted-list"><li style="list-style-type:disc">preview: the module is in tech preview and its keywords may change.</li></ul><ul id="7b02e330-4dd2-4b59-b8b2-dec6ce06e699" class="bulleted-list"><li style="list-style-type:disc">deprecated: the module should not be used anymore, and will be removed in a future release.</li></ul><ul id="c0511090-c612-4f9f-a723-610ab6adf96e" class="bulleted-list"><li style="list-style-type:disc">removed: the module has been removed and the documentation only still exists to help users migrating to its replacement.</li></ul></li></ul><ul id="eb0ec1df-5cf7-49fa-acbb-c4350c1912bc" class="bulleted-list"><li style="list-style-type:square">Modules Support statuts:<ul id="14903396-f791-452b-95bf-4760eed910d7" class="bulleted-list"><li style="list-style-type:disc">core: supported by the core ansible devs </li></ul><ul id="7fa76323-b302-4d46-b66f-27fdca946212" class="bulleted-list"><li style="list-style-type:disc">curated: supported by the partners and companies in the community, proposed changes are reviewed by  the core devs</li></ul><ul id="62fd139d-6b12-4817-acac-037f9a478762" class="bulleted-list"><li style="list-style-type:disc">community: supported by the community.</li></ul></li></ul></li></ul></li></ul><ul id="40ad0166-6c0e-445b-985d-4b4f224c7239" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Introduction Essential Ansible Modules</mark><ul id="33ba9bcd-f06c-46b6-b9bb-308916c826fc" class="bulleted-list"><li style="list-style-type:circle">ping: <mark class="highlight-yellow"><code>ansible all -m ping</code></mark></li></ul><ul id="6439a7c0-b455-4971-9406-918397ed8bc3" class="bulleted-list"><li style="list-style-type:circle">service: checks if a service is currently running 
+<code><mark class="highlight-yellow">ansible all -m service -a &quot;name=httpd state=started&quot;</mark></code></li></ul><ul id="45f0386e-614c-47cf-9788-51af94bd8783" class="bulleted-list"><li style="list-style-type:circle">command: runs any command, but not through a shell.
+<mark class="highlight-yellow"><code>ansible all -m command -a “/sbin/reboot -t now”</code></mark></li></ul><ul id="c4b691f2-ba56-445e-be03-49ba15545a06" class="bulleted-list"><li style="list-style-type:circle">shell: runs arbitrary commands through shell
+<mark class="highlight-yellow"><code>ansible all -m shell -a set
+ansible all -m shell -a “cat /etc/passwd”</code></mark></li></ul><ul id="1d5ad604-f43c-4231-8c1d-51c4999e7841" class="bulleted-list"><li style="list-style-type:circle">raw: runs commands on a remote host without a need for py.
+<mark class="highlight-yellow"><code>ansible all -m raw -a “yum install python3 -y” </code></mark></li></ul><ul id="6fa05c74-3cc8-48f5-967f-3d74dd9578c4" class="bulleted-list"><li style="list-style-type:circle">copy: copies a file to the managed host.
+<code><mark class="highlight-yellow">ansible all -m copy -a ‘content=”hello” dest=/etc/file&#x27;</mark></code></li></ul></li></ul></details></li></ul><ul id="66020091-3f06-4ddf-994f-8e00257732cb" class="toggle"><li><details open=""><summary>4- Getting started with playbooks</summary><ul id="d0445a4f-cfbc-4483-a148-be1620cd5efa" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Using YAML to write Playbooks</mark><ul id="a45211a0-58dc-4542-a8ce-67122a9e63b5" class="bulleted-list"><li style="list-style-type:circle">Ansible Playbooks are used to run multiple tasks against managed hosts in a scripted way</li></ul><ul id="b46324f8-b8e8-4459-bea8-732e7f406305" class="bulleted-list"><li style="list-style-type:circle">In playbooks, one or multiple <mark class="highlight-pink"><strong>plays </strong></mark>are started<ul id="021628cc-3f65-4677-9684-4fc6a61e921f" class="bulleted-list"><li style="list-style-type:square">each<mark class="highlight-pink"><strong> plays</strong></mark> run one or more <mark class="highlight-blue"><strong>tasks</strong></mark></li></ul><ul id="88f7f4d9-640e-4e4e-b587-0ed8e54ce3ca" class="bulleted-list"><li style="list-style-type:square">Different <mark class="highlight-brown"><strong>modules </strong></mark>are used to perform the actual work for a<strong><mark class="highlight-blue"> task</mark></strong></li></ul></li></ul></li></ul><ul id="455eb099-44bc-431e-8ea4-6c7ef3465677" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">Verifying Playbook Syntax</mark><ul id="45f4c8b9-2b3f-4ecb-9cd2-5c30ad6be79d" class="bulleted-list"><li style="list-style-type:circle">in ~/.vimrc ⇒ <mark class="highlight-teal"><code>autocmd FileType yaml setlocal ai ts=2 sw=2 et</code></mark></li></ul><ul id="9eb6cfbb-6c40-4272-a6eb-b7a60976df73" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-teal"><code>ansible-playbook —syntax-check &lt;playbook name&gt;</code></mark></li></ul><ul id="e54cc433-df97-494d-8503-a46934157fcb" class="bulleted-list"><li style="list-style-type:circle"><strong><mark class="highlight-orange">-v[vvv]</mark></strong> to increase the output verbosity</li></ul><ul id="1ac2b557-5691-43b0-b7d6-6bd9472cb612" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-orange"><strong>-C</strong></mark> to perform a dry run</li></ul></li></ul><ul id="c3da0036-25f9-49ca-8bb1-ef944c9bc25b" class="bulleted-list"><li style="list-style-type:disc">Writing Multiple-Play Playbooks <strong><mark class="highlight-teal"> </mark></strong></li></ul></details></li></ul><ul id="168fbef9-6496-4190-b004-ef595279968e" class="toggle"><li><details open=""><summary>5-working with variables and facts</summary><ul id="dbb446bd-20f3-4001-b12b-613e524e5908" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Understanding Variables</mark><ul id="be6a660b-76cd-4a48-9d8d-d3604f817349" class="bulleted-list"><li style="list-style-type:circle">A Variable is a label that is assigned to a specific value to make it easy to refer to that value throughout the playbook.</li></ul><ul id="cbf58ccf-7353-4cda-82c0-13eea4655281" class="bulleted-list"><li style="list-style-type:circle">Variables can be defined by administrators at different levels</li></ul><ul id="8e66c3f7-b172-4385-bdbf-92a5fa141bc5" class="bulleted-list"><li style="list-style-type:circle">A fact is a special type of variable, that refers to a current state of an Ansible-managed system.</li></ul></li></ul><ul id="fd16bcaf-f610-4e89-8514-f13372f2cca1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using Variables</mark><ul id="24cd1b15-ee7d-49c2-b119-7f7e656774a0" class="bulleted-list"><li style="list-style-type:circle">Variables can be set at different levels<ul id="f6af793f-d28d-4956-8f5c-f5ab15b4d794" class="bulleted-list"><li style="list-style-type:square">In a playbook
+<code>- hosts: all
+  vars:
+     web_package: httpd</code></li></ul><ul id="7a1a3529-e162-4597-b05b-5853467491e3" class="bulleted-list"><li style="list-style-type:square">In inventory (deprecated)</li></ul><ul id="47f89e94-35b8-4b91-b74b-4def89da3cb6" class="bulleted-list"><li style="list-style-type:square">In inclusion files
+<mark class="highlight-teal"><code>- hosts: all
+  vars_files:
+    - vars/&lt;filename&gt;.yml</code></mark></li></ul></li></ul><ul id="4b2a6b65-918b-4b47-9e6f-11b9a60ab2aa" class="bulleted-list"><li style="list-style-type:circle">Variables names :<ul id="a5d73a50-fa3a-468c-8c7b-107f3f2e449f" class="bulleted-list"><li style="list-style-type:square">The name must start with a letter</li></ul><ul id="32ea95a0-3649-45de-bb19-65c8e4df24e3" class="bulleted-list"><li style="list-style-type:square">Variable name can only contain letters, numbers, and “_”.</li></ul></li></ul></li></ul><ul id="04f1515b-1b69-41d4-ac6e-fdcbe853cf3d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Understanding Variable Precedence</mark><ul id="18e6df7c-a928-4ecc-8a23-1495e0d7fe77" class="bulleted-list"><li style="list-style-type:circle">Vars can be set with different types of scope<ul id="6e6ddd91-e526-423f-b470-11351ace6b20" class="bulleted-list"><li style="list-style-type:square">Global scope: var is set from inventory or the cli 
+<mark class="highlight-purple"><code>ansible-playbook site.yml -e “web_package=apache”</code></mark></li></ul><ul id="777a5c70-1f71-42b4-b6d6-9ef1f170e75b" class="bulleted-list"><li style="list-style-type:square">Play scope: var is set from a play</li></ul><ul id="d0bdc974-adf0-4c21-a4e9-9c296a9c322a" class="bulleted-list"><li style="list-style-type:square">Host scope: var is set in inventory or using host variable inclusion file</li></ul></li></ul></li></ul><ul id="7980b742-f0b7-430b-8ba7-a1e2134ca5c9" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Managing Host Variables</mark><ul id="e39a6378-ef69-45ff-a202-76275d10eba2" class="bulleted-list"><li style="list-style-type:circle">Vars can be assigned to hosts and to groups of hosts</li></ul><ul id="57a7f8f4-2494-47c6-9b78-8e69118d873e" class="bulleted-list"><li style="list-style-type:circle">Use directories to populate host and group variables</li></ul><ul id="3c9cf652-d13c-483a-8cb6-b5c51fc209ca" class="bulleted-list"><li style="list-style-type:circle">host vars can be stored in your project dir:<ul id="9d2c1e5d-7535-4feb-91b4-d0078927a8fb" class="bulleted-list"><li style="list-style-type:square"> <strong>/host_vars/&lt;host name&gt; </strong></li></ul><ul id="923b2999-442b-4e0e-994c-e2d2d68e5fe1" class="bulleted-list"><li style="list-style-type:square"><strong>/group_vars/&lt;group name&gt; </strong></li></ul></li></ul><ul id="aeece2e6-e76f-42ef-9cc2-ad07a9e8abe9" class="bulleted-list"><li style="list-style-type:circle">You don’t have to define vars in these dirs in the playbook as they are picked automatically
+</li></ul></li></ul><ul id="5b974aa7-0745-4c97-9f5e-255f01beeb93" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using Multi-valued Variables</mark><ul id="854feb68-4f54-4919-b5c8-61b2e555b8d4" class="bulleted-list"><li style="list-style-type:circle">Multi-valued variable, it can be written as an array(list) or as a dictionary(hash) and this depends on the use-case.</li></ul><ul id="f1503076-2ccf-42cf-89e0-49338aadb918" class="bulleted-list"><li style="list-style-type:circle"><strong>Using Dictionary :</strong><ul id="8d3e6e30-2b7e-458d-9fdc-59e0309c84d2" class="bulleted-list"><li style="list-style-type:square">Dictionaries can be written in two ways :
+One ⇒ 
+    <mark class="highlight-teal"><code>users:
+       linda:
+          username: linda
+          shell: /bin/bash  
+       lisa:
+           username: lisa
+           shell: /bin/sh</code></mark>
+Two ⇒
+    <mark class="highlight-yellow"><code>users:
+       linda: {username: ’linda’, shell: ’/bin/bash’}
+       lisa: {username: ‘lisa’, shell: ‘/bin/sh’}</code></mark>
+</li></ul><ul id="8fcbf9ce-1319-4caf-9763-ec662c45ec84" class="bulleted-list"><li style="list-style-type:square">To address items in a dictionary, you can use two notations :<ul id="00b5de4f-4fe0-4c0a-b020-1d283b652ca8" class="bulleted-list"><li style="list-style-type:disc">var_name[’key’] ⇒ <mark class="highlight-pink"><code>users[’linda’][’shell’]</code></mark></li></ul><ul id="4d2b33f2-a3cb-411d-a448-d35b8e75b931" class="bulleted-list"><li style="list-style-type:disc">var_name.key ⇒ <mark class="highlight-pink"><code>users.linda.shell</code></mark></li></ul></li></ul><ul id="0c4ee106-4ef0-42de-8597-5e16576570a3" class="bulleted-list"><li style="list-style-type:square">You can’t use loop or with_items on dictionaries</li></ul></li></ul><ul id="f6c50a5b-06b4-4595-85f6-7c68db6ea7af" class="bulleted-list"><li style="list-style-type:circle"><strong>Using arays : </strong><ul id="9b279a96-5e8f-41a2-95b4-1d179ad6236c" class="bulleted-list"><li style="list-style-type:square">Arrays provide a list of items, where each item can be addressed separately
+<mark class="highlight-teal"><code>users:
+  - username: linda
+     shell: /binsh
+  - username: lisa
+     shell: /bin/sh</code></mark></li></ul><ul id="7295011a-6ba9-4bc7-bb9a-06191f331c97" class="bulleted-list"><li style="list-style-type:square">You can address to an individual item in the array using <mark class="highlight-red"><strong>{{ var_name[0] }}</strong></mark> notation</li></ul><ul id="56767695-8204-4d1a-9513-56ea27b2f200" class="bulleted-list"><li style="list-style-type:square">Use <mark class="highlight-red"><strong>with_items</strong></mark> or <mark class="highlight-red"><strong>loop</strong></mark> to access all variables.</li></ul></li></ul></li></ul><ul id="a06beb04-cfa9-4657-bb63-ecd559d56b3f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Using Ansible Vault</mark><ul id="f10edde1-6988-411d-91c8-149b9db58a97" class="bulleted-list"><li style="list-style-type:circle">ansible vault is developed to protect sensitive data (web keys, passwords..) through encrypting and decrypting files.</li></ul><ul id="1f9500d3-20fe-4c8f-bfdd-7219ebee1302" class="bulleted-list"><li style="list-style-type:circle">create encrypted file ⇒ <mark class="highlight-yellow"><code><strong>ansible-vault create playook.yml</strong></code></mark></li></ul><ul id="55372405-6612-49bf-9ea1-6e1a3f6fbb97" class="bulleted-list"><li style="list-style-type:circle">You can enter the password using passwd stored in a file (Make sure to give the perms 0600) ⇒ <mark class="highlight-yellow"><code>ansible-vault create —vault-password-file=vault-pass playbook.yml</code></mark></li></ul><ul id="8e6a9580-45d2-4ca5-911c-4872db3268d7" class="bulleted-list"><li style="list-style-type:circle">view a vault enrypted file ⇒ <mark class="highlight-yellow"><code>ansible-vault view playbook.yml</code></mark></li></ul><ul id="02e0f671-62d5-48f9-ac6c-3f00459ca2b6" class="bulleted-list"><li style="list-style-type:circle">to edit ⇒ <mark class="highlight-yellow"><code>ansible-vault edit playbook.yml</code></mark></li></ul><ul id="8b55f841-9f18-43ef-8f17-3dceba675530" class="bulleted-list"><li style="list-style-type:circle">encrypt/decrypt ⇒<mark class="highlight-yellow"><code> ansible-vault encrypt/decrpyt playbook.yml</code></mark></li></ul><ul id="744acd44-57f3-4cce-a930-f2606b865d8a" class="bulleted-list"><li style="list-style-type:circle">change passwd of an exisitng file ⇒ <mark class="highlight-yellow"><code>ansible-vault rekey</code></mark></li></ul></li></ul><ul id="7ca6f299-8f50-4eb8-b8a5-26b3d45e1c6f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Working with Facts.</mark><ul id="0259b417-e805-4a4a-80a9-0b81305928db" class="bulleted-list"><li style="list-style-type:circle">Ansible facts are variables that are automatically set and discovered by ansible on managed hosts</li></ul><ul id="cb9972a5-4729-4d07-a467-cb24f8535ffe" class="bulleted-list"><li style="list-style-type:circle">Facts contain information about hosts that can be used in conditionals</li></ul><ul id="44e6ed62-fcba-4305-8888-26f0e53f8d23" class="bulleted-list"><li style="list-style-type:circle">By default, all playbooks perform fact-gathering before running the actual plays</li></ul><ul id="6574c060-222d-47d7-aa78-da5d1e474d61" class="bulleted-list"><li style="list-style-type:circle">use the <strong>setup</strong> module to run fact-gathering in an ad-hoc command.</li></ul><ul id="6f9fdda9-8ffc-4815-90db-386da9ad915a" class="bulleted-list"><li style="list-style-type:circle">use the <strong>debug</strong> module to print the value of the ansible_facts variable</li></ul><ul id="c0bd8324-907b-4116-a8ee-093cc6155a88" class="bulleted-list"><li style="list-style-type:circle">ansible facts will show you hardware information, storage configuration and much more..</li></ul><ul id="fc8fd044-3061-4fe4-82ff-db20c5425f5a" class="bulleted-list"><li style="list-style-type:circle">Use <mark class="highlight-teal"><code>gather_facts:</code></mark> no in the play header to disable it as it may seriously speed up playbooks.</li></ul><ul id="4e8bda46-744b-4217-b217-8ee350bc9861" class="bulleted-list"><li style="list-style-type:circle">Using the <strong>setup module</strong> in a task will run a fact gathering.</li></ul></li></ul><ul id="a1b37abb-6348-4663-a5e7-f53e881bd9c4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Creating Custom Facts:</mark><ul id="eb80a6f2-03b9-4c59-bcf4-3f503617b246" class="bulleted-list"><li style="list-style-type:circle">Custom facts allow administrators to dynamically generate variables which are stored as facts</li></ul><ul id="3dc415d3-6d51-4d9b-a3c0-72799dd0f500" class="bulleted-list"><li style="list-style-type:circle">Custom facts are stored in an ini or JSON file in the <mark class="highlight-pink"><strong>/etc/ansible/facts.d </strong></mark>directory on the managed host<ul id="7c5fa0d5-ded3-46aa-a241-3f2d55029857" class="bulleted-list"><li style="list-style-type:square">The name of these files must end in <mark class="highlight-blue"><strong>.fact</strong></mark></li></ul></li></ul><ul id="291bc591-2040-40f1-a2e9-aec2c2550d37" class="bulleted-list"><li style="list-style-type:circle">Custom facts are stored in the <mark class="highlight-teal"><strong>ansible_facts.ansible_local </strong></mark>variable</li></ul><ul id="69a2f5a6-b65e-4774-b647-57d7cfb88785" class="bulleted-list"><li style="list-style-type:circle">Use <mark class="highlight-yellow"><code>ansibe &lt;hostname&gt; -m setup -a “filter=ansible_local”</code></mark> to display local facts.</li></ul><ul id="5115a8a7-e50e-4590-b58f-f93904de15c2" class="bulleted-list"><li style="list-style-type:circle"></li></ul></li></ul></details></li></ul><p id="dc7b8ac1-3a50-4ac0-aeda-95c8d4233f7c" class="">
+</p></div></article></body></html>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

@@ -1,56 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://chxmxii.github.io/portfolio/posts/2022/11/certifications-exam-notes/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/posts/2022/10/understanding-ci/cd/</loc>
-    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/posts/2022/09/kubernetes-nginx-web-server-deployement/</loc>
-    <lastmod>2022-09-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/posts/2022/08/bypassing-common-jinja2-filters/</loc>
-    <lastmod>2022-08-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/ansible/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/series/hugo-101/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/posts/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/series/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/</loc>
-    <lastmod>2022-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/devops/</loc>
-    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/k8s/</loc>
-    <lastmod>2022-09-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/nginx/</loc>
-    <lastmod>2022-09-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/python/</loc>
-    <lastmod>2022-08-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/tags/web/</loc>
-    <lastmod>2022-08-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/projects.txt/</loc>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/about.txt/</loc>
-  </url><url>
-    <loc>https://chxmxii.github.io/portfolio/categories/</loc>
-  </url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <sitemap>
+    <loc>http://localhost:1313/en/sitemap.xml</loc>
+    
+      <lastmod>2023-11-23T00:00:00+00:00</lastmod>
+    
+  </sitemap>
+  
+  <sitemap>
+    <loc>http://localhost:1313/fr/sitemap.xml</loc>
+    
+  </sitemap>
+  
+</sitemapindex>

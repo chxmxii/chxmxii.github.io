@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:chxmxii_]">
+<meta name="description" content=" Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled. c. Map host port 5000 to container port 80. Please keep the container in running state. Solution: #ssh to app server1 sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #pull the docker image sudo docker pull nginx:stable #run the container sudo docker run -itd --name cluster -p 5000:80 nginx:stable &gt;itd - --interactive &#43; --tty &#43; --detach Run a Docker Container: Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below: On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state. Solution: #ssh to stapp03 sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 #run the container docker run -d --name nginx_3 -p 8080:80 nginx:alpine #verify docker ps -a docker images curl -I localhost:8080 Docker Copy Operaton: The Nautilus DevOps team has some conditional data present on App Server 1 in Stratos Datacenter. There is a container ubuntu_latest running on the same server. We received a request to copy some of the data from the docker host to the container. Below are more details about the task: On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /usr/src/ location. Please do not try to modify this file in any way. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker ps docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src/ docker exec &lt;container_id&gt; ls /usr/src/ Docker Container Issue There is a static website running within a container named nautilus, this container is running on App Server 1. Suddenly, we started facing some issues with the static website on App Server 1. Look into the issue to fix the same, you can find more details below: Container&rsquo;s volume /usr/local/apache2/htdocs is mapped with the host&rsquo;s volume /var/www/html. The website should run on host port 8080 on App Server 1 i.e command curl http://localhost:8080/ should work on App Server 1. Solution: sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #inspect container so it matches the req docker inspect &lt;container_id&gt; #list all containers docker ps -a #start the desired container docker start &lt;docker_id&gt; #verify curl localhost:8080 Pull Docker Image Nautilus project developers are planning to start testing on a new project. As per their meeting with the DevOps team, they want to test containerized environment application features. As per details shared with DevOps team, we need to accomplish the following task: a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news Solution: docker image ls docker pull busybox:musl docker images docker tag busybox:musl busybox:news docker images Write a Docker File As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 3 in Stratos DC and configure to build an image with the following requirements: a. Use ubuntu as the base image. b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc). Solution: sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker/ vi Dockerfile #build the image docker built -t apache . #run the container docker run -d -p 5004:5004 --name docker apache #test curl localhost:5004 FROM ubuntu RUN apt-get update &amp;&amp; apt-get install -y apache2 RUN sed -i &#39;s/Listen 80/Listen 5004/g&#39; /etc/apache2/ports.conf EXPOSE 5004 CMD [&#34;apache2ctl&#34;,&#34;-D&#34;,&#34;FOREGROUND&#34;] Docker Update Permissions One of the Nautilus project developers need access to run docker commands on App Server 2. This user is already created on the server. Accomplish this task as per details given below: User mark is not able to run docker commands on App Server 2 in Stratos DC, make the required changes so that this user can run docker commands without sudo Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo usermod -aG docker mark id mark su - mark id docker ps Docker EXEC Operations One of the Nautilus DevOps team members was working to configure services on a kkloud container that is running on App Server 3 in Stratos Datacenter. Due to some personal work he is on PTO for the rest of the week, but we need to finish his pending work ASAP. Please complete the remaining work as per details given below: a. Install apache2 in kkloud container using apt that is running on App Server 3 in Stratos Datacenter. b. Configure Apache to listen on port 8084 instead of default http port. Do not bind it to listen on specific IP or hostname only, i.e it should listen on localhost, 127.0.0.1, container ip, etc. c. Make sure Apache service is up and running inside the container. Keep the container in running state at the end. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker exec -it kkloud apt-get install apache2 &amp;&amp;\ &gt; sed -i &#39;s/Listen 80/Listen 8084/g&#39; /etc/apache2/ports.conf &amp;&amp;\ &gt; service apache start &amp;&amp;\ &gt; curl localhost:8084 docker inspect -f &#34;{{ .NetworkSettings.IPAddress }} curl $ip:8084 Create a Docker Image From Container One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it: a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker image ls docker commit demo:datacenter ubuntu_latest docker image ls Create a Docker Network The Nautilus DevOps team needs to set up several docker environments for different applications. One of the team members has been assigned a ticket where he has been asked to create some docker networks to be used later. Complete the task based on the following ticket description: a. Create a docker network named as blog on App Server 2 in Stratos DC. b. Configure it to use bridge drivers. c. Set it to use subnet 192.168.0.0/24 and iprange 192.168.0.2/24. Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su - docker network ls docker network create --driver=bridge --ip-range=192.168.0.2/24 --subnet=192.168.0.0/24 blog docker network inspect blog { &#34;Name&#34;: &#34;blog&#34;, &#34;Id&#34;: &#34;6cd0bae9b622286afb87eb284c36d14b20f23b242c69cae5bfede8b1b257191a&#34;, &#34;Created&#34;: &#34;2023-08-02T08:32:56.010259327Z&#34;, &#34;Scope&#34;: &#34;local&#34;, &#34;Driver&#34;: &#34;bridge&#34;, &#34;EnableIPv6&#34;: false, &#34;IPAM&#34;: { &#34;Driver&#34;: &#34;default&#34;, &#34;Options&#34;: {}, &#34;Config&#34;: [ { &#34;Subnet&#34;: &#34;192.168.0.0/24&#34;, &#34;IPRange&#34;: &#34;192.168.0.2/24&#34; } ] }, } docker network ls Docker Volumes Mapping The Nautilus DevOps team is testing applications containerization, which issupposed to be migrated on docker container-based environments soon. In today&rsquo;s stand-up meeting one of the team members has been assigned a task to create and test a docker container with certain requirements. Below are more details: a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too). b. Create a new container with name beta from the image you just pulled. c. Map the host volume /opt/security with container volume /usr/src/. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state. sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su docker pull nginx:latest #pull the nginx image docker run -d --name beta -v /opt/security:/usr/src/:Z nginx:latest cp /tmp/sample.txt /opt/security/ #copy the sample.txt file docker exec -it beta cat /usr/src/sample.txt #verify Save Load and Transfer Docker Image One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC. a. On App Server 1 save the image demo:devops in an archive. b. Transfer the image archive to App Server 3. c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1. Note: Docker is already installed on both servers; however, if its service is down please make sure to start it. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker images docker save demo:devops -o /tmp/demo.tar scp /tmp/demo.tar banner@stapp03:/tmp/ docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker load -i /tmp/demo.tar docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] Write a Docker Compose File The Nautilus application development team shared static website content that needs to be hosted on the httpd web server using a containerised platform. The team has shared details with the DevOps team, and we need to set up an environment according to those guidelines. Below are the details: a. On App Server 3 in Stratos DC create a container named httpd using a docker compose file /opt/docker/docker-compose.yml (please use the exact name for file). b. Use httpd (preferably latest tag) image for container and make sure container is named as httpd; you can use any name for service. c. Map 80 number port of container with port 5004 of docker host. d. Map container&rsquo;s /usr/local/apache2/htdocs volume with /opt/itadmin volume of docker host which is already there. (please do not modify any data within these locations). Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi docker-compose.yml docker-compose up -d docker ps version: &#39;3&#39; services: httpd: image: httpd:latest container_name: httpd ports: - &#34;5004:80&#34; volumes: - /opt/itadmin:/usr/local/apache2/htdocs Resolve Dockerfile Issues The Nautilus DevOps team is working to create new images per requirements shared by the development team. One of the team members is working to create a Dockerfile on App Server 3 in Stratos DC. While working on it she ran into issues in which the docker build is failing and displaying errors. Look into the issue and fix it to build an image as per details mentioned below: a. The Dockerfile is placed on App Server 3 under /opt/docker directory. b. Fix the issues with this file and make sure it is able to build the image. c. Do not change base image, any other valid configuration within Dockerfile, or any of the data been used — for example, index.html. Note: Please note that once you click on FINISH button all existing images, the containers will be destroyed and new image will be built from your Dockerfile. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi Dockerfile to solve the problem I have replaced all the lines under FROM with RUN pwd;ls;ls conf.d;ls conf to check which dir does exist conf.d/conf. FROM httpd:2.4.43 RUN sed -i &#34;s/Listen 80/Listen 8080/g&#34; /usr/local/apache2/conf/httpd.conf RUN sed -i &#39;/LoadModule\ ssl_module modules\/mod_ssl.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/LoadModule\ socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/Include\ conf\/extra\/httpd-ssl.conf/s/^#//g&#39; conf/httpd.conf COPY certs/server.crt /usr/local/apache2/conf/server.crt COPY certs/server.key /usr/local/apache2/conf/server.key COPY html/index.html /usr/local/apache2/htdocs/ Resolve Docker Compose Issues The Nautilus DevOps team is working to deploy one of the applications on App Server 1 in Stratos DC. Due to a misconfiguration in the docker compose file, the deployment is failing. We would like you to take a look into it to identify and fix the issues. More details can be found below: a. docker-compose.yml file is present on App Server 1 under /opt/docker directory. b. Try to run the same and make sure it works fine. c. Please do not change the container names being used. Also, do not update or alter any other valid config settings in the compose file or any other relevant data that can cause app failure. Note: Please note that once you click on FINISH button all existing running/stopped containers will be destroyed, and your compose will be run. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 cd /opt/docker sudo docker-compose up vi docker-compose.yml version: &#39;2&#39; services: web: build: context: app/ dockerfile: Dockerfile container_name: python ports: - &#34;5000:5000&#34; volumes: - .:/code depends_on: - redis command: python app/app.py redis: image: redis container_name: redis Deploy an App on Docker Containers The Nautilus Application development team recently finished development of one of the apps that they want to deploy on a containerized platform. The Nautilus Application development and DevOps teams met to discuss some of the basic pre-requisites and requirements to complete the deployment. The team wants to test the deployment on one of the app servers before going live and set up a complete containerized stack using a docker compose fie. Below are the details of the task: On App Server 3 in Stratos Datacenter create a docker compose file /opt/finance/docker-compose.yml (should be named exactly). The compose should deploy two services (web and DB), and each service should deploy a container as per details below: For web service: a. Container name must be php_web. b. Use image php with any apache tag. Check here for more details. c. Map php_web container&rsquo;s port 80 with host port 6100 d. Map php_web container&rsquo;s /var/www/html volume with host volume /var/www/html. For DB service: a. Container name must be mysql_web. b. Use image mariadb with any tag (preferably latest). Check here for more details. c. Map mysql_web container&rsquo;s port 3306 with host port 3306 d. Map mysql_web container&rsquo;s /var/lib/mysql volume with host volume /var/lib/mysql. e. Set MYSQL_DATABASE=database_web and use any custom user ( except root ) with some complex password for DB connections. After running docker-compose up you can access the app with curl command curl :6100/ For more details check here. Note: Once you click on FINISH button, all currently running/stopped containers will be destroyed and stack will be deployed again using your compose file. Soluiton sshpass -p BigGr33n ssh -o StrcitHostKeyChecking=no banner@stapp03 cd /opt/finance sudo vi docker-compose.yml sudo docker-compose up -d sudo docker ps curl localhost:6100 curl stapp03:6100 version: &#34;3&#34; services: web: container_name: php_web image: php:7.3-apache-stretch ports: - &#34;6100:80&#34; volumes: - /var/www/html:/var/www/html DB: container_name: mysql_web image: mariadb:latest ports: - &#34;3306:3306&#34; volumes: - /var/lib/mysql:/var/lib/mysql environment: MYSQL_DATABASE: database_web MYSQL_ROOT_PASSWORD: r00t321 MYSQL_USER: kodekloud MYSQL_PASSWORD: k0d3kl0ud3 Docker Node App There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework. Create a Dockerfile (name is case sensitive) under /node_app directory: Use any node image as the base image. Install the dependencies using package.json file. Use server.js in the CMD. Expose port 5001. The build image should be named as nautilus/node-web-app. Now run a container named nodeapp_nautilus using this image. Map the container port 5001 with the host port 8093. Once deployed, you can test the app using a curl command on App Server 3: curl http://localhost:8093 Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /node_app sudo vim Dockerfile docker build -t nautilus/node-web-app . docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app curl localhost:8096 FROM node:alpine WORKDIR /app COPY [&#34;package.json&#34;,&#34;server.js&#34;,&#34;./&#34;] RUN npm install EXPOSE 5001 CMD [&#34;node&#34;, &#34;server.js&#34;] Docker Python App A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below: Create a Dockerfile under /python_app directory: Use any python image as the base image. Install the dependencies using requirements.txt file. Expose the port 3002. Run the server.py script using CMD. Build an image named nautilus/python-app using this Dockerfile. Once image is built, create a container named pythonapp_nautilus: Map port 3002 of the container to the host port 8097. Once deployed, you can test the app using curl command on App Server 2. Solution: sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 cd /python_app sudo vi Dockerfile docker build -t nautilus/python-app . docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app docker ps curl localhost:8097 FROM python:3 COPY src . RUN pip install --no-cache-dir -r requirements.txt EXPOSE 3002 CMD [&#34;pyhton&#34;,&#34;server.py&#34;] DONE!!
+" />
+<meta name="keywords" content=", DevOps, Docker" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/writeups/writeup08.txt/" />
+
+
+    <title>
+        
+            KKE - Docker Challenges :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="KKE - Docker Challenges">
+  <meta itemprop="description" content=" Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled. c. Map host port 5000 to container port 80. Please keep the container in running state. Solution: #ssh to app server1 sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #pull the docker image sudo docker pull nginx:stable #run the container sudo docker run -itd --name cluster -p 5000:80 nginx:stable &gt;itd - --interactive &#43; --tty &#43; --detach Run a Docker Container: Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below: On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state. Solution: #ssh to stapp03 sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 #run the container docker run -d --name nginx_3 -p 8080:80 nginx:alpine #verify docker ps -a docker images curl -I localhost:8080 Docker Copy Operaton: The Nautilus DevOps team has some conditional data present on App Server 1 in Stratos Datacenter. There is a container ubuntu_latest running on the same server. We received a request to copy some of the data from the docker host to the container. Below are more details about the task: On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /usr/src/ location. Please do not try to modify this file in any way. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker ps docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src/ docker exec &lt;container_id&gt; ls /usr/src/ Docker Container Issue There is a static website running within a container named nautilus, this container is running on App Server 1. Suddenly, we started facing some issues with the static website on App Server 1. Look into the issue to fix the same, you can find more details below: Container’s volume /usr/local/apache2/htdocs is mapped with the host’s volume /var/www/html. The website should run on host port 8080 on App Server 1 i.e command curl http://localhost:8080/ should work on App Server 1. Solution: sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #inspect container so it matches the req docker inspect &lt;container_id&gt; #list all containers docker ps -a #start the desired container docker start &lt;docker_id&gt; #verify curl localhost:8080 Pull Docker Image Nautilus project developers are planning to start testing on a new project. As per their meeting with the DevOps team, they want to test containerized environment application features. As per details shared with DevOps team, we need to accomplish the following task: a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news Solution: docker image ls docker pull busybox:musl docker images docker tag busybox:musl busybox:news docker images Write a Docker File As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 3 in Stratos DC and configure to build an image with the following requirements: a. Use ubuntu as the base image. b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc). Solution: sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker/ vi Dockerfile #build the image docker built -t apache . #run the container docker run -d -p 5004:5004 --name docker apache #test curl localhost:5004 FROM ubuntu RUN apt-get update &amp;&amp; apt-get install -y apache2 RUN sed -i &#39;s/Listen 80/Listen 5004/g&#39; /etc/apache2/ports.conf EXPOSE 5004 CMD [&#34;apache2ctl&#34;,&#34;-D&#34;,&#34;FOREGROUND&#34;] Docker Update Permissions One of the Nautilus project developers need access to run docker commands on App Server 2. This user is already created on the server. Accomplish this task as per details given below: User mark is not able to run docker commands on App Server 2 in Stratos DC, make the required changes so that this user can run docker commands without sudo Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo usermod -aG docker mark id mark su - mark id docker ps Docker EXEC Operations One of the Nautilus DevOps team members was working to configure services on a kkloud container that is running on App Server 3 in Stratos Datacenter. Due to some personal work he is on PTO for the rest of the week, but we need to finish his pending work ASAP. Please complete the remaining work as per details given below: a. Install apache2 in kkloud container using apt that is running on App Server 3 in Stratos Datacenter. b. Configure Apache to listen on port 8084 instead of default http port. Do not bind it to listen on specific IP or hostname only, i.e it should listen on localhost, 127.0.0.1, container ip, etc. c. Make sure Apache service is up and running inside the container. Keep the container in running state at the end. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker exec -it kkloud apt-get install apache2 &amp;&amp;\ &gt; sed -i &#39;s/Listen 80/Listen 8084/g&#39; /etc/apache2/ports.conf &amp;&amp;\ &gt; service apache start &amp;&amp;\ &gt; curl localhost:8084 docker inspect -f &#34;{{ .NetworkSettings.IPAddress }} curl $ip:8084 Create a Docker Image From Container One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it: a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker image ls docker commit demo:datacenter ubuntu_latest docker image ls Create a Docker Network The Nautilus DevOps team needs to set up several docker environments for different applications. One of the team members has been assigned a ticket where he has been asked to create some docker networks to be used later. Complete the task based on the following ticket description: a. Create a docker network named as blog on App Server 2 in Stratos DC. b. Configure it to use bridge drivers. c. Set it to use subnet 192.168.0.0/24 and iprange 192.168.0.2/24. Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su - docker network ls docker network create --driver=bridge --ip-range=192.168.0.2/24 --subnet=192.168.0.0/24 blog docker network inspect blog { &#34;Name&#34;: &#34;blog&#34;, &#34;Id&#34;: &#34;6cd0bae9b622286afb87eb284c36d14b20f23b242c69cae5bfede8b1b257191a&#34;, &#34;Created&#34;: &#34;2023-08-02T08:32:56.010259327Z&#34;, &#34;Scope&#34;: &#34;local&#34;, &#34;Driver&#34;: &#34;bridge&#34;, &#34;EnableIPv6&#34;: false, &#34;IPAM&#34;: { &#34;Driver&#34;: &#34;default&#34;, &#34;Options&#34;: {}, &#34;Config&#34;: [ { &#34;Subnet&#34;: &#34;192.168.0.0/24&#34;, &#34;IPRange&#34;: &#34;192.168.0.2/24&#34; } ] }, } docker network ls Docker Volumes Mapping The Nautilus DevOps team is testing applications containerization, which issupposed to be migrated on docker container-based environments soon. In today’s stand-up meeting one of the team members has been assigned a task to create and test a docker container with certain requirements. Below are more details: a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too). b. Create a new container with name beta from the image you just pulled. c. Map the host volume /opt/security with container volume /usr/src/. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state. sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su docker pull nginx:latest #pull the nginx image docker run -d --name beta -v /opt/security:/usr/src/:Z nginx:latest cp /tmp/sample.txt /opt/security/ #copy the sample.txt file docker exec -it beta cat /usr/src/sample.txt #verify Save Load and Transfer Docker Image One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC. a. On App Server 1 save the image demo:devops in an archive. b. Transfer the image archive to App Server 3. c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1. Note: Docker is already installed on both servers; however, if its service is down please make sure to start it. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker images docker save demo:devops -o /tmp/demo.tar scp /tmp/demo.tar banner@stapp03:/tmp/ docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker load -i /tmp/demo.tar docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] Write a Docker Compose File The Nautilus application development team shared static website content that needs to be hosted on the httpd web server using a containerised platform. The team has shared details with the DevOps team, and we need to set up an environment according to those guidelines. Below are the details: a. On App Server 3 in Stratos DC create a container named httpd using a docker compose file /opt/docker/docker-compose.yml (please use the exact name for file). b. Use httpd (preferably latest tag) image for container and make sure container is named as httpd; you can use any name for service. c. Map 80 number port of container with port 5004 of docker host. d. Map container’s /usr/local/apache2/htdocs volume with /opt/itadmin volume of docker host which is already there. (please do not modify any data within these locations). Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi docker-compose.yml docker-compose up -d docker ps version: &#39;3&#39; services: httpd: image: httpd:latest container_name: httpd ports: - &#34;5004:80&#34; volumes: - /opt/itadmin:/usr/local/apache2/htdocs Resolve Dockerfile Issues The Nautilus DevOps team is working to create new images per requirements shared by the development team. One of the team members is working to create a Dockerfile on App Server 3 in Stratos DC. While working on it she ran into issues in which the docker build is failing and displaying errors. Look into the issue and fix it to build an image as per details mentioned below: a. The Dockerfile is placed on App Server 3 under /opt/docker directory. b. Fix the issues with this file and make sure it is able to build the image. c. Do not change base image, any other valid configuration within Dockerfile, or any of the data been used — for example, index.html. Note: Please note that once you click on FINISH button all existing images, the containers will be destroyed and new image will be built from your Dockerfile. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi Dockerfile to solve the problem I have replaced all the lines under FROM with RUN pwd;ls;ls conf.d;ls conf to check which dir does exist conf.d/conf. FROM httpd:2.4.43 RUN sed -i &#34;s/Listen 80/Listen 8080/g&#34; /usr/local/apache2/conf/httpd.conf RUN sed -i &#39;/LoadModule\ ssl_module modules\/mod_ssl.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/LoadModule\ socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/Include\ conf\/extra\/httpd-ssl.conf/s/^#//g&#39; conf/httpd.conf COPY certs/server.crt /usr/local/apache2/conf/server.crt COPY certs/server.key /usr/local/apache2/conf/server.key COPY html/index.html /usr/local/apache2/htdocs/ Resolve Docker Compose Issues The Nautilus DevOps team is working to deploy one of the applications on App Server 1 in Stratos DC. Due to a misconfiguration in the docker compose file, the deployment is failing. We would like you to take a look into it to identify and fix the issues. More details can be found below: a. docker-compose.yml file is present on App Server 1 under /opt/docker directory. b. Try to run the same and make sure it works fine. c. Please do not change the container names being used. Also, do not update or alter any other valid config settings in the compose file or any other relevant data that can cause app failure. Note: Please note that once you click on FINISH button all existing running/stopped containers will be destroyed, and your compose will be run. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 cd /opt/docker sudo docker-compose up vi docker-compose.yml version: &#39;2&#39; services: web: build: context: app/ dockerfile: Dockerfile container_name: python ports: - &#34;5000:5000&#34; volumes: - .:/code depends_on: - redis command: python app/app.py redis: image: redis container_name: redis Deploy an App on Docker Containers The Nautilus Application development team recently finished development of one of the apps that they want to deploy on a containerized platform. The Nautilus Application development and DevOps teams met to discuss some of the basic pre-requisites and requirements to complete the deployment. The team wants to test the deployment on one of the app servers before going live and set up a complete containerized stack using a docker compose fie. Below are the details of the task: On App Server 3 in Stratos Datacenter create a docker compose file /opt/finance/docker-compose.yml (should be named exactly). The compose should deploy two services (web and DB), and each service should deploy a container as per details below: For web service: a. Container name must be php_web. b. Use image php with any apache tag. Check here for more details. c. Map php_web container’s port 80 with host port 6100 d. Map php_web container’s /var/www/html volume with host volume /var/www/html. For DB service: a. Container name must be mysql_web. b. Use image mariadb with any tag (preferably latest). Check here for more details. c. Map mysql_web container’s port 3306 with host port 3306 d. Map mysql_web container’s /var/lib/mysql volume with host volume /var/lib/mysql. e. Set MYSQL_DATABASE=database_web and use any custom user ( except root ) with some complex password for DB connections. After running docker-compose up you can access the app with curl command curl :6100/ For more details check here. Note: Once you click on FINISH button, all currently running/stopped containers will be destroyed and stack will be deployed again using your compose file. Soluiton sshpass -p BigGr33n ssh -o StrcitHostKeyChecking=no banner@stapp03 cd /opt/finance sudo vi docker-compose.yml sudo docker-compose up -d sudo docker ps curl localhost:6100 curl stapp03:6100 version: &#34;3&#34; services: web: container_name: php_web image: php:7.3-apache-stretch ports: - &#34;6100:80&#34; volumes: - /var/www/html:/var/www/html DB: container_name: mysql_web image: mariadb:latest ports: - &#34;3306:3306&#34; volumes: - /var/lib/mysql:/var/lib/mysql environment: MYSQL_DATABASE: database_web MYSQL_ROOT_PASSWORD: r00t321 MYSQL_USER: kodekloud MYSQL_PASSWORD: k0d3kl0ud3 Docker Node App There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework. Create a Dockerfile (name is case sensitive) under /node_app directory: Use any node image as the base image. Install the dependencies using package.json file. Use server.js in the CMD. Expose port 5001. The build image should be named as nautilus/node-web-app. Now run a container named nodeapp_nautilus using this image. Map the container port 5001 with the host port 8093. Once deployed, you can test the app using a curl command on App Server 3: curl http://localhost:8093 Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /node_app sudo vim Dockerfile docker build -t nautilus/node-web-app . docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app curl localhost:8096 FROM node:alpine WORKDIR /app COPY [&#34;package.json&#34;,&#34;server.js&#34;,&#34;./&#34;] RUN npm install EXPOSE 5001 CMD [&#34;node&#34;, &#34;server.js&#34;] Docker Python App A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below: Create a Dockerfile under /python_app directory: Use any python image as the base image. Install the dependencies using requirements.txt file. Expose the port 3002. Run the server.py script using CMD. Build an image named nautilus/python-app using this Dockerfile. Once image is built, create a container named pythonapp_nautilus: Map port 3002 of the container to the host port 8097. Once deployed, you can test the app using curl command on App Server 2. Solution: sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 cd /python_app sudo vi Dockerfile docker build -t nautilus/python-app . docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app docker ps curl localhost:8097 FROM python:3 COPY src . RUN pip install --no-cache-dir -r requirements.txt EXPOSE 3002 CMD [&#34;pyhton&#34;,&#34;server.py&#34;] DONE!!">
+  <meta itemprop="datePublished" content="2023-08-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2769">
+  <meta itemprop="image" content="http://localhost:1313/">
+  <meta itemprop="keywords" content="DevOps,Docker">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="KKE - Docker Challenges">
+  <meta name="twitter:description" content=" Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled. c. Map host port 5000 to container port 80. Please keep the container in running state. Solution: #ssh to app server1 sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #pull the docker image sudo docker pull nginx:stable #run the container sudo docker run -itd --name cluster -p 5000:80 nginx:stable &gt;itd - --interactive &#43; --tty &#43; --detach Run a Docker Container: Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below: On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state. Solution: #ssh to stapp03 sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 #run the container docker run -d --name nginx_3 -p 8080:80 nginx:alpine #verify docker ps -a docker images curl -I localhost:8080 Docker Copy Operaton: The Nautilus DevOps team has some conditional data present on App Server 1 in Stratos Datacenter. There is a container ubuntu_latest running on the same server. We received a request to copy some of the data from the docker host to the container. Below are more details about the task: On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /usr/src/ location. Please do not try to modify this file in any way. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker ps docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src/ docker exec &lt;container_id&gt; ls /usr/src/ Docker Container Issue There is a static website running within a container named nautilus, this container is running on App Server 1. Suddenly, we started facing some issues with the static website on App Server 1. Look into the issue to fix the same, you can find more details below: Container’s volume /usr/local/apache2/htdocs is mapped with the host’s volume /var/www/html. The website should run on host port 8080 on App Server 1 i.e command curl http://localhost:8080/ should work on App Server 1. Solution: sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #inspect container so it matches the req docker inspect &lt;container_id&gt; #list all containers docker ps -a #start the desired container docker start &lt;docker_id&gt; #verify curl localhost:8080 Pull Docker Image Nautilus project developers are planning to start testing on a new project. As per their meeting with the DevOps team, they want to test containerized environment application features. As per details shared with DevOps team, we need to accomplish the following task: a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news Solution: docker image ls docker pull busybox:musl docker images docker tag busybox:musl busybox:news docker images Write a Docker File As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 3 in Stratos DC and configure to build an image with the following requirements: a. Use ubuntu as the base image. b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc). Solution: sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker/ vi Dockerfile #build the image docker built -t apache . #run the container docker run -d -p 5004:5004 --name docker apache #test curl localhost:5004 FROM ubuntu RUN apt-get update &amp;&amp; apt-get install -y apache2 RUN sed -i &#39;s/Listen 80/Listen 5004/g&#39; /etc/apache2/ports.conf EXPOSE 5004 CMD [&#34;apache2ctl&#34;,&#34;-D&#34;,&#34;FOREGROUND&#34;] Docker Update Permissions One of the Nautilus project developers need access to run docker commands on App Server 2. This user is already created on the server. Accomplish this task as per details given below: User mark is not able to run docker commands on App Server 2 in Stratos DC, make the required changes so that this user can run docker commands without sudo Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo usermod -aG docker mark id mark su - mark id docker ps Docker EXEC Operations One of the Nautilus DevOps team members was working to configure services on a kkloud container that is running on App Server 3 in Stratos Datacenter. Due to some personal work he is on PTO for the rest of the week, but we need to finish his pending work ASAP. Please complete the remaining work as per details given below: a. Install apache2 in kkloud container using apt that is running on App Server 3 in Stratos Datacenter. b. Configure Apache to listen on port 8084 instead of default http port. Do not bind it to listen on specific IP or hostname only, i.e it should listen on localhost, 127.0.0.1, container ip, etc. c. Make sure Apache service is up and running inside the container. Keep the container in running state at the end. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker exec -it kkloud apt-get install apache2 &amp;&amp;\ &gt; sed -i &#39;s/Listen 80/Listen 8084/g&#39; /etc/apache2/ports.conf &amp;&amp;\ &gt; service apache start &amp;&amp;\ &gt; curl localhost:8084 docker inspect -f &#34;{{ .NetworkSettings.IPAddress }} curl $ip:8084 Create a Docker Image From Container One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it: a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker image ls docker commit demo:datacenter ubuntu_latest docker image ls Create a Docker Network The Nautilus DevOps team needs to set up several docker environments for different applications. One of the team members has been assigned a ticket where he has been asked to create some docker networks to be used later. Complete the task based on the following ticket description: a. Create a docker network named as blog on App Server 2 in Stratos DC. b. Configure it to use bridge drivers. c. Set it to use subnet 192.168.0.0/24 and iprange 192.168.0.2/24. Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su - docker network ls docker network create --driver=bridge --ip-range=192.168.0.2/24 --subnet=192.168.0.0/24 blog docker network inspect blog { &#34;Name&#34;: &#34;blog&#34;, &#34;Id&#34;: &#34;6cd0bae9b622286afb87eb284c36d14b20f23b242c69cae5bfede8b1b257191a&#34;, &#34;Created&#34;: &#34;2023-08-02T08:32:56.010259327Z&#34;, &#34;Scope&#34;: &#34;local&#34;, &#34;Driver&#34;: &#34;bridge&#34;, &#34;EnableIPv6&#34;: false, &#34;IPAM&#34;: { &#34;Driver&#34;: &#34;default&#34;, &#34;Options&#34;: {}, &#34;Config&#34;: [ { &#34;Subnet&#34;: &#34;192.168.0.0/24&#34;, &#34;IPRange&#34;: &#34;192.168.0.2/24&#34; } ] }, } docker network ls Docker Volumes Mapping The Nautilus DevOps team is testing applications containerization, which issupposed to be migrated on docker container-based environments soon. In today’s stand-up meeting one of the team members has been assigned a task to create and test a docker container with certain requirements. Below are more details: a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too). b. Create a new container with name beta from the image you just pulled. c. Map the host volume /opt/security with container volume /usr/src/. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state. sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su docker pull nginx:latest #pull the nginx image docker run -d --name beta -v /opt/security:/usr/src/:Z nginx:latest cp /tmp/sample.txt /opt/security/ #copy the sample.txt file docker exec -it beta cat /usr/src/sample.txt #verify Save Load and Transfer Docker Image One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC. a. On App Server 1 save the image demo:devops in an archive. b. Transfer the image archive to App Server 3. c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1. Note: Docker is already installed on both servers; however, if its service is down please make sure to start it. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker images docker save demo:devops -o /tmp/demo.tar scp /tmp/demo.tar banner@stapp03:/tmp/ docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker load -i /tmp/demo.tar docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] Write a Docker Compose File The Nautilus application development team shared static website content that needs to be hosted on the httpd web server using a containerised platform. The team has shared details with the DevOps team, and we need to set up an environment according to those guidelines. Below are the details: a. On App Server 3 in Stratos DC create a container named httpd using a docker compose file /opt/docker/docker-compose.yml (please use the exact name for file). b. Use httpd (preferably latest tag) image for container and make sure container is named as httpd; you can use any name for service. c. Map 80 number port of container with port 5004 of docker host. d. Map container’s /usr/local/apache2/htdocs volume with /opt/itadmin volume of docker host which is already there. (please do not modify any data within these locations). Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi docker-compose.yml docker-compose up -d docker ps version: &#39;3&#39; services: httpd: image: httpd:latest container_name: httpd ports: - &#34;5004:80&#34; volumes: - /opt/itadmin:/usr/local/apache2/htdocs Resolve Dockerfile Issues The Nautilus DevOps team is working to create new images per requirements shared by the development team. One of the team members is working to create a Dockerfile on App Server 3 in Stratos DC. While working on it she ran into issues in which the docker build is failing and displaying errors. Look into the issue and fix it to build an image as per details mentioned below: a. The Dockerfile is placed on App Server 3 under /opt/docker directory. b. Fix the issues with this file and make sure it is able to build the image. c. Do not change base image, any other valid configuration within Dockerfile, or any of the data been used — for example, index.html. Note: Please note that once you click on FINISH button all existing images, the containers will be destroyed and new image will be built from your Dockerfile. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi Dockerfile to solve the problem I have replaced all the lines under FROM with RUN pwd;ls;ls conf.d;ls conf to check which dir does exist conf.d/conf. FROM httpd:2.4.43 RUN sed -i &#34;s/Listen 80/Listen 8080/g&#34; /usr/local/apache2/conf/httpd.conf RUN sed -i &#39;/LoadModule\ ssl_module modules\/mod_ssl.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/LoadModule\ socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/Include\ conf\/extra\/httpd-ssl.conf/s/^#//g&#39; conf/httpd.conf COPY certs/server.crt /usr/local/apache2/conf/server.crt COPY certs/server.key /usr/local/apache2/conf/server.key COPY html/index.html /usr/local/apache2/htdocs/ Resolve Docker Compose Issues The Nautilus DevOps team is working to deploy one of the applications on App Server 1 in Stratos DC. Due to a misconfiguration in the docker compose file, the deployment is failing. We would like you to take a look into it to identify and fix the issues. More details can be found below: a. docker-compose.yml file is present on App Server 1 under /opt/docker directory. b. Try to run the same and make sure it works fine. c. Please do not change the container names being used. Also, do not update or alter any other valid config settings in the compose file or any other relevant data that can cause app failure. Note: Please note that once you click on FINISH button all existing running/stopped containers will be destroyed, and your compose will be run. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 cd /opt/docker sudo docker-compose up vi docker-compose.yml version: &#39;2&#39; services: web: build: context: app/ dockerfile: Dockerfile container_name: python ports: - &#34;5000:5000&#34; volumes: - .:/code depends_on: - redis command: python app/app.py redis: image: redis container_name: redis Deploy an App on Docker Containers The Nautilus Application development team recently finished development of one of the apps that they want to deploy on a containerized platform. The Nautilus Application development and DevOps teams met to discuss some of the basic pre-requisites and requirements to complete the deployment. The team wants to test the deployment on one of the app servers before going live and set up a complete containerized stack using a docker compose fie. Below are the details of the task: On App Server 3 in Stratos Datacenter create a docker compose file /opt/finance/docker-compose.yml (should be named exactly). The compose should deploy two services (web and DB), and each service should deploy a container as per details below: For web service: a. Container name must be php_web. b. Use image php with any apache tag. Check here for more details. c. Map php_web container’s port 80 with host port 6100 d. Map php_web container’s /var/www/html volume with host volume /var/www/html. For DB service: a. Container name must be mysql_web. b. Use image mariadb with any tag (preferably latest). Check here for more details. c. Map mysql_web container’s port 3306 with host port 3306 d. Map mysql_web container’s /var/lib/mysql volume with host volume /var/lib/mysql. e. Set MYSQL_DATABASE=database_web and use any custom user ( except root ) with some complex password for DB connections. After running docker-compose up you can access the app with curl command curl :6100/ For more details check here. Note: Once you click on FINISH button, all currently running/stopped containers will be destroyed and stack will be deployed again using your compose file. Soluiton sshpass -p BigGr33n ssh -o StrcitHostKeyChecking=no banner@stapp03 cd /opt/finance sudo vi docker-compose.yml sudo docker-compose up -d sudo docker ps curl localhost:6100 curl stapp03:6100 version: &#34;3&#34; services: web: container_name: php_web image: php:7.3-apache-stretch ports: - &#34;6100:80&#34; volumes: - /var/www/html:/var/www/html DB: container_name: mysql_web image: mariadb:latest ports: - &#34;3306:3306&#34; volumes: - /var/lib/mysql:/var/lib/mysql environment: MYSQL_DATABASE: database_web MYSQL_ROOT_PASSWORD: r00t321 MYSQL_USER: kodekloud MYSQL_PASSWORD: k0d3kl0ud3 Docker Node App There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework. Create a Dockerfile (name is case sensitive) under /node_app directory: Use any node image as the base image. Install the dependencies using package.json file. Use server.js in the CMD. Expose port 5001. The build image should be named as nautilus/node-web-app. Now run a container named nodeapp_nautilus using this image. Map the container port 5001 with the host port 8093. Once deployed, you can test the app using a curl command on App Server 3: curl http://localhost:8093 Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /node_app sudo vim Dockerfile docker build -t nautilus/node-web-app . docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app curl localhost:8096 FROM node:alpine WORKDIR /app COPY [&#34;package.json&#34;,&#34;server.js&#34;,&#34;./&#34;] RUN npm install EXPOSE 5001 CMD [&#34;node&#34;, &#34;server.js&#34;] Docker Python App A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below: Create a Dockerfile under /python_app directory: Use any python image as the base image. Install the dependencies using requirements.txt file. Expose the port 3002. Run the server.py script using CMD. Build an image named nautilus/python-app using this Dockerfile. Once image is built, create a container named pythonapp_nautilus: Map port 3002 of the container to the host port 8097. Once deployed, you can test the app using curl command on App Server 2. Solution: sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 cd /python_app sudo vi Dockerfile docker build -t nautilus/python-app . docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app docker ps curl localhost:8097 FROM python:3 COPY src . RUN pip install --no-cache-dir -r requirements.txt EXPOSE 3002 CMD [&#34;pyhton&#34;,&#34;server.py&#34;] DONE!!">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/writeups/writeup08.txt/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="KKE - Docker Challenges">
+  <meta property="og:description" content=" Docker Ports Mapping The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below: a. Pull nginx:stable docker image on Application Server 1. b. Create a container named cluster using the image you pulled. c. Map host port 5000 to container port 80. Please keep the container in running state. Solution: #ssh to app server1 sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #pull the docker image sudo docker pull nginx:stable #run the container sudo docker run -itd --name cluster -p 5000:80 nginx:stable &gt;itd - --interactive &#43; --tty &#43; --detach Run a Docker Container: Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below: On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state. Solution: #ssh to stapp03 sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 #run the container docker run -d --name nginx_3 -p 8080:80 nginx:alpine #verify docker ps -a docker images curl -I localhost:8080 Docker Copy Operaton: The Nautilus DevOps team has some conditional data present on App Server 1 in Stratos Datacenter. There is a container ubuntu_latest running on the same server. We received a request to copy some of the data from the docker host to the container. Below are more details about the task: On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /usr/src/ location. Please do not try to modify this file in any way. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker ps docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src/ docker exec &lt;container_id&gt; ls /usr/src/ Docker Container Issue There is a static website running within a container named nautilus, this container is running on App Server 1. Suddenly, we started facing some issues with the static website on App Server 1. Look into the issue to fix the same, you can find more details below: Container’s volume /usr/local/apache2/htdocs is mapped with the host’s volume /var/www/html. The website should run on host port 8080 on App Server 1 i.e command curl http://localhost:8080/ should work on App Server 1. Solution: sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 #inspect container so it matches the req docker inspect &lt;container_id&gt; #list all containers docker ps -a #start the desired container docker start &lt;docker_id&gt; #verify curl localhost:8080 Pull Docker Image Nautilus project developers are planning to start testing on a new project. As per their meeting with the DevOps team, they want to test containerized environment application features. As per details shared with DevOps team, we need to accomplish the following task: a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news Solution: docker image ls docker pull busybox:musl docker images docker tag busybox:musl busybox:news docker images Write a Docker File As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 3 in Stratos DC and configure to build an image with the following requirements: a. Use ubuntu as the base image. b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc). Solution: sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker/ vi Dockerfile #build the image docker built -t apache . #run the container docker run -d -p 5004:5004 --name docker apache #test curl localhost:5004 FROM ubuntu RUN apt-get update &amp;&amp; apt-get install -y apache2 RUN sed -i &#39;s/Listen 80/Listen 5004/g&#39; /etc/apache2/ports.conf EXPOSE 5004 CMD [&#34;apache2ctl&#34;,&#34;-D&#34;,&#34;FOREGROUND&#34;] Docker Update Permissions One of the Nautilus project developers need access to run docker commands on App Server 2. This user is already created on the server. Accomplish this task as per details given below: User mark is not able to run docker commands on App Server 2 in Stratos DC, make the required changes so that this user can run docker commands without sudo Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo usermod -aG docker mark id mark su - mark id docker ps Docker EXEC Operations One of the Nautilus DevOps team members was working to configure services on a kkloud container that is running on App Server 3 in Stratos Datacenter. Due to some personal work he is on PTO for the rest of the week, but we need to finish his pending work ASAP. Please complete the remaining work as per details given below: a. Install apache2 in kkloud container using apt that is running on App Server 3 in Stratos Datacenter. b. Configure Apache to listen on port 8084 instead of default http port. Do not bind it to listen on specific IP or hostname only, i.e it should listen on localhost, 127.0.0.1, container ip, etc. c. Make sure Apache service is up and running inside the container. Keep the container in running state at the end. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker exec -it kkloud apt-get install apache2 &amp;&amp;\ &gt; sed -i &#39;s/Listen 80/Listen 8084/g&#39; /etc/apache2/ports.conf &amp;&amp;\ &gt; service apache start &amp;&amp;\ &gt; curl localhost:8084 docker inspect -f &#34;{{ .NetworkSettings.IPAddress }} curl $ip:8084 Create a Docker Image From Container One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it: a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker ps docker image ls docker commit demo:datacenter ubuntu_latest docker image ls Create a Docker Network The Nautilus DevOps team needs to set up several docker environments for different applications. One of the team members has been assigned a ticket where he has been asked to create some docker networks to be used later. Complete the task based on the following ticket description: a. Create a docker network named as blog on App Server 2 in Stratos DC. b. Configure it to use bridge drivers. c. Set it to use subnet 192.168.0.0/24 and iprange 192.168.0.2/24. Solution sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su - docker network ls docker network create --driver=bridge --ip-range=192.168.0.2/24 --subnet=192.168.0.0/24 blog docker network inspect blog { &#34;Name&#34;: &#34;blog&#34;, &#34;Id&#34;: &#34;6cd0bae9b622286afb87eb284c36d14b20f23b242c69cae5bfede8b1b257191a&#34;, &#34;Created&#34;: &#34;2023-08-02T08:32:56.010259327Z&#34;, &#34;Scope&#34;: &#34;local&#34;, &#34;Driver&#34;: &#34;bridge&#34;, &#34;EnableIPv6&#34;: false, &#34;IPAM&#34;: { &#34;Driver&#34;: &#34;default&#34;, &#34;Options&#34;: {}, &#34;Config&#34;: [ { &#34;Subnet&#34;: &#34;192.168.0.0/24&#34;, &#34;IPRange&#34;: &#34;192.168.0.2/24&#34; } ] }, } docker network ls Docker Volumes Mapping The Nautilus DevOps team is testing applications containerization, which issupposed to be migrated on docker container-based environments soon. In today’s stand-up meeting one of the team members has been assigned a task to create and test a docker container with certain requirements. Below are more details: a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too). b. Create a new container with name beta from the image you just pulled. c. Map the host volume /opt/security with container volume /usr/src/. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state. sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo su docker pull nginx:latest #pull the nginx image docker run -d --name beta -v /opt/security:/usr/src/:Z nginx:latest cp /tmp/sample.txt /opt/security/ #copy the sample.txt file docker exec -it beta cat /usr/src/sample.txt #verify Save Load and Transfer Docker Image One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC. a. On App Server 1 save the image demo:devops in an archive. b. Transfer the image archive to App Server 3. c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1. Note: Docker is already installed on both servers; however, if its service is down please make sure to start it. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 docker images docker save demo:devops -o /tmp/demo.tar scp /tmp/demo.tar banner@stapp03:/tmp/ docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 docker load -i /tmp/demo.tar docker inspect --format &#34;{{ .Config.Cmd }}&#34; demo:devops #2verify [/bin/bash] Write a Docker Compose File The Nautilus application development team shared static website content that needs to be hosted on the httpd web server using a containerised platform. The team has shared details with the DevOps team, and we need to set up an environment according to those guidelines. Below are the details: a. On App Server 3 in Stratos DC create a container named httpd using a docker compose file /opt/docker/docker-compose.yml (please use the exact name for file). b. Use httpd (preferably latest tag) image for container and make sure container is named as httpd; you can use any name for service. c. Map 80 number port of container with port 5004 of docker host. d. Map container’s /usr/local/apache2/htdocs volume with /opt/itadmin volume of docker host which is already there. (please do not modify any data within these locations). Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi docker-compose.yml docker-compose up -d docker ps version: &#39;3&#39; services: httpd: image: httpd:latest container_name: httpd ports: - &#34;5004:80&#34; volumes: - /opt/itadmin:/usr/local/apache2/htdocs Resolve Dockerfile Issues The Nautilus DevOps team is working to create new images per requirements shared by the development team. One of the team members is working to create a Dockerfile on App Server 3 in Stratos DC. While working on it she ran into issues in which the docker build is failing and displaying errors. Look into the issue and fix it to build an image as per details mentioned below: a. The Dockerfile is placed on App Server 3 under /opt/docker directory. b. Fix the issues with this file and make sure it is able to build the image. c. Do not change base image, any other valid configuration within Dockerfile, or any of the data been used — for example, index.html. Note: Please note that once you click on FINISH button all existing images, the containers will be destroyed and new image will be built from your Dockerfile. Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /opt/docker vi Dockerfile to solve the problem I have replaced all the lines under FROM with RUN pwd;ls;ls conf.d;ls conf to check which dir does exist conf.d/conf. FROM httpd:2.4.43 RUN sed -i &#34;s/Listen 80/Listen 8080/g&#34; /usr/local/apache2/conf/httpd.conf RUN sed -i &#39;/LoadModule\ ssl_module modules\/mod_ssl.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/LoadModule\ socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//g&#39; conf/httpd.conf RUN sed -i &#39;/Include\ conf\/extra\/httpd-ssl.conf/s/^#//g&#39; conf/httpd.conf COPY certs/server.crt /usr/local/apache2/conf/server.crt COPY certs/server.key /usr/local/apache2/conf/server.key COPY html/index.html /usr/local/apache2/htdocs/ Resolve Docker Compose Issues The Nautilus DevOps team is working to deploy one of the applications on App Server 1 in Stratos DC. Due to a misconfiguration in the docker compose file, the deployment is failing. We would like you to take a look into it to identify and fix the issues. More details can be found below: a. docker-compose.yml file is present on App Server 1 under /opt/docker directory. b. Try to run the same and make sure it works fine. c. Please do not change the container names being used. Also, do not update or alter any other valid config settings in the compose file or any other relevant data that can cause app failure. Note: Please note that once you click on FINISH button all existing running/stopped containers will be destroyed, and your compose will be run. Solution sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking=no tony@stapp01 cd /opt/docker sudo docker-compose up vi docker-compose.yml version: &#39;2&#39; services: web: build: context: app/ dockerfile: Dockerfile container_name: python ports: - &#34;5000:5000&#34; volumes: - .:/code depends_on: - redis command: python app/app.py redis: image: redis container_name: redis Deploy an App on Docker Containers The Nautilus Application development team recently finished development of one of the apps that they want to deploy on a containerized platform. The Nautilus Application development and DevOps teams met to discuss some of the basic pre-requisites and requirements to complete the deployment. The team wants to test the deployment on one of the app servers before going live and set up a complete containerized stack using a docker compose fie. Below are the details of the task: On App Server 3 in Stratos Datacenter create a docker compose file /opt/finance/docker-compose.yml (should be named exactly). The compose should deploy two services (web and DB), and each service should deploy a container as per details below: For web service: a. Container name must be php_web. b. Use image php with any apache tag. Check here for more details. c. Map php_web container’s port 80 with host port 6100 d. Map php_web container’s /var/www/html volume with host volume /var/www/html. For DB service: a. Container name must be mysql_web. b. Use image mariadb with any tag (preferably latest). Check here for more details. c. Map mysql_web container’s port 3306 with host port 3306 d. Map mysql_web container’s /var/lib/mysql volume with host volume /var/lib/mysql. e. Set MYSQL_DATABASE=database_web and use any custom user ( except root ) with some complex password for DB connections. After running docker-compose up you can access the app with curl command curl :6100/ For more details check here. Note: Once you click on FINISH button, all currently running/stopped containers will be destroyed and stack will be deployed again using your compose file. Soluiton sshpass -p BigGr33n ssh -o StrcitHostKeyChecking=no banner@stapp03 cd /opt/finance sudo vi docker-compose.yml sudo docker-compose up -d sudo docker ps curl localhost:6100 curl stapp03:6100 version: &#34;3&#34; services: web: container_name: php_web image: php:7.3-apache-stretch ports: - &#34;6100:80&#34; volumes: - /var/www/html:/var/www/html DB: container_name: mysql_web image: mariadb:latest ports: - &#34;3306:3306&#34; volumes: - /var/lib/mysql:/var/lib/mysql environment: MYSQL_DATABASE: database_web MYSQL_ROOT_PASSWORD: r00t321 MYSQL_USER: kodekloud MYSQL_PASSWORD: k0d3kl0ud3 Docker Node App There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework. Create a Dockerfile (name is case sensitive) under /node_app directory: Use any node image as the base image. Install the dependencies using package.json file. Use server.js in the CMD. Expose port 5001. The build image should be named as nautilus/node-web-app. Now run a container named nodeapp_nautilus using this image. Map the container port 5001 with the host port 8093. Once deployed, you can test the app using a curl command on App Server 3: curl http://localhost:8093 Solution sshpass -p BigGr33n ssh -o StrictHostKeyChecking=no banner@stapp03 cd /node_app sudo vim Dockerfile docker build -t nautilus/node-web-app . docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app curl localhost:8096 FROM node:alpine WORKDIR /app COPY [&#34;package.json&#34;,&#34;server.js&#34;,&#34;./&#34;] RUN npm install EXPOSE 5001 CMD [&#34;node&#34;, &#34;server.js&#34;] Docker Python App A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below: Create a Dockerfile under /python_app directory: Use any python image as the base image. Install the dependencies using requirements.txt file. Expose the port 3002. Run the server.py script using CMD. Build an image named nautilus/python-app using this Dockerfile. Once image is built, create a container named pythonapp_nautilus: Map port 3002 of the container to the host port 8097. Once deployed, you can test the app using curl command on App Server 2. Solution: sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 cd /python_app sudo vi Dockerfile docker build -t nautilus/python-app . docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app docker ps curl localhost:8097 FROM python:3 COPY src . RUN pip install --no-cache-dir -r requirements.txt EXPOSE 3002 CMD [&#34;pyhton&#34;,&#34;server.py&#34;] DONE!!">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="writeups">
+    <meta property="article:published_time" content="2023-08-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-07T00:00:00+00:00">
+    <meta property="article:tag" content="DevOps">
+    <meta property="article:tag" content="Docker">
+    <meta property="og:image" content="http://localhost:1313/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./">
+      <meta property="og:see_also" content="http://localhost:1313/posts/2023/09/certifications-exam-notes/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup10.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup11.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup09.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup07.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup01.txt/">
+
+
+
+
+
+
+    <meta property="article:published_time" content="2023-08-07 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">writeup08.txt</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/writeups/writeup08.txt/">KKE - Docker Challenges</a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <h2 id="filesdockerpngcenter"><img src="http://localhost:1313/files/Docker.png#center" alt=""></h2>
+<h2 id="docker-ports-mapping">Docker Ports Mapping</h2>
+<ul>
+<li>The Nautilus DevOps team is planning to host an application on a nginx-based container. There are number of tickets already been created for similar tasks. One of the tickets has been assigned to set up a nginx container on Application Server 1 in Stratos Datacenter. Please perform the task as per details mentioned below:</li>
+<li>a. Pull nginx:stable docker image on Application Server 1.</li>
+<li>b. Create a container named cluster using the image you pulled.</li>
+<li>c. Map host port 5000 to container port 80. Please keep the container in running state.</li>
+</ul>
+<h6 id="solution">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to app server1</span>
+</span></span><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pull the docker image</span>
+</span></span><span style="display:flex;"><span>sudo docker pull nginx:stable
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the container</span>
+</span></span><span style="display:flex;"><span>sudo docker run -itd --name cluster -p 5000:80 nginx:stable
+</span></span><span style="display:flex;"><span>&gt;itd - --interactive + --tty + --detach
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="run-a-docker-container">Run a Docker Container:</h2>
+<ul>
+<li>Nautilus DevOps team is testing some applications deployment on some of the application servers. They need to deploy a nginx container on Application Server 3. Please complete the task as per details given below:</li>
+<li>On Application Server 3 create a container named nginx_3 using image nginx with alpine tag and make sure container is in running state.</li>
+</ul>
+<h6 id="solution-1">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#ssh to stapp03</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the container</span>
+</span></span><span style="display:flex;"><span>docker run -d --name nginx_3 -p 8080:80 nginx:alpine
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>docker images
+</span></span><span style="display:flex;"><span>curl -I localhost:8080
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-copy-operaton">Docker Copy Operaton:</h2>
+<ul>
+<li>The Nautilus DevOps team has some conditional data present on App Server 1 in Stratos Datacenter. There is a container ubuntu_latest running on the same server. We received a request to copy some of the data from the docker host to the container. Below are more details about the task:</li>
+<li>On App Server 1 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container (running on same server) in /usr/src/ location. Please do not try to modify this file in any way.</li>
+</ul>
+<h6 id="solution-2">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src/
+</span></span><span style="display:flex;"><span>docker exec &lt;container_id&gt; ls /usr/src/
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-container-issue">Docker Container Issue</h2>
+<ul>
+<li>There is a static website running within a container named nautilus, this container is running on App Server 1. Suddenly, we started facing some issues with the static website on App Server 1. Look into the issue to fix the same, you can find more details below:</li>
+<li>Container&rsquo;s volume /usr/local/apache2/htdocs is mapped with the host&rsquo;s volume /var/www/html.</li>
+<li>The website should run on host port 8080 on App Server 1 i.e command curl http://localhost:8080/ should work on App Server 1.</li>
+</ul>
+<h6 id="solution-3">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#inspect container so it matches the req</span>
+</span></span><span style="display:flex;"><span>docker inspect &lt;container_id&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#list all containers</span>
+</span></span><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#start the desired container</span>
+</span></span><span style="display:flex;"><span>docker start &lt;docker_id&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>curl localhost:8080
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="pull-docker-image">Pull Docker Image</h2>
+<ul>
+<li>Nautilus project developers are planning to start testing on a new project. As per their meeting with the DevOps team, they want to test containerized environment application features. As per details shared with DevOps team, we need to accomplish the following task:</li>
+<li>a. Pull busybox:musl image on App Server 1 in Stratos DC and re-tag (create new tag) this image as busybox:news</li>
+</ul>
+<h6 id="solution-4">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>docker image ls 
+</span></span><span style="display:flex;"><span>docker pull busybox:musl
+</span></span><span style="display:flex;"><span>docker images
+</span></span><span style="display:flex;"><span>docker tag busybox:musl busybox:news
+</span></span><span style="display:flex;"><span>docker images
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="write-a-docker-file">Write a Docker File</h2>
+<ul>
+<li>As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 3 in Stratos DC and configure to build an image with the following requirements:</li>
+<li>a. Use ubuntu as the base image.</li>
+<li>b. Install apache2 and configure it to work on 5004 port. (do not update any other Apache configuration settings like document root etc).</li>
+</ul>
+<h6 id="solution-5">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>cd /opt/docker/
+</span></span><span style="display:flex;"><span>vi Dockerfile
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#build the image</span>
+</span></span><span style="display:flex;"><span>docker built -t apache .
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the container</span>
+</span></span><span style="display:flex;"><span>docker run -d -p 5004:5004 --name docker apache
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#test</span>
+</span></span><span style="display:flex;"><span>curl localhost:5004
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> ubuntu</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install -y apache2<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#39;s/Listen 80/Listen 5004/g&#39;</span> /etc/apache2/ports.conf<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 5004</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;apache2ctl&#34;</span>,<span style="color:#e6db74">&#34;-D&#34;</span>,<span style="color:#e6db74">&#34;FOREGROUND&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-update-permissions">Docker Update Permissions</h2>
+<ul>
+<li>One of the Nautilus project developers need access to run docker commands on App Server 2. This user is already created on the server. Accomplish this task as per details given below:</li>
+<li>User mark is not able to run docker commands on App Server 2 in Stratos DC, make the required changes so that this user can run docker commands without sudo</li>
+</ul>
+<h6 id="solution-6">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>sudo usermod -aG docker mark
+</span></span><span style="display:flex;"><span>id mark
+</span></span><span style="display:flex;"><span>su - mark
+</span></span><span style="display:flex;"><span>id
+</span></span><span style="display:flex;"><span>docker ps
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-exec-operations">Docker EXEC Operations</h2>
+<ul>
+<li>One of the Nautilus DevOps team members was working to configure services on a kkloud container that is running on App Server 3 in Stratos Datacenter. Due to some personal work he is on PTO for the rest of the week, but we need to finish his pending work ASAP. Please complete the remaining work as per details given below:</li>
+<li>a. Install apache2 in kkloud container using apt that is running on App Server 3 in Stratos Datacenter.</li>
+<li>b. Configure Apache to listen on port 8084 instead of default http port. Do not bind it to listen on specific IP or hostname only, i.e it should listen on localhost, 127.0.0.1, container ip, etc.</li>
+<li>c. Make sure Apache service is up and running inside the container. Keep the container in running state at the end.</li>
+</ul>
+<h6 id="solution-7">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n  ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>docker exec -it kkloud apt-get install apache2 <span style="color:#f92672">&amp;&amp;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>&gt; sed -i <span style="color:#e6db74">&#39;s/Listen 80/Listen 8084/g&#39;</span> /etc/apache2/ports.conf <span style="color:#f92672">&amp;&amp;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>&gt; service apache start <span style="color:#f92672">&amp;&amp;</span><span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>&gt; curl localhost:8084
+</span></span><span style="display:flex;"><span>docker inspect -f <span style="color:#e6db74">&#34;{{ .NetworkSettings.IPAddress }}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">curl </span>$ip<span style="color:#e6db74">:8084
+</span></span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="create-a-docker-image-from-container">Create a Docker Image From Container</h2>
+<ul>
+<li>One of the Nautilus developer was working to test new changes on a container. He wants to keep a backup of his changes to the container. A new request has been raised for the DevOps team to create a new image from this container. Below are more details about it:</li>
+<li>a. Create an image demo:datacenter on Application Server 3 from a container ubuntu_latest that is running on same server.</li>
+</ul>
+<h6 id="solution-8">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n  ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>docker image ls
+</span></span><span style="display:flex;"><span>docker commit demo:datacenter ubuntu_latest
+</span></span><span style="display:flex;"><span>docker image ls
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="create-a-docker-network">Create a Docker Network</h2>
+<ul>
+<li>The Nautilus DevOps team needs to set up several docker environments for different applications. One of the team members has been assigned a ticket where he has been asked to create some docker networks to be used later. Complete the task based on the following ticket description:</li>
+<li>a. Create a docker network named as blog on App Server 2 in Stratos DC.</li>
+<li>b. Configure it to use bridge drivers.</li>
+<li>c. Set it to use subnet 192.168.0.0/24 and iprange 192.168.0.2/24.</li>
+</ul>
+<h6 id="solution-9">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>sudo su -
+</span></span><span style="display:flex;"><span>docker network ls
+</span></span><span style="display:flex;"><span>docker network create --driver<span style="color:#f92672">=</span>bridge --ip-range<span style="color:#f92672">=</span>192.168.0.2/24 --subnet<span style="color:#f92672">=</span>192.168.0.0/24 blog
+</span></span><span style="display:flex;"><span>docker network inspect blog
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;blog&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;Id&#34;</span>: <span style="color:#e6db74">&#34;6cd0bae9b622286afb87eb284c36d14b20f23b242c69cae5bfede8b1b257191a&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;Created&#34;</span>: <span style="color:#e6db74">&#34;2023-08-02T08:32:56.010259327Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;Scope&#34;</span>: <span style="color:#e6db74">&#34;local&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;Driver&#34;</span>: <span style="color:#e6db74">&#34;bridge&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;EnableIPv6&#34;</span>: false,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;IPAM&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;Driver&#34;</span>: <span style="color:#e6db74">&#34;default&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;Options&#34;</span>: <span style="color:#f92672">{}</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;Config&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#e6db74">&#34;Subnet&#34;</span>: <span style="color:#e6db74">&#34;192.168.0.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>                  <span style="color:#e6db74">&#34;IPRange&#34;</span>: <span style="color:#e6db74">&#34;192.168.0.2/24&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>docker network ls
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-volumes-mapping">Docker Volumes Mapping</h2>
+<ul>
+<li>The Nautilus DevOps team is testing applications containerization, which issupposed to be migrated on docker container-based environments soon. In today&rsquo;s stand-up meeting one of the team members has been assigned a task to create and test a docker container with certain requirements. Below are more details:</li>
+<li>a. On App Server 2 in Stratos DC pull nginx image (preferably latest tag but others should work too).</li>
+<li>b. Create a new container with name beta from the image you just pulled.</li>
+<li>c. Map the host volume /opt/security with container volume /usr/src/. There is an sample.txt file present on same server under /tmp; copy that file to /opt/security. Also please keep the container in running state.</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>sudo su
+</span></span><span style="display:flex;"><span>docker pull nginx:latest <span style="color:#75715e">#pull the nginx image</span>
+</span></span><span style="display:flex;"><span>docker run -d --name beta -v /opt/security:/usr/src/:Z nginx:latest
+</span></span><span style="display:flex;"><span>cp /tmp/sample.txt /opt/security/ <span style="color:#75715e">#copy the sample.txt file </span>
+</span></span><span style="display:flex;"><span>docker exec -it beta cat /usr/src/sample.txt <span style="color:#75715e">#verify</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="save-load-and-transfer-docker-image">Save Load and Transfer Docker Image</h2>
+<ul>
+<li>One of the DevOps team members was working on to create a new custom docker image on App Server 1 in Stratos DC. He is done with his changes and image is saved on same server with name demo:devops. Recently a requirement has been raised by a team to use that image for testing, but the team wants to test the same on App Server 3. So we need to provide them that image on App Server 3 in Stratos DC.</li>
+<li>a. On App Server 1 save the image demo:devops in an archive.</li>
+<li>b. Transfer the image archive to App Server 3.</li>
+<li>c. Load that image archive on App Server 3 with same name and tag which was used on App Server 1.</li>
+<li>Note: Docker is already installed on both servers; however, if its service is down please make sure to start it.</li>
+</ul>
+<h6 id="solution-10">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>docker images 
+</span></span><span style="display:flex;"><span>docker save demo:devops -o /tmp/demo.tar
+</span></span><span style="display:flex;"><span>scp /tmp/demo.tar banner@stapp03:/tmp/
+</span></span><span style="display:flex;"><span>docker inspect --format <span style="color:#e6db74">&#34;{{ .Config.Cmd }}&#34;</span> demo:devops <span style="color:#75715e">#2verify</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span>/bin/bash<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>docker load -i /tmp/demo.tar
+</span></span><span style="display:flex;"><span>docker inspect --format <span style="color:#e6db74">&#34;{{ .Config.Cmd }}&#34;</span> demo:devops <span style="color:#75715e">#2verify</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span>/bin/bash<span style="color:#f92672">]</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="write-a-docker-compose-file">Write a Docker Compose File</h2>
+<ul>
+<li>The Nautilus application development team shared static website content that needs to be hosted on the httpd web server using a containerised platform. The team has shared details with the DevOps team, and we need to set up an environment according to those guidelines. Below are the details:</li>
+<li>a. On App Server 3 in Stratos DC create a container named httpd using a docker compose file /opt/docker/docker-compose.yml (please use the exact name for file).</li>
+<li>b. Use httpd (preferably latest tag) image for container and make sure container is named as httpd; you can use any name for service.</li>
+<li>c. Map 80 number port of container with port 5004 of docker host.</li>
+<li>d. Map container&rsquo;s /usr/local/apache2/htdocs volume with /opt/itadmin volume of docker host which is already there. (please do not modify any data within these locations).</li>
+</ul>
+<h6 id="solution-11">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>cd /opt/docker
+</span></span><span style="display:flex;"><span>vi docker-compose.yml
+</span></span><span style="display:flex;"><span>docker-compose up -d
+</span></span><span style="display:flex;"><span>docker ps
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">httpd</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">httpd:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;5004:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/opt/itadmin:/usr/local/apache2/htdocs</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="resolve-dockerfile-issues">Resolve Dockerfile Issues</h2>
+<ul>
+<li>The Nautilus DevOps team is working to create new images per requirements shared by the development team. One of the team members is working to create a Dockerfile on App Server 3 in Stratos DC. While working on it she ran into issues in which the docker build is failing and displaying errors. Look into the issue and fix it to build an image as per details mentioned below:</li>
+<li>a. The Dockerfile is placed on App Server 3 under /opt/docker directory.</li>
+<li>b. Fix the issues with this file and make sure it is able to build the image.</li>
+<li>c. Do not change base image, any other valid configuration within Dockerfile, or any of the data been used — for example, index.html.</li>
+<li>Note: Please note that once you click on FINISH button all existing images, the containers will be destroyed and new image will be built from your Dockerfile.</li>
+</ul>
+<h6 id="solution-12">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03 
+</span></span><span style="display:flex;"><span>cd /opt/docker
+</span></span><span style="display:flex;"><span>vi Dockerfile
+</span></span></code></pre></div></li>
+<li>to solve the problem I have replaced all the lines under <code>FROM</code> with <code>RUN pwd;ls;ls conf.d;ls conf</code> to check which dir does exist conf.d/conf.</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Docker" data-lang="Docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> httpd:2.4.43</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#34;s/Listen 80/Listen 8080/g&#34;</span> /usr/local/apache2/conf/httpd.conf<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#39;/LoadModule\ ssl_module modules\/mod_ssl.so/s/^#//g&#39;</span> conf/httpd.conf<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#39;/LoadModule\ socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//g&#39;</span> conf/httpd.conf<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#39;/Include\ conf\/extra\/httpd-ssl.conf/s/^#//g&#39;</span> conf/httpd.conf<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> certs/server.crt /usr/local/apache2/conf/server.crt<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> certs/server.key /usr/local/apache2/conf/server.key<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> html/index.html /usr/local/apache2/htdocs/<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="resolve-docker-compose-issues">Resolve Docker Compose Issues</h2>
+<ul>
+<li>The Nautilus DevOps team is working to deploy one of the applications on App Server 1 in Stratos DC. Due to a misconfiguration in the docker compose file, the deployment is failing. We would like you to take a look into it to identify and fix the issues. More details can be found below:</li>
+<li>a. docker-compose.yml file is present on App Server 1 under /opt/docker directory.</li>
+<li>b. Try to run the same and make sure it works fine.</li>
+<li>c. Please do not change the container names being used. Also, do not update or alter any other valid config settings in the compose file or any other relevant data that can cause app failure.</li>
+<li>Note: Please note that once you click on FINISH button all existing running/stopped containers will be destroyed, and your compose will be run.</li>
+</ul>
+<h6 id="solution-13">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p Ir0nM@n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no tony@stapp01
+</span></span><span style="display:flex;"><span>cd /opt/docker
+</span></span><span style="display:flex;"><span>sudo docker-compose up
+</span></span><span style="display:flex;"><span>vi docker-compose.yml
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">build</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">context</span>: <span style="color:#ae81ff">app/</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">Dockerfile</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">python</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;5000:5000&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">.:/code</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">depends_on</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">redis</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">command</span>: <span style="color:#ae81ff">python app/app.py</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">redis</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">redis</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">redis</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="deploy-an-app-on-docker-containers">Deploy an App on Docker Containers</h2>
+<ul>
+<li>The Nautilus Application development team recently finished development of one of the apps that they want to deploy on a containerized platform. The Nautilus Application development and DevOps teams met to discuss some of the basic pre-requisites and requirements to complete the deployment. The team wants to test the deployment on one of the app servers before going live and set up a complete containerized stack using a docker compose fie. Below are the details of the task:</li>
+<li>On App Server 3 in Stratos Datacenter create a docker compose file /opt/finance/docker-compose.yml (should be named exactly).</li>
+<li>The compose should deploy two services (web and DB), and each service should deploy a container as per details below:</li>
+<li>For web service:
+<ul>
+<li>a. Container name must be php_web.</li>
+<li>b. Use image php with any apache tag. Check here for more details.</li>
+<li>c. Map php_web container&rsquo;s port 80 with host port 6100</li>
+<li>d. Map php_web container&rsquo;s /var/www/html volume with host volume /var/www/html.</li>
+</ul>
+</li>
+<li>For DB service:
+<ul>
+<li>a. Container name must be mysql_web.</li>
+<li>b. Use image mariadb with any tag (preferably latest). Check here for more details.</li>
+<li>c. Map mysql_web container&rsquo;s port 3306 with host port 3306</li>
+<li>d. Map mysql_web container&rsquo;s /var/lib/mysql volume with host volume /var/lib/mysql.</li>
+<li>e. Set MYSQL_DATABASE=database_web and use any custom user ( except root ) with some complex password for DB connections.</li>
+</ul>
+</li>
+<li>After running docker-compose up you can access the app with curl command curl <!-- raw HTML omitted -->:6100/
+For more details check here.</li>
+<li>Note: Once you click on FINISH button, all currently running/stopped containers will be destroyed and stack will be deployed again using your compose file.</li>
+</ul>
+<h6 id="soluiton">Soluiton</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrcitHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>cd /opt/finance
+</span></span><span style="display:flex;"><span>sudo vi docker-compose.yml
+</span></span><span style="display:flex;"><span>sudo docker-compose up -d
+</span></span><span style="display:flex;"><span>sudo docker ps
+</span></span><span style="display:flex;"><span>curl localhost:6100
+</span></span><span style="display:flex;"><span>curl stapp03:6100  
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#34;3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">php_web</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">php:7.3-apache-stretch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;6100:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/var/www/html:/var/www/html</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">DB</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">mysql_web</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mariadb:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;3306:3306&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/var/lib/mysql:/var/lib/mysql</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_DATABASE</span>: <span style="color:#ae81ff">database_web</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_ROOT_PASSWORD</span>: <span style="color:#ae81ff">r00t321</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_USER</span>: <span style="color:#ae81ff">kodekloud</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_PASSWORD</span>: <span style="color:#ae81ff">k0d3kl0ud3</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-node-app">Docker Node App</h2>
+<ul>
+<li>There is a requirement to Dockerize a Node app and to deploy the same on App Server 3. Under /node_app directory on App Server 3, we have already placed a package.json file that describes the app dependencies and server.js file that defines a web app framework.</li>
+<li>Create a Dockerfile (name is case sensitive) under /node_app directory:
+<ul>
+<li>Use any node image as the base image.</li>
+<li>Install the dependencies using package.json file.</li>
+<li>Use server.js in the CMD.</li>
+<li>Expose port 5001.</li>
+</ul>
+</li>
+<li>The build image should be named as nautilus/node-web-app.</li>
+<li>Now run a container named nodeapp_nautilus using this image.</li>
+<li>Map the container port 5001 with the host port 8093.</li>
+<li>Once deployed, you can test the app using a curl command on App Server 3:
+<ul>
+<li><code>curl http://localhost:8093</code></li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-14">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>sshpass -p BigGr33n ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no banner@stapp03
+</span></span><span style="display:flex;"><span>cd /node_app
+</span></span><span style="display:flex;"><span>sudo vim Dockerfile
+</span></span><span style="display:flex;"><span>docker build -t nautilus/node-web-app .
+</span></span><span style="display:flex;"><span>docker run -d --name nodeapp_nautilus -p 8093:5001 nautilus/node-web-app
+</span></span><span style="display:flex;"><span>curl localhost:8096
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Docker" data-lang="Docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;package.json&#34;</span>,<span style="color:#e6db74">&#34;server.js&#34;</span>,<span style="color:#e6db74">&#34;./&#34;</span><span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm install<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 5001</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;node&#34;</span>, <span style="color:#e6db74">&#34;server.js&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="docker-python-app">Docker Python App</h2>
+<ul>
+<li>A python app needed to be Dockerized, and then it needs to be deployed on App Server 2. We have already copied a requirements.txt file (having the app dependencies) under /python_app/src/ directory on App Server 2. Further complete this task as per details mentioned below:
+<ul>
+<li>Create a Dockerfile under /python_app directory:
+<ul>
+<li>Use any python image as the base image.</li>
+<li>Install the dependencies using requirements.txt file.</li>
+<li>Expose the port 3002.</li>
+<li>Run the server.py script using CMD.</li>
+</ul>
+</li>
+<li>Build an image named nautilus/python-app using this Dockerfile.</li>
+<li>Once image is built, create a container named pythonapp_nautilus:
+<ul>
+<li>Map port 3002 of the container to the host port 8097.</li>
+</ul>
+</li>
+<li>Once deployed, you can test the app using curl command on App Server 2.</li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-15">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>cd /python_app
+</span></span><span style="display:flex;"><span>sudo vi Dockerfile
+</span></span><span style="display:flex;"><span>docker build -t nautilus/python-app .
+</span></span><span style="display:flex;"><span>docker run -d --name pythonapp_nautilus -p 8097:3002 nautilus/python-app
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>curl localhost:8097
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Docker" data-lang="Docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> src .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --no-cache-dir -r requirements.txt<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 3002</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;pyhton&#34;</span>,<span style="color:#e6db74">&#34;server.py&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+</ul>
+<blockquote>
+<p>DONE!!</p>
+</blockquote>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="http://localhost:1313/tags/devops/">DevOps</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/docker/">Docker</a></span>
+        
+    </p>
+
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

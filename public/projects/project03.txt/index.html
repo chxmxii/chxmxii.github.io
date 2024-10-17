@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:chxmxii_]">
+<meta name="description" content="&hellip;
+" />
+<meta name="keywords" content=", aws, Jenkins, terraform, ansible, SAST, DAST" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/projects/project03.txt/" />
+
+
+    <title>
+        
+            Designing and Implementing an Open-Source NOC - PART 01 :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Designing and Implementing an Open-Source NOC - PART 01">
+  <meta itemprop="description" content="…">
+  <meta itemprop="datePublished" content="2022-09-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2022-09-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1">
+  <meta itemprop="image" content="http://localhost:1313/">
+  <meta itemprop="keywords" content="Aws,Jenkins,Terraform,Ansible,SAST,DAST">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="Designing and Implementing an Open-Source NOC - PART 01">
+  <meta name="twitter:description" content="…">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/projects/project03.txt/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="Designing and Implementing an Open-Source NOC - PART 01">
+  <meta property="og:description" content="…">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="projects">
+    <meta property="article:published_time" content="2022-09-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-09-10T00:00:00+00:00">
+    <meta property="article:tag" content="Aws">
+    <meta property="article:tag" content="Jenkins">
+    <meta property="article:tag" content="Terraform">
+    <meta property="article:tag" content="Ansible">
+    <meta property="article:tag" content="SAST">
+    <meta property="article:tag" content="DAST">
+    <meta property="og:image" content="http://localhost:1313/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./">
+      <meta property="og:see_also" content="http://localhost:1313/posts/2023/09/certifications-exam-notes/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup10.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup11.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup09.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup07.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup01.txt/">
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-09-10 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">project03.txt</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/projects/project03.txt/">Designing and Implementing an Open-Source NOC - PART 01</a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>&hellip;</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="http://localhost:1313/tags/aws/">aws</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/jenkins/">Jenkins</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/terraform/">terraform</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/ansible/">ansible</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/sast/">SAST</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/dast/">DAST</a></span>
+        
+    </p>
+
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

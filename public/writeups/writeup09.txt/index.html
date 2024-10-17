@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:chxmxii_]">
+<meta name="description" content="{ CHXMXII } Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already. There is a ZIP archive /usr/src/devops/nautilus.zip on jump host. Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to perform the below given tasks. Unzip /usr/src/devops/nautilus.zip archive in /opt/devops/ location on all app servers. Make sure the extracted data must has the respective sudo user as their user and group owner, i.e tony for app server 1, steve for app server 2, banner for app server 3. The extracted data permissions must be 0644 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution: #verify the connectivity ansible all -m ping -i inventory #create a playbook.yml #run the playbook ansible-playbook -i inventory playbook.yml --- - hosts: all become: true tasks: - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; ... Ansible Facts Gathering The Nautilus DevOps team is trying to setup a simple Apache web server on all app servers in Stratos DC using Ansible. They also want to create a sample html page for now with some app specific data on it. Below you can find more details about the task. You will find a valid inventory file /home/thor/playbooks/inventory on jump host (which we are using as an Ansible controller). Create a playbook index.yml under /home/thor/playbooks directory on jump host. Using blockinfile Ansible module create a file facts.txt under /root directory on all app servers and add the following given block in it. You will need to enable facts gathering for this task. Ansible managed node IP is (You can obtain default ipv4 address from Ansible&rsquo;s gathered facts by using the correct Ansible variable while taking into account Jinja2 syntax) Install httpd server on all apps. After that make a copy of facts.txt file as index.html under /var/www/html directory. Make sure to start httpd service after that. Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook. Solution: --- - hosts: all become: true gather_facts: true tasks: - file: path: /root/facts.txt state: touch - blockinfile: dest: /root/facts.txt block: &#34;Ansible managed node IP is {{ansible_default_ipv4[&#39;address&#39;]}}&#34; - package: name: httpd state: installed - copy: remote_src: yes src: /root/facts.txt dest: /var/www/html/index.html - service: name: httpd state: started Puppet Create Symlinks Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below: Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks: Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2. Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2. Notes: Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test. Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first. P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start. Solution sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp #verify the syntax puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp #run on the agent 2 sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo puppet agent -tv #verify ls -lrt /var/www/html ls -lrt /opt/itadmin class symlink { //create sym link file{&#39;/opt/itadmin&#39;: ensure =&gt; &#39;link&#39;, target =&gt; &#39;/var/www/html&#39;, } //create file media.txt file{&#39;/opt/itadmin/media.txt&#39;: ensure =&gt; &#39;present&#39;; } } node &#39;stapp01.stratos.xfusioncorp.com&#39;, &#39;stapp02.stratos.xfusioncorp.com&#39;, &#39;stapp03.stratos.xfusioncorp.com&#39; { include symlink } Ansible Basic Playbook One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task: The inventory file /home/thor/ansible/inventory seems to be having some issues, please fix them. The playbook needs to be run on App Server 2 in Stratos DC, so inventory file needs to be updated accordingly. Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak Solution: #fix the inventory file by adding the ssh user and sshpass stapp02 ansible_host=172.16.238.11 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ #remote_user=steve #verify ansible stapp02 -m ping -i ansible/inventory #now lets write the playbook vi ansible/playboo.yml #run the playbook ansible-playbook playbook.yml -i inventory --- - hosts: stapp02 tasks: - file: dest: /tmp/file.txt state: touch Ansible Inventory Update The Nautilus DevOps team has started testing their Ansible playbooks on different servers within the stack. They have placed some playbooks under /home/thor/playbook/ directory on jump host which they want to test. Some of these playbooks have already been tested on different servers, but now they want to test them on app server 1 in Stratos DC. However, they first need to create an inventory file so that Ansible can connect to the respective app. Below are some requirements: a. Create an ini type Ansible inventory file /home/thor/playbook/inventory on jump host. b. Add App Server 1 in this inventory along with required variables that are needed to make it work. c. The inventory hostname of the host should be the server name as per the wiki, for example stapp01 for app server 1 in Stratos DC. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution cd playbooks echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory ansible-playbook -i inventory playbook.yml Ansible Config File Update To manage all servers within the stack using Ansible, the Nautilus DevOps team is planning to use a common sudo user among all servers. Ansible will be able to use this to perform different tasks on each server. This is not finalized yet, but the team has decided to first perform testing. The DevOps team has already installed Ansible on jump host using yum, and they now have the following requirement: On jump host make appropriate changes so that Ansible can use kirsty as a default ssh user for all hosts. Make changes in Ansible&rsquo;s default configuration only —please do not try to create a new config. Solution: thor@jump_host ~$ ansible --version ansible 2.9.9 config file = /etc/ansible/ansible.cfg thor@jump_host ~$ sudo vi /etc/ansible.cfg &gt; search for &#34;#remote_user=root&#34; and change it to &#34;remote_user=kirst&#34; #verify ansible-config dump | grep USER Ansible Copy Module There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below: a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes. b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; ansible/inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; ansible/inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; ansible/inventory ansible all -i ansible/inventory -m ping vi ansible/playbook.yml ansible-playbook -i ansible/inventory -C ansible/playbook.yml ansible-playbook -i ansible/inventory ansible/playbook.yml ansible all -i ansible/inventory -a &#34;cat /opt/finance/index.html&#34; --- - hosts: all gather_facts: no become: true tasks: - copy: src=http://localhost:1313/usr/src/finance/index.html dest=/opt/finance/ Ansible File Module The Nautilus DevOps team is working to test several Ansible modules on servers in Stratos DC. Recently they wanted to test the file creation on remote hosts using Ansible. Find below more details about the task: a. Create an inventory file ~/playbook/inventory on jump host and add all app servers in it. b. Create a playbook ~/playbook/playbook.yml to create a blank file /tmp/data.txt on all app servers. c. The /tmp/data.txt file permission must be 0755. d. The user/group owner of file /tmp/data.txt must be tony on app server 1, steve on app server 2 and banner on app server 3. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;ls -l /tmp/data.txt&#34; --- - hosts: all tasks: - file: path: /tmp/data.txt state: touch owner: tony group: tony mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp01&#34; - file: path: /tmp/data.txt state: touch owner: steve group: steve mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp02&#34; - file: path: /tmp/data.txt state: touch owner: banner group: banner mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp03&#34; Ansible Ping Module Usage The Nautilus DevOps team is planning to test several Ansible playbooks on different app servers in Stratos DC. Before that, some pre-requisites must be met. Essentially, the team needs to set up a password-less SSH connection between Ansible controller and Ansible managed nodes. One of the tickets is assigned to you; please complete the task as per details mentioned below: a. Jump host is our Ansible controller, and we are going to run Ansible playbooks through thor user on jump host. b.Make appropriate changes on jump host so that user thor on jump host can SSH into App Server 1 through its respective sudo user. (for example tony for app server 1). c. There is an inventory file /home/thor/ansible/inventory on jump host. Using that inventory file test Ansible ping from jump host to App Server 1, make sure ping works. Solution ssh-keygen ssh-copy-id &lt;user&gt;@&lt;hostname&gt; ansible all -i ansible/inventory -m ping ansible all -i ansible/inventory -a &#34;id&#34; Ansible Install Package The Nautilus Application development team wanted to test some applications on app servers in Stratos Datacenter. They shared some pre-requisites with the DevOps team, and packages need to be installed on app servers. Since we are already using Ansible for automating such tasks, please perform this task using Ansible as per details mentioned below: Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it. Create an Ansible playbook /home/thor/playbook/playbook.yml to install zip package on all app servers using Ansible yum module. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;zip --help&#34; --- - hosts: all become: yes tasks: - yum: name=zip state=installed Ansible Archive Module The Nautilus DevOps team has some data on each app server in Stratos DC that they want to copy to a different location. However, they want to create an archive of the data first, then they want to copy the same to a different location on the respective app server. Additionally, there are some specific requirements for each server. Perform the task using Ansible playbook as per requirements mentioned below: Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already placed under /home/thor/ansible/ directory on Jump Server itself. Create an archive beta.tar.gz (make sure archive format is tar.gz) of /usr/src/finance/ directory ( present on each app server ) and copy it to /opt/finance/ directory on all app servers. The user and group owner of archive beta.tar.gz should be tony for App Server 1, steve for App Server 2 and banner for App Server 3. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd ansible/ vi playbook.yml ansible-playbook -i inventory playbook.yml ansible all -i inventory -a &#34;ls -l /opt/finance&#34; --- - hosts: all become: true tasks: - archive: path: /usr/src/finance/ dest: /opt/finance/beta.tar.gz format: gz - file: path: /opt/finance/beta.tar.gz owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/finance/beta.tar.gz owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/finance/beta.tar.gz owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; Ansible Blockinfile Module The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. &#43; Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below. We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running. Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content: &ldquo;Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually!&rdquo; The /var/www/html/index.html file&rsquo;s user and group owner should be apache on all app servers. The /var/www/html/index.html file&rsquo;s permissions should be 0644 on all app servers. Note: i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. ii. Do not use any custom or empty marker for blockinfile module. Solution vi ansible/playbook.yml ansible-doc blockinfile ansible-playbook --syntax-check ansible/playbook ansible-playbook -i ansible/inventory ansible/playbook.yml ansible -i ansible/inventory -a &#34;ls -l /var/www/html&#34; for i in {1..3}; do curl stapp0$i:80; done --- - hosts: all become: true tasks: - package: name: httpd state: installed - service: name: httpd state: started enabled: yes - file: path: /var/www/html/index.html owner: apache group: apache mode: &#39;0644&#39; state: touch - blockinfile: path: /var/www/html/index.html block: | Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually! Creating Soft Links Using Ansible The Nautilus DevOps team is practicing some of the Ansible modules and creating and testing different Ansible playbooks to accomplish tasks. Recently they started testing an Ansible file module to create soft links on all app servers. Below you can find more details about it. Write a playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on jump host itself. Using this playbook accomplish below given tasks: Create an empty file /opt/sysops/blog.txt on app server 1; its user owner and group owner should be tony. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/story.txt on app server 2; its user owner and group owner should be steve. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/media.txt on app server 3; its user owner and group owner should be banner. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way without passing any extra arguments. Solution --- - hosts: all become: true tasks: - file: path: /opt/sysops/blog.txt state: touch owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/sysops/story.txt state: touch owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/sysops/media.txt state: touch owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; - file: src: /opt/sysops/ dest: /var/www/html state: link Managing ACLs Using Ansible There are some files that need to be created on all app servers in Stratos DC. The Nautilus DevOps team want these files to be owned by user root only however, they also want that the app specific user to have a set of permissions on these files. All tasks must be done using Ansible only, so they need to create a playbook. Below you can find more information about the task. Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on Jump Server itself. Create an empty file blog.txt under /opt/devops/ directory on app server 1. Set some acl properties for this file. Using acl provide read &lsquo;(r)&rsquo; permissions to group tony (i.e entity is tony and etype is group). Create an empty file story.txt under /opt/devops/ directory on app server 2. Set some acl properties for this file. Using acl provide read &#43; write &lsquo;(rw)&rsquo; permissions to user steve (i.e entity is steve and etype is user). Create an empty file media.txt under /opt/devops/ on app server 3. Set some acl properties for this file. Using acl provide read &#43; write &lsquo;(rw)&rsquo; permissions to group banner (i.e entity is banner and etype is group). Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way, without passing any extra arguments. Solution cd ansible ansibe-doc file ansible-doc acl ansible-playbook -i inventory -C playbook.yml ansible-playbook -i inventory playbook.yml ansible stapp01 -i inventory -a &#34;getfacl /opt/devops/blog.txt&#34; --- - hosts: all become: true tasks: - block: - file: path: /opt/devops/blog.txt state: touch - acl: path: /opt/devops/blog.txt entity: tony etype: group permissions: r state: present when: ansible_hostname == &#34;stapp01&#34; - block: - file: path: /opt/devops/story.txt state: touch - acl: path: /opt/devops/story.txt entity: steve etype: user permissions: rw state: present when: ansible_hostname == &#34;stapp02&#34; - block: - file: path: /opt/devops/media.txt state: touch - acl: path: /opt/devops/media.txt entity: banner etype: group permissions: rw state: present when: ansible_hostname == &#34;stapp03&#34; Ansible Manage Services Developers are looking for dependencies to be installed and run on Nautilus app servers in Stratos DC. They have shared some requirements with the DevOps team. Because we are now managing packages installation and services management using Ansible, some playbooks need to be created and tested. As per details mentioned below please complete the task: a. On jump host create an Ansible playbook /home/thor/ansible/playbook.yml and configure it to install httpd on all app servers. b. After installation make sure to start and enable httpd service on all app servers. c. The inventory /home/thor/ansible/inventory is already there on jump host. d. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution --- - hosts: all become: true tasks: - package: name=httpd state=installed - service: name=httpd state=started enabled=yes Ansible Lineinfile Module The Nautilus DevOps team want to install and set up a simple httpd web server on all app servers in Stratos DC. They also want to deploy a sample web page using Ansible. Therefore, write the required playbook to complete this task as per details mentioned below. We already have an inventory file under /home/thor/ansible directory on jump host. Write a playbook playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook perform below given tasks: Install httpd web server on all app servers, and make sure its service is up and running. Create a file /var/www/html/index.html with content: This is a Nautilus sample file, created using Ansible!
+" />
+<meta name="keywords" content=", DevOps, Sysadmin, Ansible" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/writeups/writeup09.txt/" />
+
+
+    <title>
+        
+            KKE - Ansible Challenges :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="KKE - Ansible Challenges">
+  <meta itemprop="description" content="{ CHXMXII } Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already. There is a ZIP archive /usr/src/devops/nautilus.zip on jump host. Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to perform the below given tasks. Unzip /usr/src/devops/nautilus.zip archive in /opt/devops/ location on all app servers. Make sure the extracted data must has the respective sudo user as their user and group owner, i.e tony for app server 1, steve for app server 2, banner for app server 3. The extracted data permissions must be 0644 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution: #verify the connectivity ansible all -m ping -i inventory #create a playbook.yml #run the playbook ansible-playbook -i inventory playbook.yml --- - hosts: all become: true tasks: - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; ... Ansible Facts Gathering The Nautilus DevOps team is trying to setup a simple Apache web server on all app servers in Stratos DC using Ansible. They also want to create a sample html page for now with some app specific data on it. Below you can find more details about the task. You will find a valid inventory file /home/thor/playbooks/inventory on jump host (which we are using as an Ansible controller). Create a playbook index.yml under /home/thor/playbooks directory on jump host. Using blockinfile Ansible module create a file facts.txt under /root directory on all app servers and add the following given block in it. You will need to enable facts gathering for this task. Ansible managed node IP is (You can obtain default ipv4 address from Ansible’s gathered facts by using the correct Ansible variable while taking into account Jinja2 syntax) Install httpd server on all apps. After that make a copy of facts.txt file as index.html under /var/www/html directory. Make sure to start httpd service after that. Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook. Solution: --- - hosts: all become: true gather_facts: true tasks: - file: path: /root/facts.txt state: touch - blockinfile: dest: /root/facts.txt block: &#34;Ansible managed node IP is {{ansible_default_ipv4[&#39;address&#39;]}}&#34; - package: name: httpd state: installed - copy: remote_src: yes src: /root/facts.txt dest: /var/www/html/index.html - service: name: httpd state: started Puppet Create Symlinks Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below: Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks: Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2. Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2. Notes: Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test. Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first. P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start. Solution sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp #verify the syntax puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp #run on the agent 2 sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo puppet agent -tv #verify ls -lrt /var/www/html ls -lrt /opt/itadmin class symlink { //create sym link file{&#39;/opt/itadmin&#39;: ensure =&gt; &#39;link&#39;, target =&gt; &#39;/var/www/html&#39;, } //create file media.txt file{&#39;/opt/itadmin/media.txt&#39;: ensure =&gt; &#39;present&#39;; } } node &#39;stapp01.stratos.xfusioncorp.com&#39;, &#39;stapp02.stratos.xfusioncorp.com&#39;, &#39;stapp03.stratos.xfusioncorp.com&#39; { include symlink } Ansible Basic Playbook One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task: The inventory file /home/thor/ansible/inventory seems to be having some issues, please fix them. The playbook needs to be run on App Server 2 in Stratos DC, so inventory file needs to be updated accordingly. Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak Solution: #fix the inventory file by adding the ssh user and sshpass stapp02 ansible_host=172.16.238.11 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ #remote_user=steve #verify ansible stapp02 -m ping -i ansible/inventory #now lets write the playbook vi ansible/playboo.yml #run the playbook ansible-playbook playbook.yml -i inventory --- - hosts: stapp02 tasks: - file: dest: /tmp/file.txt state: touch Ansible Inventory Update The Nautilus DevOps team has started testing their Ansible playbooks on different servers within the stack. They have placed some playbooks under /home/thor/playbook/ directory on jump host which they want to test. Some of these playbooks have already been tested on different servers, but now they want to test them on app server 1 in Stratos DC. However, they first need to create an inventory file so that Ansible can connect to the respective app. Below are some requirements: a. Create an ini type Ansible inventory file /home/thor/playbook/inventory on jump host. b. Add App Server 1 in this inventory along with required variables that are needed to make it work. c. The inventory hostname of the host should be the server name as per the wiki, for example stapp01 for app server 1 in Stratos DC. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution cd playbooks echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory ansible-playbook -i inventory playbook.yml Ansible Config File Update To manage all servers within the stack using Ansible, the Nautilus DevOps team is planning to use a common sudo user among all servers. Ansible will be able to use this to perform different tasks on each server. This is not finalized yet, but the team has decided to first perform testing. The DevOps team has already installed Ansible on jump host using yum, and they now have the following requirement: On jump host make appropriate changes so that Ansible can use kirsty as a default ssh user for all hosts. Make changes in Ansible’s default configuration only —please do not try to create a new config. Solution: thor@jump_host ~$ ansible --version ansible 2.9.9 config file = /etc/ansible/ansible.cfg thor@jump_host ~$ sudo vi /etc/ansible.cfg &gt; search for &#34;#remote_user=root&#34; and change it to &#34;remote_user=kirst&#34; #verify ansible-config dump | grep USER Ansible Copy Module There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below: a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes. b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; ansible/inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; ansible/inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; ansible/inventory ansible all -i ansible/inventory -m ping vi ansible/playbook.yml ansible-playbook -i ansible/inventory -C ansible/playbook.yml ansible-playbook -i ansible/inventory ansible/playbook.yml ansible all -i ansible/inventory -a &#34;cat /opt/finance/index.html&#34; --- - hosts: all gather_facts: no become: true tasks: - copy: src=http://localhost:1313/usr/src/finance/index.html dest=/opt/finance/ Ansible File Module The Nautilus DevOps team is working to test several Ansible modules on servers in Stratos DC. Recently they wanted to test the file creation on remote hosts using Ansible. Find below more details about the task: a. Create an inventory file ~/playbook/inventory on jump host and add all app servers in it. b. Create a playbook ~/playbook/playbook.yml to create a blank file /tmp/data.txt on all app servers. c. The /tmp/data.txt file permission must be 0755. d. The user/group owner of file /tmp/data.txt must be tony on app server 1, steve on app server 2 and banner on app server 3. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;ls -l /tmp/data.txt&#34; --- - hosts: all tasks: - file: path: /tmp/data.txt state: touch owner: tony group: tony mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp01&#34; - file: path: /tmp/data.txt state: touch owner: steve group: steve mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp02&#34; - file: path: /tmp/data.txt state: touch owner: banner group: banner mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp03&#34; Ansible Ping Module Usage The Nautilus DevOps team is planning to test several Ansible playbooks on different app servers in Stratos DC. Before that, some pre-requisites must be met. Essentially, the team needs to set up a password-less SSH connection between Ansible controller and Ansible managed nodes. One of the tickets is assigned to you; please complete the task as per details mentioned below: a. Jump host is our Ansible controller, and we are going to run Ansible playbooks through thor user on jump host. b.Make appropriate changes on jump host so that user thor on jump host can SSH into App Server 1 through its respective sudo user. (for example tony for app server 1). c. There is an inventory file /home/thor/ansible/inventory on jump host. Using that inventory file test Ansible ping from jump host to App Server 1, make sure ping works. Solution ssh-keygen ssh-copy-id &lt;user&gt;@&lt;hostname&gt; ansible all -i ansible/inventory -m ping ansible all -i ansible/inventory -a &#34;id&#34; Ansible Install Package The Nautilus Application development team wanted to test some applications on app servers in Stratos Datacenter. They shared some pre-requisites with the DevOps team, and packages need to be installed on app servers. Since we are already using Ansible for automating such tasks, please perform this task using Ansible as per details mentioned below: Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it. Create an Ansible playbook /home/thor/playbook/playbook.yml to install zip package on all app servers using Ansible yum module. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;zip --help&#34; --- - hosts: all become: yes tasks: - yum: name=zip state=installed Ansible Archive Module The Nautilus DevOps team has some data on each app server in Stratos DC that they want to copy to a different location. However, they want to create an archive of the data first, then they want to copy the same to a different location on the respective app server. Additionally, there are some specific requirements for each server. Perform the task using Ansible playbook as per requirements mentioned below: Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already placed under /home/thor/ansible/ directory on Jump Server itself. Create an archive beta.tar.gz (make sure archive format is tar.gz) of /usr/src/finance/ directory ( present on each app server ) and copy it to /opt/finance/ directory on all app servers. The user and group owner of archive beta.tar.gz should be tony for App Server 1, steve for App Server 2 and banner for App Server 3. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd ansible/ vi playbook.yml ansible-playbook -i inventory playbook.yml ansible all -i inventory -a &#34;ls -l /opt/finance&#34; --- - hosts: all become: true tasks: - archive: path: /usr/src/finance/ dest: /opt/finance/beta.tar.gz format: gz - file: path: /opt/finance/beta.tar.gz owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/finance/beta.tar.gz owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/finance/beta.tar.gz owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; Ansible Blockinfile Module The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. &#43; Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below. We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running. Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content: “Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually!” The /var/www/html/index.html file’s user and group owner should be apache on all app servers. The /var/www/html/index.html file’s permissions should be 0644 on all app servers. Note: i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. ii. Do not use any custom or empty marker for blockinfile module. Solution vi ansible/playbook.yml ansible-doc blockinfile ansible-playbook --syntax-check ansible/playbook ansible-playbook -i ansible/inventory ansible/playbook.yml ansible -i ansible/inventory -a &#34;ls -l /var/www/html&#34; for i in {1..3}; do curl stapp0$i:80; done --- - hosts: all become: true tasks: - package: name: httpd state: installed - service: name: httpd state: started enabled: yes - file: path: /var/www/html/index.html owner: apache group: apache mode: &#39;0644&#39; state: touch - blockinfile: path: /var/www/html/index.html block: | Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually! Creating Soft Links Using Ansible The Nautilus DevOps team is practicing some of the Ansible modules and creating and testing different Ansible playbooks to accomplish tasks. Recently they started testing an Ansible file module to create soft links on all app servers. Below you can find more details about it. Write a playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on jump host itself. Using this playbook accomplish below given tasks: Create an empty file /opt/sysops/blog.txt on app server 1; its user owner and group owner should be tony. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/story.txt on app server 2; its user owner and group owner should be steve. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/media.txt on app server 3; its user owner and group owner should be banner. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way without passing any extra arguments. Solution --- - hosts: all become: true tasks: - file: path: /opt/sysops/blog.txt state: touch owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/sysops/story.txt state: touch owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/sysops/media.txt state: touch owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; - file: src: /opt/sysops/ dest: /var/www/html state: link Managing ACLs Using Ansible There are some files that need to be created on all app servers in Stratos DC. The Nautilus DevOps team want these files to be owned by user root only however, they also want that the app specific user to have a set of permissions on these files. All tasks must be done using Ansible only, so they need to create a playbook. Below you can find more information about the task. Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on Jump Server itself. Create an empty file blog.txt under /opt/devops/ directory on app server 1. Set some acl properties for this file. Using acl provide read ‘(r)’ permissions to group tony (i.e entity is tony and etype is group). Create an empty file story.txt under /opt/devops/ directory on app server 2. Set some acl properties for this file. Using acl provide read &#43; write ‘(rw)’ permissions to user steve (i.e entity is steve and etype is user). Create an empty file media.txt under /opt/devops/ on app server 3. Set some acl properties for this file. Using acl provide read &#43; write ‘(rw)’ permissions to group banner (i.e entity is banner and etype is group). Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way, without passing any extra arguments. Solution cd ansible ansibe-doc file ansible-doc acl ansible-playbook -i inventory -C playbook.yml ansible-playbook -i inventory playbook.yml ansible stapp01 -i inventory -a &#34;getfacl /opt/devops/blog.txt&#34; --- - hosts: all become: true tasks: - block: - file: path: /opt/devops/blog.txt state: touch - acl: path: /opt/devops/blog.txt entity: tony etype: group permissions: r state: present when: ansible_hostname == &#34;stapp01&#34; - block: - file: path: /opt/devops/story.txt state: touch - acl: path: /opt/devops/story.txt entity: steve etype: user permissions: rw state: present when: ansible_hostname == &#34;stapp02&#34; - block: - file: path: /opt/devops/media.txt state: touch - acl: path: /opt/devops/media.txt entity: banner etype: group permissions: rw state: present when: ansible_hostname == &#34;stapp03&#34; Ansible Manage Services Developers are looking for dependencies to be installed and run on Nautilus app servers in Stratos DC. They have shared some requirements with the DevOps team. Because we are now managing packages installation and services management using Ansible, some playbooks need to be created and tested. As per details mentioned below please complete the task: a. On jump host create an Ansible playbook /home/thor/ansible/playbook.yml and configure it to install httpd on all app servers. b. After installation make sure to start and enable httpd service on all app servers. c. The inventory /home/thor/ansible/inventory is already there on jump host. d. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution --- - hosts: all become: true tasks: - package: name=httpd state=installed - service: name=httpd state=started enabled=yes Ansible Lineinfile Module The Nautilus DevOps team want to install and set up a simple httpd web server on all app servers in Stratos DC. They also want to deploy a sample web page using Ansible. Therefore, write the required playbook to complete this task as per details mentioned below. We already have an inventory file under /home/thor/ansible directory on jump host. Write a playbook playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook perform below given tasks: Install httpd web server on all app servers, and make sure its service is up and running. Create a file /var/www/html/index.html with content: This is a Nautilus sample file, created using Ansible!">
+  <meta itemprop="datePublished" content="2023-08-21T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-21T00:00:00+00:00">
+  <meta itemprop="wordCount" content="5090">
+  <meta itemprop="image" content="http://localhost:1313/">
+  <meta itemprop="keywords" content="DevOps,Sysadmin,Ansible">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="KKE - Ansible Challenges">
+  <meta name="twitter:description" content="{ CHXMXII } Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already. There is a ZIP archive /usr/src/devops/nautilus.zip on jump host. Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to perform the below given tasks. Unzip /usr/src/devops/nautilus.zip archive in /opt/devops/ location on all app servers. Make sure the extracted data must has the respective sudo user as their user and group owner, i.e tony for app server 1, steve for app server 2, banner for app server 3. The extracted data permissions must be 0644 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution: #verify the connectivity ansible all -m ping -i inventory #create a playbook.yml #run the playbook ansible-playbook -i inventory playbook.yml --- - hosts: all become: true tasks: - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; ... Ansible Facts Gathering The Nautilus DevOps team is trying to setup a simple Apache web server on all app servers in Stratos DC using Ansible. They also want to create a sample html page for now with some app specific data on it. Below you can find more details about the task. You will find a valid inventory file /home/thor/playbooks/inventory on jump host (which we are using as an Ansible controller). Create a playbook index.yml under /home/thor/playbooks directory on jump host. Using blockinfile Ansible module create a file facts.txt under /root directory on all app servers and add the following given block in it. You will need to enable facts gathering for this task. Ansible managed node IP is (You can obtain default ipv4 address from Ansible’s gathered facts by using the correct Ansible variable while taking into account Jinja2 syntax) Install httpd server on all apps. After that make a copy of facts.txt file as index.html under /var/www/html directory. Make sure to start httpd service after that. Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook. Solution: --- - hosts: all become: true gather_facts: true tasks: - file: path: /root/facts.txt state: touch - blockinfile: dest: /root/facts.txt block: &#34;Ansible managed node IP is {{ansible_default_ipv4[&#39;address&#39;]}}&#34; - package: name: httpd state: installed - copy: remote_src: yes src: /root/facts.txt dest: /var/www/html/index.html - service: name: httpd state: started Puppet Create Symlinks Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below: Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks: Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2. Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2. Notes: Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test. Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first. P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start. Solution sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp #verify the syntax puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp #run on the agent 2 sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo puppet agent -tv #verify ls -lrt /var/www/html ls -lrt /opt/itadmin class symlink { //create sym link file{&#39;/opt/itadmin&#39;: ensure =&gt; &#39;link&#39;, target =&gt; &#39;/var/www/html&#39;, } //create file media.txt file{&#39;/opt/itadmin/media.txt&#39;: ensure =&gt; &#39;present&#39;; } } node &#39;stapp01.stratos.xfusioncorp.com&#39;, &#39;stapp02.stratos.xfusioncorp.com&#39;, &#39;stapp03.stratos.xfusioncorp.com&#39; { include symlink } Ansible Basic Playbook One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task: The inventory file /home/thor/ansible/inventory seems to be having some issues, please fix them. The playbook needs to be run on App Server 2 in Stratos DC, so inventory file needs to be updated accordingly. Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak Solution: #fix the inventory file by adding the ssh user and sshpass stapp02 ansible_host=172.16.238.11 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ #remote_user=steve #verify ansible stapp02 -m ping -i ansible/inventory #now lets write the playbook vi ansible/playboo.yml #run the playbook ansible-playbook playbook.yml -i inventory --- - hosts: stapp02 tasks: - file: dest: /tmp/file.txt state: touch Ansible Inventory Update The Nautilus DevOps team has started testing their Ansible playbooks on different servers within the stack. They have placed some playbooks under /home/thor/playbook/ directory on jump host which they want to test. Some of these playbooks have already been tested on different servers, but now they want to test them on app server 1 in Stratos DC. However, they first need to create an inventory file so that Ansible can connect to the respective app. Below are some requirements: a. Create an ini type Ansible inventory file /home/thor/playbook/inventory on jump host. b. Add App Server 1 in this inventory along with required variables that are needed to make it work. c. The inventory hostname of the host should be the server name as per the wiki, for example stapp01 for app server 1 in Stratos DC. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution cd playbooks echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory ansible-playbook -i inventory playbook.yml Ansible Config File Update To manage all servers within the stack using Ansible, the Nautilus DevOps team is planning to use a common sudo user among all servers. Ansible will be able to use this to perform different tasks on each server. This is not finalized yet, but the team has decided to first perform testing. The DevOps team has already installed Ansible on jump host using yum, and they now have the following requirement: On jump host make appropriate changes so that Ansible can use kirsty as a default ssh user for all hosts. Make changes in Ansible’s default configuration only —please do not try to create a new config. Solution: thor@jump_host ~$ ansible --version ansible 2.9.9 config file = /etc/ansible/ansible.cfg thor@jump_host ~$ sudo vi /etc/ansible.cfg &gt; search for &#34;#remote_user=root&#34; and change it to &#34;remote_user=kirst&#34; #verify ansible-config dump | grep USER Ansible Copy Module There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below: a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes. b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; ansible/inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; ansible/inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; ansible/inventory ansible all -i ansible/inventory -m ping vi ansible/playbook.yml ansible-playbook -i ansible/inventory -C ansible/playbook.yml ansible-playbook -i ansible/inventory ansible/playbook.yml ansible all -i ansible/inventory -a &#34;cat /opt/finance/index.html&#34; --- - hosts: all gather_facts: no become: true tasks: - copy: src=http://localhost:1313/usr/src/finance/index.html dest=/opt/finance/ Ansible File Module The Nautilus DevOps team is working to test several Ansible modules on servers in Stratos DC. Recently they wanted to test the file creation on remote hosts using Ansible. Find below more details about the task: a. Create an inventory file ~/playbook/inventory on jump host and add all app servers in it. b. Create a playbook ~/playbook/playbook.yml to create a blank file /tmp/data.txt on all app servers. c. The /tmp/data.txt file permission must be 0755. d. The user/group owner of file /tmp/data.txt must be tony on app server 1, steve on app server 2 and banner on app server 3. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;ls -l /tmp/data.txt&#34; --- - hosts: all tasks: - file: path: /tmp/data.txt state: touch owner: tony group: tony mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp01&#34; - file: path: /tmp/data.txt state: touch owner: steve group: steve mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp02&#34; - file: path: /tmp/data.txt state: touch owner: banner group: banner mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp03&#34; Ansible Ping Module Usage The Nautilus DevOps team is planning to test several Ansible playbooks on different app servers in Stratos DC. Before that, some pre-requisites must be met. Essentially, the team needs to set up a password-less SSH connection between Ansible controller and Ansible managed nodes. One of the tickets is assigned to you; please complete the task as per details mentioned below: a. Jump host is our Ansible controller, and we are going to run Ansible playbooks through thor user on jump host. b.Make appropriate changes on jump host so that user thor on jump host can SSH into App Server 1 through its respective sudo user. (for example tony for app server 1). c. There is an inventory file /home/thor/ansible/inventory on jump host. Using that inventory file test Ansible ping from jump host to App Server 1, make sure ping works. Solution ssh-keygen ssh-copy-id &lt;user&gt;@&lt;hostname&gt; ansible all -i ansible/inventory -m ping ansible all -i ansible/inventory -a &#34;id&#34; Ansible Install Package The Nautilus Application development team wanted to test some applications on app servers in Stratos Datacenter. They shared some pre-requisites with the DevOps team, and packages need to be installed on app servers. Since we are already using Ansible for automating such tasks, please perform this task using Ansible as per details mentioned below: Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it. Create an Ansible playbook /home/thor/playbook/playbook.yml to install zip package on all app servers using Ansible yum module. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;zip --help&#34; --- - hosts: all become: yes tasks: - yum: name=zip state=installed Ansible Archive Module The Nautilus DevOps team has some data on each app server in Stratos DC that they want to copy to a different location. However, they want to create an archive of the data first, then they want to copy the same to a different location on the respective app server. Additionally, there are some specific requirements for each server. Perform the task using Ansible playbook as per requirements mentioned below: Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already placed under /home/thor/ansible/ directory on Jump Server itself. Create an archive beta.tar.gz (make sure archive format is tar.gz) of /usr/src/finance/ directory ( present on each app server ) and copy it to /opt/finance/ directory on all app servers. The user and group owner of archive beta.tar.gz should be tony for App Server 1, steve for App Server 2 and banner for App Server 3. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd ansible/ vi playbook.yml ansible-playbook -i inventory playbook.yml ansible all -i inventory -a &#34;ls -l /opt/finance&#34; --- - hosts: all become: true tasks: - archive: path: /usr/src/finance/ dest: /opt/finance/beta.tar.gz format: gz - file: path: /opt/finance/beta.tar.gz owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/finance/beta.tar.gz owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/finance/beta.tar.gz owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; Ansible Blockinfile Module The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. &#43; Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below. We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running. Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content: “Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually!” The /var/www/html/index.html file’s user and group owner should be apache on all app servers. The /var/www/html/index.html file’s permissions should be 0644 on all app servers. Note: i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. ii. Do not use any custom or empty marker for blockinfile module. Solution vi ansible/playbook.yml ansible-doc blockinfile ansible-playbook --syntax-check ansible/playbook ansible-playbook -i ansible/inventory ansible/playbook.yml ansible -i ansible/inventory -a &#34;ls -l /var/www/html&#34; for i in {1..3}; do curl stapp0$i:80; done --- - hosts: all become: true tasks: - package: name: httpd state: installed - service: name: httpd state: started enabled: yes - file: path: /var/www/html/index.html owner: apache group: apache mode: &#39;0644&#39; state: touch - blockinfile: path: /var/www/html/index.html block: | Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually! Creating Soft Links Using Ansible The Nautilus DevOps team is practicing some of the Ansible modules and creating and testing different Ansible playbooks to accomplish tasks. Recently they started testing an Ansible file module to create soft links on all app servers. Below you can find more details about it. Write a playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on jump host itself. Using this playbook accomplish below given tasks: Create an empty file /opt/sysops/blog.txt on app server 1; its user owner and group owner should be tony. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/story.txt on app server 2; its user owner and group owner should be steve. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/media.txt on app server 3; its user owner and group owner should be banner. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way without passing any extra arguments. Solution --- - hosts: all become: true tasks: - file: path: /opt/sysops/blog.txt state: touch owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/sysops/story.txt state: touch owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/sysops/media.txt state: touch owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; - file: src: /opt/sysops/ dest: /var/www/html state: link Managing ACLs Using Ansible There are some files that need to be created on all app servers in Stratos DC. The Nautilus DevOps team want these files to be owned by user root only however, they also want that the app specific user to have a set of permissions on these files. All tasks must be done using Ansible only, so they need to create a playbook. Below you can find more information about the task. Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on Jump Server itself. Create an empty file blog.txt under /opt/devops/ directory on app server 1. Set some acl properties for this file. Using acl provide read ‘(r)’ permissions to group tony (i.e entity is tony and etype is group). Create an empty file story.txt under /opt/devops/ directory on app server 2. Set some acl properties for this file. Using acl provide read &#43; write ‘(rw)’ permissions to user steve (i.e entity is steve and etype is user). Create an empty file media.txt under /opt/devops/ on app server 3. Set some acl properties for this file. Using acl provide read &#43; write ‘(rw)’ permissions to group banner (i.e entity is banner and etype is group). Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way, without passing any extra arguments. Solution cd ansible ansibe-doc file ansible-doc acl ansible-playbook -i inventory -C playbook.yml ansible-playbook -i inventory playbook.yml ansible stapp01 -i inventory -a &#34;getfacl /opt/devops/blog.txt&#34; --- - hosts: all become: true tasks: - block: - file: path: /opt/devops/blog.txt state: touch - acl: path: /opt/devops/blog.txt entity: tony etype: group permissions: r state: present when: ansible_hostname == &#34;stapp01&#34; - block: - file: path: /opt/devops/story.txt state: touch - acl: path: /opt/devops/story.txt entity: steve etype: user permissions: rw state: present when: ansible_hostname == &#34;stapp02&#34; - block: - file: path: /opt/devops/media.txt state: touch - acl: path: /opt/devops/media.txt entity: banner etype: group permissions: rw state: present when: ansible_hostname == &#34;stapp03&#34; Ansible Manage Services Developers are looking for dependencies to be installed and run on Nautilus app servers in Stratos DC. They have shared some requirements with the DevOps team. Because we are now managing packages installation and services management using Ansible, some playbooks need to be created and tested. As per details mentioned below please complete the task: a. On jump host create an Ansible playbook /home/thor/ansible/playbook.yml and configure it to install httpd on all app servers. b. After installation make sure to start and enable httpd service on all app servers. c. The inventory /home/thor/ansible/inventory is already there on jump host. d. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution --- - hosts: all become: true tasks: - package: name=httpd state=installed - service: name=httpd state=started enabled=yes Ansible Lineinfile Module The Nautilus DevOps team want to install and set up a simple httpd web server on all app servers in Stratos DC. They also want to deploy a sample web page using Ansible. Therefore, write the required playbook to complete this task as per details mentioned below. We already have an inventory file under /home/thor/ansible directory on jump host. Write a playbook playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook perform below given tasks: Install httpd web server on all app servers, and make sure its service is up and running. Create a file /var/www/html/index.html with content: This is a Nautilus sample file, created using Ansible!">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/writeups/writeup09.txt/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="KKE - Ansible Challenges">
+  <meta property="og:description" content="{ CHXMXII } Ansible Unarchive Module One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task: We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already. There is a ZIP archive /usr/src/devops/nautilus.zip on jump host. Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to perform the below given tasks. Unzip /usr/src/devops/nautilus.zip archive in /opt/devops/ location on all app servers. Make sure the extracted data must has the respective sudo user as their user and group owner, i.e tony for app server 1, steve for app server 2, banner for app server 3. The extracted data permissions must be 0644 Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution: #verify the connectivity ansible all -m ping -i inventory #create a playbook.yml #run the playbook ansible-playbook -i inventory playbook.yml --- - hosts: all become: true tasks: - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - unarchive: src: /usr/src/sysops/xfusion.zip dest: /opt/sysops/ mode: &#39;0744&#39; owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; ... Ansible Facts Gathering The Nautilus DevOps team is trying to setup a simple Apache web server on all app servers in Stratos DC using Ansible. They also want to create a sample html page for now with some app specific data on it. Below you can find more details about the task. You will find a valid inventory file /home/thor/playbooks/inventory on jump host (which we are using as an Ansible controller). Create a playbook index.yml under /home/thor/playbooks directory on jump host. Using blockinfile Ansible module create a file facts.txt under /root directory on all app servers and add the following given block in it. You will need to enable facts gathering for this task. Ansible managed node IP is (You can obtain default ipv4 address from Ansible’s gathered facts by using the correct Ansible variable while taking into account Jinja2 syntax) Install httpd server on all apps. After that make a copy of facts.txt file as index.html under /var/www/html directory. Make sure to start httpd service after that. Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook. Solution: --- - hosts: all become: true gather_facts: true tasks: - file: path: /root/facts.txt state: touch - blockinfile: dest: /root/facts.txt block: &#34;Ansible managed node IP is {{ansible_default_ipv4[&#39;address&#39;]}}&#34; - package: name: httpd state: installed - copy: remote_src: yes src: /root/facts.txt dest: /var/www/html/index.html - service: name: httpd state: started Puppet Create Symlinks Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below: Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks: Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2. Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2. Notes: Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test. Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first. P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start. Solution sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp #verify the syntax puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp #run on the agent 2 sshpass -p Am3ric@ ssh -o StrictHostKeyChecking=no steve@stapp02 sudo puppet agent -tv #verify ls -lrt /var/www/html ls -lrt /opt/itadmin class symlink { //create sym link file{&#39;/opt/itadmin&#39;: ensure =&gt; &#39;link&#39;, target =&gt; &#39;/var/www/html&#39;, } //create file media.txt file{&#39;/opt/itadmin/media.txt&#39;: ensure =&gt; &#39;present&#39;; } } node &#39;stapp01.stratos.xfusioncorp.com&#39;, &#39;stapp02.stratos.xfusioncorp.com&#39;, &#39;stapp03.stratos.xfusioncorp.com&#39; { include symlink } Ansible Basic Playbook One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task: The inventory file /home/thor/ansible/inventory seems to be having some issues, please fix them. The playbook needs to be run on App Server 2 in Stratos DC, so inventory file needs to be updated accordingly. Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak Solution: #fix the inventory file by adding the ssh user and sshpass stapp02 ansible_host=172.16.238.11 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ #remote_user=steve #verify ansible stapp02 -m ping -i ansible/inventory #now lets write the playbook vi ansible/playboo.yml #run the playbook ansible-playbook playbook.yml -i inventory --- - hosts: stapp02 tasks: - file: dest: /tmp/file.txt state: touch Ansible Inventory Update The Nautilus DevOps team has started testing their Ansible playbooks on different servers within the stack. They have placed some playbooks under /home/thor/playbook/ directory on jump host which they want to test. Some of these playbooks have already been tested on different servers, but now they want to test them on app server 1 in Stratos DC. However, they first need to create an inventory file so that Ansible can connect to the respective app. Below are some requirements: a. Create an ini type Ansible inventory file /home/thor/playbook/inventory on jump host. b. Add App Server 1 in this inventory along with required variables that are needed to make it work. c. The inventory hostname of the host should be the server name as per the wiki, for example stapp01 for app server 1 in Stratos DC. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution cd playbooks echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory ansible-playbook -i inventory playbook.yml Ansible Config File Update To manage all servers within the stack using Ansible, the Nautilus DevOps team is planning to use a common sudo user among all servers. Ansible will be able to use this to perform different tasks on each server. This is not finalized yet, but the team has decided to first perform testing. The DevOps team has already installed Ansible on jump host using yum, and they now have the following requirement: On jump host make appropriate changes so that Ansible can use kirsty as a default ssh user for all hosts. Make changes in Ansible’s default configuration only —please do not try to create a new config. Solution: thor@jump_host ~$ ansible --version ansible 2.9.9 config file = /etc/ansible/ansible.cfg thor@jump_host ~$ sudo vi /etc/ansible.cfg &gt; search for &#34;#remote_user=root&#34; and change it to &#34;remote_user=kirst&#34; #verify ansible-config dump | grep USER Ansible Copy Module There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below: a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes. b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. Solution ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; ansible/inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; ansible/inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; ansible/inventory ansible all -i ansible/inventory -m ping vi ansible/playbook.yml ansible-playbook -i ansible/inventory -C ansible/playbook.yml ansible-playbook -i ansible/inventory ansible/playbook.yml ansible all -i ansible/inventory -a &#34;cat /opt/finance/index.html&#34; --- - hosts: all gather_facts: no become: true tasks: - copy: src=http://localhost:1313/usr/src/finance/index.html dest=/opt/finance/ Ansible File Module The Nautilus DevOps team is working to test several Ansible modules on servers in Stratos DC. Recently they wanted to test the file creation on remote hosts using Ansible. Find below more details about the task: a. Create an inventory file ~/playbook/inventory on jump host and add all app servers in it. b. Create a playbook ~/playbook/playbook.yml to create a blank file /tmp/data.txt on all app servers. c. The /tmp/data.txt file permission must be 0755. d. The user/group owner of file /tmp/data.txt must be tony on app server 1, steve on app server 2 and banner on app server 3. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;ls -l /tmp/data.txt&#34; --- - hosts: all tasks: - file: path: /tmp/data.txt state: touch owner: tony group: tony mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp01&#34; - file: path: /tmp/data.txt state: touch owner: steve group: steve mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp02&#34; - file: path: /tmp/data.txt state: touch owner: banner group: banner mode: &#39;0755&#39; when: ansible_hostname == &#34;stapp03&#34; Ansible Ping Module Usage The Nautilus DevOps team is planning to test several Ansible playbooks on different app servers in Stratos DC. Before that, some pre-requisites must be met. Essentially, the team needs to set up a password-less SSH connection between Ansible controller and Ansible managed nodes. One of the tickets is assigned to you; please complete the task as per details mentioned below: a. Jump host is our Ansible controller, and we are going to run Ansible playbooks through thor user on jump host. b.Make appropriate changes on jump host so that user thor on jump host can SSH into App Server 1 through its respective sudo user. (for example tony for app server 1). c. There is an inventory file /home/thor/ansible/inventory on jump host. Using that inventory file test Ansible ping from jump host to App Server 1, make sure ping works. Solution ssh-keygen ssh-copy-id &lt;user&gt;@&lt;hostname&gt; ansible all -i ansible/inventory -m ping ansible all -i ansible/inventory -a &#34;id&#34; Ansible Install Package The Nautilus Application development team wanted to test some applications on app servers in Stratos Datacenter. They shared some pre-requisites with the DevOps team, and packages need to be installed on app servers. Since we are already using Ansible for automating such tasks, please perform this task using Ansible as per details mentioned below: Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it. Create an Ansible playbook /home/thor/playbook/playbook.yml to install zip package on all app servers using Ansible yum module. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd playbook ansible --version echo &#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34; &gt; inventory echo &#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34; &gt;&gt; inventory echo &#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34; &gt;&gt; inventory ansible all -i inventory -m ping vi playbook.yml ansible-playbook -i inventory playbook.yml #verify ansible all -i inventory -a &#34;zip --help&#34; --- - hosts: all become: yes tasks: - yum: name=zip state=installed Ansible Archive Module The Nautilus DevOps team has some data on each app server in Stratos DC that they want to copy to a different location. However, they want to create an archive of the data first, then they want to copy the same to a different location on the respective app server. Additionally, there are some specific requirements for each server. Perform the task using Ansible playbook as per requirements mentioned below: Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already placed under /home/thor/ansible/ directory on Jump Server itself. Create an archive beta.tar.gz (make sure archive format is tar.gz) of /usr/src/finance/ directory ( present on each app server ) and copy it to /opt/finance/ directory on all app servers. The user and group owner of archive beta.tar.gz should be tony for App Server 1, steve for App Server 2 and banner for App Server 3. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution cd ansible/ vi playbook.yml ansible-playbook -i inventory playbook.yml ansible all -i inventory -a &#34;ls -l /opt/finance&#34; --- - hosts: all become: true tasks: - archive: path: /usr/src/finance/ dest: /opt/finance/beta.tar.gz format: gz - file: path: /opt/finance/beta.tar.gz owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/finance/beta.tar.gz owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/finance/beta.tar.gz owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; Ansible Blockinfile Module The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. &#43; Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below. We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running. Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content: “Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually!” The /var/www/html/index.html file’s user and group owner should be apache on all app servers. The /var/www/html/index.html file’s permissions should be 0644 on all app servers. Note: i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments. ii. Do not use any custom or empty marker for blockinfile module. Solution vi ansible/playbook.yml ansible-doc blockinfile ansible-playbook --syntax-check ansible/playbook ansible-playbook -i ansible/inventory ansible/playbook.yml ansible -i ansible/inventory -a &#34;ls -l /var/www/html&#34; for i in {1..3}; do curl stapp0$i:80; done --- - hosts: all become: true tasks: - package: name: httpd state: installed - service: name: httpd state: started enabled: yes - file: path: /var/www/html/index.html owner: apache group: apache mode: &#39;0644&#39; state: touch - blockinfile: path: /var/www/html/index.html block: | Welcome to XfusionCorp! This is Nautilus sample file, created using Ansible! Please do not modify this file manually! Creating Soft Links Using Ansible The Nautilus DevOps team is practicing some of the Ansible modules and creating and testing different Ansible playbooks to accomplish tasks. Recently they started testing an Ansible file module to create soft links on all app servers. Below you can find more details about it. Write a playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on jump host itself. Using this playbook accomplish below given tasks: Create an empty file /opt/sysops/blog.txt on app server 1; its user owner and group owner should be tony. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/story.txt on app server 2; its user owner and group owner should be steve. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Create an empty file /opt/sysops/media.txt on app server 3; its user owner and group owner should be banner. Create a symbolic link of source path /opt/sysops to destination /var/www/html. Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way without passing any extra arguments. Solution --- - hosts: all become: true tasks: - file: path: /opt/sysops/blog.txt state: touch owner: tony group: tony when: ansible_hostname == &#34;stapp01&#34; - file: path: /opt/sysops/story.txt state: touch owner: steve group: steve when: ansible_hostname == &#34;stapp02&#34; - file: path: /opt/sysops/media.txt state: touch owner: banner group: banner when: ansible_hostname == &#34;stapp03&#34; - file: src: /opt/sysops/ dest: /var/www/html state: link Managing ACLs Using Ansible There are some files that need to be created on all app servers in Stratos DC. The Nautilus DevOps team want these files to be owned by user root only however, they also want that the app specific user to have a set of permissions on these files. All tasks must be done using Ansible only, so they need to create a playbook. Below you can find more information about the task. Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on Jump Server itself. Create an empty file blog.txt under /opt/devops/ directory on app server 1. Set some acl properties for this file. Using acl provide read ‘(r)’ permissions to group tony (i.e entity is tony and etype is group). Create an empty file story.txt under /opt/devops/ directory on app server 2. Set some acl properties for this file. Using acl provide read &#43; write ‘(rw)’ permissions to user steve (i.e entity is steve and etype is user). Create an empty file media.txt under /opt/devops/ on app server 3. Set some acl properties for this file. Using acl provide read &#43; write ‘(rw)’ permissions to group banner (i.e entity is banner and etype is group). Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way, without passing any extra arguments. Solution cd ansible ansibe-doc file ansible-doc acl ansible-playbook -i inventory -C playbook.yml ansible-playbook -i inventory playbook.yml ansible stapp01 -i inventory -a &#34;getfacl /opt/devops/blog.txt&#34; --- - hosts: all become: true tasks: - block: - file: path: /opt/devops/blog.txt state: touch - acl: path: /opt/devops/blog.txt entity: tony etype: group permissions: r state: present when: ansible_hostname == &#34;stapp01&#34; - block: - file: path: /opt/devops/story.txt state: touch - acl: path: /opt/devops/story.txt entity: steve etype: user permissions: rw state: present when: ansible_hostname == &#34;stapp02&#34; - block: - file: path: /opt/devops/media.txt state: touch - acl: path: /opt/devops/media.txt entity: banner etype: group permissions: rw state: present when: ansible_hostname == &#34;stapp03&#34; Ansible Manage Services Developers are looking for dependencies to be installed and run on Nautilus app servers in Stratos DC. They have shared some requirements with the DevOps team. Because we are now managing packages installation and services management using Ansible, some playbooks need to be created and tested. As per details mentioned below please complete the task: a. On jump host create an Ansible playbook /home/thor/ansible/playbook.yml and configure it to install httpd on all app servers. b. After installation make sure to start and enable httpd service on all app servers. c. The inventory /home/thor/ansible/inventory is already there on jump host. d. Make sure user thor should be able to run the playbook on jump host. Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments. Solution --- - hosts: all become: true tasks: - package: name=httpd state=installed - service: name=httpd state=started enabled=yes Ansible Lineinfile Module The Nautilus DevOps team want to install and set up a simple httpd web server on all app servers in Stratos DC. They also want to deploy a sample web page using Ansible. Therefore, write the required playbook to complete this task as per details mentioned below. We already have an inventory file under /home/thor/ansible directory on jump host. Write a playbook playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook perform below given tasks: Install httpd web server on all app servers, and make sure its service is up and running. Create a file /var/www/html/index.html with content: This is a Nautilus sample file, created using Ansible!">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="writeups">
+    <meta property="article:published_time" content="2023-08-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-21T00:00:00+00:00">
+    <meta property="article:tag" content="DevOps">
+    <meta property="article:tag" content="Sysadmin">
+    <meta property="article:tag" content="Ansible">
+    <meta property="og:image" content="http://localhost:1313/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/2023/11/boost-your-apps-security-with-this-open-source-tool./">
+      <meta property="og:see_also" content="http://localhost:1313/posts/2023/09/certifications-exam-notes/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup10.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup11.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup07.txt/">
+      <meta property="og:see_also" content="http://localhost:1313/writeups/writeup01.txt/">
+
+
+
+
+
+
+    <meta property="article:published_time" content="2023-08-21 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">writeup09.txt</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/writeups/writeup09.txt/">KKE - Ansible Challenges</a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <h2 id="filesansiblepngcenter-chxmxii-"><img src="http://localhost:1313/files/ansible.png#center" alt="">{ CHXMXII }</h2>
+<h2 id="ansible-unarchive-module">Ansible Unarchive Module</h2>
+<ul>
+<li>One of the DevOps team members has created an ZIP archive on jump host in Stratos DC that needs to be extracted and copied over to all app servers in Stratos DC itself. Because this is a routine task, the Nautilus DevOps team has suggested automating it. We can use Ansible since we have been using it for other automation tasks. Below you can find more details about the task:</li>
+<li>We have an inventory file under /home/thor/ansible directory on jump host, which should have all the app servers added already.</li>
+<li>There is a ZIP archive /usr/src/devops/nautilus.zip on jump host.</li>
+<li>Create a playbook.yml under /home/thor/ansible/ directory on jump host itself to perform the below given tasks.</li>
+<li>Unzip /usr/src/devops/nautilus.zip archive in /opt/devops/ location on all app servers.</li>
+<li>Make sure the extracted data must has the respective sudo user as their user and group owner, i.e tony for app server 1, steve for app server 2, banner for app server 3.</li>
+<li>The extracted data permissions must be 0644</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e">#verify the connectivity </span>
+</span></span><span style="display:flex;"><span>ansible all -m ping -i inventory
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#create a playbook.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the playbook</span>
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">unarchive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/sysops/xfusion.zip</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0744&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">unarchive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/sysops/xfusion.zip</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0744&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">unarchive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/sysops/xfusion.zip</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0744&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-facts-gathering">Ansible Facts Gathering</h2>
+<ul>
+<li>The Nautilus DevOps team is trying to setup a simple Apache web server on all app servers in Stratos DC using Ansible. They also want to create a sample html page for now with some app specific data on it. Below you can find more details about the task.</li>
+<li>You will find a valid inventory file /home/thor/playbooks/inventory on jump host (which we are using as an Ansible controller).</li>
+<li>Create a playbook index.yml under /home/thor/playbooks directory on jump host. Using blockinfile Ansible module create a file facts.txt under /root directory on all app servers and add the following given block in it. You will need to enable facts gathering for this task.
+Ansible managed node IP is <!-- raw HTML omitted -->
+(You can obtain default ipv4 address from Ansible&rsquo;s gathered facts by using the correct Ansible variable while taking into account Jinja2 syntax)</li>
+<li>Install httpd server on all apps. After that make a copy of facts.txt file as index.html under /var/www/html directory. Make sure to start httpd service after that.
+Note: Do not create a separate role for this task, just add all of the changes in index.yml playbook.</li>
+</ul>
+<h6 id="solution-1">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/root/facts.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">blockinfile</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/root/facts.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">block</span>: <span style="color:#e6db74">&#34;Ansible managed node IP is {{ansible_default_ipv4[&#39;address&#39;]}}&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">package</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">remote_src</span>: <span style="color:#66d9ef">yes</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/root/facts.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/html/index.html</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started  </span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="puppet-create-symlinks">Puppet Create Symlinks</h2>
+<ul>
+<li>Some directory structure in the Stratos Datacenter needs to be changed, there is a directory that needs to be linked to the default Apache document root. We need to accomplish this task using Puppet, as per the instructions given below:</li>
+<li>Create a puppet programming file official.pp under /etc/puppetlabs/code/environments/production/manifests directory on puppet master node i.e on Jump Server. Within that define a class symlink and perform below mentioned tasks:</li>
+<li>Create a symbolic link through puppet programming code. The source path should be /opt/itadmin and destination path should be /var/www/html on Puppet agents 2 i.e on App Servers 2.
+Create a blank file media.txt under /opt/itadmin directory on puppet agent 2 nodes i.e on App Servers 2.</li>
+<li>Notes:
+<ul>
+<li>Please make sure to run the puppet agent test using sudo on agent nodes, otherwise you can face certificate issues. In that case you will have to clean the certificates first and then you will be able to run the puppet agent test.</li>
+<li>Before clicking on the Check button please make sure to verify puppet server and puppet agent services are up and running on the respective servers, also please make sure to run puppet agent test to apply/test the changes manually first.</li>
+</ul>
+</li>
+<li>P lease note that once lab is loaded, the puppet server service should start automatically on puppet master server, however it can take upto 2-3 minutes to start.</li>
+</ul>
+<h6 id="solution-2">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo vi /etc/puppetlabs/code/environments/production/manifests/official.pp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify the syntax</span>
+</span></span><span style="display:flex;"><span>puppet parser validate /etc/puppetlabs/code/environments/production/manifests/official.pp
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run on the agent 2</span>
+</span></span><span style="display:flex;"><span>sshpass -p Am3ric@ ssh -o StrictHostKeyChecking<span style="color:#f92672">=</span>no steve@stapp02
+</span></span><span style="display:flex;"><span>sudo puppet agent -tv
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ls -lrt /var/www/html
+</span></span><span style="display:flex;"><span>ls -lrt /opt/itadmin
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">symlink</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//create sym link
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">file</span>{<span style="color:#e6db74">&#39;/opt/itadmin&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ensure</span> =&gt; <span style="color:#e6db74">&#39;link&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span> =&gt; <span style="color:#e6db74">&#39;/var/www/html&#39;</span>,
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//create file media.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">file</span>{<span style="color:#e6db74">&#39;/opt/itadmin/media.txt&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ensure</span> =&gt; <span style="color:#e6db74">&#39;present&#39;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">node</span> <span style="color:#e6db74">&#39;stapp01.stratos.xfusioncorp.com&#39;</span>, <span style="color:#e6db74">&#39;stapp02.stratos.xfusioncorp.com&#39;</span>, <span style="color:#e6db74">&#39;stapp03.stratos.xfusioncorp.com&#39;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">include</span> <span style="color:#a6e22e">symlink</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-basic-playbook">Ansible Basic Playbook</h2>
+<ul>
+<li>One of the Nautilus DevOps team members was working on to test an Ansible playbook on jump host. However, he was only able to create the inventory, and due to other priorities that came in he has to work on other tasks. Please pick up this task from where he left off and complete it. Below are more details about the task:</li>
+<li>The inventory file /home/thor/ansible/inventory seems to be having some issues, please fix them. The playbook needs to be run on App Server 2 in Stratos DC, so inventory file needs to be updated accordingly.</li>
+<li>Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 2.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please mak</li>
+</ul>
+<h6 id="solution-3">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#fix the inventory file by adding the ssh user and sshpass</span>
+</span></span><span style="display:flex;"><span>stapp02 ansible_host<span style="color:#f92672">=</span>172.16.238.11 ansible_ssh_user<span style="color:#f92672">=</span>steve ansible_ssh_pass<span style="color:#f92672">=</span>Am3ric@ <span style="color:#75715e">#remote_user=steve</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ansible stapp02 -m ping -i ansible/inventory
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#now lets write the playbook</span>
+</span></span><span style="display:flex;"><span>vi ansible/playboo.yml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#run the playbook</span>
+</span></span><span style="display:flex;"><span>ansible-playbook playbook.yml -i inventory
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">stapp02</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/tmp/file.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-inventory-update">Ansible Inventory Update</h2>
+<ul>
+<li>The Nautilus DevOps team has started testing their Ansible playbooks on different servers within the stack. They have placed some playbooks under /home/thor/playbook/ directory on jump host which they want to test. Some of these playbooks have already been tested on different servers, but now they want to test them on app server 1 in Stratos DC. However, they first need to create an inventory file so that Ansible can connect to the respective app. Below are some requirements:</li>
+<li>a. Create an ini type Ansible inventory file /home/thor/playbook/inventory on jump host.</li>
+<li>b. Add App Server 1 in this inventory along with required variables that are needed to make it work.</li>
+<li>c. The inventory hostname of the host should be the server name as per the wiki, for example stapp01 for app server 1 in Stratos DC.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-4">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>cd playbooks
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34;</span> &gt; inventory
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-config-file-update">Ansible Config File Update</h2>
+<ul>
+<li>To manage all servers within the stack using Ansible, the Nautilus DevOps team is planning to use a common sudo user among all servers. Ansible will be able to use this to perform different tasks on each server. This is not finalized yet, but the team has decided to first perform testing. The DevOps team has already installed Ansible on jump host using yum, and they now have the following requirement:</li>
+<li>On jump host make appropriate changes so that Ansible can use kirsty as a default ssh user for all hosts. Make changes in Ansible&rsquo;s default configuration only —please do not try to create a new config.</li>
+</ul>
+<h6 id="solution-5">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>thor@jump_host ~$ ansible --version
+</span></span><span style="display:flex;"><span>ansible 2.9.9
+</span></span><span style="display:flex;"><span>  config file <span style="color:#f92672">=</span> /etc/ansible/ansible.cfg
+</span></span><span style="display:flex;"><span>thor@jump_host ~$ sudo vi /etc/ansible.cfg
+</span></span><span style="display:flex;"><span>&gt; search <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;#remote_user=root&#34;</span> and change it to <span style="color:#e6db74">&#34;remote_user=kirst&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ansible-config dump | grep USER 
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-copy-module">Ansible Copy Module</h2>
+<ul>
+<li>There is data on jump host that needs to be copied on all application servers in Stratos DC. Nautilus DevOps team want to perform this task using Ansible. Perform the task as per details mentioned below:</li>
+<li>a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes.</li>
+<li>b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/finance/index.html file to all application servers at location /opt/finance.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-6">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>ansible --version
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34;</span> &gt; ansible/inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34;</span> &gt;&gt; ansible/inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34;</span> &gt;&gt; ansible/inventory
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory  -m ping
+</span></span><span style="display:flex;"><span>vi ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory -C ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;cat /opt/finance/index.html&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">no</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>: <span style="color:#ae81ff">src=http://localhost:1313/usr/src/finance/index.html dest=/opt/finance/</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-file-module">Ansible File Module</h2>
+<ul>
+<li>The Nautilus DevOps team is working to test several Ansible modules on servers in Stratos DC. Recently they wanted to test the file creation on remote hosts using Ansible. Find below more details about the task:</li>
+<li>a. Create an inventory file ~/playbook/inventory on jump host and add all app servers in it.</li>
+<li>b. Create a playbook ~/playbook/playbook.yml to create a blank file /tmp/data.txt on all app servers.</li>
+<li>c. The /tmp/data.txt file permission must be 0755.</li>
+<li>d. The user/group owner of file /tmp/data.txt must be tony on app server 1, steve on app server 2 and banner on app server 3.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-7">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd playbook
+</span></span><span style="display:flex;"><span>ansible --version
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34;</span> &gt; inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34;</span> &gt;&gt; inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34;</span> &gt;&gt; inventory
+</span></span><span style="display:flex;"><span>ansible all -i inventory  -m ping
+</span></span><span style="display:flex;"><span>vi playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ansible all -i inventory  -a <span style="color:#e6db74">&#34;ls -l /tmp/data.txt&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/tmp/data.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/tmp/data.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/tmp/data.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-ping-module-usage">Ansible Ping Module Usage</h2>
+<ul>
+<li>The Nautilus DevOps team is planning to test several Ansible playbooks on different app servers in Stratos DC. Before that, some pre-requisites must be met. Essentially, the team needs to set up a password-less SSH connection between Ansible controller and Ansible managed nodes. One of the tickets is assigned to you; please complete the task as per details mentioned below:</li>
+<li>a. Jump host is our Ansible controller, and we are going to run Ansible playbooks through thor user on jump host.</li>
+<li>b.Make appropriate changes on jump host so that user thor on jump host can SSH into App Server 1 through its respective sudo user. (for example tony for app server 1).</li>
+<li>c. There is an inventory file /home/thor/ansible/inventory on jump host. Using that inventory file test Ansible ping from jump host to App Server 1, make sure ping works.</li>
+</ul>
+<h6 id="solution-8">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>ssh-keygen
+</span></span><span style="display:flex;"><span>ssh-copy-id &lt;user&gt;@&lt;hostname&gt;
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -m ping
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;id&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-install-package">Ansible Install Package</h2>
+<ul>
+<li>The Nautilus Application development team wanted to test some applications on app servers in Stratos Datacenter.</li>
+<li>They shared some pre-requisites with the DevOps team, and packages need to be installed on app servers. Since we are already using Ansible for automating such tasks, please perform this task using Ansible as per details mentioned below:</li>
+<li>Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it.</li>
+<li>Create an Ansible playbook /home/thor/playbook/playbook.yml to install zip package on all app servers using Ansible yum module.</li>
+<li>Make sure user thor should be able to run the playbook on jump host.</li>
+<li>Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-9">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd playbook
+</span></span><span style="display:flex;"><span>ansible --version
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp01 ansible_user=tony ansible_password=Ir0nM@n&#34;</span> &gt; inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp02 ansible_user=steve ansible_password=Am3ric@&#34;</span> &gt;&gt; inventory
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;stapp03 ansible_user=banner ansible_password=BigGr33n&#34;</span> &gt;&gt; inventory
+</span></span><span style="display:flex;"><span>ansible all -i inventory  -m ping
+</span></span><span style="display:flex;"><span>vi playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#verify</span>
+</span></span><span style="display:flex;"><span>ansible all -i inventory  -a <span style="color:#e6db74">&#34;zip --help&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">yes</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">yum</span>: <span style="color:#ae81ff">name=zip state=installed</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-archive-module">Ansible Archive Module</h2>
+<ul>
+<li>The Nautilus DevOps team has some data on each app server in Stratos DC that they want to copy to a different location. However, they want to create an archive of the data first, then they want to copy the same to a different location on the respective app server. Additionally, there are some specific requirements for each server. Perform the task using Ansible playbook as per requirements mentioned below:</li>
+<li>Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already placed under /home/thor/ansible/ directory on Jump Server itself.</li>
+<li>Create an archive beta.tar.gz (make sure archive format is tar.gz) of /usr/src/finance/ directory ( present on each app server ) and copy it to /opt/finance/ directory on all app servers. The user and group owner of archive beta.tar.gz should be tony for App Server 1, steve for App Server 2 and banner for App Server 3.</li>
+<li>Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-10">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>cd ansible/
+</span></span><span style="display:flex;"><span>vi playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span>ansible all -i inventory -a <span style="color:#e6db74">&#34;ls -l /opt/finance&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    -  <span style="color:#f92672">archive</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/usr/src/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/beta.tar.gz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">format</span>: <span style="color:#ae81ff">gz</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/finance/beta.tar.gz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/finance/beta.tar.gz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/finance/beta.tar.gz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-blockinfile-module">Ansible Blockinfile Module</h2>
+<ul>
+<li>The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. + Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below.</li>
+<li>We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself.</li>
+<li>Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running.</li>
+<li>Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content:
+&ldquo;Welcome to XfusionCorp!
+This is Nautilus sample file, created using Ansible!
+Please do not modify this file manually!&rdquo;</li>
+<li>The /var/www/html/index.html file&rsquo;s user and group owner should be apache on all app servers.</li>
+<li>The /var/www/html/index.html file&rsquo;s permissions should be 0644 on all app servers.</li>
+<li>Note:
+<ul>
+<li>i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</li>
+<li>ii. Do not use any custom or empty marker for blockinfile module.</li>
+</ul>
+</li>
+</ul>
+<h6 id="solution-11">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible-doc blockinfile
+</span></span><span style="display:flex;"><span>ansible-playbook --syntax-check ansible/playbook
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible -i ansible/inventory -a <span style="color:#e6db74">&#34;ls -l /var/www/html&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..3<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> curl stapp0$i:80; <span style="color:#66d9ef">done</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">package</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">yes</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/var/www/html/index.html</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">apache</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">apache</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">blockinfile</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/var/www/html/index.html </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">block</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          Welcome to XfusionCorp!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          This is Nautilus sample file, created using Ansible!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          Please do not modify this file manually!    </span>          
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="creating-soft-links-using-ansible">Creating Soft Links Using Ansible</h2>
+<ul>
+<li>The Nautilus DevOps team is practicing some of the Ansible modules and creating and testing different Ansible playbooks to accomplish tasks. Recently they started testing an Ansible file module to create soft links on all app servers. Below you can find more details about it.</li>
+<li>Write a playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on jump host itself. Using this playbook accomplish below given tasks:</li>
+<li>Create an empty file /opt/sysops/blog.txt on app server 1; its user owner and group owner should be tony. Create a symbolic link of source path /opt/sysops to destination /var/www/html.</li>
+<li>Create an empty file /opt/sysops/story.txt on app server 2; its user owner and group owner should be steve. Create a symbolic link of source path /opt/sysops to destination /var/www/html.</li>
+<li>Create an empty file /opt/sysops/media.txt on app server 3; its user owner and group owner should be banner. Create a symbolic link of source path /opt/sysops to destination /var/www/html.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-12">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/sysops/blog.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/sysops/story.txt </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/sysops/media.txt </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/opt/sysops/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/html</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">link</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="managing-acls-using-ansible">Managing ACLs Using Ansible</h2>
+<ul>
+<li>There are some files that need to be created on all app servers in Stratos DC. The Nautilus DevOps team want these files to be owned by user root only however, they also want that the app specific user to have a set of permissions on these files. All tasks must be done using Ansible only, so they need to create a playbook. Below you can find more information about the task.</li>
+<li>Create a playbook named playbook.yml under /home/thor/ansible directory on jump host, an inventory file is already present under /home/thor/ansible directory on Jump Server itself.</li>
+<li>Create an empty file blog.txt under /opt/devops/ directory on app server 1. Set some acl properties for this file. Using acl provide read &lsquo;(r)&rsquo; permissions to group tony (i.e entity is tony and etype is group).</li>
+<li>Create an empty file story.txt under /opt/devops/ directory on app server 2. Set some acl properties for this file. Using acl provide read + write &lsquo;(rw)&rsquo; permissions to user steve (i.e entity is steve and etype is user).</li>
+<li>Create an empty file media.txt under /opt/devops/ on app server 3. Set some acl properties for this file. Using acl provide read + write &lsquo;(rw)&rsquo; permissions to group banner (i.e entity is banner and etype is group).</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-13">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd ansible
+</span></span><span style="display:flex;"><span>ansibe-doc file
+</span></span><span style="display:flex;"><span>ansible-doc acl
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory -C playbook.yml 
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span>ansible stapp01 -i inventory -a <span style="color:#e6db74">&#34;getfacl /opt/devops/blog.txt&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/devops/blog.txt</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">acl</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/devops/blog.txt</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">entity</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">etype</span>: <span style="color:#ae81ff">group</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">permissions</span>: <span style="color:#ae81ff">r</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/devops/story.txt</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">acl</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/devops/story.txt</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">entity</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">etype</span>: <span style="color:#ae81ff">user</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">permissions</span>: <span style="color:#ae81ff">rw</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/devops/media.txt</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">state</span>: <span style="color:#ae81ff">touch</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">acl</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/opt/devops/media.txt</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">entity</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">etype</span>: <span style="color:#ae81ff">group</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">permissions</span>: <span style="color:#ae81ff">rw</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-manage-services">Ansible Manage Services</h2>
+<ul>
+<li>Developers are looking for dependencies to be installed and run on Nautilus app servers in Stratos DC. They have shared some requirements with the DevOps team. Because we are now managing packages installation and services management using Ansible, some playbooks need to be created and tested. As per details mentioned below please complete the task:</li>
+<li>a. On jump host create an Ansible playbook /home/thor/ansible/playbook.yml and configure it to install httpd on all app servers.</li>
+<li>b. After installation make sure to start and enable httpd service on all app servers.</li>
+<li>c. The inventory /home/thor/ansible/inventory is already there on jump host.</li>
+<li>d. Make sure user thor should be able to run the playbook on jump host.</li>
+<li>Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-14">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">package</span>: <span style="color:#ae81ff">name=httpd state=installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">name=httpd state=started enabled=yes</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-lineinfile-module">Ansible Lineinfile Module</h2>
+<ul>
+<li>The Nautilus DevOps team want to install and set up a simple httpd web server on all app servers in Stratos DC. They also want to deploy a sample web page using Ansible. Therefore, write the required playbook to complete this task as per details mentioned below.</li>
+<li>We already have an inventory file under /home/thor/ansible directory on jump host. Write a playbook playbook.yml under /home/thor/ansible directory on jump host itself. Using the playbook perform below given tasks:</li>
+<li>Install httpd web server on all app servers, and make sure its service is up and running.</li>
+<li>Create a file /var/www/html/index.html with content:</li>
+</ul>
+<blockquote>
+<p>This is a Nautilus sample file, created using Ansible!</p>
+</blockquote>
+<ul>
+<li>Using lineinfile Ansible module add some more content in /var/www/html/index.html file. Below is the content:</li>
+</ul>
+<blockquote>
+<p>Welcome to xFusionCorp Industries!</p>
+</blockquote>
+<ul>
+<li>Also make sure this new line is added at the top of the file.</li>
+<li>The /var/www/html/index.html file&rsquo;s user and group owner should be apache on all app servers.</li>
+<li>The /var/www/html/index.html file&rsquo;s permissions should be 0644 on all app servers.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-15">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi ansible/playbook.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml --syntax-check
+</span></span><span style="display:flex;"><span>ansible-playbook -i ansible/inventory ansible/playbook.yml 
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;ls -l /var/www/html/index.html&#34;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>ansible all -i ansible/inventory -a <span style="color:#e6db74">&#34;cat /var/www/html/index.html&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">yum</span>: <span style="color:#ae81ff">name=httpd state=installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>: <span style="color:#ae81ff">name=httpd state=started enabled=true</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>: <span style="color:#ae81ff">content=&#34;This is a Nautilus sample file, created using Ansible!&#34; dest=/var/www/html/index.html owner=apache group=&#34;apache&#34; mode=&#39;0655&#39;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">lineinfile</span>: <span style="color:#ae81ff">path=/var/www/html/index.html line=&#34;Welcome to Nautilus Group!&#34; insertbefore=BOF</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-replace-module">Ansible Replace Module</h2>
+<ul>
+<li>
+<p>There is some data on all app servers in Stratos DC. The Nautilus development team shared some requirement with the DevOps team to alter some of the data as per recent changes they made. The DevOps team is working to prepare an Ansible playbook to accomplish the same. Below you can find more details about the task.</p>
+</li>
+<li>
+<p>Write a playbook.yml under /home/thor/ansible on jump host, an inventory is already present under /home/thor/ansible directory on Jump host itself. Perform below given tasks using this playbook:</p>
+</li>
+<li>
+<p>We have a file /opt/sysops/blog.txt on app server 1. Using Ansible replace module replace string xFusionCorp to Nautilus in that file.</p>
+</li>
+<li>
+<p>We have a file /opt/sysops/story.txt on app server 2. Using Ansiblereplace module replace the string Nautilus to KodeKloud in that file.</p>
+</li>
+<li>
+<p>We have a file /opt/sysops/media.txt on app server 3. Using Ansible replace module replace string KodeKloud to xFusionCorp Industries in that file.</p>
+</li>
+<li>
+<p>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">replace</span>: <span style="color:#ae81ff">path=/opt/sysops/blog.txt regexp=&#39;xFusionCorp&#39; replace=&#39;Nautilus&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname==&#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">replace</span>: <span style="color:#ae81ff">path=/opt/sysops/story.txt regexp=&#39;Nautilus&#39; replace=&#39;KodeKloud&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname==&#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">replace</span>: <span style="color:#ae81ff">path=/opt/sysops/media.txt regexp=&#39;KodeKloud&#39; replace=&#39;xFusionCorp Industries&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname==&#34;stapp03&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-create-users-and-groups">Ansible Create Users and Groups</h2>
+<ul>
+<li>Several new developers and DevOps engineers just joined the xFusionCorp industries. They have been assigned the Nautilus project, and as per the onboarding process we need to create user accounts for new joinees on at least one of the app servers in Stratos DC. We also need to create groups and make new users members of those groups. We need to accomplish this task using Ansible. Below you can find more information about the task.</li>
+<li>There is already an inventory file ~/playbooks/inventory on jump host.</li>
+<li>On jump host itself there is a list of users in ~/playbooks/data/users.yml file and there are two groups — admins and developers —that have list of different users. Create a playbook ~/playbooks/add_users.yml on jump host to perform the following tasks on app server 3 in Stratos DC.</li>
+<li>a. Add all users given in the users.yml file on app server 3.</li>
+<li>b. Also add developers and admins groups on the same server.</li>
+<li>c. As per the list given in the users.yml file, make each user member of the respective group they are listed under.</li>
+<li>d. Make sure home directory for all of the users under developers group is /var/www (not the default i.e /var/www/{USER}). Users under admins group should use the default home directory (i.e /home/devid for user devid).</li>
+<li>e. Set password TmPcZjtRQx for all of the users under developers group and YchZHRcLkL for of the users under admins group. Make sure to use the password given in the ~/playbooks/secrets/vault.txt file as Ansible vault password to encrypt the original password strings. You can use ~/playbooks/secrets/vault.txt file as a vault secret file while running the playbook (make necessary changes in ~/playbooks/ansible.cfg file).</li>
+<li>f. All users under admins group must be added as sudo users. To do so, simply make them member of the wheel group as well.</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory add_users.yml so please make sure playbook works this way, without passing any extra arguments.</li>
+</ul>
+<h6 id="solution-16">Solution</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd playbooks
+</span></span><span style="display:flex;"><span>vi add_users.yml
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;vault_password_file=./secrets/vault.txt&#34;</span> &gt;&gt; ansibe.cfg
+</span></span><span style="display:flex;"><span>ansible-vault encrypt add_users.yml
+</span></span><span style="display:flex;"><span>cat add_users.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory add_users.yml
+</span></span><span style="display:flex;"><span>ansible stapp03 -i inventory -m shell -a <span style="color:#e6db74">&#34;id joy;id ray;cat /etc/passwd&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#for further verification, you can ssh to the stapp03.</span>
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">stapp03</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">vars_files</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">./data/users.yml</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">vars</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">password_admin</span>: <span style="color:#ae81ff">YchZHRcLkL</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">password_dev</span>: <span style="color:#ae81ff">TmPcZjtRQx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">group</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">admins </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">group</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">developers </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">user</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item }}&#34;</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">groups</span>: <span style="color:#ae81ff">admins,wheel </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">password</span>: <span style="color:#e6db74">&#34;{{ password_admin | password_hash(&#39;sha512&#39;) }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{admins}}&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">user</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item }}&#34;</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">password</span>: <span style="color:#e6db74">&#34;{{ password_dev | password_hash(&#39;sha512&#39;) }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">groups</span>: <span style="color:#ae81ff">developers,wheel</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">home</span>: <span style="color:#e6db74">&#34;/var/www/{{ item }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ developers }}&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="managing-jinja2-templates-using-ansible">Managing Jinja2 Templates Using Ansible:</h2>
+<ul>
+<li>One of the Nautilus DevOps team members is working on to develop a role for httpd installation and configuration. Work is almost completed, however there is a requirement to add a jinja2 template for index.html file. Additionally, the relevant task needs to be added inside the role. The inventory file ~/ansible/inventory is already present on jump host that can be used. Complete the task as per details mentioned below:</li>
+<li>a. Update ~/ansible/playbook.yml playbook to run the httpd role on App Server 3.</li>
+<li>b. Create a jinja2 template index.html.j2 under /home/thor/ansible/role/httpd/templates/ directory and add a line This file was created using Ansible on <!-- raw HTML omitted --> (for example This file was created using Ansible on stapp01 in case of App Server 1). Also please make sure not to hard code the server name inside the template. Instead, use inventory_hostname variable to fetch the correct value.</li>
+<li>c. Add a task inside /home/thor/ansible/role/httpd/tasks/main.yml to copy this template on App Server 3 under /var/www/html/index.html. Also make sure that /var/www/html/index.html file&rsquo;s permissions are 0644.</li>
+<li>d. The user/group owner of /var/www/html/index.html file must be respective sudo user of the server (for example tony in case of stapp01).</li>
+<li>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments</li>
+</ul>
+<h6 id="solution-17">Solution:</h6>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd ansible
+</span></span><span style="display:flex;"><span>vi playbook.yml <span style="color:#75715e">#add the desired stapp server on the &#34;hosts&#34; header</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;This file was created using Ansible on {{ inventory_hostname }}&#34;</span> &gt; /role/httpd/templates/index.html.j2
+</span></span><span style="display:flex;"><span>vi /role/httpd/tasks/main.yml
+</span></span><span style="display:flex;"><span>ansible-playbook -i inventory playbook.yml
+</span></span><span style="display:flex;"><span>curl stapp03:80
+</span></span><span style="display:flex;"><span>  &gt; This file was created using Ansible on stapp03
+</span></span></code></pre></div></li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e">#...exisiting tasks</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">src</span>: <span style="color:#ae81ff">index.html.j2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/html/index.html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">src</span>: <span style="color:#ae81ff">index.html.j2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/index.html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">src</span>: <span style="color:#ae81ff">index.html.j2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/index.html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0644&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="ansible-setup-httpd-and-php">Ansible Setup Httpd and PHP</h2>
+<ul>
+<li>
+<p>Nautilus Application development team wants to test the Apache and PHP setup on one of the app servers in Stratos Datacenter. They want the DevOps team to prepare an Ansible playbook to accomplish this task. Below you can find more details about the task.</p>
+</li>
+<li>
+<p>There is an inventory file ~/playbooks/inventory on jump host.</p>
+</li>
+<li>
+<p>Create a playbook ~/playbooks/httpd.yml on jump host and perform the following tasks on App Server 3.</p>
+</li>
+<li>
+<p>a. Install httpd and php packages (whatever default version is available in yum repo).</p>
+</li>
+<li>
+<p>b. Change default document root of Apache to /var/www/html/myroot in default Apache config /etc/httpd/conf/httpd.conf. Make sure /var/www/html/myroot path exists (if not please create the same).</p>
+</li>
+<li>
+<p>c. There is a template ~/playbooks/templates/phpinfo.php.j2 on jump host. Copy this template to the Apache document root you created as phpinfo.php file and make sure user owner and the group owner for this file is apache user.</p>
+</li>
+<li>
+<p>d. Start and enable httpd service.</p>
+</li>
+<li>
+<p>Note: Validation will try to run the playbook using command ansible-playbook -i inventory httpd.yml, so please make sure the playbook works this way without passing any extra arguments.</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">stapp03</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">yum</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">php</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">installed</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/var/www/html/myroot</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">directory</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">recurse</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">lineinfile</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/etc/httpd/conf/httpd.conf</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">regex</span>: <span style="color:#e6db74">&#39;^DocumentRoot &#34;/var/www/html&#34;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">line</span>: <span style="color:#e6db74">&#39;DocumentRoot &#34;/var/www/html/myroot&#34;&#39;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">template</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">templates/phpinfo.php.j2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/var/www/html/myroot/phpinfo.php</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">apache</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">apache</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h2 id="using-ansible-conditionals">Using Ansible Conditionals</h2>
+<ul>
+<li>
+<p>The Nautilus DevOps team had a discussion about, how they can train different team members to use Ansible for different automation tasks. There are numerous ways to perform a particular task using Ansible, but we want to utilize each aspect that Ansible offers. The team wants to utilise Ansible&rsquo;s conditionals to perform the following task:</p>
+</li>
+<li>
+<p>An inventory file is already placed under /home/thor/ansible directory on jump host, with all the Stratos DC app servers included.</p>
+</li>
+<li>
+<p>Create a playbook /home/thor/ansible/playbook.yml and make sure to use Ansible&rsquo;s when conditionals statements to perform the below given tasks.</p>
+</li>
+<li>
+<p>Copy blog.txt file present under /usr/src/finance directory on jump host to App Server 1 under /opt/finance directory. Its user and group owner must be user tony and its permissions must be 0755 .</p>
+</li>
+<li>
+<p>Copy story.txt file present under /usr/src/finance directory on jump host to App Server 2 under /opt/finance directory. Its user and group owner must be user steve and its permissions must be 0755 .</p>
+</li>
+<li>
+<p>Copy media.txt file present under /usr/src/finance directory on jump host to App Server 3 under /opt/finance directory. Its user and group owner must be user banner and its permissions must be 0755.</p>
+</li>
+<li>
+<p>NOTE: You can use ansible_nodename variable from gathered facts with when condition. Additionally, please make sure you are running the play for all hosts i.e use - hosts: all.</p>
+</li>
+<li>
+<p>Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml, so please make sure the playbook works this way without passing any extra arguments</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">become</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/finance/blog.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">tony</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp01&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/finance/story.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">steve</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp02&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">src</span>: <span style="color:#ae81ff">/usr/src/finance/media.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#ae81ff">/opt/finance/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">owner</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">group</span>: <span style="color:#ae81ff">banner</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">mode</span>: <span style="color:#e6db74">&#39;0755&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#ae81ff">ansible_hostname == &#34;stapp03&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<blockquote>
+<p>DONE&hellip;!</p>
+</blockquote>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="http://localhost:1313/tags/devops/">DevOps</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/sysadmin/">Sysadmin</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/ansible/">Ansible</a></span>
+        
+    </p>
+
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="All rights reserved - @chxmxii_ ">
+<meta name="description" content="&lt;!DOCTYPE NETSCAPE-Bookmark-file-1&gt; chxmxii RHCE RESOURCES Managing Ansible Configuration Files Ansible Sample Exam for RHCE EX294 and EX407 | Lisenet.com :: Linux | Security | Networking SwiperNo/Ansible-Lab Tips and tricks — Ansible Documentation RHCE - TekNeed Ansible Sample Exam Questions and Answers For RHCE EX294 | SeiMaxim RHCE Sample Exam | PDF | Web Server | Internet &amp; Web soficx/rhce: These are a few practice exams to get ready for the Red Hat Certified Engineer exam (RHCE) Chapter 6 Working with Variables and Facts | Red Hat RHCE 8 (EX294) Cert Guide Red Hat RHCE 8 Practice Exam 1 | Red Hat RHCE 8® Practice Tests Ansible Installation &amp; Configuration on AWS | Install &amp; Configure Ansible on EC2 | Intellipaat - YouTube Ansible: Deploy a HA Proxy and Webservers | by Kyle Jones | Nov, 2022 | Medium CyberSecurityUP/Cloud-Security-Attacks: Azure and AWS Attacks RHCE 8 EX294 Exam Practice Questions || RHCE EX294 || Question 1 setup ansible hosts - YouTube nbtechsupport Sample Exam - RHCE 8 EX294 - Network Nuts RHEL7 RHCE Exam objectives - CertDepot RHCE Sample Exam for RHEL 7 | Lisenet.com :: Linux | Security | Networking Free RedHat EX294 Questions - Pass RedHat EX294 RedHat EX294 Exam Practice Test Instant Access - No Installation Required Free Red Hat RHCE Sample Questions and Cert Prep Guide | VMExam Python Examples of ansible.module_utils.basic.AnsibleModule Ansible Exam (RHCE 8) full solution with explanation - Techinfobest " />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/rhce/modules/rhce-resources/" />
+
+
+    <title>
+        
+             :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Mouhib CHVMSI">
+  <meta itemprop="description" content="&lt;!DOCTYPE NETSCAPE-Bookmark-file-1&gt; chxmxii RHCE RESOURCES Managing Ansible Configuration Files Ansible Sample Exam for RHCE EX294 and EX407 | Lisenet.com :: Linux | Security | Networking SwiperNo/Ansible-Lab Tips and tricks — Ansible Documentation RHCE - TekNeed Ansible Sample Exam Questions and Answers For RHCE EX294 | SeiMaxim RHCE Sample Exam | PDF | Web Server | Internet &amp; Web soficx/rhce: These are a few practice exams to get ready for the Red Hat Certified Engineer exam (RHCE) Chapter 6 Working with Variables and Facts | Red Hat RHCE 8 (EX294) Cert Guide Red Hat RHCE 8 Practice Exam 1 | Red Hat RHCE 8® Practice Tests Ansible Installation &amp; Configuration on AWS | Install &amp; Configure Ansible on EC2 | Intellipaat - YouTube Ansible: Deploy a HA Proxy and Webservers | by Kyle Jones | Nov, 2022 | Medium CyberSecurityUP/Cloud-Security-Attacks: Azure and AWS Attacks RHCE 8 EX294 Exam Practice Questions || RHCE EX294 || Question 1 setup ansible hosts - YouTube nbtechsupport Sample Exam - RHCE 8 EX294 - Network Nuts RHEL7 RHCE Exam objectives - CertDepot RHCE Sample Exam for RHEL 7 | Lisenet.com :: Linux | Security | Networking Free RedHat EX294 Questions - Pass RedHat EX294 RedHat EX294 Exam Practice Test Instant Access - No Installation Required Free Red Hat RHCE Sample Questions and Cert Prep Guide | VMExam Python Examples of ansible.module_utils.basic.AnsibleModule Ansible Exam (RHCE 8) full solution with explanation - Techinfobest ">
+  <meta itemprop="wordCount" content="235">
+  <meta itemprop="image" content="http://localhost:1313/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="Mouhib CHVMSI">
+  <meta name="twitter:description" content="&lt;!DOCTYPE NETSCAPE-Bookmark-file-1&gt; chxmxii RHCE RESOURCES Managing Ansible Configuration Files Ansible Sample Exam for RHCE EX294 and EX407 | Lisenet.com :: Linux | Security | Networking SwiperNo/Ansible-Lab Tips and tricks — Ansible Documentation RHCE - TekNeed Ansible Sample Exam Questions and Answers For RHCE EX294 | SeiMaxim RHCE Sample Exam | PDF | Web Server | Internet &amp; Web soficx/rhce: These are a few practice exams to get ready for the Red Hat Certified Engineer exam (RHCE) Chapter 6 Working with Variables and Facts | Red Hat RHCE 8 (EX294) Cert Guide Red Hat RHCE 8 Practice Exam 1 | Red Hat RHCE 8® Practice Tests Ansible Installation &amp; Configuration on AWS | Install &amp; Configure Ansible on EC2 | Intellipaat - YouTube Ansible: Deploy a HA Proxy and Webservers | by Kyle Jones | Nov, 2022 | Medium CyberSecurityUP/Cloud-Security-Attacks: Azure and AWS Attacks RHCE 8 EX294 Exam Practice Questions || RHCE EX294 || Question 1 setup ansible hosts - YouTube nbtechsupport Sample Exam - RHCE 8 EX294 - Network Nuts RHEL7 RHCE Exam objectives - CertDepot RHCE Sample Exam for RHEL 7 | Lisenet.com :: Linux | Security | Networking Free RedHat EX294 Questions - Pass RedHat EX294 RedHat EX294 Exam Practice Test Instant Access - No Installation Required Free Red Hat RHCE Sample Questions and Cert Prep Guide | VMExam Python Examples of ansible.module_utils.basic.AnsibleModule Ansible Exam (RHCE 8) full solution with explanation - Techinfobest ">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/rhce/modules/rhce-resources/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="Mouhib CHVMSI">
+  <meta property="og:description" content="&lt;!DOCTYPE NETSCAPE-Bookmark-file-1&gt; chxmxii RHCE RESOURCES Managing Ansible Configuration Files Ansible Sample Exam for RHCE EX294 and EX407 | Lisenet.com :: Linux | Security | Networking SwiperNo/Ansible-Lab Tips and tricks — Ansible Documentation RHCE - TekNeed Ansible Sample Exam Questions and Answers For RHCE EX294 | SeiMaxim RHCE Sample Exam | PDF | Web Server | Internet &amp; Web soficx/rhce: These are a few practice exams to get ready for the Red Hat Certified Engineer exam (RHCE) Chapter 6 Working with Variables and Facts | Red Hat RHCE 8 (EX294) Cert Guide Red Hat RHCE 8 Practice Exam 1 | Red Hat RHCE 8® Practice Tests Ansible Installation &amp; Configuration on AWS | Install &amp; Configure Ansible on EC2 | Intellipaat - YouTube Ansible: Deploy a HA Proxy and Webservers | by Kyle Jones | Nov, 2022 | Medium CyberSecurityUP/Cloud-Security-Attacks: Azure and AWS Attacks RHCE 8 EX294 Exam Practice Questions || RHCE EX294 || Question 1 setup ansible hosts - YouTube nbtechsupport Sample Exam - RHCE 8 EX294 - Network Nuts RHEL7 RHCE Exam objectives - CertDepot RHCE Sample Exam for RHEL 7 | Lisenet.com :: Linux | Security | Networking Free RedHat EX294 Questions - Pass RedHat EX294 RedHat EX294 Exam Practice Test Instant Access - No Installation Required Free Red Hat RHCE Sample Questions and Cert Prep Guide | VMExam Python Examples of ansible.module_utils.basic.AnsibleModule Ansible Exam (RHCE 8) full solution with explanation - Techinfobest ">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="rhce">
+    <meta property="og:image" content="http://localhost:1313/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">rhce-resources</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/rhce/modules/rhce-resources/"></a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>chxmxii</TITLE>
+<H1>RHCE RESOURCES</H1>
+<DL><p>
+            
+                    <DT><H3 ADD_DATE="1666601807" LAST_MODIFIED="1674512453"></H3>
+                    <DL><p>
+                        <DT><A HREF="https://www.redhat.com/en/blog/managing-ansible-configuration-files" ADD_DATE="1666601822">Managing Ansible Configuration Files</A>
+                        <DT><A HREF="https://www.lisenet.com/2019/ansible-sample-exam-for-ex294/" ADD_DATE="1649723706">Ansible Sample Exam for RHCE EX294 and EX407 | Lisenet.com :: Linux | Security | Networking</A>
+                        <DT><A HREF="https://github.com/SwiperNo/Ansible-Lab" ADD_DATE="1666818329">SwiperNo/Ansible-Lab</A>
+                        <DT><A HREF="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" ADD_DATE="1667489927">Tips and tricks — Ansible Documentation</A>
+                        <DT><A HREF="https://tekneed.com/category/rhce/" ADD_DATE="1667675610">RHCE - TekNeed</A>
+                        <DT><A HREF="https://www.seimaxim.com/kb/ansible-sample-exam-questions-and-answers-for-rhce-ex294" ADD_DATE="1667675738">Ansible Sample Exam Questions and Answers For RHCE EX294 | SeiMaxim</A>
+                        <DT><A HREF="https://www.scribd.com/doc/261736380/RHCE-Sample-Exam" ADD_DATE="1667736267">RHCE Sample Exam | PDF | Web Server | Internet &amp; Web</A>
+                        <DT><A HREF="https://github.com/soficx/rhce" ADD_DATE="1649723919">soficx/rhce: These are a few practice exams to get ready for the Red Hat Certified Engineer exam (RHCE)</A>
+                        <DT><A HREF="https://learning.oreilly.com/library/view/red-hat-rhce/9780136872481/ch06.xhtml" ADD_DATE="1668762211">Chapter 6 Working with Variables and Facts | Red Hat RHCE 8 (EX294) Cert Guide</A>
+                        <DT><A HREF="https://learning.oreilly.com/library/view/red-hat-rhce/9780136656845/ch01.xhtml" ADD_DATE="1668809679">Red Hat RHCE 8 Practice Exam 1 | Red Hat RHCE 8® Practice Tests</A>
+                        <DT><A HREF="https://www.youtube.com/watch?v=Km3BCQnV6sw" ADD_DATE="1668810073">Ansible Installation &amp; Configuration on AWS | Install &amp; Configure Ansible on EC2 | Intellipaat - YouTube</A>
+                        <DT><A HREF="https://medium.com/@kylejones199108/ansible-deploy-a-ha-proxy-and-webservers-97bdc136e34a" ADD_DATE="1668849276">Ansible: Deploy a HA Proxy and Webservers | by Kyle Jones | Nov, 2022 | Medium</A>
+                        <DT><A HREF="https://github.com/CyberSecurityUP/Cloud-Security-Attacks" ADD_DATE="1668965537">CyberSecurityUP/Cloud-Security-Attacks: Azure and AWS Attacks</A>
+                        <DT><A HREF="https://www.youtube.com/watch?v=veZfOFdfV6o&list=PLcLWSRuj15cu9Dzrajokd9pgdnR81C3G3" ADD_DATE="1671491888">RHCE 8 EX294 Exam Practice Questions || RHCE EX294 || Question 1 setup ansible hosts - YouTube</A>
+                        <DT><A HREF="https://www.nbtechsupport.co.in/2022/06/rhce-8-ex294-exam-practice-questions.html" ADD_DATE="1671492161">nbtechsupport</A>
+                        <DT><A HREF="https://networknuts.net/sample-exam-ex294/" ADD_DATE="1671538281">Sample Exam - RHCE 8 EX294 - Network Nuts</A>
+                        <DT><A HREF="https://www.certdepot.net/rhel7-rhce-exam-objectives/" ADD_DATE="1673372271">RHEL7 RHCE Exam objectives - CertDepot</A>
+                        <DT><A HREF="https://www.lisenet.com/2016/rhce-sample-exam-for-rhel-7/" ADD_DATE="1673373102">RHCE Sample Exam for RHEL 7 | Lisenet.com :: Linux | Security | Networking</A>
+                        <DT><A HREF="https://www.pass4success.com/redhat/exam/ex294" ADD_DATE="1673950666">Free RedHat EX294 Questions - Pass RedHat EX294</A>
+                        <DT><A HREF="https://www.certshero.com/redhat/ex294/practice-test" ADD_DATE="1673963090">RedHat EX294 Exam Practice Test Instant Access - No Installation Required</A>
+                        <DT><A HREF="https://www.vmexam.com/red-hat/red-hat-ex294-certification-exam-sample-questions" ADD_DATE="1673980532">Free Red Hat RHCE Sample Questions and Cert Prep Guide | VMExam</A>
+                        <DT><A HREF="https://www.programcreek.com/python/example/94933/ansible.module_utils.basic.AnsibleModule" ADD_DATE="1673981225">Python Examples of ansible.module_utils.basic.AnsibleModule</A>
+                        <DT><A HREF="https://techinfobest.com/ansible-exam-rhce-8-full-solution-with-explanation/" ADD_DATE="1674388123">Ansible Exam (RHCE 8) full solution with explanation - Techinfobest</A>
+                    </DL><p>
+                   </DL><p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

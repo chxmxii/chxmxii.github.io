@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="All rights reserved - @chxmxii_ ">
+<meta name="description" content="Solution As it is mentioned in the challenge description, we are spawned in a restricted shell. you can use echo $0 to verify.
+notice that we have the ability to execute certain commands like ls, but not cat or find. Why? That is because the PATH env var is modified and set to another directory to limit the commands available to a user. using the echo $PATH command, we can find the new directory set to PATH.
+" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/writeups/writeup12.txt/" />
+
+
+    <title>
+        
+             :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Mouhib CHVMSI">
+  <meta itemprop="description" content="Solution As it is mentioned in the challenge description, we are spawned in a restricted shell. you can use echo $0 to verify.
+notice that we have the ability to execute certain commands like ls, but not cat or find. Why? That is because the PATH env var is modified and set to another directory to limit the commands available to a user. using the echo $PATH command, we can find the new directory set to PATH.">
+  <meta itemprop="wordCount" content="235">
+  <meta itemprop="image" content="http://localhost:1313/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="Mouhib CHVMSI">
+  <meta name="twitter:description" content="Solution As it is mentioned in the challenge description, we are spawned in a restricted shell. you can use echo $0 to verify.
+notice that we have the ability to execute certain commands like ls, but not cat or find. Why? That is because the PATH env var is modified and set to another directory to limit the commands available to a user. using the echo $PATH command, we can find the new directory set to PATH.">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/writeups/writeup12.txt/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="Mouhib CHVMSI">
+  <meta property="og:description" content="Solution As it is mentioned in the challenge description, we are spawned in a restricted shell. you can use echo $0 to verify.
+notice that we have the ability to execute certain commands like ls, but not cat or find. Why? That is because the PATH env var is modified and set to another directory to limit the commands available to a user. using the echo $PATH command, we can find the new directory set to PATH.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="writeups">
+    <meta property="og:image" content="http://localhost:1313/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">writeup12.txt</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/writeups/writeup12.txt/"></a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <h1 id="solution">Solution</h1>
+<p>As it is mentioned in the challenge description, we are spawned in a <a href="https://en.wikipedia.org/wiki/Restricted_shell">restricted shell</a>. you can use <code>echo $0</code> to verify.</p>
+<p>notice that we have the ability to execute certain commands like <code>ls</code>, but not <code>cat</code> or <code>find</code>. Why? That is because the PATH env var is modified and set to another directory to limit the commands available to a user. using the <code>echo $PATH</code> command, we can find the new directory set to PATH.</p>
+<pre tabindex="0"><code>echo $PATH
+/usr/bolbok/cmds
+</code></pre><p>Since we know the directory that holds the available binaries, we can use<br>
+<code>ls /usr/bolbok/cmds</code> to find out which commands we are allowed to use.</p>
+<pre tabindex="0"><code>ls /usr/bolbok/cmds
+ls uptime grep top rbash
+</code></pre><p>who needs <code>find</code> when you have <code>ls</code> and <code>grep</code> ?</p>
+<pre tabindex="0"><code>ls -Ra / | grep *flag* 
+.flag
+</code></pre><p>okay, now we know that the flag is a hidden file. how can we get its absolute path? <code>ls -Ra</code> already shows us the absolute path for the file but is filtered because of the grep command. use the <code>-B3</code> option to show the last 3 lines before <code>.flag</code></p>
+<pre tabindex="0"><code>ls -Ra / | grep *flag* -B3
+&lt;path&gt;:
+.
+..
+.flag
+</code></pre><p>now so we got the absolute path for the flag. no cat tac! don&rsquo;t worry you still can display the contents of a file using shell built-ins like <code>echo</code> and <code>read</code>.</p>
+<pre tabindex="0"><code>echo $(&lt; &lt;path&gt;/.flag)
+Securinets{FLAG}
+or 
+while read line; do echo $line; done &lt; &lt;path&gt;/.flag
+Securinets{FLAG}
+</code></pre>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>

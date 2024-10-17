@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="icon" href="http://localhost:1313/mor.jpg" type="image/icon type">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="All rights reserved - @chxmxii_ ">
+<meta name="description" content="Core ConceptsCore Concepts
+" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="http://localhost:1313/cka/certified-kubernetes-administrator-84224f6e5ecc49bcabde5fef4bec64d2/core-concepts-887ea8c9f7f543808e7dbfafdde011c3/" />
+
+
+    <title>
+        
+             :: Mouhib CHVMSI 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/scss/main.scss">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+    <link rel="manifest" href="http://localhost:1313/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="http://localhost:1313/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Mouhib CHVMSI">
+  <meta itemprop="description" content="Core ConceptsCore Concepts">
+  <meta itemprop="wordCount" content="1070">
+  <meta itemprop="image" content="http://localhost:1313/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:title" content="Mouhib CHVMSI">
+  <meta name="twitter:description" content="Core ConceptsCore Concepts">
+
+
+
+    <meta property="og:url" content="http://localhost:1313/cka/certified-kubernetes-administrator-84224f6e5ecc49bcabde5fef4bec64d2/core-concepts-887ea8c9f7f543808e7dbfafdde011c3/">
+  <meta property="og:site_name" content="Mouhib CHVMSI">
+  <meta property="og:title" content="Mouhib CHVMSI">
+  <meta property="og:description" content="Core ConceptsCore Concepts">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="cka">
+    <meta property="og:image" content="http://localhost:1313/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="http://localhost:1313/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark"> </span>
+            <span class="logo__text">C:\Users\chxmxii\</span>
+            <span class="logo__text" style="color:#ff3c36">Core Concepts 887ea8c9f7f543808e7dbfafdde011c3</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#ff3c36;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="http://localhost:1313/about.txt/" style="text-decoration: none;" class="name">About</a></li><li><a href="http://localhost:1313/posts/" style="text-decoration: none;" class="name">Posts</a></li><li><a href="http://localhost:1313/projects/" style="text-decoration: none;" class="name">Projects</a></li><li><a href="http://localhost:1313/writeups/" style="text-decoration: none;" class="name">Writeups</a></li><li><a href="http://localhost:1313/error.html" style="text-decoration: none;" class="name">~Resume</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="http://localhost:1313/cka/certified-kubernetes-administrator-84224f6e5ecc49bcabde5fef4bec64d2/core-concepts-887ea8c9f7f543808e7dbfafdde011c3/"></a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Core Concepts</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="887ea8c9-f7f5-4380-8e7d-bfafdde011c3" class="page sans"><header><img class="page-cover-image" src="Core%20Concepts%20887ea8c9f7f543808e7dbfafdde011c3/k8s.png" style="object-position:center 35.27%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="Core%20Concepts%20887ea8c9f7f543808e7dbfafdde011c3/logo.png"/></div><h1 class="page-title">Core Concepts</h1><p class="page-description"></p></header><div class="page-body"><ul id="bab8c920-2b20-44df-b25d-004950e970d0" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Cluster Architecture Overview</mark></strong></summary><ul id="c37936eb-a69b-49e6-92d8-b3a0e423d567" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Master</mark>:<ul id="4322b11d-bdd8-4593-8941-a8f66a011a06" class="bulleted-list"><li style="list-style-type:circle"><strong>ETCD cluster</strong>: stores information about the cluster in a k-v format.</li></ul><ul id="c57516ca-28fb-4d33-b2b2-d01f08a63ffe" class="bulleted-list"><li style="list-style-type:circle"><strong>Kube-API server</strong>: responsible for orchestrating all operations within the cluster</li></ul><ul id="33ae3c2c-d13d-4232-a9bb-5c9fdee531dc" class="bulleted-list"><li style="list-style-type:circle"><strong>Kube Controller Manager:</strong> takes care of different functions such as node controller (takes care of nodes), replication controller (ensures the desired number of containers are running), etc…</li></ul><ul id="d76e5e95-aa4c-40d5-b99b-29f0bc77cf50" class="bulleted-list"><li style="list-style-type:circle"><strong>Kube-scheduler</strong>: responsible for scheduling applications or containers on nodes. Basically, it identifies the right node to place the container based on the container resource requirements, the node maximum capacity etc..</li></ul><figure id="9995aba4-ee77-4210-8cb0-a8665d0076d2" class="image"><a href="Core%20Concepts%20887ea8c9f7f543808e7dbfafdde011c3/Untitled.png"><img style="width:1252px" src="Core%20Concepts%20887ea8c9f7f543808e7dbfafdde011c3/Untitled.png"/></a></figure></li></ul><ul id="024fab5f-dc33-47ac-9648-a39eb2445140" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Worker:</mark><ul id="818684b8-939b-40c8-b157-30306029d9b5" class="bulleted-list"><li style="list-style-type:circle"><strong>Kubelet</strong>: plays the captain role of the ship, takes instructions from the Kube-API server, and manages containers and the kube-proxy.</li></ul><ul id="ebdd44cf-20cd-45d0-96a4-dad74dda60d7" class="bulleted-list"><li style="list-style-type:circle"><strong>kube</strong>-<strong>proxy</strong>: helps in enabling communication between services within the cluster.</li></ul></li></ul></details></li></ul><ul id="719ff635-8405-4832-8d84-ea6545b90088" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Kubernetes Control-Plane Components</strong></mark></summary><ul id="7329e080-8db0-450b-8b26-9bab2bace6c4" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>ETCD</strong></mark><strong><mark class="highlight-yellow"> </mark></strong></summary><ul id="00874a30-60ba-4107-b64d-825ed76d40b1" class="toggle"><li><details open=""><summary><mark class="highlight-yellow">ETCD </mark>Overview</summary><ul id="43b4f29d-45f7-4cd0-95bc-d07ba1d4a39a" class="bulleted-list"><li style="list-style-type:disc">What is <mark class="highlight-blue">ETCD</mark>?<ul id="12be8d57-b094-45b0-8c16-b9de598936bf" class="bulleted-list"><li style="list-style-type:circle">So basically, ETCD is a distributed reliable, and highly available key-value store that is simple, secure &amp; fast.</li></ul></li></ul><ul id="c8fae5e9-adb9-4a39-81ba-0800e290b037" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">ETCD </mark>Installation:<ul id="6d1edd4a-4b2e-4f83-8bf6-466196dbb745" class="bulleted-list"><li style="list-style-type:circle">Download the binary<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="395c1cb7-d067-46df-864f-e1b3a0d90797" class="code"><code class="language-Shell">curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz</code></pre></li></ul><ul id="9530d5d3-e5b9-4eee-a470-9d480a2e1dc8" class="bulleted-list"><li style="list-style-type:circle">Extract<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="aea82dba-2529-41ce-989c-e34423db47a3" class="code"><code class="language-Shell">tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /usr/bin/etcd --strip-components=1</code></pre></li></ul><ul id="b7db0e70-0020-4731-b7b7-1bb38c38cabd" class="bulleted-list"><li style="list-style-type:circle">RUN <mark class="highlight-blue">ETCD </mark>service<p id="33fa5b23-a5de-4bf1-be99-9f91962279a9" class=""><mark class="highlight-yellow"><code>etcd --version</code></mark></p><p id="e5378344-fc34-48c9-ad37-97de843a036c" class="">⇒ Once the ETCD service runs, it starts to listen on port <mark class="highlight-blue">2379 </mark>by default.</p></li></ul></li></ul><ul id="511a94c8-2a33-4a1a-a82c-ae833ade24c1" class="bulleted-list"><li style="list-style-type:disc">Operate <mark class="highlight-blue">ETCD</mark><ul id="f0b93d90-35e9-4fdd-a97f-bb95c11d4c30" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><code>etcdctl</code></mark></li></ul></li></ul><ul id="c45597ad-e4b5-405f-b22d-a1d51df2c99e" class="bulleted-list"><li style="list-style-type:disc">change the <mark class="highlight-yellow">API version</mark><ul id="6002246c-2261-42e4-8c7f-198628020fec" class="bulleted-list"><li style="list-style-type:circle">M1 for each command: <mark class="highlight-gray"><code>ETCDCTL_API=3 </code></mark><mark class="highlight-blue"><code>./etcdctl </code></mark><mark class="highlight-gray"><code>version</code></mark></li></ul><ul id="86deb0bf-b64f-4f3d-81c1-eb3b9ee0a0a7" class="bulleted-list"><li style="list-style-type:circle">M2 for the entire session: <mark class="highlight-gray"><code>export ETDCTL_API=3</code></mark></li></ul></li></ul><p id="5b61eeec-dd93-4aeb-8a1a-840680ab7a11" class="">
+</p></details></li></ul><ul id="16b498fc-6006-45c1-8537-7efa083239af" class="toggle"><li><details open=""><summary><mark class="highlight-yellow">ETCD </mark>for Kubernetes</summary><ul id="60f8eedc-0f67-4e06-9600-0d5b87ec8072" class="bulleted-list"><li style="list-style-type:disc">ETCD stores information about the cluster such as ( nodes, pods, configs, secrets, accounts, roles, bindings, etc..) </li></ul></details></li></ul></details></li></ul><ul id="7b883cb3-b1ef-4f09-b602-a32c6b93edd9" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Kube-API server</strong></mark></summary><ul id="a4851e99-70b6-404a-8a5d-eaa8327a1a41" class="bulleted-list"><li style="list-style-type:disc">What is it? ⇒ Primary management component in Kubernetes.</li></ul><ul id="59e469c5-dec4-4962-8854-44c55e59877c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue">Responsible </mark>for:<ol type="1" id="3fa93cb8-c534-4f81-8a2a-f799efd2ea15" class="numbered-list" start="1"><li>Authenticate user</li></ol><ol type="1" id="5f74267e-381a-48ac-b51e-e046754e3467" class="numbered-list" start="2"><li>Validate request</li></ol><ol type="1" id="80ca0780-5e16-47cd-abd2-94da994eb493" class="numbered-list" start="3"><li>Retrieve data</li></ol><ol type="1" id="715f9d12-bb9d-4294-b156-3237d813056b" class="numbered-list" start="4"><li>Update ETCD</li></ol><ol type="1" id="566951ff-ceec-42a7-8559-f163b7bed204" class="numbered-list" start="5"><li>Scheduler</li></ol><ol type="1" id="fdf34602-64df-4ebb-90ac-57923fc14c16" class="numbered-list" start="6"><li>Kubelet</li></ol></li></ul><ul id="a05677ed-d943-4aa1-87d0-bd3f8651de5a" class="bulleted-list"><li style="list-style-type:disc">The only component that interacts directly with ETCD data store.</li></ul></details></li></ul><ul id="20f3aadc-8c16-4c70-b002-cc9f00a33e78" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Kube Controller Manager</mark></strong></summary><ul id="3280b6af-e3e3-4677-89c7-1d38030bbe82" class="bulleted-list"><li style="list-style-type:disc">What is it? ⇒ Responsible for managing various controllers in k8s.</li></ul><ul id="6b1a7d0d-d770-41fa-8812-df1f340ac728" class="bulleted-list"><li style="list-style-type:disc">A controller is a process that continuously monitors the state of various components within the system and works towards bringing them to the desired function state.<ul id="9705c53a-802b-4d45-9a47-9b79a539e5b3" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue"><strong>Note Controller:</strong></mark><ul id="de20a6f5-3962-47c2-bd80-f1245a551d04" class="bulleted-list"><li style="list-style-type:square">Responsible for monitoring the status of the nodes.</li></ul><ul id="50a8f3e0-75fc-46d1-a316-38893a12aa67" class="bulleted-list"><li style="list-style-type:square">Tests the status of the nodes every 5 seconds through the kube-api server.</li></ul><ul id="5009899b-6c8a-48bb-9c71-79ffac403e6a" class="bulleted-list"><li style="list-style-type:square">The node is marked unreachable after 40 seconds, giving it 5 minutes to return. </li></ul><ul id="4549482e-4e58-4492-9b96-4c2fc3b8aa4e" class="bulleted-list"><li style="list-style-type:square">If it doesn’t, then it will remove all the pods assigned to that node and provision them on the healthy node.</li></ul></li></ul><ul id="444a8d86-cced-46a6-ba85-015f7135477a" class="bulleted-list"><li style="list-style-type:circle"><strong><mark class="highlight-blue">Replication Controller:</mark></strong><ul id="cc089bd4-3ce9-4d57-aa98-7bd6dfc45438" class="bulleted-list"><li style="list-style-type:square">Responsible for monitoring the status of the replica sets, ensuring that the desired number of pods are available.</li></ul><ul id="bdb904cc-cb6e-400d-9668-6eb5a958f990" class="bulleted-list"><li style="list-style-type:square">If a pod dies, it creates another one.</li></ul></li></ul><ul id="7a497eed-e424-47ae-bce6-4df301172ff3" class="bulleted-list"><li style="list-style-type:circle"><strong><mark class="highlight-blue">Other Controllers:</mark></strong><ul id="5028fcb8-ae1c-40e5-8644-fb7237e264f1" class="bulleted-list"><li style="list-style-type:square">Deployment Controller</li></ul><ul id="7390f474-2749-42b2-941e-4c82ab1e47bd" class="bulleted-list"><li style="list-style-type:square">NameSpace Controller</li></ul><ul id="98a9b5de-261b-43ae-9007-412e6eb9270e" class="bulleted-list"><li style="list-style-type:square">EndPoint Controller</li></ul><ul id="bb5bfb20-ecda-4bac-8b39-0c2aed3b7075" class="bulleted-list"><li style="list-style-type:square">Job Controller</li></ul><ul id="6b29dc8f-ef0a-474a-a07c-558fc0e9bd95" class="bulleted-list"><li style="list-style-type:square">Service Account Controller</li></ul><ul id="454c91a6-05b3-45f8-8822-9dba18202ced" class="bulleted-list"><li style="list-style-type:square">PV-Protection Controller</li></ul><ul id="be3ee117-3277-41ac-884a-b8c9817e3004" class="bulleted-list"><li style="list-style-type:square">CronJob Controller</li></ul><ul id="30164e5d-6b84-47ae-afda-3bfdf8bdb867" class="bulleted-list"><li style="list-style-type:square">Stateful Controller</li></ul><ul id="2feaece5-e892-43ea-a84b-f0ce2c3ae0ad" class="bulleted-list"><li style="list-style-type:square">PV-Binder Controller </li></ul></li></ul></li></ul><p id="af527416-ce3b-4feb-96a5-b5dc92d02052" class="">
+</p></details></li></ul><ul id="57631fb7-b8ec-4958-9826-4ebdcc1c6990" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Kube Scheduler</strong></mark></summary><ul id="db86971b-76d9-484a-8043-e99924102214" class="bulleted-list"><li style="list-style-type:disc">What is it? ⇒ Responsible for scheduling pods on nodes.</li></ul><ul id="f7eb0b36-1ab1-4520-b442-c14808640c74" class="bulleted-list"><li style="list-style-type:disc">Only decides which pod goes where.</li></ul><ul id="cb8bb534-c798-47c7-88b5-6cb2d20fd996" class="bulleted-list"><li style="list-style-type:disc">Uses a scoring system to prioritize the best fit for the container.</li></ul></details></li></ul><ul id="18d88859-b148-4dbd-891b-76ce23af6388" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Kubelet</strong></mark></summary><ul id="93743c07-74bc-4106-a819-f0832a3c4505" class="bulleted-list"><li style="list-style-type:disc">What is it? ⇒ Responsible for managing the nodes.</li></ul><ul id="5d38d813-7884-4f4f-a5ca-e388e60ab89f" class="bulleted-list"><li style="list-style-type:disc">They receive instructions from the master nodes.</li></ul><ul id="24728fdf-900e-4e0c-ab19-48e703294eb2" class="bulleted-list"><li style="list-style-type:disc">Register nodes within the cluster.</li></ul><ul id="08975581-803b-48ff-9c59-90852cf4d7d9" class="bulleted-list"><li style="list-style-type:disc">The installation of Kubbelet is done manually for every node. </li></ul></details></li></ul><ul id="a599b6d9-1cd1-4394-8a7e-076f95ade448" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Kube-proxy</mark></strong></summary><ul id="2809f87f-4fa2-4766-b0f4-1cc17b162543" class="bulleted-list"><li style="list-style-type:disc"><strong>What is it?</strong><ul id="d29895c2-0f63-4e39-b6a0-ef6fed2e1087" class="bulleted-list"><li style="list-style-type:circle">a process that runs on each node in the k8s cluster to ensure the communication between pods. </li></ul></li></ul><ul id="f3d5a624-2030-47f6-a69f-bbfe96db7825" class="bulleted-list"><li style="list-style-type:disc"><strong>How? </strong><ul id="2e19426f-a0b2-462b-84e6-999b70d1de82" class="bulleted-list"><li style="list-style-type:circle">The kube-proxy job is to look for new services and create the appropriate rules on each node to forward traffic to those services to the backend pods. </li></ul><ul id="1610c109-9091-408b-a745-1558a4f56ac8" class="bulleted-list"><li style="list-style-type:circle">Using <mark class="highlight-yellow"><code>iptable</code></mark><mark class="highlight-yellow"> </mark>rules.</li></ul></li></ul></details></li></ul></details></li></ul><ul id="c5781372-9b3d-4049-b8b5-b5bc564ce997" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Kubernetes workloads Resources</mark></strong></summary><ul id="6766eed7-670d-4b75-9458-2bd1b4210663" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Pods</strong></mark><strong> </strong></summary><ul id="ee825714-5eda-4cf9-9743-0833f01b6a53" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>What is a Pod?</strong></mark><ul id="0a83b50f-5f8b-455f-9fa4-3e238986f87b" class="bulleted-list"><li style="list-style-type:circle">Pods are the smallest deployable units of computing that you can create and manage within your Kubernetes cluster. However, A pod consists of a group of one or more tightly related containers that share the same node underlying and the same Linux namespace. and </li></ul></li></ul><ul id="b1a278d4-ed55-4b93-bd64-f8f1d588dbdd" class="bulleted-list"><li style="list-style-type:disc"><strong><mark class="highlight-blue">How to deploy a Pod?</mark></strong><ul id="71a94dc3-ffd9-4756-ac85-082502625a72" class="bulleted-list"><li style="list-style-type:circle"><strong>Imperative way:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3d485a4c-9af2-4393-88f7-2a03364b09af" class="code"><code class="language-Shell">kubectl run nginx --image=nginx:1.14.2
+kubectl get pods</code></pre></li></ul><ul id="d8553f9a-ea7a-4313-ac42-0960f4cc61b4" class="bulleted-list"><li style="list-style-type:circle"><strong>Declarative way:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f9981209-a172-42a8-95fb-8e96ef9a31fb" class="code"><code class="language-YAML">apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="06065401-a159-44bd-a4d2-2ff434cb3e9a" class="code"><code class="language-Shell">kubectl create -f nginx_pod.yml
+kubectl get pods</code></pre></li></ul></li></ul></details></li></ul><ul id="fd4e20e5-1b4f-4ac3-b4e1-0880b8318d1f" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>ReplicaSets</strong></mark></summary><ul id="41c99383-fd0a-4f06-953a-4e462309907c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>What is a ReplicaSet?</strong></mark><ul id="31c37d5b-b4a5-4a55-9dc7-07d85b116c9d" class="bulleted-list"><li style="list-style-type:circle">ReplicaSets are used to maintain a stable set of pods running at any given time. As such, is used to guarantee the availability of a specified number of identical pods. </li></ul></li></ul><ul id="48964e1a-a010-47f5-b217-19a689cf643c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>How to deploy a ReplicaSet?<br/><br/></strong></mark><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7848f1b7-8bf2-4e63-bd75-f71bbfeac293" class="code"><code class="language-YAML">apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+  template: #Pod template
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google_samples/gb-frontend:v3</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ee1dfd6a-bdd1-4724-84b7-be207af0e464" class="code"><code class="language-Shell">
+$ kubectl create -f front-replicas.yml
+$ kubectl get rs
+$ kubectl describe rs/frontend</code></pre></li></ul></details></li></ul><ul id="1a2090bb-f8ca-4dc8-a1f5-b82a727074b1" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Deployments</strong></mark></summary><ul id="f3ac4315-7e48-4649-849a-9660688965c1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>What is a deployment?</strong></mark><ul id="9053da50-dd4f-47c2-b82d-f46b5f4230ed" class="bulleted-list"><li style="list-style-type:circle">So basically, Deployments ensure the desired number of pods are running and always available. The update process is also wholly recorded, and versioned with options to pause, continue, and roll back to previous versions.</li></ul></li></ul><ul id="58fa6e02-3247-4b41-9d1f-b793fd5f0097" class="bulleted-list"><li style="list-style-type:disc">The Kubernetes deployment object lets you:<ul id="14722441-c882-4752-a8f9-31e7cab45e06" class="bulleted-list"><li style="list-style-type:circle">Deploy a replica set or pod.</li></ul><ul id="3b2b463a-ba34-4005-9397-de84c348cb7e" class="bulleted-list"><li style="list-style-type:circle">Update pods and replica sets.</li></ul><ul id="df772110-ef8c-4f2d-84ee-88d27d0d7008" class="bulleted-list"><li style="list-style-type:circle">Rollback to the previous version.</li></ul><ul id="ef06fb19-9b89-4d7d-81df-98d92bbad593" class="bulleted-list"><li style="list-style-type:circle">Scale a deployment.</li></ul><ul id="0901fe19-a53f-4bae-864e-e21ed2d06bc4" class="bulleted-list"><li style="list-style-type:circle">Pause or continue a deployement.</li></ul></li></ul><ul id="89de6eba-385b-40ca-999a-658cb020bf29" class="bulleted-list"><li style="list-style-type:disc"><strong><mark class="highlight-blue">How to deploy a deployment?</mark></strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="032a4d90-3459-4f1a-8311-88d86ed71ffa" class="code"><code class="language-Shell">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx 
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80</code></pre></li></ul></details></li></ul><ul id="59201f13-08f0-438d-8dc3-8884cb509a08" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Services</strong></mark></summary><ul id="0794af51-847a-4c3c-8543-93b2ccd722f4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>What is a Service?</strong></mark><ul id="2baa7ad4-df62-43b6-ae45-1308f9ad39de" class="bulleted-list"><li style="list-style-type:circle">A service is a method for exposing a network application that is running as one or more Pods in your cluster.</li></ul></li></ul><ul id="d3dde21e-ff09-4cc0-95fb-bdb5c10a4f3b" class="bulleted-list"><li style="list-style-type:disc"><strong><mark class="highlight-blue">Why use the Service Kubernetes object?</mark></strong><ul id="2852142c-2d53-4b60-87c2-0b13c099da16" class="bulleted-list"><li style="list-style-type:circle">To understand the need for a service let’s assume that you are using a Deployment to run your app. that Deploymenet can create and destroy Pods dynamically. Each Pod gets its own IP address, the set of Pods running in one moment in time could be different from the set of Pods running that application a moment later. This leads to a <strong>problem;</strong> if some set of Pods <mark class="highlight-blue"><code>Backends</code></mark><mark class="highlight-blue"> </mark>provides functionality to other pods <mark class="highlight-blue"><code>Frontends</code></mark> inside your cluster, how do the frontends find out and keep track of which IP address to connect to, so that the frontend can use the backend part of the workload? ENTER SERVICES.</li></ul></li></ul><ul id="170e03f3-8b73-4d6b-87c4-38a8fbfcede4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Service type:</strong></mark><ul id="7e84eb98-3449-4151-a14c-5ba767659501" class="bulleted-list"><li style="list-style-type:circle"><strong>ClusterIP:</strong><ul id="ef0a8e67-b4c2-4459-b7e2-f2c23156fd38" class="bulleted-list"><li style="list-style-type:square">Exposes the Service on the cluster-internal IP <mark class="highlight-blue">→</mark> This will make the Service only reachable from within the cluster.</li></ul></li></ul><ul id="7fe31223-18c6-4764-9c34-c98f4a57a5ce" class="bulleted-list"><li style="list-style-type:circle"><strong>NodePort:</strong><ul id="6270dc1b-b6c5-4d4c-b046-99fd3c2bf1e5" class="bulleted-list"><li style="list-style-type:square">Exposes the Service on each Node’s IP at a static port.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="72454b18-6bb5-4802-9790-7f3129c2a030" class="code"><code class="language-YAML">piVersion: v1
+kind: Service
+metadata:
+ name: myapp-service
+spec:
+ types: NodePort
+ ports:
+ - targetPort: 80
+   port: 80
+   nodePort: 30008</code></pre></li></ul></li></ul><ul id="ed5c0230-8a10-43c6-ad71-757b474bbc16" class="bulleted-list"><li style="list-style-type:circle"><strong>LoadBalancer:</strong><ul id="24527be3-d8b6-4945-89a8-a86ac8c261e7" class="bulleted-list"><li style="list-style-type:square">Exposes the service externally using an external load balancer. Note that you should provide one as Kubernetes doesn’t directly offer a load-balancing component.</li></ul></li></ul><ul id="072156ee-e642-444c-9b34-9cc07ecfac11" class="bulleted-list"><li style="list-style-type:circle"><strong>ExternalName:</strong><ul id="016e8160-b27a-4673-ab69-a28b81ec73f9" class="bulleted-list"><li style="list-style-type:square">Maps the service to the contents of the <mark class="highlight-blue"><code>externalName</code></mark>field (e.g. <mark class="highlight-blue"><code>api.foo.bar.example</code></mark>). The mapping configures your cluster’s DNS server to return a <mark class="highlight-blue"><code>CNAME</code></mark><mark class="highlight-blue"> </mark>record with that external hostname value.</li></ul></li></ul></li></ul><ul id="23dba430-e545-4a19-85d4-2bc11e170fb3" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Defining a Service</strong></mark><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26a653f0-5d3a-4d49-9969-4e01342bba4a" class="code"><code class="language-YAML">apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+#Default Service type is ClusterIP</code></pre></li></ul></details></li></ul><ul id="cb16b495-792c-465d-aed0-71dbdb95ecd6" class="toggle"><li><details open=""><summary><strong><mark class="highlight-blue">Name Spaces</mark></strong></summary><ul id="1e7fca32-51af-44e4-9051-1e82ff8dd54b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>What are Namespaces?</strong></mark><ul id="ac7b65f0-ff1b-41b0-9640-04ff0789f4db" class="bulleted-list"><li style="list-style-type:circle">Namespaces is a mechanism for isolating groups of resources within a single cluster.  </li></ul></li></ul><ul id="232c7c83-e325-4795-9c1e-a6771b455888" class="bulleted-list"><li style="list-style-type:disc"><strong><mark class="highlight-blue">Initial namespaces</mark></strong><ul id="73cbfb01-7054-4855-9f32-bb350436da76" class="bulleted-list"><li style="list-style-type:circle"><strong>default</strong></li></ul><ul id="877aa1a3-8ad7-4957-a4fc-7510a099d208" class="bulleted-list"><li style="list-style-type:circle"><strong>kube-node-lease:</strong> holds Lease objects associated with each node. Node leases allow the Kubelet to send <mark class="highlight-blue"><code>heartbeats</code></mark><mark class="highlight-blue"> </mark>so that the control plane can detect node failure.</li></ul><ul id="55c412f3-7996-4934-b0fe-e5fd8ec1e22f" class="bulleted-list"><li style="list-style-type:circle"><strong>kube-public: </strong>This namespace is readable by all clients, and is mostly reserved for cluster usage in case some resources should be visible and readable publicly throughout the whole cluster.</li></ul><ul id="d2a0a8bc-b413-4f70-8f2b-f5973dd6b917" class="bulleted-list"><li style="list-style-type:circle"><strong>kube-system: </strong>used for objects created by the Kubernetes system.</li></ul></li></ul><ul id="28e894de-3f38-4f63-baf9-00add236b6e2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Working withe namespaces</strong></mark><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5d36c8ff-98d3-4b63-873e-eb5c91041f96" class="code"><code class="language-YAML">apiVersion: v1
+kind: Namespace
+metadata:
+	name: mynamespace</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12882b6f-b084-46c1-89ef-db2e5f07637a" class="code"><code class="language-Shell">$ kubectl create ns &lt;namespace&gt;
+$ kubectl get ns</code></pre></li></ul></details></li></ul></details></li></ul><p id="063c06bf-b568-4c5c-9c37-f2a3550d7cd3" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    
+<div id="particles-js" style="position: fixed; inset: 0; z-index: -1;"></div>
+<script src="http://localhost:1313/js/particles.min.js"></script>
+<script>
+  particlesJS('particles-js',
+    {
+      "particles": {
+        "number": {
+          "value": 25,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#424569"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#ff3f38"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.2305594644660164,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3f38",
+          "opacity": 0.19875815902242794,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": false,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+</script>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+            
+            
+            <span>© All right reserved chxmxii - 2022</span>
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="http://localhost:1313/bundle.min.63e1cd4087b02bc78961fcab2aaf77e957e2227557c73ab774f1cc4a9db0645e90d2403ca03e55eb0887e432e82aea10afe7f125052af6dd46cfea148ecbc663.js" integrity="sha512-Y&#43;HNQIewK8eJYfyrKq936VfiInVXxzq3dPHMSp2wZF6Q0kA8oD5V6wiH5DLoKuoQr&#43;fxJQUq9t1Gz&#43;oUjsvGYw=="></script>
+
+
+
+
+    </body>
+</html>
